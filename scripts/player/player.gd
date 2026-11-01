@@ -51,6 +51,7 @@ var _crouch_toggled: bool = false
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
+@onready var interactor: Interactor = $Head/Camera3D/Interactor
 @onready var flashlight: SpotLight3D = $Flashlight
 @onready var _collider: CollisionShape3D = $CollisionShape3D
 @onready var _shape: CapsuleShape3D = $CollisionShape3D.shape
@@ -90,16 +91,16 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var can_act := input_enabled and _is_mouse_captured()
+	var active := can_act()
 	var move_input := Vector2.ZERO
-	if can_act:
+	if active:
 		move_input = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 
-	_update_crouch(delta, can_act)
+	_update_crouch(delta, active)
 
 	var speed := walk_speed
 	# Sprint only while moving forward and standing.
-	is_sprinting = can_act and not is_crouching and move_input.y < -0.1 and Input.is_action_pressed("sprint")
+	is_sprinting = active and not is_crouching and move_input.y < -0.1 and Input.is_action_pressed("sprint")
 	if is_crouching:
 		speed = crouch_speed
 	elif is_sprinting:
@@ -128,6 +129,11 @@ func _process(delta: float) -> void:
 	flashlight.global_transform = Transform3D(Basis(rot), target.origin)
 
 
+## True when the player is allowed to move, look and interact right now.
+func can_act() -> bool:
+	return input_enabled and _is_mouse_captured()
+
+
 func toggle_flashlight() -> void:
 	set_flashlight(not flashlight.visible)
 
@@ -147,9 +153,9 @@ func _look(relative: Vector2) -> void:
 	head.rotation.x = deg_to_rad(_pitch)
 
 
-func _update_crouch(delta: float, can_act: bool) -> void:
+func _update_crouch(delta: float, active: bool) -> void:
 	var want := is_crouching
-	if can_act:
+	if active:
 		want = _crouch_toggled if Settings.crouch_toggle else Input.is_action_pressed("crouch")
 	# Never stand up into a ceiling.
 	if not want and _height < stand_height and not _has_headroom(stand_height - _height):

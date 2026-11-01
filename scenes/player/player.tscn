@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://scripts/interaction/interactor.gd" id="2_interactor"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 resource_local_to_scene = true
@@ -8,6 +9,7 @@ radius = 0.3
 height = 1.75
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
+collision_layer = 2
 floor_snap_length = 0.3
 script = ExtResource("1_player")
 
@@ -23,6 +25,9 @@ current = true
 fov = 75.0
 near = 0.05
 far = 200.0
+
+[node name="Interactor" type="RayCast3D" parent="Head/Camera3D"]
+script = ExtResource("2_interactor")
 
 [node name="Flashlight" type="SpotLight3D" parent="."]
 light_color = Color(1, 0.94, 0.82, 1)

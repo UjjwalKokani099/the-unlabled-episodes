@@ -14,6 +14,16 @@ Useful headless commands (run from project root):
 - Run a scene for N frames and capture errors:
   `<console exe> --path . --quit-after 300 res://scenes/test/<scene>.tscn`
 - Syntax-check a script: `<console exe> --headless --path . --check-only --script res://path.gd`
+- Run all automated tests: `bash tests/run_tests.sh` (opens a window per test; mouse capture
+  needs a real window). Tests are SceneTree scripts in `tests/test_*.gd` that print PASS/FAIL.
+  They must not use class_name types or autoload names at compile time (untyped `var p`):
+  `--script` compiles them before autoloads are registered.
+
+## Gotchas found so far
+- AnimatableBody3D only syncs collision when its *own* transform changes — make the moving
+  node the body itself (see `scenes/props/door.tscn`), don't rotate a parent of it.
+- Physics layers: 1 world, 2 player, 3 interactable (value 4). The Interactor ray masks 1|4.
+- HUD messages from anywhere: `get_tree().call_group("hud", "show_message", "text")`.
 
 ## Layout
 - `scenes/`   hub, menus, test scenes

@@ -3,6 +3,10 @@
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
 [ext_resource type="Shader" path="res://shaders/debug_grid.gdshader" id="2_grid"]
 [ext_resource type="Script" path="res://scripts/ui/debug_overlay.gd" id="3_overlay"]
+[ext_resource type="PackedScene" path="res://scenes/props/door.tscn" id="4_door"]
+[ext_resource type="PackedScene" path="res://scenes/props/light_switch.tscn" id="5_switch"]
+[ext_resource type="PackedScene" path="res://scenes/props/vhs_tape.tscn" id="6_tape"]
+[ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="7_hud"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_floor"]
 render_priority = 0
@@ -139,6 +143,23 @@ material = SubResource("ShaderMaterial_prop")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -11.6)
 size = Vector3(6, 2, 0.6)
 material = SubResource("ShaderMaterial_prop")
+
+[node name="Door" parent="." instance=ExtResource("4_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.45, 0, -4)
+
+[node name="LockedDoor" parent="." instance=ExtResource("4_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45, 0, -11.95)
+locked = true
+locked_message = "Locked from the other side."
+
+[node name="LightSwitch" parent="." instance=ExtResource("5_switch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1.4, 1.407)
+light_paths = Array[NodePath]([NodePath("../RoomLight")])
+
+[node name="VHSTape" parent="." instance=ExtResource("6_tape")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1.5, -9)
+
+[node name="HUD" parent="." instance=ExtResource("7_hud")]
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
