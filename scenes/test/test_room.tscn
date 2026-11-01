@@ -18,6 +18,8 @@
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/knock.wav" id="16_knock"]
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/door_slam.wav" id="17_slam"]
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/sting.wav" id="18_sting"]
+[ext_resource type="PackedScene" path="res://ui/hud/camcorder.tscn" id="19_camcorder"]
+[ext_resource type="Script" path="res://scripts/events/camera_reaction.gd" id="20_camera"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_floor"]
 render_priority = 0
@@ -300,6 +302,28 @@ targets = Array[NodePath]([NodePath("../../Player/Flashlight")])
 duration = 1.3
 on_event = &"left_storage"
 
+[node name="SlamShake" type="Node" parent="Scares"]
+script = ExtResource("20_camera")
+shake = 0.6
+glitch = 0.45
+glitch_duration = 0.6
+on_event = &"vhs_tape"
+delay = 1.5
+
+[node name="KnockGlitch" type="Node" parent="Scares"]
+script = ExtResource("20_camera")
+glitch = 0.25
+glitch_duration = 0.8
+on_event = &"entered_dark_room"
+delay = 1.8
+
+[node name="FigureGlitch" type="Node" parent="Scares"]
+script = ExtResource("20_camera")
+shake = 0.3
+glitch = 1.0
+glitch_duration = 1.4
+on_event = &"left_storage"
+
 [node name="FigureSting" type="Node" parent="Scares"]
 script = ExtResource("13_sound")
 on_event = &"left_storage"
@@ -308,19 +332,22 @@ on_event = &"left_storage"
 stream = ExtResource("18_sting")
 bus = &"SFX"
 
+[node name="Camcorder" parent="." instance=ExtResource("19_camcorder")]
+
 [node name="HUD" parent="." instance=ExtResource("7_hud")]
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
 
 [node name="DebugOverlay" type="CanvasLayer" parent="."]
+layer = 20
 script = ExtResource("3_overlay")
 
 [node name="Label" type="Label" parent="DebugOverlay"]
-offset_left = 12.0
-offset_top = 10.0
-offset_right = 812.0
-offset_bottom = 130.0
+offset_left = 70.0
+offset_top = 96.0
+offset_right = 870.0
+offset_bottom = 236.0
 theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4

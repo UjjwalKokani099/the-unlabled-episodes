@@ -1,6 +1,7 @@
 extends CanvasLayer
 ## Test-room helper text in the top-left corner.
 ## [ and ] change mouse sensitivity (saved, so it survives a restart). F3 hides the text.
+## F4 cycles the VHS screen effect: full / half / off.
 
 const ACTIONS: Array[StringName] = [
 	&"move_forward", &"move_back", &"move_left", &"move_right",
@@ -41,6 +42,7 @@ func _process(_delta: float) -> void:
 			_yn(player.is_on_floor()), _yn(player.flashlight.visible)])
 	lines.append("events: %s" % ("-" if _recent_events.is_empty() else " > ".join(_recent_events)))
 	lines.append("mouse sensitivity %.2f   ([ / ] to change)" % Settings.mouse_sensitivity)
+	lines.append("screen effects %.1f   (F4 to cycle)" % Settings.screen_effects)
 	lines.append("Esc: free mouse   click: recapture   F3: hide this text")
 	_label.text = "\n".join(lines)
 
@@ -56,6 +58,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			Settings.mouse_sensitivity += 0.02
 		KEY_F3:
 			_label.visible = not _label.visible
+		KEY_F4:
+			Settings.screen_effects = 0.5 if Settings.screen_effects > 0.75 else (0.0 if Settings.screen_effects > 0.25 else 1.0)
 
 
 func _yn(value: bool) -> String:

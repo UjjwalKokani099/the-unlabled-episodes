@@ -95,3 +95,4 @@ pause={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+scaling_3d/scale=0.75

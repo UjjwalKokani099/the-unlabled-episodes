@@ -96,5 +96,7 @@ func _initialize() -> void:
 	check(not figure.visible, "figure gone after 1.3 s")
 	check(flashlight.visible and is_equal_approx(flashlight.light_energy, torch_energy), "flashlight back to normal")
 
+	room.queue_free()  # stop sounds before quitting (playing audio at exit reports leaks)
+	await frames(3)
 	print("RESULT fails=", fails)
 	quit(fails)

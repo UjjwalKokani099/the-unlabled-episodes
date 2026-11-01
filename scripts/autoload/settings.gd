@@ -20,7 +20,7 @@ const AUDIO_BUSES := {
 
 ## Every persisted key. Add new settings here AND as a var below.
 const KEYS: Array[StringName] = [
-	&"mouse_sensitivity", &"invert_y", &"fov", &"crouch_toggle", &"head_bob",
+	&"mouse_sensitivity", &"invert_y", &"fov", &"crouch_toggle", &"head_bob", &"screen_effects",
 	&"master_volume", &"music_volume", &"sfx_volume", &"ambience_volume",
 ]
 
@@ -52,10 +52,17 @@ var crouch_toggle: bool = false:
 		crouch_toggle = value
 		_on_value_set(&"crouch_toggle")
 
+## Also controls the camera's hand-held sway.
 var head_bob: bool = true:
 	set(value):
 		head_bob = value
 		_on_value_set(&"head_bob")
+
+## VHS look strength: 0 = clean picture, 1 = full effect.
+var screen_effects: float = 1.0:
+	set(value):
+		screen_effects = clampf(value, 0.0, 1.0)
+		_on_value_set(&"screen_effects")
 
 # Volumes are linear 0.0 (silent) .. 1.0 (full).
 var master_volume: float = 0.8:

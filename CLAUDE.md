@@ -41,6 +41,16 @@ Useful headless commands (run from project root):
 - Flicker lights by `light_energy`, never `visible` (visible = the player's on/off state).
 - Placeholder SFX come from `python tools/gen_placeholder_sfx.py`; replace files in place.
 
+## Camera / screen
+- Every level instances `ui/hud/camcorder.tscn` (OSD on layer 2, VHS shader on layer 3) and
+  `ui/hud/hud.tscn` (layer 10, stays crisp above the VHS effect). Debug overlay = layer 20.
+- Shake: `call_group("camera_shake", "add_trauma", x)`; glitch: `call_group("camcorder",
+  "glitch", amount, seconds)`; or a `CameraReaction` node. CameraShake owns the camera's
+  local rotation — don't set Camera3D.rotation elsewhere.
+- 3D renders at 75% (`rendering/scaling_3d/scale`) for the lo-fi look and performance.
+- Tests: frame rate is uncapped under `--script`; wait real seconds for timing checks, and
+  free the level before quit() (sounds still playing at exit report leaks).
+
 ## Layout
 - `scenes/`   hub, menus, test scenes
 - `scripts/`  autoload (singletons), player, interaction, objectives, events, ui
