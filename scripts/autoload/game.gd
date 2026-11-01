@@ -18,6 +18,7 @@ signal transition_finished
 const CHAPTER_LIST_PATH := "res://chapters/chapter_list.tres"
 const SAVE_VERSION := 1
 const MAIN_MENU_PATH := "res://scenes/menus/main_menu.tscn"
+const INTRO_PATH := "res://scenes/intro/intro.tscn"
 const TITLE_CARD_SECONDS := 1.4
 ## Hold time for a plain fade (no title text).
 const PLAIN_FADE_SECONDS := 0.25
@@ -181,11 +182,39 @@ func go_to_main_menu() -> void:
 	_change_level(MAIN_MENU_PATH, "■ STOP", PackedStringArray())
 
 
-## Wipes the save file and starts in the hub.
+## Wipes the save file and starts again with the intro (or the hub if there is none).
 func new_game() -> void:
 	if _transitioning:
 		return
 	delete_save()
+	if ResourceLoader.exists(INTRO_PATH):
+		play_intro()
+	else:
+		enter_hub()
+
+
+# --- Intro (flea market -> home) ---------------------------------------------
+
+## True only on the very first launch (no save yet, intro never seen).
+func should_autoplay_intro() -> bool:
+	return not _save.get("intro_seen", false) and ResourceLoader.exists(INTRO_PATH)
+
+
+func mark_intro_seen() -> void:
+	_save["intro_seen"] = true
+	_write_save()
+
+
+func play_intro() -> void:
+	if _transitioning:
+		return
+	_clear_chapter_state()
+	_change_level(INTRO_PATH, "PLAY ►", PackedStringArray())
+
+
+## Called by the intro when it ends or is skipped.
+func finish_intro() -> void:
+	mark_intro_seen()
 	enter_hub()
 
 
@@ -221,6 +250,7 @@ func load_save() -> void:
 	if data is Dictionary:
 		_save.completed = data.get("completed", [])
 		_save.checkpoint = data.get("checkpoint", {})
+		_save.intro_seen = data.get("intro_seen", false)
 	else:
 		push_warning("Game: save file unreadable, starting fresh")
 

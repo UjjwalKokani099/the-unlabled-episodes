@@ -22,6 +22,7 @@ const AUDIO_BUSES := {
 const KEYS: Array[StringName] = [
 	&"mouse_sensitivity", &"invert_y", &"fov", &"crouch_toggle", &"head_bob", &"screen_effects",
 	&"brightness", &"fullscreen", &"graphics_quality", &"show_fps",
+	&"subtitles", &"subtitle_size", &"key_bindings",
 	&"master_volume", &"music_volume", &"sfx_volume", &"ambience_volume",
 ]
 
@@ -86,6 +87,28 @@ var show_fps: bool = false:
 	set(value):
 		show_fps = value
 		_on_value_set(&"show_fps")
+
+var subtitles: bool = true:
+	set(value):
+		subtitles = value
+		_on_value_set(&"subtitles")
+
+## 0 = small, 1 = medium, 2 = large.
+var subtitle_size: int = 1:
+	set(value):
+		subtitle_size = clampi(value, 0, 2)
+		_on_value_set(&"subtitle_size")
+
+## Rebound keyboard keys: action name -> physical keycode. Only changed actions are stored.
+var key_bindings: Dictionary = {}:
+	set(value):
+		key_bindings = value
+		_apply_bindings()
+		_on_value_set(&"key_bindings")
+
+## Actions the player may rebind (shown in Settings > Controls).
+const REBINDABLE: Array[StringName] = [&"move_forward", &"move_back", &"move_left", &"move_right",
+	&"sprint", &"crouch", &"flashlight", &"interact", &"objectives"]
 
 # Volumes are linear 0.0 (silent) .. 1.0 (full).
 var master_volume: float = 0.8:
@@ -191,3 +214,31 @@ func _apply_fullscreen() -> void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	elif not fullscreen and is_full:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+
+
+## Bind `action` to one keyboard key (replacing its keyboard keys; other devices kept).
+func rebind(action: StringName, physical_keycode: Key) -> void:
+	var copy := key_bindings.duplicate()
+	copy[String(action)] = int(physical_keycode)
+	key_bindings = copy
+
+
+## The first keyboard key bound to an action, as text for the UI.
+func key_name(action: StringName) -> String:
+	for event in InputMap.action_get_events(action):
+		var key := event as InputEventKey
+		if key:
+			return OS.get_keycode_string(DisplayServer.keyboard_get_keycode_from_physical(key.physical_keycode))
+	return "-"
+
+
+func _apply_bindings() -> void:
+	for action: String in key_bindings:
+		if not InputMap.has_action(action):
+			continue
+		for event in InputMap.action_get_events(action):
+			if event is InputEventKey:
+				InputMap.action_erase_event(action, event)
+		var key := InputEventKey.new()
+		key.physical_keycode = int(key_bindings[action])
+		InputMap.action_add_event(action, key)

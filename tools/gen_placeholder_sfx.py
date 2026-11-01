@@ -143,6 +143,23 @@ def fan_hum(rng):
     return out
 
 
+def vcr_click(rng):
+    n = int(RATE * 0.09)
+    noise = [rng.uniform(-1, 1) for _ in range(n)]
+    return [(noise[i] * 0.7 + math.sin(2 * math.pi * 1800 * i / RATE) * 0.5) * math.exp(-i / RATE * 90) for i in range(n)]
+
+
+def room_hum(rng):
+    n = int(RATE * 4.0)
+    air = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.02)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        edge = min(t / 0.02, 1.0, (4.0 - t) / 0.02)
+        out.append(edge * (0.35 * math.sin(2 * math.pi * 50 * t) + 0.15 * math.sin(2 * math.pi * 100 * t) + air[i] * 3.0))
+    return out
+
+
 def write(name, samples):
     peak = max(abs(s) for s in samples) or 1.0
     OUT.mkdir(parents=True, exist_ok=True)
@@ -170,6 +187,8 @@ def main():
     write("ui_select.wav", select)
     write("doorbell.wav", doorbell(rng))
     write("fan_hum.wav", fan_hum(rng))
+    write("vcr_click.wav", vcr_click(rng))
+    write("room_hum.wav", room_hum(rng))
 
 
 if __name__ == "__main__":
