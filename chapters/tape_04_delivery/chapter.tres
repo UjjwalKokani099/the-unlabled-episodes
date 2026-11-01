@@ -6,6 +6,6 @@
 script = ExtResource("1_data")
 id = &"tape_04_delivery"
 title = "TAPE 04"
-subtitle = "THE DELIVERY"
+subtitle = "THE LAST DELIVERY"
 scene_path = ""
-start_datetime = "1998-06-30T01:31:00"
+start_datetime = "2009-01-09T00:50:00"

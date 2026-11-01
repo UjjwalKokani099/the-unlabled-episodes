@@ -73,6 +73,17 @@ Useful headless commands (run from project root):
   focus, beeps). Pause/menus use process_mode Always; Game pauses the tree during loads.
 - Brightness is a gamma overlay owned by the Settings autoload (canvas layer 5).
 
+## Graphics / performance (target: 60 FPS at 1080p on the RTX 3050 Ti laptop)
+- `Graphics` autoload applies Low/Medium/High (`PRESETS` in scripts/autoload/graphics.gd):
+  render scale, FXAA, LOD threshold, shadow quality, SSAO/SSIL/volumetric-fog quality.
+- Levels author their WorldEnvironment with the features they want (AgX tonemap, SSAO,
+  SSIL, glow, volumetric fog); presets only switch features off, never add them.
+- Benchmark: `<console exe> --path . --script res://tools/benchmark.gd -- <scene> [sec]`
+  (fullscreen, VSync off; visits Marker3Ds in group `benchmark_points`). Run it after every
+  visual change and report avg / 1% low / GPU ms per preset.
+- Lighting plan: baked LightmapGI for static light (owner presses Bake in the editor),
+  real-time lights only for flicker / flashlight / power cut.
+
 ## Camera / screen
 - Every level instances `ui/hud/camcorder.tscn` (OSD on layer 2, VHS shader on layer 3) and
   `ui/hud/hud.tscn` (layer 10, stays crisp above the VHS effect). Debug overlay = layer 20.

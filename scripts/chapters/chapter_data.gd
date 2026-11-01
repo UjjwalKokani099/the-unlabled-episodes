@@ -11,6 +11,7 @@ extends Resource
 ## The level scene. Empty = not built yet (can't be started).
 @export_file("*.tscn") var scene_path: String
 ## Camcorder date/time when the tape starts, "YYYY-MM-DDTHH:MM:SS".
+## Empty = the player's real local time right now (the final tape is "tonight").
 @export var start_datetime: String = "1998-10-31T23:42:00"
 
 

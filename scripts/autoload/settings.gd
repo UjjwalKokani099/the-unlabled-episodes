@@ -21,7 +21,7 @@ const AUDIO_BUSES := {
 ## Every persisted key. Add new settings here AND as a var below.
 const KEYS: Array[StringName] = [
 	&"mouse_sensitivity", &"invert_y", &"fov", &"crouch_toggle", &"head_bob", &"screen_effects",
-	&"brightness", &"fullscreen",
+	&"brightness", &"fullscreen", &"graphics_quality", &"show_fps",
 	&"master_volume", &"music_volume", &"sfx_volume", &"ambience_volume",
 ]
 
@@ -75,6 +75,17 @@ var fullscreen: bool = false:
 	set(value):
 		fullscreen = value
 		_on_value_set(&"fullscreen")
+
+## 0 = Low, 1 = Medium, 2 = High. Applied by the Graphics autoload.
+var graphics_quality: int = 1:
+	set(value):
+		graphics_quality = clampi(value, 0, 2)
+		_on_value_set(&"graphics_quality")
+
+var show_fps: bool = false:
+	set(value):
+		show_fps = value
+		_on_value_set(&"show_fps")
 
 # Volumes are linear 0.0 (silent) .. 1.0 (full).
 var master_volume: float = 0.8:

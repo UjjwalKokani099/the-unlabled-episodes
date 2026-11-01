@@ -14,6 +14,8 @@ const ROWS: Array[Dictionary] = [
 	{"key": &"crouch_toggle", "label": "Toggle crouch"},
 	{"key": &"head_bob", "label": "Head bob + sway"},
 	{"key": &"screen_effects", "label": "VHS effect", "min": 0.0, "max": 1.0, "step": 0.05, "percent": true},
+	{"key": &"graphics_quality", "label": "Graphics", "min": 0.0, "max": 2.0, "step": 1.0, "names": ["LOW", "MEDIUM", "HIGH"]},
+	{"key": &"show_fps", "label": "Show FPS"},
 	{"key": &"brightness", "label": "Brightness", "min": 0.6, "max": 1.6, "step": 0.05, "fmt": "%.2f"},
 	{"key": &"fullscreen", "label": "Fullscreen"},
 	{"key": &"master_volume", "label": "Master volume", "min": 0.0, "max": 1.0, "step": 0.05, "percent": true},
@@ -86,7 +88,8 @@ func _add_row(row: Dictionary) -> void:
 		slider.custom_minimum_size = Vector2(300, 26)
 		slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		slider.value_changed.connect(func(value: float) -> void:
-			Settings.set(key, value)
+			# Whole-number settings (e.g. the graphics preset) must stay ints.
+			Settings.set(key, int(value) if Settings.get(key) is int else value)
 			_update_value_label(row))
 		controls[key] = slider
 		_rows.add_child(slider)
@@ -106,6 +109,8 @@ func _update_value_label(row: Dictionary) -> void:
 	var text: String
 	if value is bool:
 		text = "ON" if value else "OFF"
+	elif row.has("names"):
+		text = row.names[int(value)]
 	elif row.get("percent", false):
 		text = "%d%%" % roundi(value * 100.0)
 	else:

@@ -33,7 +33,11 @@ func _ready() -> void:
 	if Game.current_chapter:
 		start_datetime = Game.current_chapter.start_datetime
 		elapsed = Game.tape_time_at_load
-	_start_unix = Time.get_unix_time_from_datetime_string(start_datetime)
+	if start_datetime.is_empty():
+		var bias_minutes: int = Time.get_time_zone_from_system().get("bias", 0)
+		_start_unix = int(Time.get_unix_time_from_system()) + bias_minutes * 60
+	else:
+		_start_unix = Time.get_unix_time_from_datetime_string(start_datetime)
 	_update_clock()
 
 
