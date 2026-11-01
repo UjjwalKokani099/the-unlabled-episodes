@@ -41,6 +41,18 @@ Useful headless commands (run from project root):
 - Flicker lights by `light_energy`, never `visible` (visible = the player's on/off state).
 - Placeholder SFX come from `python tools/gen_placeholder_sfx.py`; replace files in place.
 
+## Chapters / saving (Game autoload)
+- `chapters/chapter_list.tres` lists the tapes in order (+ debug chapters, hub scene).
+  Each tape has `chapters/<tape>/chapter.tres` (title, scene_path, camcorder start time);
+  empty scene_path = not built yet. Test chapter: `scenes/test/test_chapter.tres`.
+- `Game.start_chapter(id)`, `load_checkpoint()`, `restart_chapter()`, `complete_chapter()`
+  (end a level with a MethodReaction targeting `/root/Game`). Save: `user://save.json`.
+- A level needs: Player, HUD, Camcorder, ObjectiveLoader, and `Checkpoint` areas (origin on
+  the floor, respawn faces -Z; one at the spawn so Continue works immediately).
+- Checkpoint = Events counts + Game flags + camcorder time. Anything that must survive a
+  reload is either derived from Events counts or stored with `Game.set_flag()` (Pickups do).
+  While objectives rebuild, `Events.replaying` is true and EventReactions ignore events.
+
 ## Camera / screen
 - Every level instances `ui/hud/camcorder.tscn` (OSD on layer 2, VHS shader on layer 3) and
   `ui/hud/hud.tscn` (layer 10, stays crisp above the VHS effect). Debug overlay = layer 20.

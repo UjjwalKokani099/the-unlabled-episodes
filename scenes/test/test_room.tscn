@@ -20,6 +20,7 @@
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/sting.wav" id="18_sting"]
 [ext_resource type="PackedScene" path="res://ui/hud/camcorder.tscn" id="19_camcorder"]
 [ext_resource type="Script" path="res://scripts/events/camera_reaction.gd" id="20_camera"]
+[ext_resource type="Script" path="res://scripts/chapters/checkpoint.gd" id="21_checkpoint"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_floor"]
 render_priority = 0
@@ -67,6 +68,12 @@ radius = 0.24
 height = 1.85
 radial_segments = 12
 rings = 4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_checkpoint"]
+size = Vector3(2.4, 3, 1.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit"]
+size = Vector3(8, 3, 2)
 
 [node name="TestRoom" type="Node3D"]
 
@@ -331,6 +338,51 @@ on_event = &"left_storage"
 [node name="Sting" type="AudioStreamPlayer" parent="Scares/FigureSting"]
 stream = ExtResource("18_sting")
 bus = &"SFX"
+
+[node name="ExitZone" type="Area3D" parent="Scares"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 11)
+script = ExtResource("11_zone")
+event_id = &"test_exit"
+armed_by = &"collect_batteries"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Scares/ExitZone"]
+shape = SubResource("BoxShape3D_exit")
+
+[node name="EndTape" type="Node" parent="Scares"]
+script = ExtResource("15_method")
+targets = Array[NodePath]([NodePath("/root/Game")])
+method = &"complete_chapter"
+on_event = &"test_exit"
+delay = 0.5
+
+[node name="Checkpoints" type="Node3D" parent="."]
+
+[node name="Start" type="Area3D" parent="Checkpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
+script = ExtResource("21_checkpoint")
+checkpoint_id = &"start"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoints/Start"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_checkpoint")
+
+[node name="DarkRoom" type="Area3D" parent="Checkpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -5.5)
+script = ExtResource("21_checkpoint")
+checkpoint_id = &"dark_room"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoints/DarkRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_checkpoint")
+
+[node name="Storage" type="Area3D" parent="Checkpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -9.5)
+script = ExtResource("21_checkpoint")
+checkpoint_id = &"storage"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoints/Storage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_checkpoint")
 
 [node name="Camcorder" parent="." instance=ExtResource("19_camcorder")]
 

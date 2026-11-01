@@ -30,6 +30,9 @@ var _rec_on: bool = true
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if Game.current_chapter:
+		start_datetime = Game.current_chapter.start_datetime
+		elapsed = Game.tape_time_at_load
 	_start_unix = Time.get_unix_time_from_datetime_string(start_datetime)
 	_update_clock()
 

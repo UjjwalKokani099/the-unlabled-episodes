@@ -25,7 +25,7 @@ func trigger() -> void:
 
 
 func _on_event(id: StringName) -> void:
-	if id != on_event or (once and _has_reacted):
+	if id != on_event or (once and _has_reacted) or Events.replaying:
 		return
 	_has_reacted = true
 	if delay > 0.0:

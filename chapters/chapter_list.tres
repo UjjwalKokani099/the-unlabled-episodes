@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ChapterList" format=3]
+
+[ext_resource type="Script" path="res://scripts/chapters/chapter_list.gd" id="1_list"]
+[ext_resource type="Script" path="res://scripts/chapters/chapter_data.gd" id="2_data"]
+[ext_resource type="Resource" path="res://chapters/tape_01_watchman/chapter.tres" id="t1"]
+[ext_resource type="Resource" path="res://chapters/tape_02_tollbooth/chapter.tres" id="t2"]
+[ext_resource type="Resource" path="res://chapters/tape_03_hotel/chapter.tres" id="t3"]
+[ext_resource type="Resource" path="res://chapters/tape_04_delivery/chapter.tres" id="t4"]
+[ext_resource type="Resource" path="res://chapters/tape_05_final/chapter.tres" id="t5"]
+[ext_resource type="Resource" path="res://scenes/test/test_chapter.tres" id="dbg"]
+
+[resource]
+script = ExtResource("1_list")
+chapters = Array[ExtResource("2_data")]([ExtResource("t1"), ExtResource("t2"), ExtResource("t3"), ExtResource("t4"), ExtResource("t5")])
+debug_chapters = Array[ExtResource("2_data")]([ExtResource("dbg")])

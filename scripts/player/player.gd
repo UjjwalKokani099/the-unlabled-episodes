@@ -129,6 +129,16 @@ func _process(delta: float) -> void:
 	flashlight.global_transform = Transform3D(Basis(rot), target.origin)
 
 
+## Puts the player at a spot (feet) facing the -Z of `facing` basis; resets look and speed.
+func teleport(spot: Transform3D) -> void:
+	global_position = spot.origin
+	var forward := -spot.basis.z
+	rotation.y = atan2(-forward.x, -forward.z)
+	_pitch = 0.0
+	head.rotation.x = 0.0
+	velocity = Vector3.ZERO
+
+
 ## True when the player is allowed to move, look and interact right now.
 func can_act() -> bool:
 	return input_enabled and _is_mouse_captured()

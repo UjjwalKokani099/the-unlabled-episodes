@@ -125,10 +125,12 @@ func _initialize() -> void:
 		if n < 3:
 			check(objectives.get_progress(&"collect_batteries") == n, "battery %d (prompt '%s', progress %d)" % [n, prompt, objectives.get_progress(&"collect_batteries")])
 	check(objectives.is_completed(&"collect_batteries"), "all 3 batteries collected")
+	check(active_ids() == ["return_to_start"], "-> return_to_start (%s)" % [active_ids()])
+	check(panel_lines().has("Collect batteries  - done"), "panel shows batteries done (%s)" % [panel_lines()])
+	await create_timer(3.0).timeout
+	check(panel_lines() == ["Go back to where you started"], "done lines expire (%s)" % [panel_lines()])
+	events.fire(&"test_exit")
 	check(finished[0] == 1, "test room objectives all completed")
-	check(panel_lines().back() == "Collect batteries  - done", "panel shows final done line (%s)" % [panel_lines()])
-	await frames(200)
-	check(panel_lines().is_empty(), "done lines expire and panel empties (%s)" % [panel_lines()])
 
 	print("RESULT fails=", fails)
 	quit(fails)

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ChapterData" format=3]
+
+[ext_resource type="Script" path="res://scripts/chapters/chapter_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"tape_02_tollbooth"
+title = "TAPE 02"
+subtitle = "THE TOLLBOOTH"
+scene_path = ""
+start_datetime = "1998-01-09T03:47:00"

@@ -1,10 +1,10 @@
 class_name ObjectiveLoader
 extends Node
 ## Drop into a level to start its objectives when the level loads.
+## Objectives rebuild their progress from Events counts, so after a checkpoint load
+## (Game restores the counts first) they pick up exactly where the player was.
 
 @export var objective_set: ObjectiveSet
-## Clear remembered Events first, so a fresh run of the level starts clean.
-@export var reset_events: bool = true
 
 
 func _ready() -> void:
@@ -13,7 +13,8 @@ func _ready() -> void:
 
 
 func _begin() -> void:
-	if reset_events:
-		Events.reset()
-	if objective_set:
-		Objectives.begin(objective_set)
+	if objective_set == null:
+		return
+	Events.replaying = true  # re-completed objectives must not re-trigger scares
+	Objectives.begin(objective_set)
+	Events.replaying = false

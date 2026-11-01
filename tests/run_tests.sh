@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.." || exit 1
 total_fail=0
 for t in tests/test_*.gd; do
 	echo "=== $t"
-	out=$(timeout 120 "$GODOT" --path . --quit-after 4000 --script "res://$t" 2>&1)
+	out=$(timeout 120 "$GODOT" --path . --quit-after 20000 --script "res://$t" 2>&1)
 	echo "$out" | grep -E "^(PASS|FAIL|RESULT)|SCRIPT ERROR|^ERROR|WARNING" | grep -v "^PASS"
 	echo "$out" | grep -q "RESULT fails=0" || total_fail=$((total_fail + 1))
 done

@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Settings="*res://scripts/autoload/settings.gd"
 Events="*res://scripts/autoload/events.gd"
 Objectives="*res://scripts/autoload/objectives.gd"
+Game="*res://scripts/autoload/game.gd"
 
 [display]
 

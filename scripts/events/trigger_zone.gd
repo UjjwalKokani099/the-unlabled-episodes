@@ -7,7 +7,8 @@ signal triggered
 
 ## Events id fired on enter.
 @export var event_id: StringName
-## Fire only the first time.
+## Fire only the first time (also: not again if `event_id` already fired, e.g. before
+## a checkpoint load, or from another zone with the same id).
 @export var once: bool = true
 ## If set, the zone does nothing until this Events id has fired (e.g. &"vhs_tape").
 ## If the player is already inside when it arms, it fires right away.
@@ -44,7 +45,7 @@ func _on_event(id: StringName) -> void:
 
 
 func _try_fire() -> void:
-	if not is_armed() or (once and _has_fired):
+	if not is_armed() or (once and (_has_fired or Events.has_fired(event_id))):
 		return
 	_has_fired = true
 	triggered.emit()

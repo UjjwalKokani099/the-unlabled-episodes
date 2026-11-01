@@ -11,6 +11,10 @@ extends Node
 
 signal fired(id: StringName)
 
+## True while a checkpoint load rebuilds state (objectives re-completing etc.).
+## Scares (EventReaction) ignore events fired while this is set.
+var replaying: bool = false
+
 var _counts: Dictionary = {}  # StringName -> int
 
 
@@ -29,6 +33,21 @@ func has_fired(id: StringName) -> bool:
 	return count(id) > 0
 
 
-## Forget everything (call when a chapter starts).
+## Forget everything (Game calls this when a chapter starts).
 func reset() -> void:
 	_counts.clear()
+
+
+## Plain copy of the counts, for save files.
+func snapshot() -> Dictionary:
+	var copy := {}
+	for id: StringName in _counts:
+		copy[String(id)] = _counts[id]
+	return copy
+
+
+## Replace the counts with a saved snapshot (emits nothing).
+func restore(saved: Dictionary) -> void:
+	_counts.clear()
+	for key: String in saved:
+		_counts[StringName(key)] = int(saved[key])

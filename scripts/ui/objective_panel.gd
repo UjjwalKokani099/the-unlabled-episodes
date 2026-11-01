@@ -44,6 +44,9 @@ func _on_changed() -> void:
 
 
 func _on_completed(objective: ObjectiveData) -> void:
+	if Events.replaying:  # restored from a checkpoint, not newly done
+		_rebuild()
+		return
 	_recently_done.append(objective)
 	_done_left[objective] = DONE_LINGER_SECONDS
 	_on_changed()

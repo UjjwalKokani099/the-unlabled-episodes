@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ChapterData" format=3]
+
+[ext_resource type="Script" path="res://scripts/chapters/chapter_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"tape_01_watchman"
+title = "TAPE 01"
+subtitle = "THE WATCHMAN"
+scene_path = ""
+start_datetime = "1997-11-14T02:13:00"
