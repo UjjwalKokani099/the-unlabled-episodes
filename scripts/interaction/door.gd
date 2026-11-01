@@ -15,9 +15,12 @@ signal closed
 @export var unlock_event: StringName
 ## Events id fired the first time the door opens (e.g. &"storage_opened").
 @export var opened_event: StringName
+## Played (from the door) when slam() actually bangs it shut.
+@export var slam_sound: AudioStream
 
 var is_open: bool = false
 var _tween: Tween
+var _slam_player: AudioStreamPlayer3D
 
 ## The hinge is the physics body itself: AnimatableBody3D only syncs its collision
 ## when its own transform changes, not when a parent moves.
@@ -27,6 +30,13 @@ var _tween: Tween
 
 func _ready() -> void:
 	interactable.interacted.connect(_on_interacted)
+	if slam_sound:
+		_slam_player = AudioStreamPlayer3D.new()
+		_slam_player.stream = slam_sound
+		_slam_player.bus = &"SFX"
+		_slam_player.unit_size = 8.0
+		_slam_player.position = Vector3(0.55, 1.1, 0.0)
+		add_child(_slam_player)
 	if unlock_event != &"":
 		Events.fired.connect(_on_event)
 		if Events.has_fired(unlock_event):
@@ -53,6 +63,27 @@ func close() -> void:
 	is_open = false
 	_update_prompt()
 	closed.emit()
+
+
+## Bangs the door shut fast (a scare). Optionally locks it afterwards.
+## Returns true if it was open (so callers can skip a slam sound otherwise).
+func slam(lock_after: bool = false) -> bool:
+	var was_open := is_open
+	if was_open:
+		if _slam_player:
+			_slam_player.play()
+		_new_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN) \
+			.tween_property(hinge, "rotation:y", 0.0, 0.18)
+		is_open = false
+		_update_prompt()
+		closed.emit()
+	if lock_after:
+		locked = true
+	return was_open
+
+
+func lock() -> void:
+	locked = true
 
 
 func unlock() -> void:

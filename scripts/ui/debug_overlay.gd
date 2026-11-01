@@ -9,6 +9,18 @@ const ACTIONS: Array[StringName] = [
 
 @onready var _label: Label = $Label
 
+var _recent_events := PackedStringArray()
+
+
+func _ready() -> void:
+	Events.fired.connect(_on_event)
+
+
+func _on_event(id: StringName) -> void:
+	_recent_events.append(String(id))
+	if _recent_events.size() > 4:
+		_recent_events.remove_at(0)
+
 
 func _process(_delta: float) -> void:
 	if not _label.visible:
@@ -27,6 +39,7 @@ func _process(_delta: float) -> void:
 		lines.append("speed %.1f m/s   crouch %s   sprint %s   on floor %s   flashlight %s" % [
 			ground_speed, _yn(player.is_crouching), _yn(player.is_sprinting),
 			_yn(player.is_on_floor()), _yn(player.flashlight.visible)])
+	lines.append("events: %s" % ("-" if _recent_events.is_empty() else " > ".join(_recent_events)))
 	lines.append("mouse sensitivity %.2f   ([ / ] to change)" % Settings.mouse_sensitivity)
 	lines.append("Esc: free mouse   click: recapture   F3: hide this text")
 	_label.text = "\n".join(lines)

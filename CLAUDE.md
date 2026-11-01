@@ -34,6 +34,12 @@ Useful headless commands (run from project root):
   loaded by an `ObjectiveLoader` node. Each objective: `complete_on` event, `required`
   count, `starts_after` objective id.
 - Props react to events via exports, e.g. Door `unlock_event = &"find_tape"`.
+- Scares = `TriggerZone` (fires `event_id` on player enter; `armed_by` gates it) plus
+  `EventReaction` nodes listening to that id with their own `delay`: FlickerReaction,
+  SoundReaction, VisibilityReaction, MethodReaction (calls any method, e.g. Door `slam`).
+  Example: the `Scares` node in `scenes/test/test_room.tscn`.
+- Flicker lights by `light_energy`, never `visible` (visible = the player's on/off state).
+- Placeholder SFX come from `python tools/gen_placeholder_sfx.py`; replace files in place.
 
 ## Layout
 - `scenes/`   hub, menus, test scenes
