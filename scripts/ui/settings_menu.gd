@@ -13,6 +13,7 @@ const ROWS: Array[Dictionary] = [
 	{"tab": 0, "key": &"graphics_quality", "label": "Quality preset", "min": 0.0, "max": 2.0, "step": 1.0, "names": ["LOW", "MEDIUM", "HIGH"]},
 	{"tab": 0, "key": &"brightness", "label": "Brightness", "min": 0.6, "max": 1.6, "step": 0.05, "fmt": "%.2f"},
 	{"tab": 0, "key": &"screen_effects", "label": "VHS effect", "min": 0.0, "max": 1.0, "step": 0.05, "percent": true},
+	{"tab": 0, "key": &"ps1_mode", "label": "PS1 mode"},
 	{"tab": 0, "key": &"fov", "label": "Field of view", "min": 60.0, "max": 100.0, "step": 1.0, "fmt": "%d"},
 	{"tab": 0, "key": &"head_bob", "label": "Head bob + sway"},
 	{"tab": 0, "key": &"fullscreen", "label": "Fullscreen"},
@@ -29,7 +30,7 @@ const ROWS: Array[Dictionary] = [
 ]
 const ACTION_NAMES := {&"move_forward": "Move forward", &"move_back": "Move back", &"move_left": "Move left",
 	&"move_right": "Move right", &"sprint": "Sprint", &"crouch": "Crouch", &"flashlight": "Flashlight",
-	&"interact": "Use / interact", &"spot": "Pause tape (spot him)", &"objectives": "Show objectives"}
+	&"interact": "Use / interact", &"spot": "Pause tape (spot him)", &"night_vision": "Night vision", &"objectives": "Show objectives"}
 const ROW_FONT_SIZE := 20
 
 ## Setting key (or action name for rebind rows) -> its control, for refresh and tests.

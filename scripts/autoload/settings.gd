@@ -21,7 +21,7 @@ const AUDIO_BUSES := {
 ## Every persisted key. Add new settings here AND as a var below.
 const KEYS: Array[StringName] = [
 	&"mouse_sensitivity", &"invert_y", &"fov", &"crouch_toggle", &"head_bob", &"screen_effects",
-	&"brightness", &"fullscreen", &"graphics_quality", &"show_fps",
+	&"brightness", &"fullscreen", &"graphics_quality", &"show_fps", &"ps1_mode",
 	&"subtitles", &"subtitle_size", &"key_bindings",
 	&"master_volume", &"music_volume", &"sfx_volume", &"ambience_volume",
 ]
@@ -88,6 +88,13 @@ var show_fps: bool = false:
 		show_fps = value
 		_on_value_set(&"show_fps")
 
+## Optional PS1 look: ~480p pixelation + colour banding, vertex wobble, affine warping,
+## point-sampled textures (Graphics applies it; off = the default VHS-over-PBR look).
+var ps1_mode: bool = false:
+	set(value):
+		ps1_mode = value
+		_on_value_set(&"ps1_mode")
+
 var subtitles: bool = true:
 	set(value):
 		subtitles = value
@@ -108,7 +115,7 @@ var key_bindings: Dictionary = {}:
 
 ## Actions the player may rebind (shown in Settings > Controls).
 const REBINDABLE: Array[StringName] = [&"move_forward", &"move_back", &"move_left", &"move_right",
-	&"sprint", &"crouch", &"flashlight", &"interact", &"spot", &"objectives"]
+	&"sprint", &"crouch", &"flashlight", &"interact", &"spot", &"night_vision", &"objectives"]
 
 # Volumes are linear 0.0 (silent) .. 1.0 (full).
 var master_volume: float = 0.8:

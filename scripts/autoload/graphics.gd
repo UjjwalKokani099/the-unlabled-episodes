@@ -39,7 +39,11 @@ const PRESETS := {
 }
 
 const AUTHORED_META := &"authored_graphics"
+## 3D render scale in PS1 mode (1080p -> 540 lines, then pixelated to 480).
+const PS1_RENDER_SCALE := 0.5
 
+## Value of the global shader parameter `ps1_amount` (0 = off, 1 = PS1 mode).
+var ps1_amount: float = 0.0
 var _fps_label: Label
 var _fps_timer: float = 0.0
 
@@ -70,8 +74,13 @@ func apply() -> void:
 func _apply_global() -> void:
 	var p := current()
 	var viewport := get_tree().root
-	viewport.scaling_3d_scale = p.render_scale
-	viewport.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA if p.fxaa else Viewport.SCREEN_SPACE_AA_DISABLED
+	var ps1 := Settings.ps1_mode
+	# PS1 mode: the picture ends up pixelated to 480 lines anyway (shaders/ps1_post), so
+	# render 3D at half resolution and skip anti-aliasing (crunchy edges are the look).
+	viewport.scaling_3d_scale = minf(p.render_scale, PS1_RENDER_SCALE) if ps1 else p.render_scale
+	viewport.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA if (p.fxaa and not ps1) else Viewport.SCREEN_SPACE_AA_DISABLED
+	ps1_amount = 1.0 if ps1 else 0.0
+	RenderingServer.global_shader_parameter_set(&"ps1_amount", ps1_amount)
 	viewport.mesh_lod_threshold = p.lod_threshold
 	viewport.positional_shadow_atlas_size = p.shadow_atlas
 	RenderingServer.positional_soft_shadow_filter_set_quality(p.soft_shadows)
@@ -113,7 +122,7 @@ func _on_node_added(node: Node) -> void:
 
 
 func _on_setting_changed(key: StringName) -> void:
-	if key == &"graphics_quality" or key == &"show_fps":
+	if key == &"graphics_quality" or key == &"show_fps" or key == &"ps1_mode":
 		apply()
 
 

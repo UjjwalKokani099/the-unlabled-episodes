@@ -20,6 +20,8 @@ func _initialize() -> void:
 	var graphics: Node = root.get_node("Graphics")
 	var old_quality: int = settings.graphics_quality
 	var old_fps: bool = settings.show_fps
+	var old_ps1: bool = settings.ps1_mode
+	settings.ps1_mode = false  # presets are checked in the default look (PS1 has test_retro)
 
 	var room: Node = load("res://scenes/test/test_room.tscn").instantiate()
 	root.add_child(room)
@@ -53,6 +55,7 @@ func _initialize() -> void:
 
 	settings.graphics_quality = old_quality
 	settings.show_fps = old_fps
+	settings.ps1_mode = old_ps1
 	room.queue_free()
 	plain.queue_free()
 	await frames(3)

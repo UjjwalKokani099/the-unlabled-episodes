@@ -93,6 +93,17 @@ Useful headless commands (run from project root):
 - GI = VoxelGI baked by script (`tools/bake_voxelgi.gd`) for interiors; night exteriors use
   local lights + SSIL only. Emissive props that switch off (tube lights) use gi_mode disabled.
 - Brightness is a gamma overlay owned by the Settings autoload (canvas layer 5).
+- PS1 mode (`Settings.ps1_mode`, off by default): Graphics sets 3D scale <= 0.5, no FXAA, and
+  the global shader uniform `ps1_amount` (project.godot [shader_globals]; read it back from
+  `Graphics.ps1_amount`, the RenderingServer getter is editor-only). surface.gdshader uses it
+  for vertex snapping (POSITION), partial affine warping, 256-texel point sampling. The
+  camcorder adds `shaders/ps1_post.gdshader` (480 lines, nearest, 15-bit + Bayer dither)
+  under the OSD. Benchmark it with `... benchmark.gd -- <scene> <sec> ps1`.
+- Night vision: camcorder `set_night_vision()` / key N: VHS shader `night_vision` (gain,
+  green, grain, tunnel vignette) + an IR OmniLight on the camera; drains `osd.battery_level`
+  (240 s full), Events `battery` (battery pickups) adds 0.5.
+- Tests/scratch scripts that change Settings must restore them even on failure paths
+  (Settings saves to the player's real settings.cfg).
 
 ## Materials and decals (Phase 1)
 - `shaders/surfaces/surface.gdshader` = the wall/floor shader: world-space projection (no UVs,

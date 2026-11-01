@@ -2,8 +2,8 @@ extends SceneTree
 ## Measures performance on THIS machine, for every graphics preset.
 ##
 ## Usage (from the project root):
-##   <console exe> --path . --script res://tools/benchmark.gd -- [scene] [seconds_per_point]
-## Defaults: the test room, 3 seconds per point.
+##   <console exe> --path . --script res://tools/benchmark.gd -- [scene] [seconds_per_point] [ps1]
+## Defaults: the test room, 3 seconds per point. Add "ps1" to measure with PS1 mode on.
 ##
 ## Runs fullscreen at the desktop resolution with VSync off. The camera visits every
 ## Marker3D in the "benchmark_points" group (or just the player's spawn) and turns a full
@@ -19,6 +19,8 @@ func _initialize() -> void:
 	var per_point := float(args[1]) if args.size() > 1 else 3.0
 	var settings: Node = root.get_node("Settings")
 	var saved_quality: int = settings.graphics_quality
+	var saved_ps1: bool = settings.ps1_mode
+	settings.ps1_mode = "ps1" in args
 
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
@@ -39,7 +41,7 @@ func _initialize() -> void:
 		player.input_enabled = false
 
 	print("")
-	print("BENCH scene=%s  resolution=%s  points=%d  %.1fs each" % [scene_path, root.size, points.size(), per_point])
+	print("BENCH scene=%s  resolution=%s  points=%d  %.1fs each%s" % [scene_path, root.size, points.size(), per_point, "  PS1 MODE" if settings.ps1_mode else ""])
 	print("BENCH %-7s %8s %8s %8s %8s" % ["preset", "avg fps", "1% low", "gpu ms", "cpu ms"])
 	for quality in [0, 1, 2]:
 		settings.graphics_quality = quality
@@ -68,6 +70,7 @@ func _initialize() -> void:
 			1000.0 / _percentile(frame_ms, 0.99), _mean(gpu_ms), _mean(cpu_ms)])
 
 	settings.graphics_quality = saved_quality
+	settings.ps1_mode = saved_ps1
 	current_scene.queue_free()
 	await process_frame
 	quit()

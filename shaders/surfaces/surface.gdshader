@@ -8,6 +8,9 @@
 //   dark tide line, rain/leak streaks running down from under each slab, grime near the top.
 //   Storeys are storey_height metres tall starting at storey_base (world Y).
 // Works with baked lightmaps (LightmapGI) and the Graphics presets.
+// - PS1 mode (global ps1_amount, Settings.ps1_mode): vertices snap to a coarse screen grid
+//   (wobble), texture coordinates interpolate partly affine (warping), textures are
+//   point-sampled at 256 texels per repeat.
 shader_type spatial;
 render_mode diffuse_burley, specular_schlick_ggx;
 
@@ -51,8 +54,16 @@ uniform float leak_tile = 2.5;
 /** Darkening in the top part of each storey (soot, cobwebs, missed paint). */
 uniform float top_grime : hint_range(0.0, 1.0) = 0.0;
 
-varying vec3 world_pos;
+varying vec3 world_pos_v;
 varying vec3 world_normal;
+// world_pos * clip w, and clip w: dividing them per pixel gives affine (PS1) interpolation.
+varying vec3 world_pos_w;
+varying float clip_w;
+
+global uniform float ps1_amount;
+const vec2 PS1_GRID = vec2(160.0, 120.0);  // vertex snap steps per half screen (320x240)
+const float PS1_AFFINE = 0.35;             // how much of the affine warp to keep
+const float PS1_TEXELS = 256.0;            // texels per texture repeat
 
 float hash(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
@@ -78,12 +89,20 @@ float fbm(vec2 p) {
 }
 
 void vertex() {
-	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	world_pos_v = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	world_normal = normalize(mat3(MODEL_MATRIX) * NORMAL);
+	vec4 clip = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+	vec4 snapped = clip;
+	snapped.xy = round(clip.xy / clip.w * PS1_GRID) / PS1_GRID * clip.w;
+	POSITION = mix(clip, snapped, ps1_amount);
+	clip_w = clip.w;
+	world_pos_w = world_pos_v * clip.w;
 }
 
 void fragment() {
 	vec3 n = normalize(world_normal);
+	// Texture lookups use the (partly) affine position; lighting keeps the true one.
+	vec3 world_pos = mix(world_pos_v, world_pos_w / clip_w, PS1_AFFINE * ps1_amount);
 	vec3 an = abs(n);
 	vec2 plane;  // metres on the projection plane (u right, v up)
 	vec3 tangent;
@@ -105,6 +124,9 @@ void fragment() {
 	}
 	// Texture v runs downward, so flip it to keep textures upright.
 	vec2 uv = vec2(plane.x, -plane.y) / tile_size;
+	if (ps1_amount > 0.5) {
+		uv = (floor(uv * PS1_TEXELS) + 0.5) / PS1_TEXELS;  // chunky point-sampled texels
+	}
 
 	vec3 albedo = texture(albedo_tex, uv).rgb * tint.rgb;
 	float roughness = texture(roughness_tex, uv).r;

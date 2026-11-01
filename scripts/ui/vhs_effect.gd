@@ -4,6 +4,7 @@ extends ColorRect
 
 var _glitch: float = 0.0
 var _glitch_decay: float = 0.0
+var _night_vision: bool = false
 
 @onready var _material: ShaderMaterial = material
 
@@ -12,7 +13,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_apply_strength()
 	Settings.changed.connect(func(key: StringName) -> void:
-		if key == &"screen_effects":
+		if key == &"screen_effects" or key == &"ps1_mode":
 			_apply_strength())
 
 
@@ -29,6 +30,13 @@ func set_paused(paused: bool) -> void:
 	_material.set_shader_parameter(&"pause_amount", 1.0 if paused else 0.0)
 
 
+## Camcorder night vision on/off (shown even when the VHS effect is turned off).
+func set_night_vision(on: bool) -> void:
+	_night_vision = on
+	_material.set_shader_parameter(&"night_vision", 1.0 if on else 0.0)
+	_apply_strength()
+
+
 func get_glitch() -> float:
 	return _glitch
 
@@ -42,4 +50,7 @@ func _process(delta: float) -> void:
 
 func _apply_strength() -> void:
 	_material.set_shader_parameter(&"strength", Settings.screen_effects)
-	visible = Settings.screen_effects > 0.0
+	# PS1 mode: less smear, so the chunky 480-line pixels survive the tape look.
+	_material.set_shader_parameter(&"bleed", 0.08 if Settings.ps1_mode else 0.35)
+	_material.set_shader_parameter(&"aberration_px", 0.9 if Settings.ps1_mode else 1.6)
+	visible = Settings.screen_effects > 0.0 or _night_vision

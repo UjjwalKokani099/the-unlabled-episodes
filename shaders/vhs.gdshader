@@ -9,6 +9,9 @@ uniform float strength : hint_range(0.0, 1.0) = 1.0;
 uniform float glitch : hint_range(0.0, 1.0) = 0.0;
 // VCR freeze-frame (the Spot key): judder + a noisy tracking band near the bottom.
 uniform float pause_amount : hint_range(0.0, 1.0) = 0.0;
+// Camcorder night-vision mode: amplified green picture, extra grain (works even with the
+// VHS effect turned down to 0 in Settings).
+uniform float night_vision : hint_range(0.0, 1.0) = 0.0;
 uniform float aberration_px = 1.6;   // red/blue split, in screen pixels
 uniform float bleed = 0.35;          // horizontal colour smear
 uniform float noise_amount = 0.055;
@@ -54,17 +57,24 @@ void fragment() {
 	float luma = dot(col, vec3(0.299, 0.587, 0.114));
 	col = mix(col, mix(vec3(luma), col, saturation) * tint, strength);
 
+	// Night vision: gain with a soft roll-off, green phosphor, noisier.
+	float nv_luma = dot(col, vec3(0.299, 0.587, 0.114));
+	vec3 nv = vec3(0.32, 1.0, 0.42) * (1.0 - exp(-nv_luma * 5.0));
+	col = mix(col, nv, night_vision);
+
 	// Scanlines (3 px period) and grain.
 	float scan = 0.5 + 0.5 * cos(FRAGCOORD.y * TAU / 3.0);
 	col *= 1.0 - scanline_amount * scan * strength;
 	float grain = hash(floor(FRAGCOORD.xy) + fract(t * 7.3) * 113.0) - 0.5;
 	col += grain * noise_amount * (1.0 + glitch * 3.0) * strength;
+	col += grain * 0.12 * night_vision;
 	col += bottom * grain * 0.4 * strength;
 	col = mix(col, vec3(0.55 + grain * 1.6), pause_band * 0.75);
 
 	// Vignette.
 	vec2 d = SCREEN_UV - 0.5;
 	col *= mix(1.0, clamp(1.0 - dot(d, d) * vignette * 2.2, 0.0, 1.0), strength);
+	col *= mix(1.0, clamp(1.0 - dot(d, d) * 2.4, 0.0, 1.0), night_vision);  // tunnel vision
 
 	COLOR = vec4(col, 1.0);
 }

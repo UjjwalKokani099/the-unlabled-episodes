@@ -5,6 +5,9 @@ extends Node
 ##     get_tree().call_group("camcorder", "tape_cut", "03:11:20")
 ## The Spot key ("spot") is the camcorder's PAUSE button: looking at a Spottable (the
 ## Cameraman's hidden appearances) and pressing it freezes the frame and counts it.
+## Night vision ("night_vision", N): green amplified picture + an infrared fill light on the
+## camera; drains the battery (OSD icon). Battery pickups (Events `battery`) recharge it.
+## PS1 mode (Settings.ps1_mode): a pixelate/dither pass under the OSD (shaders/ps1_post).
 
 signal cut_finished
 signal spotted(spot_id: StringName)
@@ -13,14 +16,21 @@ const STATIC_SHADER := preload("res://shaders/static_bg.gdshader")
 const STATIC_SOUND := preload("res://assets/audio/sfx/tv_static.wav")
 const CLICK_SOUND := preload("res://assets/audio/sfx/vcr_click.wav")
 const PAUSE_SECONDS := 1.6
+const PS1_SHADER := preload("res://shaders/ps1_post.gdshader")
+## Full battery lasts this many seconds of night vision.
+const NV_BATTERY_SECONDS := 240.0
+const BATTERY_PICKUP := 0.5
 
 var is_cutting: bool = false
 var is_frozen: bool = false
+var night_vision: bool = false
 
 var _cut_layer: CanvasLayer
 var _black: ColorRect
 var _static: ColorRect
 var _sound: AudioStreamPlayer
+var _retro: ColorRect
+var _ir_light: OmniLight3D
 
 @onready var osd: CamcorderOSD = $OSDLayer/OSD
 @onready var vhs: VHSEffect = $VHSLayer/VHS
@@ -33,6 +43,18 @@ func _ready() -> void:
 	_cut_layer = CanvasLayer.new()
 	_cut_layer.layer = 1  # under the OSD and the VHS effect, so both stay on top
 	add_child(_cut_layer)
+	# Drawn first in the layer: the PS1 pass sits under the tape-cut rects.
+	_retro = _full_rect(Color.WHITE)
+	var retro_mat := ShaderMaterial.new()
+	retro_mat.shader = PS1_SHADER
+	_retro.material = retro_mat
+	_retro.visible = Settings.ps1_mode
+	Settings.changed.connect(func(key: StringName) -> void:
+		if key == &"ps1_mode":
+			_retro.visible = Settings.ps1_mode)
+	Events.fired.connect(func(id: StringName) -> void:
+		if id == &"battery" and not Events.replaying:
+			osd.battery_level += BATTERY_PICKUP)
 	_black = _full_rect(Color.BLACK)
 	_static = _full_rect(Color.WHITE)
 	var mat := ShaderMaterial.new()
@@ -81,8 +103,54 @@ func hide_static() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"spot") and not event.is_echo():
+	if event.is_echo():
+		return
+	if event.is_action_pressed(&"spot"):
 		try_spot()
+	elif event.is_action_pressed(&"night_vision"):
+		set_night_vision(not night_vision)
+
+
+## Night vision on/off. Can't switch on with a dead battery.
+func set_night_vision(on: bool) -> void:
+	if on and osd.battery_level <= 0.0:
+		get_tree().call_group("hud", "show_message", "Battery dead.")
+		on = false
+	if on == night_vision:
+		return
+	night_vision = on
+	vhs.set_night_vision(on)
+	osd.get_node("Mode").text = "SP   NIGHT" if on else "SP"
+	_play(CLICK_SOUND, -8.0)
+	if on:
+		_attach_ir_light()
+	elif is_instance_valid(_ir_light):
+		_ir_light.queue_free()
+
+
+func _process(delta: float) -> void:
+	if not night_vision or get_tree().paused:
+		return
+	if not is_instance_valid(_ir_light):
+		_attach_ir_light()  # the camera changed (checkpoint reload)
+	osd.battery_level -= delta / NV_BATTERY_SECONDS
+	if osd.battery_level <= 0.0:
+		set_night_vision(false)
+		get_tree().call_group("hud", "show_message", "Battery dead.")
+
+
+## An invisible infrared lamp on the camcorder: lights what the night vision amplifies.
+func _attach_ir_light() -> void:
+	var camera := get_viewport().get_camera_3d()
+	if camera == null:
+		return
+	_ir_light = OmniLight3D.new()
+	_ir_light.light_energy = 0.5
+	_ir_light.omni_range = 7.0
+	_ir_light.omni_attenuation = 2.2  # bright up close, black a few metres out
+	_ir_light.light_specular = 0.0
+	_ir_light.light_volumetric_fog_energy = 0.0
+	camera.add_child(_ir_light)
 
 
 ## Looks for a Spottable near the centre of the view. Freezes the frame when it finds
