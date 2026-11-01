@@ -100,6 +100,16 @@ Useful headless commands (run from project root):
 - Preview everything in `scenes/test/material_gallery.tscn` (built by
   `tools/gen_material_gallery.py`). Tube light fixture: `scenes/props/tube_light.tscn`.
 
+## Building kit (Phase 2)
+- `tools/levelkit.py` = the modular kit as Python functions (wall with openings, slab,
+  stair_flight, railing, window_fill, residential_wing, sodium_lamp, night_environment,
+  player_rig). Level generators (`tools/gen_*.py`) import it and write .tscn files.
+- Static geometry goes under `Static` (StaticBatcher merges it at runtime: ~1500 boxes ->
+  ~40 meshes per wing); collision under one `Collision` StaticBody3D. Stairs = visual steps
+  + convex ramp collider. Doors/props that move stay outside `Static`.
+- Closed flats get BoxOccluder3D occluders (occlusion culling is on).
+- Preview: `scenes/test/kit_preview.tscn` (`python tools/gen_kit_preview.py`).
+
 ## Camera / screen
 - Every level instances `ui/hud/camcorder.tscn` (OSD on layer 2, VHS shader on layer 3) and
   `ui/hud/hud.tscn` (layer 10, stays crisp above the VHS effect). Debug overlay = layer 20.

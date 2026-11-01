@@ -14,3 +14,4 @@ shader_parameter/tile_size = 1.5
 shader_parameter/macro_strength = 0.3
 shader_parameter/damp_height = 0.4
 shader_parameter/damp_strength = 0.5
+shader_parameter/damp_storeys = 1

@@ -2,10 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/interaction/door.gd" id="1_door"]
 [ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="2_interactable"]
+[ext_resource type="Material" path="res://assets/materials/door_panel.tres" id="3_wood"]
 
-[sub_resource type="StandardMaterial3D" id="Material_wood"]
-albedo_color = Color(0.3, 0.2, 0.13, 1)
-roughness = 0.85
 
 [sub_resource type="StandardMaterial3D" id="Material_metal"]
 albedo_color = Color(0.55, 0.52, 0.45, 1)
@@ -13,7 +11,7 @@ metallic = 0.8
 roughness = 0.4
 
 [sub_resource type="BoxMesh" id="BoxMesh_panel"]
-material = SubResource("Material_wood")
+material = ExtResource("3_wood")
 size = Vector3(1.1, 2.15, 0.05)
 
 [sub_resource type="SphereMesh" id="SphereMesh_knob"]

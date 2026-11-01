@@ -20,7 +20,7 @@ WHITE = (0.92, 0.92, 0.89)
 DADO_GREEN = (0.36, 0.5, 0.42)
 DADO_BROWN = (0.42, 0.3, 0.22)
 
-WEATHERED = {"damp_height": 0.6, "damp_strength": 0.65, "leak": LEAKS, "leak_strength": 0.55, "top_grime": 0.3, "macro_strength": 0.45}
+WEATHERED = {"damp_height": 0.6, "damp_strength": 0.65, "damp_storeys": 1, "leak": LEAKS, "leak_strength": 0.55, "top_grime": 0.3, "macro_strength": 0.45}
 INDOOR_WORN = {"damp_height": 0.35, "damp_strength": 0.35, "top_grime": 0.2, "macro_strength": 0.3}
 
 # name: (texture set, tile metres, extra params)
@@ -46,9 +46,9 @@ MATERIALS = {
     "wall_bare_stained": ("plaster_bare", 2.0, {"damp_height": 0.5, "damp_strength": 0.5, "leak": LEAKS_B, "leak_strength": 0.4}),
     # --- Concrete and brick ---
     "concrete_rough": ("concrete_rough", 2.0, {"macro_strength": 0.35}),
-    "concrete_dirty": ("concrete_dirty", 3.0, {"damp_height": 0.5, "leak": LEAKS, "leak_strength": 0.5, "macro_strength": 0.4}),
+    "concrete_dirty": ("concrete_dirty", 3.0, {"damp_height": 0.5, "damp_storeys": 1, "leak": LEAKS, "leak_strength": 0.5, "macro_strength": 0.4}),
     "concrete_dark": ("concrete_dark", 3.0, {"macro_strength": 0.45}),
-    "brick_red": ("brick_red", 1.5, {"macro_strength": 0.3, "damp_height": 0.4, "damp_strength": 0.5}),
+    "brick_red": ("brick_red", 1.5, {"macro_strength": 0.3, "damp_height": 0.4, "damp_strength": 0.5, "damp_storeys": 1}),
     # --- Floors ---
     "floor_mosaic": ("floor_mosaic", 1.2, {"roughness_offset": -0.25, "macro_strength": 0.25}),
     "floor_kota": ("floor_kota", 1.2, {"tint": (0.88, 0.97, 0.93), "roughness_offset": 0.05, "macro_strength": 0.3}),

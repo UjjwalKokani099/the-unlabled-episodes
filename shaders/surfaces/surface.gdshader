@@ -41,6 +41,8 @@ uniform float storey_height = 3.0;
 /** Height of the rising-damp band above each storey's floor (0 = none). */
 uniform float damp_height = 0.0;
 uniform float damp_strength : hint_range(0.0, 1.0) = 0.6;
+/** Rising damp only affects this many storeys from storey_base (ground = 1). */
+uniform float damp_storeys = 99.0;
 uniform vec4 damp_color : source_color = vec4(0.42, 0.38, 0.28, 1.0);
 /** Leak/rain streaks running down from under each slab. */
 uniform sampler2D leak_tex : hint_default_white, filter_linear_mipmap, repeat_enable;
@@ -124,7 +126,8 @@ void fragment() {
 			}
 		}
 		// Rising damp: darker, browner band with a ragged tide line.
-		if (damp_height > 0.0) {
+		float storey_index = floor((world_pos.y - storey_base) / storey_height);
+		if (damp_height > 0.0 && storey_index < damp_storeys) {
 			float line_h = damp_height * (1.0 + edge_noise * 0.6);
 			float damp = 1.0 - smoothstep(line_h * 0.55, line_h, h);
 			float tide = smoothstep(0.07, 0.0, abs(h - line_h)) * 0.6;

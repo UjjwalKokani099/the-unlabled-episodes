@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/materials/textures/wood_varnished/wood_varnished_albedo.jpg" id="1_a"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/wood_varnished/wood_varnished_normal.jpg" id="2_n"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/wood_varnished/wood_varnished_roughness.jpg" id="3_r"]
+
+[resource]
+albedo_color = Color(0.75, 0.6, 0.5, 1)
+albedo_texture = ExtResource("1_a")
+roughness_texture = ExtResource("3_r")
+normal_enabled = true
+normal_texture = ExtResource("2_n")
+uv1_scale = Vector3(1.5, 1.5, 1.5)

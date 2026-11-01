@@ -14,5 +14,6 @@ shader_parameter/roughness_tex = ExtResource("roughness")
 shader_parameter/tile_size = 3.0
 shader_parameter/leak_tex = ExtResource("leak")
 shader_parameter/damp_height = 0.5
+shader_parameter/damp_storeys = 1
 shader_parameter/leak_strength = 0.5
 shader_parameter/macro_strength = 0.4
