@@ -1,0 +1,29 @@
+# --- Godot 4 ---
+# Editor cache / imported resources (regenerated automatically on open)
+.godot/
+/android/
+*.tmp
+*.translation
+
+# Export output
+/builds/
+/export/
+# Export presets can contain signing credentials; commit a sanitized copy if needed
+export_credentials.cfg
+
+# Mono / C# (not used, but harmless)
+.mono/
+data_*/
+mono_crash.*.json
+
+# --- OS / editors ---
+.DS_Store
+Thumbs.db
+desktop.ini
+*.lnk
+.vscode/
+.idea/
+
+# --- Local tooling ---
+node_modules/
+.claude/settings.local.json
