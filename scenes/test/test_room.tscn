@@ -1,0 +1,157 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
+[ext_resource type="Shader" path="res://shaders/debug_grid.gdshader" id="2_grid"]
+[ext_resource type="Script" path="res://scripts/ui/debug_overlay.gd" id="3_overlay"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_floor"]
+render_priority = 0
+shader = ExtResource("2_grid")
+shader_parameter/base_color = Color(0.32, 0.32, 0.32, 1)
+shader_parameter/line_color = Color(0.18, 0.18, 0.18, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wall"]
+render_priority = 0
+shader = ExtResource("2_grid")
+shader_parameter/base_color = Color(0.42, 0.42, 0.42, 1)
+shader_parameter/line_color = Color(0.26, 0.26, 0.26, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_prop"]
+render_priority = 0
+shader = ExtResource("2_grid")
+shader_parameter/base_color = Color(0.46, 0.34, 0.22, 1)
+shader_parameter/line_color = Color(0.3, 0.22, 0.14, 1)
+shader_parameter/cell_size = 0.5
+
+[sub_resource type="Environment" id="Environment_room"]
+background_mode = 1
+background_color = Color(0, 0, 0, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.55, 0.6, 0.7, 1)
+ambient_light_energy = 0.06
+tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.02, 0.02, 0.025, 1)
+fog_density = 0.03
+
+[node name="TestRoom" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_room")
+
+[node name="RoomLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6, 7)
+light_color = Color(1, 0.85, 0.6, 1)
+light_energy = 0.8
+omni_range = 9.0
+
+[node name="Level" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Floor" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+size = Vector3(24, 1, 24)
+material = SubResource("ShaderMaterial_floor")
+
+[node name="Ceiling" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+size = Vector3(24, 1, 24)
+material = SubResource("ShaderMaterial_wall")
+
+[node name="WallNorth" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -12.5)
+size = Vector3(26, 4, 1)
+material = SubResource("ShaderMaterial_wall")
+
+[node name="WallSouth" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 12.5)
+size = Vector3(26, 4, 1)
+material = SubResource("ShaderMaterial_wall")
+
+[node name="WallEast" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 2, 0)
+size = Vector3(1, 4, 24)
+material = SubResource("ShaderMaterial_wall")
+
+[node name="WallWest" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 2, 0)
+size = Vector3(1, 4, 24)
+material = SubResource("ShaderMaterial_wall")
+
+[node name="DividerWall" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -4)
+size = Vector3(24, 4, 0.4)
+material = SubResource("ShaderMaterial_wall")
+
+[node name="Doorway" type="CSGBox3D" parent="Level/DividerWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -1, 0)
+operation = 2
+size = Vector3(1.2, 2.4, 1)
+
+[node name="CrawlHole" type="CSGBox3D" parent="Level/DividerWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -1.5, 0)
+operation = 2
+size = Vector3(1.4, 1.4, 1)
+
+[node name="Ramp" type="CSGPolygon3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 7)
+polygon = PackedVector2Array(0, 0, 5, 0, 5, 1.2)
+depth = 2.0
+material = SubResource("ShaderMaterial_prop")
+
+[node name="RampPlatform" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.6, 6)
+size = Vector3(2, 1.2, 2)
+material = SubResource("ShaderMaterial_prop")
+
+[node name="Crate1" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.5, 5)
+material = SubResource("ShaderMaterial_prop")
+
+[node name="Crate2" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1, 0.5, 5.2)
+material = SubResource("ShaderMaterial_prop")
+
+[node name="Crate3" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1.5, 5.1)
+material = SubResource("ShaderMaterial_prop")
+
+[node name="Pillar" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, 1)
+size = Vector3(0.8, 4, 0.8)
+material = SubResource("ShaderMaterial_wall")
+
+[node name="DarkPillar" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -8)
+size = Vector3(0.8, 4, 0.8)
+material = SubResource("ShaderMaterial_wall")
+
+[node name="DarkCrate1" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.5, -9)
+material = SubResource("ShaderMaterial_prop")
+
+[node name="DarkCrate2" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.75, -9)
+size = Vector3(1.5, 1.5, 1.5)
+material = SubResource("ShaderMaterial_prop")
+
+[node name="DarkShelf" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -11.6)
+size = Vector3(6, 2, 0.6)
+material = SubResource("ShaderMaterial_prop")
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
+
+[node name="DebugOverlay" type="CanvasLayer" parent="."]
+script = ExtResource("3_overlay")
+
+[node name="Label" type="Label" parent="DebugOverlay"]
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 812.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 14
