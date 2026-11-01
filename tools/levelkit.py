@@ -275,7 +275,7 @@ def railing(lv, p0, p1, y, h=1.0, post_every=1.2, mat="metal_gate_green", collid
 def residential_wing(lv: Level, name: str, ox: float, oz: float, *, letter: str, exterior: str,
                      core_wall: str = "wall_stairwell_mint", lit_floors=(), tv_floors=(),
                      interior_floor: int | None = None, flicker_floors=(), occluders=True,
-                     unlocked_doors=()) -> dict:
+                     unlocked_doors=(), door_unlock_events=None) -> dict:
     """A G+4 wing: stilt parking (ground), flats on floors 1-4 (one per floor, number
     '<floor><letter>'), terrace with stair cabin + overhead tank. Footprint 12 x 10 m,
     front faces +Z. Returns useful world positions (door spots, balcony, landings...)."""
@@ -325,7 +325,8 @@ def residential_wing(lv: Level, name: str, ox: float, oz: float, *, letter: str,
             info["doors"][flat] = lv.scene(f"Door{flat}", "res://scenes/props/door.tscn", group, {
                 "position": v3(X(CORE), y, Z(door_z + 0.55)), "rotation_degrees": v3(0, 90, 0),
                 "locked": "false" if flat in unlocked_doors else "true",
-                "locked_message": '"Locked. Nobody answers."'})
+                "locked_message": '"Locked. Nobody answers."',
+                **({"unlock_event": f'&"{door_unlock_events[flat]}"'} if door_unlock_events and flat in door_unlock_events else {})})
             lv.add(f"Plate{flat}", "Label3D", group, {
                 "position": v3(X(CORE - T / 2 - 0.012), y + 1.75, Z(door_z + 0.85)), "rotation_degrees": v3(0, -90, 0),
                 "pixel_size": "0.0016", "shaded": "true", "modulate": "Color(0.72, 0.55, 0.2, 1)",

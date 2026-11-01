@@ -33,7 +33,7 @@ func _initialize() -> void:
 
 	# --- Unlocking ---
 	check(game.is_unlocked(&"tape_01_watchman") and not game.is_unlocked(&"tape_02_tollbooth"), "only tape 01 unlocked on a new save")
-	check(not game.start_chapter(&"tape_01_watchman"), "unbuilt chapter refuses to start")
+	check(not game.start_chapter(&"tape_02_tollbooth"), "unbuilt chapter refuses to start")
 	check(not game.has_checkpoint(), "no checkpoint on a new save")
 
 	# --- Start ---

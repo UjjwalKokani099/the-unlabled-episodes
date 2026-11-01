@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="ObjectiveSet" format=3]
+
+[ext_resource type="Script" path="res://scripts/objectives/objective_set.gd" id="1_set"]
+[ext_resource type="Script" path="res://scripts/objectives/objective_data.gd" id="2_data"]
+
+[sub_resource type="Resource" id="O_sign_register"]
+script = ExtResource("2_data")
+id = &"sign_register"
+text = "Sign in at the gate register"
+complete_on = &"register_signed"
+required = 1
+starts_after = &""
+
+[sub_resource type="Resource" id="O_check_cctv"]
+script = ExtResource("2_data")
+id = &"check_cctv"
+text = "Check the CCTV monitor"
+complete_on = &"cctv_checked"
+required = 1
+starts_after = &"sign_register"
+
+[sub_resource type="Resource" id="O_patrol"]
+script = ExtResource("2_data")
+id = &"patrol"
+text = "Patrol the four wings"
+complete_on = &"patrol_point"
+required = 4
+starts_after = &"check_cctv"
+
+[sub_resource type="Resource" id="O_lock_terraces"]
+script = ExtResource("2_data")
+id = &"lock_terraces"
+text = "Padlock the terrace doors"
+complete_on = &"terrace_locked"
+required = 4
+starts_after = &"patrol"
+
+[sub_resource type="Resource" id="O_return_cabin"]
+script = ExtResource("2_data")
+id = &"return_cabin"
+text = "Go back to the cabin"
+complete_on = &"back_at_cabin"
+required = 1
+starts_after = &"lock_terraces"
+
+[resource]
+script = ExtResource("1_set")
+objectives = Array[ExtResource("2_data")]([SubResource("O_sign_register"), SubResource("O_check_cctv"), SubResource("O_patrol"), SubResource("O_lock_terraces"), SubResource("O_return_cabin")])

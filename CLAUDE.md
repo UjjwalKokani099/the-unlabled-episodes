@@ -68,6 +68,57 @@ Useful headless commands (run from project root):
 - `call_group("hud", "show_note", bbcode, handwritten)` shows paper/screens (NoteView).
 - Disabled Interactables leave the physics layer, so they never block the look-ray.
 
+## Menus + intro (Phases 4-5)
+- Main scene = `scenes/menus/main_menu.tscn`: VCR-OSD blue panel over a live half-res
+  SubViewport of `scenes/menus/menu_backdrop.tscn` (Nikhil's room, tube light off, REC dot).
+  CONTINUE / NEW GAME (replays intro) / TAPES (locked = blank cassette) / SETTINGS / QUIT.
+- First launch autoplays `scenes/intro/intro.tscn` (built by `tools/gen_intro.py`, driven by
+  `scripts/intro/intro_director.gd`; hold Space to skip; `intro_seen` in the save).
+- Settings screen: tabs from `ROWS` in settings_menu.gd; rebind rows from
+  `Settings.REBINDABLE` (saved as `key_bindings`). Subtitles: `call_group("subtitles", "say",
+  speaker, text, seconds)` (Subtitles node is in the HUD and the intro).
+- Pause menu lives inside `ui/hud/hud.tscn` (Esc). Theme: `ui/themes/vcr_theme.tres`.
+- Tests that open the main menu must call `Game.mark_intro_seen()` first.
+
+## Graphics / performance (target: 60 FPS at 1080p on the RTX 3050 Ti laptop)
+- `Graphics` autoload applies Low/Medium/High (`PRESETS`): render scale, FXAA, LOD threshold,
+  shadows, SSAO/SSIL/volumetric fog quality, VoxelGI (off on Low). Presets only switch level
+  features off, never add them. FPS counter = Settings.show_fps.
+- Benchmark: `<console exe> --path . --script res://tools/benchmark.gd -- <scene> [sec]`
+  (fullscreen, VSync off, Marker3Ds in group `benchmark_points`). Tape 1 map: Medium ~248 FPS.
+- GI = VoxelGI baked by script (`tools/bake_voxelgi.gd`) for interiors; night exteriors use
+  local lights + SSIL only. Emissive props that switch off (tube lights) use gi_mode disabled.
+- Brightness is a gamma overlay owned by the Settings autoload (canvas layer 5).
+
+## Materials and decals (Phase 1)
+- `shaders/surfaces/surface.gdshader` = the wall/floor shader: world-space projection (no UVs,
+  `tile_size` metres), macro variation, per-storey weathering (rising damp limited by
+  `damp_storeys`, leak streaks, top grime), two-tone dado. Storeys are 3 m.
+- Library `assets/materials/*.tres` generated from the table in `tools/gen_materials.py`
+  (edit table, re-run). Plain StandardMaterial3D files (glass, paint, door) are hand-written.
+- Textures: CC0 ambientCG via `tools/fetch_textures.py`. After adding textures: `--import`,
+  `python tools/configure_texture_imports.py`, `--import` again.
+- Imported normal maps are 2-channel (RG): custom shaders must rebuild Z.
+- Decals `scenes/decals/<name>.tscn`: put the node ON the surface, +Z out of it.
+  Posters: `tools/gen_posters.gd` (Godot renders Devanagari) -> `tools/gen_decals.py`.
+
+## Building kit (Phase 2)
+- `tools/levelkit.py` = the modular kit (wall with openings, slab, stair_flight, railing,
+  window_fill, residential_wing, sodium_lamp, night_environment, player_rig, benchmark_points).
+  Level generators `tools/gen_*.py` import it and write .tscn files — edit the generator and
+  re-run, don't hand-edit generated scenes.
+- Static geometry under `Static` (StaticBatcher merges at runtime: 6400 boxes -> ~200 meshes);
+  collision under one `Collision` body; stairs = visual steps + convex ramp collider.
+- In generated .tscn, `script` must be written before that script's exported properties.
+
+## Tape 1: Shanti Vihar (Phase 6)
+- `chapters/tape_01_watchman/shanti_vihar.tscn` + `objectives.tres` from `tools/gen_tape01.py`.
+  Wings A-D (G+4, stilt parking), cabin (CCTV monitor with live feeds, gate register, 4B key,
+  intercom), meter room, water tank, parking, lamps, ambience.
+- Playable now: Raghu's duties (register -> CCTV -> patrol 4 wings -> padlock 4 terraces ->
+  back to cabin -> tape ends). Story beats (Deshmukh at 3:12, intercom breathing, register
+  entries, power cut, ending) are the next brief.
+
 ## Camera / screen
 - Every level instances `ui/hud/camcorder.tscn` (OSD on layer 2, VHS shader on layer 3) and
   `ui/hud/hud.tscn` (layer 10, stays crisp above the VHS effect). Debug overlay = layer 20.

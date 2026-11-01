@@ -160,6 +160,63 @@ def room_hum(rng):
     return out
 
 
+def crickets(rng):
+    n = int(RATE * 6.0)
+    out = [0.0] * n
+    for voice in range(5):
+        f = rng.uniform(3800, 5200)
+        period = rng.uniform(0.35, 0.6)
+        start = rng.uniform(0, period)
+        amp = rng.uniform(0.15, 0.35)
+        t0 = start
+        while t0 < 5.9:
+            for k in range(3):  # each chirp = 3 pulses
+                p0 = int((t0 + k * 0.022) * RATE)
+                for i in range(int(0.014 * RATE)):
+                    if p0 + i < n:
+                        e = math.sin(math.pi * i / (0.014 * RATE))
+                        out[p0 + i] += amp * e * math.sin(2 * math.pi * f * i / RATE)
+            t0 += period * rng.uniform(0.9, 1.1)
+    edge = int(0.02 * RATE)
+    for i in range(edge):
+        out[i] *= i / edge
+        out[-1 - i] *= i / edge
+    return out
+
+
+def dog_bark(rng):
+    out = silence(0.05)
+    for b in range(rng.randint(2, 3)):
+        n = int(RATE * 0.22)
+        noise = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.35)
+        bark = []
+        for i in range(n):
+            t = i / RATE
+            f = 520 - 900 * t
+            env = min(t / 0.015, 1.0) * math.exp(-t * 14)
+            bark.append(env * (0.6 * math.sin(2 * math.pi * f * t) + 0.5 * math.sin(2 * math.pi * f * 2.1 * t) + 0.6 * noise[i]))
+        out += lowpass(bark, 0.25) + silence(rng.uniform(0.12, 0.3))
+    return out
+
+
+def traffic(rng):
+    n = int(RATE * 8.0)
+    rumble = lowpass(lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.01), 0.05)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        edge = min(t / 0.05, 1.0, (8.0 - t) / 0.05)
+        swell = 0.6 + 0.4 * math.sin(2 * math.pi * t / 8.0)
+        out.append(edge * rumble[i] * swell)
+    return out
+
+
+def horn(rng):
+    n = int(RATE * 0.9)
+    return [math.sin(2 * math.pi * 420 * i / RATE) * 0.6 + math.sin(2 * math.pi * 530 * i / RATE) * 0.4
+            for i in range(n)]
+
+
 def write(name, samples):
     peak = max(abs(s) for s in samples) or 1.0
     OUT.mkdir(parents=True, exist_ok=True)
@@ -189,6 +246,10 @@ def main():
     write("fan_hum.wav", fan_hum(rng))
     write("vcr_click.wav", vcr_click(rng))
     write("room_hum.wav", room_hum(rng))
+    write("crickets_loop.wav", crickets(rng))
+    write("dog_bark.wav", dog_bark(rng))
+    write("traffic_loop.wav", traffic(rng))
+    write("horn_far.wav", lowpass(horn(rng), 0.08))
 
 
 if __name__ == "__main__":

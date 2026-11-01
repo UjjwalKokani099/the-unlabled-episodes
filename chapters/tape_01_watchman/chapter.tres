@@ -7,5 +7,5 @@ script = ExtResource("1_data")
 id = &"tape_01_watchman"
 title = "TAPE 01"
 subtitle = "THE WATCHMAN"
-scene_path = ""
+scene_path = "res://chapters/tape_01_watchman/shanti_vihar.tscn"
 start_datetime = "1998-03-14T22:40:00"
