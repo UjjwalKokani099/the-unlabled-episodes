@@ -156,18 +156,21 @@ position = Vector3(0, 1.5, 0)
 mesh = SubResource("CylinderMesh_9")
 material_override = SubResource("StandardMaterial3D_10")
 
-[node name="Head" type="MeshInstance3D" parent="Body"]
-position = Vector3(0, 1.62, 0)
+[node name="Head" type="Node3D" parent="Body"]
+position = Vector3(0, 1.52, 0)
+
+[node name="Skull" type="MeshInstance3D" parent="Body/Head"]
+position = Vector3(0, 0.1, 0)
 mesh = SubResource("SphereMesh_11")
 material_override = SubResource("StandardMaterial3D_10")
 
-[node name="Hair" type="MeshInstance3D" parent="Body"]
-position = Vector3(0, 1.64, 0.012)
+[node name="Hair" type="MeshInstance3D" parent="Body/Head"]
+position = Vector3(0, 0.12, 0.012)
 mesh = SubResource("SphereMesh_12")
 material_override = SubResource("StandardMaterial3D_13")
 
-[node name="Nose" type="MeshInstance3D" parent="Body"]
-position = Vector3(0, 1.6, -0.105)
+[node name="Nose" type="MeshInstance3D" parent="Body/Head"]
+position = Vector3(0, 0.08, -0.105)
 mesh = SubResource("BoxMesh_14")
 material_override = SubResource("StandardMaterial3D_10")
 

@@ -119,7 +119,7 @@ func _initialize() -> void:
 		wicket_max = maxf(wicket_max, lv.get_node("Wicket").rotation_degrees.y)
 	check(events.has_fired(&"deshmukh_left"), "Mr. Deshmukh walked out of the gate")
 	check(wicket_max > 1.0, "the wicket gate swung open for him")
-	check(lv.get_node("BalconyDeshmukh").visible and lv.get_node("BalconyDeshmukh/Body/Body/Head").layers == 1 << 19,
+	check(lv.get_node("BalconyDeshmukh").visible and lv.get_node("BalconyDeshmukh/Body/Body/Head/Skull").layers == 1 << 19,
 		"...and now stands on his balcony, on CCTV only")
 	check(await until(func() -> bool: return not lv.get_node("Deshmukh").visible), "he never comes back in")
 	await use(lv, "GateRegister", p)
@@ -162,6 +162,17 @@ func _initialize() -> void:
 
 	# ---- the secretary, the power cut
 	await use(lv, "Phone", p)
+	var view = lv.get_node("HUD/DialogueView")
+	view.instant = true
+	check(await until(func() -> bool: return view.is_open), "the secretary picks up")
+	var guard := 0
+	while view.is_open and guard < 40:  # first choice each time
+		guard += 1
+		if view.choice_texts().is_empty():
+			view.advance()
+		else:
+			view.choose(0)
+		await physics(1)
 	check(await wait_event(&"secretary_called"), "phoned the secretary: 4B empty for eight months")
 	check(not lv.get_node("Power").powered and not lv.get_node("CabinTube").on, "power cut: the lights are out")
 	check(load("res://assets/materials/glass_lit_warm.tres").emission_energy_multiplier == 0.0, "lit windows went dark")

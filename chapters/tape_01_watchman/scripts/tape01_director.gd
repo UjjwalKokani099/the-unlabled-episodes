@@ -3,6 +3,8 @@ extends Node
 ## round. Listens to Events and drives the scripted beats; objectives (objectives.tres)
 ## tell the player what to do next. Pacing: ~70% duties, ~20% wrongness, ~10% ending.
 ##
+##   (first round)      -> Mr. Deshmukh waits under B wing and asks for the gate at 3:12;
+##                         Mrs. Iyer (2C) walks over for her parcel after the CCTV check
 ##   back_at_cabin      -> tape cut, the clock jumps to 3:10 AM
 ##   register_3am       -> Mr. Deshmukh walks out of the gate (3:12), never comes back
 ##   deshmukh_left      -> on the CCTV he stands on his 4B balcony; the real one is empty
@@ -25,12 +27,19 @@ const OPENING := [
 	["Four buildings, one gate, one register. It was supposed to be easy work.", 4.5],
 ]
 const SFX := "res://assets/audio/sfx/"
+const SECRETARY_DIALOGUE := "res://dialogue/tape01/secretary.json"
+## Mrs. Iyer: C wing entrance <-> outside the cabin door.
+const IYER_HOME := Vector3(3.5, 0, -13.2)
+const IYER_WAIT := Vector3(3.3, 0, 23.4)
+## Mr. Deshmukh goes back into the B wing stairwell after talking.
+const DESHMUKH_STAIRS := Vector3(-12.5, 0, -14.9)
 
 ## Multiplies every scripted wait (tests make it small).
 var time_scale: float = 1.0
 var ending_started: bool = false
 var _calling: bool = false
 var _sfx: AudioStreamPlayer
+var _deshmukh_called: bool = false
 
 @onready var level: Node = get_parent()
 @onready var cctv: CCTVMonitor = level.get_node("CCTV")
@@ -48,6 +57,8 @@ var _sfx: AudioStreamPlayer
 @onready var intercom_breath: AudioStreamPlayer3D = level.get_node("Intercom/Breath")
 @onready var flat_breath: AudioStreamPlayer3D = level.get_node("FlatBreath")
 @onready var fan: AudioStreamPlayer3D = level.get_node("CabinFan")
+@onready var deshmukh_npc: NPC = level.get_node("DeshmukhNPC")
+@onready var iyer: NPC = level.get_node("IyerNPC")
 
 
 func _ready() -> void:
@@ -77,6 +88,13 @@ func _restore() -> void:
 	main_switch.enabled = dark
 	if Events.has_fired(&"register_3am") and not left:
 		_after(3.0, func() -> void: Events.fire(&"deshmukh_walk"))
+	# People of the first round.
+	var night := Events.has_fired(&"back_at_cabin")
+	deshmukh_npc.active = not night and Game.get_flag("t1_deshmukh_gone", null) == null
+	iyer.active = not night and Events.has_fired(&"check_cctv") and Game.get_flag("t1_iyer_home", null) == null
+	if iyer.active:
+		iyer.global_position = IYER_WAIT
+		_iyer_waits()
 
 
 func _on_event(id: StringName) -> void:
@@ -84,12 +102,29 @@ func _on_event(id: StringName) -> void:
 		return
 	match id:
 		&"back_at_cabin":
+			deshmukh_npc.active = false
+			iyer.active = false
+			if Objectives.is_active(&"give_parcel"):
+				Objectives.complete(&"give_parcel")  # she gave up and went to bed
 			_cut_to_three()
+		&"check_cctv":
+			_iyer_comes_down()
+		&"talked_iyer":
+			if Events.has_fired(&"parcel_given"):
+				_iyer_goes_home()
+		&"talked_deshmukh":
+			_deshmukh_goes_in()
 		&"register_3am":
 			_after(5.0, func() -> void: Events.fire(&"deshmukh_walk"))
 		&"deshmukh_at_gate":
 			_wicket(true)
-			_say(RAGHU, "Deshmukh-ji? Sahab... at this hour?", 3.5)
+			if Dialogue.flag("promised_gate"):
+				_say(RAGHU, "Going out, sahab? I kept it open, like you asked.", 3.5)
+			elif Dialogue.flag("refused_gate"):
+				_say(RAGHU, "Sahab, the gate stays locked after—", 2.5)
+				_after(2.0, _message.bind("The little gate swings open by itself.", 3.0))
+			else:
+				_say(RAGHU, "Deshmukh-ji? Sahab... at this hour?", 3.5)
 		&"deshmukh_left":
 			_after(1.2, _wicket.bind(false))
 			balcony.visible = true
@@ -190,15 +225,11 @@ func _secretary_call() -> void:
 	_calling = true
 	_play("phone_ring", -10.0)
 	await _wait(3.2)
-	for line in [
-			[SECRETARY, "Hello? ...Who is this, at this hour?", 3.2],
-			[RAGHU, "Sahab, it's Raghu. The new night watchman. Sorry to call so late.", 4.0],
-			[RAGHU, "Mr. Deshmukh from 4B went out at 3:12. He hasn't come back. And the intercom from 4B...", 5.0],
-			[SECRETARY, "Deshmukh? From 4B?", 2.6],
-			[SECRETARY, "Raghu, 4B has been empty for eight months. Deshmukh-ji left in July.", 4.8],
-			[RAGHU, "But I saw him. On the CCTV. He's standing on his balcony right n—", 3.4]]:
-		_say(line[0], line[1], line[2])
-		await _wait(line[2] + 0.3)
+	# Branching call (dialogue/tape01/secretary.json): what he says depends on what Raghu
+	# promised Deshmukh and heard from Mrs. Iyer. It always ends with the line going dead.
+	var view := level.get_node("HUD/DialogueView") as DialogueView
+	view.play(SECRETARY_DIALOGUE)
+	await view.finished
 	Events.fire(&"power_cut")
 	Events.fire(&"secretary_called")
 	_calling = false
@@ -207,6 +238,49 @@ func _secretary_call() -> void:
 	await _wait(4.5)
 	_message("The meter room is beside D Wing. Take the torch (F).", 4.0)
 	Game.save_checkpoint(&"start")
+
+
+# --- The first round's people ------------------------------------------------------------
+
+func _process(_delta: float) -> void:
+	# Deshmukh calls out once when Raghu comes near B wing.
+	if _deshmukh_called or not deshmukh_npc.active or ending_started:
+		return
+	var player := get_tree().get_first_node_in_group("player") as Node3D
+	if player and player.global_position.distance_to(deshmukh_npc.global_position) < 9.0:
+		_deshmukh_called = true
+		_say("MR. DESHMUKH", "Watchman-ji.", 2.5)
+
+
+func _deshmukh_goes_in() -> void:
+	deshmukh_npc.walk_to(DESHMUKH_STAIRS)
+	await deshmukh_npc.arrived
+	deshmukh_npc.active = false
+	Game.set_flag("t1_deshmukh_gone", true)
+
+
+func _iyer_comes_down() -> void:
+	if Game.get_flag("t1_iyer_home", null) != null:
+		return
+	iyer.global_position = IYER_HOME
+	iyer.active = true
+	await _wait(2.0)
+	iyer.walk_to(IYER_WAIT)
+	await iyer.arrived
+	_iyer_waits()
+
+
+func _iyer_waits() -> void:
+	iyer.face(Vector3(5.0, 0, 23.4))  # towards the cabin door
+	_say("MRS. IYER", "Watchman-ji? Are you there?", 3.0)
+
+
+func _iyer_goes_home() -> void:
+	await _wait(1.0)
+	iyer.walk_to(IYER_HOME)
+	await iyer.arrived
+	iyer.active = false
+	Game.set_flag("t1_iyer_home", true)
 
 
 func _ending() -> void:

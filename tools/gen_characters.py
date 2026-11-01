@@ -3,7 +3,9 @@ scenes/characters/deshmukh.tscn  - Mr. Deshmukh of 4B (white kurta-pajama, grey 
 scenes/characters/raghu.tscn     - Raghu the watchman (khaki uniform, cap, moustache)
 scenes/characters/cameraman.tscn - the Cameraman (thin, grey sweater, shoulder camcorder over
                                    his face, blinking red REC light; scripts/characters/cameraman.gd)
-They are placeholders until real models exist; keep node names (Body, RecDot, RecLight).
+scenes/characters/iyer.tscn      - Mrs. Iyer of 2C (saree, shawl, grey bun, bindi)
+They are placeholders until real models exist; keep node names (Body, Body/Head, RecDot,
+RecLight). Body/Head is a pivot at the top of the neck: NPC head tracking turns it.
 Run: python tools/gen_characters.py
 """
 import os
@@ -12,6 +14,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "scenes", "characters")
 
 SKIN = (0.42, 0.29, 0.21)
+HEAD_Y = 1.52  # Body/Head pivot height (top of the neck)
 
 
 def col(c):
@@ -60,6 +63,11 @@ class Scene:
         props["material_override"] = f'SubResource("{self.mat(color, rough, emission)}")'
         self.nodes.append(self._node(name, "MeshInstance3D", parent, props))
 
+    def head_part(self, name, mesh_type, mesh_props, color, world_pos, **kw):
+        """A part that turns with the head: given in character space, stored under Body/Head."""
+        x, y, z = world_pos
+        self.part(name, mesh_type, mesh_props, color, (x, round(y - HEAD_Y, 4), z), parent="Body/Head", **kw)
+
     def node(self, name, typ, props, parent="."):
         self.nodes.append(self._node(name, typ, parent, props))
 
@@ -86,9 +94,10 @@ def body(s, top, legs, shoes, hair, thin=1.0, arms=True):
             s.part(f"Arm{side}", "CapsuleMesh", capsule(0.05, 0.66), top, (x, 1.13, 0), rot=(0, 0, 4 if x < 0 else -4))
             s.part(f"Hand{side}", "SphereMesh", {"radius": "0.045", "height": "0.09"}, SKIN, (x * 1.06, 0.79, 0))
     s.part("Neck", "CylinderMesh", {"top_radius": "0.045", "bottom_radius": "0.05", "height": "0.1"}, SKIN, (0, 1.5, 0))
-    s.part("Head", "SphereMesh", {"radius": "0.105", "height": "0.24"}, SKIN, (0, 1.62, 0))
-    s.part("Hair", "SphereMesh", {"radius": "0.112", "height": "0.112", "is_hemisphere": "true"}, hair, (0, 1.64, 0.012))
-    s.part("Nose", "BoxMesh", {"size": "Vector3(0.03, 0.05, 0.04)"}, SKIN, (0, 1.6, -0.105))
+    s.node("Head", "Node3D", {"position": f"Vector3(0, {HEAD_Y}, 0)"}, parent="Body")
+    s.head_part("Skull", "SphereMesh", {"radius": "0.105", "height": "0.24"}, SKIN, (0, 1.62, 0))
+    s.head_part("Hair", "SphereMesh", {"radius": "0.112", "height": "0.112", "is_hemisphere": "true"}, hair, (0, 1.64, 0.012))
+    s.head_part("Nose", "BoxMesh", {"size": "Vector3(0.03, 0.05, 0.04)"}, SKIN, (0, 1.6, -0.105))
 
 
 def deshmukh():
@@ -97,7 +106,7 @@ def deshmukh():
     body(s, white, white, (0.3, 0.2, 0.12), grey)
     s.part("Kurta", "CylinderMesh", {"top_radius": "0.18", "bottom_radius": "0.22", "height": "0.72", "radial_segments": "12"},
            white, (0, 0.98, 0), scale=(1, 1, 0.72))
-    s.part("Glasses", "BoxMesh", {"size": "Vector3(0.17, 0.035, 0.012)"}, (0.05, 0.04, 0.03), (0, 1.635, -0.104), rough=0.3)
+    s.head_part("Glasses", "BoxMesh", {"size": "Vector3(0.17, 0.035, 0.012)"}, (0.05, 0.04, 0.03), (0, 1.635, -0.104), rough=0.3)
     s.write("deshmukh.tscn")
 
 
@@ -106,10 +115,23 @@ def raghu():
     khaki, dark = (0.45, 0.39, 0.25), (0.33, 0.28, 0.18)
     body(s, khaki, khaki, (0.08, 0.06, 0.05), (0.06, 0.05, 0.05))
     s.part("Belt", "BoxMesh", {"size": "Vector3(0.37, 0.05, 0.25)"}, (0.08, 0.06, 0.05), (0, 0.9, 0))
-    s.part("Cap", "CylinderMesh", {"top_radius": "0.11", "bottom_radius": "0.115", "height": "0.07"}, dark, (0, 1.715, 0.005))
-    s.part("Brim", "BoxMesh", {"size": "Vector3(0.17, 0.012, 0.08)"}, dark, (0, 1.69, -0.11))
-    s.part("Moustache", "BoxMesh", {"size": "Vector3(0.075, 0.016, 0.012)"}, (0.05, 0.04, 0.04), (0, 1.575, -0.1))
+    s.head_part("Cap", "CylinderMesh", {"top_radius": "0.11", "bottom_radius": "0.115", "height": "0.07"}, dark, (0, 1.715, 0.005))
+    s.head_part("Brim", "BoxMesh", {"size": "Vector3(0.17, 0.012, 0.08)"}, dark, (0, 1.69, -0.11))
+    s.head_part("Moustache", "BoxMesh", {"size": "Vector3(0.075, 0.016, 0.012)"}, (0.05, 0.04, 0.04), (0, 1.575, -0.1))
     s.write("raghu.tscn")
+
+
+def iyer():
+    s = Scene("Iyer")
+    blouse, saree, shawl = (0.42, 0.08, 0.12), (0.12, 0.32, 0.22), (0.55, 0.5, 0.42)
+    body(s, blouse, saree, (0.25, 0.15, 0.1), (0.5, 0.5, 0.5))
+    s.part("Saree", "CylinderMesh", {"top_radius": "0.19", "bottom_radius": "0.27", "height": "0.98", "radial_segments": "14"},
+           saree, (0, 0.49, 0), scale=(1, 1, 0.8))
+    s.part("Pallu", "BoxMesh", {"size": "Vector3(0.2, 0.62, 0.02)"}, saree, (0.04, 1.2, -0.12), rot=(0, 0, 32))
+    s.part("Shawl", "CapsuleMesh", capsule(0.19, 0.44), shawl, (0, 1.3, 0.005), scale=(1.12, 1, 0.74))
+    s.head_part("Bun", "SphereMesh", {"radius": "0.06", "height": "0.12"}, (0.5, 0.5, 0.5), (0, 1.63, 0.11))
+    s.head_part("Bindi", "SphereMesh", {"radius": "0.008", "height": "0.016"}, (0.8, 0.05, 0.05), (0, 1.665, -0.103))
+    s.write("iyer.tscn")
 
 
 def cameraman():
@@ -137,4 +159,5 @@ def cameraman():
 if __name__ == "__main__":
     deshmukh()
     raghu()
+    iyer()
     cameraman()

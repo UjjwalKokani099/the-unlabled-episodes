@@ -1,0 +1,21 @@
+{
+	"start": "hello",
+	"nodes": {
+		"hello": {"speaker": "MR. DESHMUKH", "text": "You must be Raghu.", "set": {"met_deshmukh": true}, "next": "who"},
+		"who": {"speaker": "RAGHU", "text": "...", "choices": [
+			{"text": "Yes, sahab. And you are...?", "next": "intro"},
+			{"text": "How do you know my name?", "next": "name", "set": {"deshmukh_knew_name": true}}
+		]},
+		"name": {"speaker": "MR. DESHMUKH", "text": "It's written on your face, beta. Like it was on Kishan's.", "next": "intro"},
+		"intro": {"speaker": "MR. DESHMUKH", "text": "Deshmukh. 4B. I have been here longer than these walls.", "next": "ask"},
+		"ask": {"speaker": "MR. DESHMUKH", "text": "I take a small walk at three. Kishan kept the little gate open for me. You will also, no?", "choices": [
+			{"text": "Of course, sahab.", "next": "promise", "set": {"promised_gate": true}},
+			{"text": "Sorry, sahab. The gates stay locked after midnight.", "next": "refuse", "set": {"refused_gate": true}},
+			{"text": "Where do you go at three?", "if": "!flag:asked_where", "next": "where", "set": {"asked_where": true}}
+		]},
+		"where": {"speaker": "MR. DESHMUKH", "text": "Out. I always come back.", "next": "ask"},
+		"promise": {"speaker": "MR. DESHMUKH", "text": "Good boy. Three-twelve. Don't be late."},
+		"refuse": {"speaker": "MR. DESHMUKH", "text": "Locks. Kishan also had locks.", "next": "refuse2"},
+		"refuse2": {"speaker": "MR. DESHMUKH", "text": "Goodnight, Raghu."}
+	}
+}

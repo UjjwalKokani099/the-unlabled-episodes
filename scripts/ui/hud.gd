@@ -41,6 +41,11 @@ func show_note(text: String, handwritten: bool = false) -> void:
 	($NoteView as NoteView).open(text, handwritten)
 
 
+## Play a conversation (DialogueView). See scripts/dialogue/dialogue.gd for the format.
+func start_dialogue(path: String, start: String = "") -> void:
+	($DialogueView as DialogueView).play(path, start)
+
+
 ## Hold an item close and turn it over (InspectView). See Inspectable.
 func inspect(item: Inspectable) -> void:
 	($InspectView as InspectView).open(item)

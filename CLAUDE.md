@@ -154,8 +154,8 @@ Useful headless commands (run from project root):
   (Q) is the camcorder's PAUSE (freezes the tree + VHS pause band). Ids like `t1_flat_4b`
   persist in the save (`Game.mark_spotted/spotted_count`); 12 total = Ending B. A Spottable
   with `monitor` + `monitor_camera` counts only while that CCTV feed shows.
-- Characters: `tools/gen_characters.py` -> `scenes/characters/` (deshmukh, raghu, cameraman;
-  primitive stand-ins, -Z forward). `Cameraman`: `active`, `spot_id`, `vanish_when_unseen`
+- Characters: `tools/gen_characters.py` -> `scenes/characters/` (deshmukh, raghu, iyer,
+  cameraman; primitive stand-ins, -Z forward, head parts under the `Body/Head` pivot). `Cameraman`: `active`, `spot_id`, `vanish_when_unseen`
   (needs real line of sight), `cctv_only`, `steady_dot`. `NPCWalker`: scripted walks.
 - CCTV-only things: render layer 20 (`CCTVOnly`); the player camera's cull mask excludes it.
   CCTV markers can set `metadata/fov` for a narrow lens.
@@ -163,8 +163,24 @@ Useful headless commands (run from project root):
   `glow_materials` (restored on exit). Kit sodium lamps + wing tube lights are in "mains".
 - `RingingPhone`: phones/intercoms (ring_event, answered_event, use_event, blinking Led).
 - Fonts for paper: `[font=res://ui/fonts/hand_raghu.tres]`, `hand_stranger.tres` in BBCode.
-- Older input tests (test_camera, test_interaction, test_events, test_player) are timing-
-  flaky under uncapped frames; rerun before assuming a regression.
+- Dialogue: JSON in `dialogue/<tape>/*.json` (format in `scripts/dialogue/dialogue.gd`: nodes
+  with speaker/text/next/choices/branch; `if` = "event:x" / "flag:x" / "!..."; `set` flags
+  (stored as Game flags `dlg_<name>`), `event` fires). Play: `call_group("hud",
+  "start_dialogue", path, start)` -> HUD/DialogueView (await `finished`). Tests: `instant`,
+  `advance()`, `choose(i)`, `choice_texts()`. Read flags with `Dialogue.flag("name")`.
+- NPC base: `scenes/characters/npc.tscn` (CharacterBody3D + Model + Agent + Talk). Put a
+  character scene under `<npc>/Model`; head tracking turns `Model/.../Body/Head` (`uncanny`
+  = 150 degrees + snap); `walk_to()` -> `arrived` (deferred); `talk()`; `active` toggles all.
+  Levels add a `NavBaker` NavigationRegion3D (bakes from `../Collision` at load, on a thread;
+  filter_baking_aabb keeps it to the ground). Agent `path_desired_distance` 0.9: the baked
+  mesh floats ~0.5 m above the floor and a smaller value never advances.
+- Tape 1 people: DeshmukhNPC (first round, asks for the gate at 3:12: flags
+  `promised_gate` / `refused_gate` change 3:12 + the secretary), IyerNPC (walks over after
+  the CCTV check for her parcel; mentions the red light: `heard_terrace`), secretary call =
+  `dialogue/tape01/secretary.json`.
+- Older input tests (test_camera, test_interaction, test_events, test_player) looked flaky;
+  the real cause was the machine running out of memory (OneDrive syncing this folder grew to
+  ~35 GB commit). If tests crash with D3D12 0x8007000e, check free RAM/commit first.
 
 ## Camera / screen
 - Every level instances `ui/hud/camcorder.tscn` (OSD on layer 2, VHS shader on layer 3) and

@@ -77,7 +77,10 @@ func _initialize() -> void:
 	ev.action = &"interact"
 	ev.pressed = true
 	Input.parse_input_event(ev)
-	await physics(3)
+	var t := 0.0
+	while view.is_open and t < 3.0:  # input timing varies with frame rate
+		await create_timer(0.05).timeout
+		t += 0.05
 	check(not view.is_open and p.input_enabled and is_instance_valid(card), "E puts it back (it can't be taken)")
 
 	# --- The battery in the drawer ---

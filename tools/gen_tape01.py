@@ -131,6 +131,34 @@ def story_beats(lv) -> None:
                                        ("CabinZone2", (5.75, 1.2, 23.75), (3.2, 2.4, 3.2), "cabin_return2", "check_4b"),
                                        ("MeterZone", (28, 1.2, -4), (3.6, 2.4, 3.6), "meter_room_reached", "power_cut")):
         area(lv, ".", name, pos, size, {"script": script(lv, trig), "event_id": f'&"{ev}"', "armed_by": f'&"{armed}"'})
+    # ---- people (Phase 4): NPC base scene + a character model under Model
+    nav_mesh = lv.sub("NavigationMesh", {
+        "geometry_parsed_geometry_type": "1", "geometry_collision_mask": "1",
+        "geometry_source_geometry_mode": "1", "geometry_source_group_name": '&"nav_source"',
+        "cell_size": "0.25", "cell_height": "0.25", "agent_radius": "0.25", "agent_height": "1.75",
+        "agent_max_climb": "0.25", "agent_max_slope": "40.0",
+        "filter_baking_aabb": "AABB(-40, -1, -34, 80, 4, 80)"})  # ground level only: NPCs stay down here
+    lv.add("Navigation", "NavigationRegion3D", ".", {"script": script(lv, "res://scripts/kit/nav_baker.gd"),
+                                                     "navigation_mesh": f'SubResource("{nav_mesh}")'})
+    npc = "res://scenes/characters/npc.tscn"
+    # Mr. Deshmukh, early in the night, under B wing: body turned to the gate (uncanny head)
+    lv.scene("DeshmukhNPC", npc, ".", {"position": v3(-10.4, 0, -11.5), "rotation_degrees": v3(0, 180, 0),
+                                       "display_name": '"Mr. Deshmukh"', "dialogue": '"res://dialogue/tape01/deshmukh.json"',
+                                       "talked_event": '&"talked_deshmukh"', "uncanny": "true", "look_distance": "7.0",
+                                       "walk_speed": "0.9"})
+    character(lv, "Deshmukh", "deshmukh", "DeshmukhNPC/Model", (0, 0, 0), 0)
+    # Mrs. Iyer of 2C: comes down for her parcel after the first CCTV check
+    lv.scene("IyerNPC", npc, ".", {"position": v3(3.5, 0, -13.2), "display_name": '"Mrs. Iyer"',
+                                   "dialogue": '"res://dialogue/tape01/iyer.json"', "talked_event": '&"talked_iyer"',
+                                   "active": "false", "walk_speed": "1.0"})
+    character(lv, "Iyer", "iyer", "IyerNPC/Model", (0, 0, 0), 0)
+    parcel = usable(lv, ".", "Parcel", (6.9, 0.12, 22.4), (0.42, 0.3, 0.36), "Pick up the parcel for 2C",
+                    {"item_id": '&"parcel_2c"', "display_name": '"Parcel for 2C"'}, "res://scripts/interaction/pickup.gd")
+    lv.box((0, 0, 0), (0.36, 0.22, 0.28), "cardboard", collide=False, parent=parcel)
+    lv.add("Label", "Label3D", parcel, {"position": v3(0, 0.111, 0), "rotation_degrees": v3(-90, 0, 0),
+                                        "pixel_size": "0.0012", "font_size": "48", "outline_size": "0",
+                                        "modulate": "Color(0.1, 0.1, 0.1, 1)", "text": '"IYER  2C"'})
+
     # mains power + the story director
     glow = ", ".join(f'ExtResource("{lv.ext(f"res://assets/materials/{m}.tres", "Material")}")'
                      for m in ("glass_sodium", "glass_lit_warm", "glass_lit_tv"))
@@ -332,6 +360,7 @@ def main() -> None:
     # ---- objectives (Raghu's normal night duties)
     objs = [("sign_register", "Sign in at the gate register", "register_signed", 1, ""),
             ("check_cctv", "Check the CCTV monitor", "cctv_checked", 1, "sign_register"),
+            ("give_parcel", "Give Mrs. Iyer her parcel", "parcel_given", 1, "check_cctv"),
             ("patrol", "Patrol the four wings", "patrol_point", 4, "check_cctv"),
             ("lock_terraces", "Padlock the terrace doors", "terrace_locked", 4, "patrol"),
             ("return_cabin", "Go back to the cabin", "back_at_cabin", 1, "lock_terraces"),

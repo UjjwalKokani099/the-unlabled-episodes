@@ -71,11 +71,16 @@
 [ext_resource type="PackedScene" path="res://scenes/characters/cameraman.tscn" id="69_r"]
 [ext_resource type="Script" path="res://scripts/story/spottable.gd" id="70_r"]
 [ext_resource type="PackedScene" path="res://scenes/characters/raghu.tscn" id="71_r"]
-[ext_resource type="Script" path="res://scripts/props/power_grid.gd" id="72_r"]
-[ext_resource type="Script" path="res://chapters/tape_01_watchman/scripts/tape01_director.gd" id="73_r"]
-[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="74_r"]
-[ext_resource type="PackedScene" path="res://ui/hud/camcorder.tscn" id="75_r"]
-[ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="76_r"]
+[ext_resource type="Script" path="res://scripts/kit/nav_baker.gd" id="72_r"]
+[ext_resource type="PackedScene" path="res://scenes/characters/npc.tscn" id="73_r"]
+[ext_resource type="PackedScene" path="res://scenes/characters/iyer.tscn" id="74_r"]
+[ext_resource type="Script" path="res://scripts/interaction/pickup.gd" id="75_r"]
+[ext_resource type="Material" path="res://assets/materials/cardboard.tres" id="76_r"]
+[ext_resource type="Script" path="res://scripts/props/power_grid.gd" id="77_r"]
+[ext_resource type="Script" path="res://chapters/tape_01_watchman/scripts/tape01_director.gd" id="78_r"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="79_r"]
+[ext_resource type="PackedScene" path="res://ui/hud/camcorder.tscn" id="80_r"]
+[ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="81_r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0"]
 shader = ExtResource("2_r")
@@ -1158,6 +1163,25 @@ size = Vector3(3.2, 2.4, 3.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_352"]
 size = Vector3(3.6, 2.4, 3.6)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_353"]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 1
+geometry_source_geometry_mode = 1
+geometry_source_group_name = &"nav_source"
+cell_size = 0.25
+cell_height = 0.25
+agent_radius = 0.25
+agent_height = 1.75
+agent_max_climb = 0.25
+agent_max_slope = 40.0
+filter_baking_aabb = AABB(-40, -1, -34, 80, 4, 80)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_354"]
+size = Vector3(0.42, 0.3, 0.36)
+
+[sub_resource type="BoxMesh" id="BoxMesh_355"]
+size = Vector3(0.36, 0.22, 0.28)
 
 [node name="ShantiVihar" type="Node3D"]
 
@@ -40525,21 +40549,79 @@ armed_by = &"power_cut"
 [node name="Shape" type="CollisionShape3D" parent="MeterZone"]
 shape = SubResource("BoxShape3D_352")
 
-[node name="Power" type="Node" parent="."]
+[node name="Navigation" type="NavigationRegion3D" parent="."]
 script = ExtResource("72_r")
+navigation_mesh = SubResource("NavigationMesh_353")
+
+[node name="DeshmukhNPC" parent="." instance=ExtResource("73_r")]
+position = Vector3(-10.4, 0, -11.5)
+rotation_degrees = Vector3(0, 180, 0)
+display_name = "Mr. Deshmukh"
+dialogue = "res://dialogue/tape01/deshmukh.json"
+talked_event = &"talked_deshmukh"
+uncanny = true
+look_distance = 7.0
+walk_speed = 0.9
+
+[node name="Deshmukh" parent="DeshmukhNPC/Model" instance=ExtResource("66_r")]
+position = Vector3(0, 0, 0)
+rotation_degrees = Vector3(0, 0, 0)
+
+[node name="IyerNPC" parent="." instance=ExtResource("73_r")]
+position = Vector3(3.5, 0, -13.2)
+display_name = "Mrs. Iyer"
+dialogue = "res://dialogue/tape01/iyer.json"
+talked_event = &"talked_iyer"
+active = false
+walk_speed = 1.0
+
+[node name="Iyer" parent="IyerNPC/Model" instance=ExtResource("74_r")]
+position = Vector3(0, 0, 0)
+rotation_degrees = Vector3(0, 0, 0)
+
+[node name="Parcel" type="Node3D" parent="."]
+position = Vector3(6.9, 0.12, 22.4)
+script = ExtResource("75_r")
+item_id = &"parcel_2c"
+display_name = "Parcel for 2C"
+
+[node name="Interactable" type="Area3D" parent="Parcel"]
+position = Vector3(0, 0, 0)
+script = ExtResource("24_r")
+prompt = "Pick up the parcel for 2C"
+
+[node name="Shape" type="CollisionShape3D" parent="Parcel/Interactable"]
+shape = SubResource("BoxShape3D_354")
+
+[node name="M6502" type="MeshInstance3D" parent="Parcel"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("BoxMesh_355")
+material_override = ExtResource("76_r")
+
+[node name="Label" type="Label3D" parent="Parcel"]
+position = Vector3(0, 0.111, 0)
+rotation_degrees = Vector3(-90, 0, 0)
+pixel_size = 0.0012
+font_size = 48
+outline_size = 0
+modulate = Color(0.1, 0.1, 0.1, 1)
+text = "IYER  2C"
+
+[node name="Power" type="Node" parent="."]
+script = ExtResource("77_r")
 glow_materials = Array[BaseMaterial3D]([ExtResource("31_r"), ExtResource("20_r"), ExtResource("21_r")])
 
 [node name="Story" type="Node" parent="."]
-script = ExtResource("73_r")
+script = ExtResource("78_r")
 
-[node name="Player" parent="." instance=ExtResource("74_r")]
+[node name="Player" parent="." instance=ExtResource("79_r")]
 position = Vector3(5.75, 0.0, 23.6)
 rotation_degrees = Vector3(0, 0.0, 0)
 flashlight_on_start = true
 
-[node name="Camcorder" parent="." instance=ExtResource("75_r")]
+[node name="Camcorder" parent="." instance=ExtResource("80_r")]
 
-[node name="HUD" parent="." instance=ExtResource("76_r")]
+[node name="HUD" parent="." instance=ExtResource("81_r")]
 
 [node name="BenchmarkPoints" type="Node3D" parent="."]
 

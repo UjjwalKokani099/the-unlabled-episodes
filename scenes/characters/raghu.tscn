@@ -156,18 +156,21 @@ position = Vector3(0, 1.5, 0)
 mesh = SubResource("CylinderMesh_13")
 material_override = SubResource("StandardMaterial3D_10")
 
-[node name="Head" type="MeshInstance3D" parent="Body"]
-position = Vector3(0, 1.62, 0)
+[node name="Head" type="Node3D" parent="Body"]
+position = Vector3(0, 1.52, 0)
+
+[node name="Skull" type="MeshInstance3D" parent="Body/Head"]
+position = Vector3(0, 0.1, 0)
 mesh = SubResource("SphereMesh_14")
 material_override = SubResource("StandardMaterial3D_10")
 
-[node name="Hair" type="MeshInstance3D" parent="Body"]
-position = Vector3(0, 1.64, 0.012)
+[node name="Hair" type="MeshInstance3D" parent="Body/Head"]
+position = Vector3(0, 0.12, 0.012)
 mesh = SubResource("SphereMesh_15")
 material_override = SubResource("StandardMaterial3D_16")
 
-[node name="Nose" type="MeshInstance3D" parent="Body"]
-position = Vector3(0, 1.6, -0.105)
+[node name="Nose" type="MeshInstance3D" parent="Body/Head"]
+position = Vector3(0, 0.08, -0.105)
 mesh = SubResource("BoxMesh_17")
 material_override = SubResource("StandardMaterial3D_10")
 
@@ -176,17 +179,17 @@ position = Vector3(0, 0.9, 0)
 mesh = SubResource("BoxMesh_18")
 material_override = SubResource("StandardMaterial3D_5")
 
-[node name="Cap" type="MeshInstance3D" parent="Body"]
-position = Vector3(0, 1.715, 0.005)
+[node name="Cap" type="MeshInstance3D" parent="Body/Head"]
+position = Vector3(0, 0.195, 0.005)
 mesh = SubResource("CylinderMesh_19")
 material_override = SubResource("StandardMaterial3D_20")
 
-[node name="Brim" type="MeshInstance3D" parent="Body"]
-position = Vector3(0, 1.69, -0.11)
+[node name="Brim" type="MeshInstance3D" parent="Body/Head"]
+position = Vector3(0, 0.17, -0.11)
 mesh = SubResource("BoxMesh_21")
 material_override = SubResource("StandardMaterial3D_20")
 
-[node name="Moustache" type="MeshInstance3D" parent="Body"]
-position = Vector3(0, 1.575, -0.1)
+[node name="Moustache" type="MeshInstance3D" parent="Body/Head"]
+position = Vector3(0, 0.055, -0.1)
 mesh = SubResource("BoxMesh_22")
 material_override = SubResource("StandardMaterial3D_23")

@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/ui/note_view.gd" id="5_note"]
 [ext_resource type="PackedScene" path="res://ui/hud/subtitles.tscn" id="6_subs"]
 [ext_resource type="Script" path="res://scripts/ui/inspect_view.gd" id="7_inspect"]
+[ext_resource type="Script" path="res://scripts/ui/dialogue_view.gd" id="8_dialogue"]
 
 [sub_resource type="StyleBoxFlat" id="Style_paper"]
 bg_color = Color(0.93, 0.9, 0.8, 1)
@@ -155,6 +156,9 @@ text = "[E]  put it down"
 horizontal_alignment = 1
 
 [node name="Subtitles" parent="." instance=ExtResource("6_subs")]
+
+[node name="DialogueView" type="CanvasLayer" parent="."]
+script = ExtResource("8_dialogue")
 
 [node name="InspectView" type="CanvasLayer" parent="."]
 script = ExtResource("7_inspect")

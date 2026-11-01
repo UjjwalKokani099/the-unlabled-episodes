@@ -19,6 +19,14 @@ complete_on = &"cctv_checked"
 required = 1
 starts_after = &"sign_register"
 
+[sub_resource type="Resource" id="O_give_parcel"]
+script = ExtResource("2_data")
+id = &"give_parcel"
+text = "Give Mrs. Iyer her parcel"
+complete_on = &"parcel_given"
+required = 1
+starts_after = &"check_cctv"
+
 [sub_resource type="Resource" id="O_patrol"]
 script = ExtResource("2_data")
 id = &"patrol"
@@ -149,4 +157,4 @@ starts_after = &"meter_room"
 
 [resource]
 script = ExtResource("1_set")
-objectives = Array[ExtResource("2_data")]([SubResource("O_sign_register"), SubResource("O_check_cctv"), SubResource("O_patrol"), SubResource("O_lock_terraces"), SubResource("O_return_cabin"), SubResource("O_sign_3am"), SubResource("O_watch_gate"), SubResource("O_log_deshmukh"), SubResource("O_cctv_again"), SubResource("O_look_balcony"), SubResource("O_answer_intercom"), SubResource("O_take_key"), SubResource("O_check_4b"), SubResource("O_back_to_cabin"), SubResource("O_read_register"), SubResource("O_call_secretary"), SubResource("O_meter_room"), SubResource("O_main_switch")])
+objectives = Array[ExtResource("2_data")]([SubResource("O_sign_register"), SubResource("O_check_cctv"), SubResource("O_give_parcel"), SubResource("O_patrol"), SubResource("O_lock_terraces"), SubResource("O_return_cabin"), SubResource("O_sign_3am"), SubResource("O_watch_gate"), SubResource("O_log_deshmukh"), SubResource("O_cctv_again"), SubResource("O_look_balcony"), SubResource("O_answer_intercom"), SubResource("O_take_key"), SubResource("O_check_4b"), SubResource("O_back_to_cabin"), SubResource("O_read_register"), SubResource("O_call_secretary"), SubResource("O_meter_room"), SubResource("O_main_switch")])
