@@ -1,0 +1,43 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/props/tube_light.gd" id="1_tube"]
+[ext_resource type="Material" path="res://assets/materials/metal_meter_white.tres" id="2_metal"]
+
+[sub_resource type="StandardMaterial3D" id="Material_tube"]
+albedo_color = Color(0.95, 0.97, 1, 1)
+emission_enabled = true
+emission = Color(0.88, 0.95, 1, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="CylinderMesh" id="Mesh_tube"]
+material = SubResource("Material_tube")
+top_radius = 0.014
+bottom_radius = 0.014
+height = 1.2
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="Mesh_batten"]
+size = Vector3(1.26, 0.04, 0.07)
+
+[node name="TubeLight" type="Node3D"]
+script = ExtResource("1_tube")
+
+[node name="Batten" type="MeshInstance3D" parent="."]
+mesh = SubResource("Mesh_batten")
+material_override = ExtResource("2_metal")
+
+[node name="Tube" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.04, 0)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("Mesh_tube")
+cast_shadow = 0
+
+[node name="Light" type="OmniLight3D" parent="."]
+position = Vector3(0, -0.15, 0)
+light_color = Color(0.86, 0.95, 1, 1)
+light_energy = 1.1
+light_specular = 0.25
+light_size = 0.3
+omni_range = 7.0
+omni_attenuation = 1.2

@@ -1,0 +1,838 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://assets/materials/floor_mosaic.tres" id="1_r"]
+[ext_resource type="Material" path="res://assets/materials/floor_kota.tres" id="2_r"]
+[ext_resource type="Material" path="res://assets/materials/tile_white.tres" id="3_r"]
+[ext_resource type="Material" path="res://assets/materials/tile_checker.tres" id="4_r"]
+[ext_resource type="Material" path="res://assets/materials/tile_polished.tres" id="5_r"]
+[ext_resource type="Material" path="res://assets/materials/ground_pavers.tres" id="6_r"]
+[ext_resource type="Material" path="res://assets/materials/ground_asphalt.tres" id="7_r"]
+[ext_resource type="Material" path="res://assets/materials/ground_dirt.tres" id="8_r"]
+[ext_resource type="Material" path="res://assets/materials/concrete_dark.tres" id="9_r"]
+[ext_resource type="Material" path="res://assets/materials/concrete_rough.tres" id="10_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_paint_white.tres" id="11_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_paint_cream.tres" id="12_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_paint_mint.tres" id="13_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_paint_sky.tres" id="14_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_paint_peach.tres" id="15_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_exterior_cream.tres" id="16_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_exterior_peach.tres" id="17_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_exterior_sky.tres" id="18_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_stairwell_mint.tres" id="19_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_stairwell_cream.tres" id="20_r"]
+[ext_resource type="Material" path="res://assets/materials/wood_door_dark.tres" id="21_r"]
+[ext_resource type="Material" path="res://assets/materials/wood_door_varnished.tres" id="22_r"]
+[ext_resource type="Material" path="res://assets/materials/wood_frame_blue.tres" id="23_r"]
+[ext_resource type="Material" path="res://assets/materials/wood_planks.tres" id="24_r"]
+[ext_resource type="Material" path="res://assets/materials/metal_corrugated.tres" id="25_r"]
+[ext_resource type="Material" path="res://assets/materials/paper.tres" id="26_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_peeling.tres" id="27_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_peeling_heavy.tres" id="28_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_damp_green.tres" id="29_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_yellow_peeling.tres" id="30_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_bare_stained.tres" id="31_r"]
+[ext_resource type="Material" path="res://assets/materials/brick_red.tres" id="32_r"]
+[ext_resource type="Material" path="res://assets/materials/concrete_dirty.tres" id="33_r"]
+[ext_resource type="Material" path="res://assets/materials/metal_gate_green.tres" id="34_r"]
+[ext_resource type="Material" path="res://assets/materials/metal_meter_white.tres" id="35_r"]
+[ext_resource type="Material" path="res://assets/materials/metal_rust.tres" id="36_r"]
+[ext_resource type="PackedScene" path="res://scenes/decals/notice_water.tscn" id="37_r"]
+[ext_resource type="PackedScene" path="res://scenes/decals/tuition.tscn" id="38_r"]
+[ext_resource type="PackedScene" path="res://scenes/decals/ganesh.tscn" id="39_r"]
+[ext_resource type="PackedScene" path="res://scenes/decals/lost_dog.tscn" id="40_r"]
+[ext_resource type="PackedScene" path="res://scenes/decals/room_rent.tscn" id="41_r"]
+[ext_resource type="PackedScene" path="res://scenes/decals/stencil_no_bills.tscn" id="42_r"]
+[ext_resource type="PackedScene" path="res://scenes/decals/crack_a.tscn" id="43_r"]
+[ext_resource type="PackedScene" path="res://scenes/decals/hand_grime.tscn" id="44_r"]
+[ext_resource type="PackedScene" path="res://scenes/decals/paan_a.tscn" id="45_r"]
+[ext_resource type="PackedScene" path="res://scenes/decals/water_stain.tscn" id="46_r"]
+[ext_resource type="PackedScene" path="res://scenes/decals/paan_b.tscn" id="47_r"]
+[ext_resource type="PackedScene" path="res://scenes/props/tube_light.tscn" id="48_r"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="49_r"]
+[ext_resource type="PackedScene" path="res://ui/hud/camcorder.tscn" id="50_r"]
+[ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="51_r"]
+[ext_resource type="Script" path="res://scripts/ui/debug_overlay.gd" id="52_r"]
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 1
+background_color = Color(0, 0, 0, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.55, 0.6, 0.7, 1)
+ambient_light_energy = 0.08
+tonemap_mode = 4
+tonemap_exposure = 1.1
+ssao_enabled = true
+ssao_radius = 1.0
+ssao_intensity = 2.0
+ssil_enabled = true
+ssil_radius = 3.0
+ssil_intensity = 0.8
+glow_enabled = true
+glow_intensity = 0.6
+glow_bloom = 0.03
+glow_hdr_threshold = 0.9
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.015
+volumetric_fog_length = 32.0
+
+[sub_resource type="BoxMesh" id="Box_0"]
+size = Vector3(4, 0.1, 6)
+add_uv2 = true
+
+[sub_resource type="BoxMesh" id="Box_1"]
+size = Vector3(20.0, 0.1, 12.0)
+add_uv2 = true
+
+[sub_resource type="BoxMesh" id="Box_2"]
+size = Vector3(2, 3.0, 0.2)
+add_uv2 = true
+
+[sub_resource type="BoxMesh" id="Box_3"]
+size = Vector3(0.2, 3.0, 2)
+add_uv2 = true
+
+[sub_resource type="BoxMesh" id="Box_4"]
+size = Vector3(6.4, 3.0, 0.1)
+add_uv2 = true
+
+[sub_resource type="BoxShape3D" id="Shape_0"]
+size = Vector3(20.0, 0.1, 12.0)
+
+[sub_resource type="BoxShape3D" id="Shape_1"]
+size = Vector3(20.0, 3.0, 0.2)
+
+[sub_resource type="BoxShape3D" id="Shape_2"]
+size = Vector3(20.0, 3.0, 0.2)
+
+[sub_resource type="BoxShape3D" id="Shape_3"]
+size = Vector3(0.2, 3.0, 12.0)
+
+[sub_resource type="BoxShape3D" id="Shape_4"]
+size = Vector3(0.2, 3.0, 12.0)
+
+[sub_resource type="BoxShape3D" id="Shape_5"]
+size = Vector3(6.4, 3.0, 0.2)
+
+[node name="MaterialGallery" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+[node name="Floors" type="Node3D" parent="."]
+
+[node name="F_floor_mosaic" type="MeshInstance3D" parent="Floors"]
+position = Vector3(-8.0, -0.05, 3.0)
+mesh = SubResource("Box_0")
+material_override = ExtResource("1_r")
+
+[node name="F_floor_mosaicLabel" type="Label3D" parent="Floors"]
+position = Vector3(-8.0, 0.02, 0.4)
+pixel_size = 0.0035
+text = "floor_mosaic"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="F_floor_kota" type="MeshInstance3D" parent="Floors"]
+position = Vector3(-4.0, -0.05, 3.0)
+mesh = SubResource("Box_0")
+material_override = ExtResource("2_r")
+
+[node name="F_floor_kotaLabel" type="Label3D" parent="Floors"]
+position = Vector3(-4.0, 0.02, 0.4)
+pixel_size = 0.0035
+text = "floor_kota"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="F_tile_white" type="MeshInstance3D" parent="Floors"]
+position = Vector3(0.0, -0.05, 3.0)
+mesh = SubResource("Box_0")
+material_override = ExtResource("3_r")
+
+[node name="F_tile_whiteLabel" type="Label3D" parent="Floors"]
+position = Vector3(0.0, 0.02, 0.4)
+pixel_size = 0.0035
+text = "tile_white"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="F_tile_checker" type="MeshInstance3D" parent="Floors"]
+position = Vector3(4.0, -0.05, 3.0)
+mesh = SubResource("Box_0")
+material_override = ExtResource("4_r")
+
+[node name="F_tile_checkerLabel" type="Label3D" parent="Floors"]
+position = Vector3(4.0, 0.02, 0.4)
+pixel_size = 0.0035
+text = "tile_checker"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="F_tile_polished" type="MeshInstance3D" parent="Floors"]
+position = Vector3(8.0, -0.05, 3.0)
+mesh = SubResource("Box_0")
+material_override = ExtResource("5_r")
+
+[node name="F_tile_polishedLabel" type="Label3D" parent="Floors"]
+position = Vector3(8.0, 0.02, 0.4)
+pixel_size = 0.0035
+text = "tile_polished"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="G_ground_pavers" type="MeshInstance3D" parent="Floors"]
+position = Vector3(-8.0, -0.05, -3.0)
+mesh = SubResource("Box_0")
+material_override = ExtResource("6_r")
+
+[node name="G_ground_paversLabel" type="Label3D" parent="Floors"]
+position = Vector3(-8.0, 0.02, -0.4)
+pixel_size = 0.0035
+text = "ground_pavers"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="G_ground_asphalt" type="MeshInstance3D" parent="Floors"]
+position = Vector3(-4.0, -0.05, -3.0)
+mesh = SubResource("Box_0")
+material_override = ExtResource("7_r")
+
+[node name="G_ground_asphaltLabel" type="Label3D" parent="Floors"]
+position = Vector3(-4.0, 0.02, -0.4)
+pixel_size = 0.0035
+text = "ground_asphalt"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="G_ground_dirt" type="MeshInstance3D" parent="Floors"]
+position = Vector3(0.0, -0.05, -3.0)
+mesh = SubResource("Box_0")
+material_override = ExtResource("8_r")
+
+[node name="G_ground_dirtLabel" type="Label3D" parent="Floors"]
+position = Vector3(0.0, 0.02, -0.4)
+pixel_size = 0.0035
+text = "ground_dirt"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="G_concrete_dark" type="MeshInstance3D" parent="Floors"]
+position = Vector3(4.0, -0.05, -3.0)
+mesh = SubResource("Box_0")
+material_override = ExtResource("9_r")
+
+[node name="G_concrete_darkLabel" type="Label3D" parent="Floors"]
+position = Vector3(4.0, 0.02, -0.4)
+pixel_size = 0.0035
+text = "concrete_dark"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="G_concrete_rough" type="MeshInstance3D" parent="Floors"]
+position = Vector3(8.0, -0.05, -3.0)
+mesh = SubResource("Box_0")
+material_override = ExtResource("10_r")
+
+[node name="G_concrete_roughLabel" type="Label3D" parent="Floors"]
+position = Vector3(8.0, 0.02, -0.4)
+pixel_size = 0.0035
+text = "concrete_rough"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="Ceiling" type="MeshInstance3D" parent="Floors"]
+position = Vector3(0, 3.05, 0)
+mesh = SubResource("Box_1")
+material_override = ExtResource("11_r")
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="B0_wall_paint_cream" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-9.0, 1.5, -6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("12_r")
+
+[node name="B0_wall_paint_creamLabel" type="Label3D" parent="Walls"]
+position = Vector3(-9.0, 2.75, -5.99)
+pixel_size = 0.0035
+text = "wall_paint_cream"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+
+[node name="B1_wall_paint_mint" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-7.0, 1.5, -6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("13_r")
+
+[node name="B1_wall_paint_mintLabel" type="Label3D" parent="Walls"]
+position = Vector3(-7.0, 2.75, -5.99)
+pixel_size = 0.0035
+text = "wall_paint_mint"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+
+[node name="B2_wall_paint_sky" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-5.0, 1.5, -6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("14_r")
+
+[node name="B2_wall_paint_skyLabel" type="Label3D" parent="Walls"]
+position = Vector3(-5.0, 2.75, -5.99)
+pixel_size = 0.0035
+text = "wall_paint_sky"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+
+[node name="B3_wall_paint_peach" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-3.0, 1.5, -6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("15_r")
+
+[node name="B3_wall_paint_peachLabel" type="Label3D" parent="Walls"]
+position = Vector3(-3.0, 2.75, -5.99)
+pixel_size = 0.0035
+text = "wall_paint_peach"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+
+[node name="B4_wall_paint_white" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-1.0, 1.5, -6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("11_r")
+
+[node name="B4_wall_paint_whiteLabel" type="Label3D" parent="Walls"]
+position = Vector3(-1.0, 2.75, -5.99)
+pixel_size = 0.0035
+text = "wall_paint_white"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+
+[node name="B5_wall_exterior_cream" type="MeshInstance3D" parent="Walls"]
+position = Vector3(1.0, 1.5, -6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("16_r")
+
+[node name="B5_wall_exterior_creamLabel" type="Label3D" parent="Walls"]
+position = Vector3(1.0, 2.75, -5.99)
+pixel_size = 0.0035
+text = "wall_exterior_cream"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+
+[node name="B6_wall_exterior_peach" type="MeshInstance3D" parent="Walls"]
+position = Vector3(3.0, 1.5, -6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("17_r")
+
+[node name="B6_wall_exterior_peachLabel" type="Label3D" parent="Walls"]
+position = Vector3(3.0, 2.75, -5.99)
+pixel_size = 0.0035
+text = "wall_exterior_peach"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+
+[node name="B7_wall_exterior_sky" type="MeshInstance3D" parent="Walls"]
+position = Vector3(5.0, 1.5, -6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("18_r")
+
+[node name="B7_wall_exterior_skyLabel" type="Label3D" parent="Walls"]
+position = Vector3(5.0, 2.75, -5.99)
+pixel_size = 0.0035
+text = "wall_exterior_sky"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+
+[node name="B8_wall_stairwell_mint" type="MeshInstance3D" parent="Walls"]
+position = Vector3(7.0, 1.5, -6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("19_r")
+
+[node name="B8_wall_stairwell_mintLabel" type="Label3D" parent="Walls"]
+position = Vector3(7.0, 2.75, -5.99)
+pixel_size = 0.0035
+text = "wall_stairwell_mint"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+
+[node name="B9_wall_stairwell_cream" type="MeshInstance3D" parent="Walls"]
+position = Vector3(9.0, 1.5, -6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("20_r")
+
+[node name="B9_wall_stairwell_creamLabel" type="Label3D" parent="Walls"]
+position = Vector3(9.0, 2.75, -5.99)
+pixel_size = 0.0035
+text = "wall_stairwell_cream"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+
+[node name="Fr0_wood_door_dark" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-9.0, 1.5, 6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("21_r")
+
+[node name="Fr0_wood_door_darkLabel" type="Label3D" parent="Walls"]
+position = Vector3(-9.0, 2.75, 5.99)
+pixel_size = 0.0035
+text = "wood_door_dark"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="Fr1_wood_door_varnished" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-7.0, 1.5, 6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("22_r")
+
+[node name="Fr1_wood_door_varnishedLabel" type="Label3D" parent="Walls"]
+position = Vector3(-7.0, 2.75, 5.99)
+pixel_size = 0.0035
+text = "wood_door_varnished"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="Fr2_wood_frame_blue" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-5.0, 1.5, 6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("23_r")
+
+[node name="Fr2_wood_frame_blueLabel" type="Label3D" parent="Walls"]
+position = Vector3(-5.0, 2.75, 5.99)
+pixel_size = 0.0035
+text = "wood_frame_blue"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="Fr3_wood_planks" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-3.0, 1.5, 6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("24_r")
+
+[node name="Fr3_wood_planksLabel" type="Label3D" parent="Walls"]
+position = Vector3(-3.0, 2.75, 5.99)
+pixel_size = 0.0035
+text = "wood_planks"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="Fr4_metal_corrugated" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-1.0, 1.5, 6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("25_r")
+
+[node name="Fr4_metal_corrugatedLabel" type="Label3D" parent="Walls"]
+position = Vector3(-1.0, 2.75, 5.99)
+pixel_size = 0.0035
+text = "metal_corrugated"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="Fr5_tile_white" type="MeshInstance3D" parent="Walls"]
+position = Vector3(1.0, 1.5, 6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("3_r")
+
+[node name="Fr5_tile_whiteLabel" type="Label3D" parent="Walls"]
+position = Vector3(1.0, 2.75, 5.99)
+pixel_size = 0.0035
+text = "tile_white"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="Fr6_paper" type="MeshInstance3D" parent="Walls"]
+position = Vector3(3.0, 1.5, 6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("26_r")
+
+[node name="Fr6_paperLabel" type="Label3D" parent="Walls"]
+position = Vector3(3.0, 2.75, 5.99)
+pixel_size = 0.0035
+text = "paper"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="Fr7_wall_paint_white" type="MeshInstance3D" parent="Walls"]
+position = Vector3(5.0, 1.5, 6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("11_r")
+
+[node name="Fr7_wall_paint_whiteLabel" type="Label3D" parent="Walls"]
+position = Vector3(5.0, 2.75, 5.99)
+pixel_size = 0.0035
+text = "wall_paint_white"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="Fr8_wall_paint_white" type="MeshInstance3D" parent="Walls"]
+position = Vector3(7.0, 1.5, 6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("11_r")
+
+[node name="Fr8_wall_paint_whiteLabel" type="Label3D" parent="Walls"]
+position = Vector3(7.0, 2.75, 5.99)
+pixel_size = 0.0035
+text = "wall_paint_white"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="Fr9_wall_paint_white" type="MeshInstance3D" parent="Walls"]
+position = Vector3(9.0, 1.5, 6.1)
+mesh = SubResource("Box_2")
+material_override = ExtResource("11_r")
+
+[node name="Fr9_wall_paint_whiteLabel" type="Label3D" parent="Walls"]
+position = Vector3(9.0, 2.75, 5.99)
+pixel_size = 0.0035
+text = "wall_paint_white"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="L0_wall_peeling" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-10.1, 1.5, -5.0)
+mesh = SubResource("Box_3")
+material_override = ExtResource("27_r")
+
+[node name="L0_wall_peelingLabel" type="Label3D" parent="Walls"]
+position = Vector3(-9.99, 2.75, -5.0)
+pixel_size = 0.0035
+text = "wall_peeling"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="L1_wall_peeling_heavy" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-10.1, 1.5, -3.0)
+mesh = SubResource("Box_3")
+material_override = ExtResource("28_r")
+
+[node name="L1_wall_peeling_heavyLabel" type="Label3D" parent="Walls"]
+position = Vector3(-9.99, 2.75, -3.0)
+pixel_size = 0.0035
+text = "wall_peeling_heavy"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="L2_wall_damp_green" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-10.1, 1.5, -1.0)
+mesh = SubResource("Box_3")
+material_override = ExtResource("29_r")
+
+[node name="L2_wall_damp_greenLabel" type="Label3D" parent="Walls"]
+position = Vector3(-9.99, 2.75, -1.0)
+pixel_size = 0.0035
+text = "wall_damp_green"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="L3_wall_yellow_peeling" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-10.1, 1.5, 1.0)
+mesh = SubResource("Box_3")
+material_override = ExtResource("30_r")
+
+[node name="L3_wall_yellow_peelingLabel" type="Label3D" parent="Walls"]
+position = Vector3(-9.99, 2.75, 1.0)
+pixel_size = 0.0035
+text = "wall_yellow_peeling"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="L4_wall_bare_stained" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-10.1, 1.5, 3.0)
+mesh = SubResource("Box_3")
+material_override = ExtResource("31_r")
+
+[node name="L4_wall_bare_stainedLabel" type="Label3D" parent="Walls"]
+position = Vector3(-9.99, 2.75, 3.0)
+pixel_size = 0.0035
+text = "wall_bare_stained"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="L5_brick_red" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-10.1, 1.5, 5.0)
+mesh = SubResource("Box_3")
+material_override = ExtResource("32_r")
+
+[node name="L5_brick_redLabel" type="Label3D" parent="Walls"]
+position = Vector3(-9.99, 2.75, 5.0)
+pixel_size = 0.0035
+text = "brick_red"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="R0_concrete_rough" type="MeshInstance3D" parent="Walls"]
+position = Vector3(10.1, 1.5, -5.0)
+mesh = SubResource("Box_3")
+material_override = ExtResource("10_r")
+
+[node name="R0_concrete_roughLabel" type="Label3D" parent="Walls"]
+position = Vector3(9.99, 2.75, -5.0)
+pixel_size = 0.0035
+text = "concrete_rough"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, -90, 0)
+
+[node name="R1_concrete_dirty" type="MeshInstance3D" parent="Walls"]
+position = Vector3(10.1, 1.5, -3.0)
+mesh = SubResource("Box_3")
+material_override = ExtResource("33_r")
+
+[node name="R1_concrete_dirtyLabel" type="Label3D" parent="Walls"]
+position = Vector3(9.99, 2.75, -3.0)
+pixel_size = 0.0035
+text = "concrete_dirty"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, -90, 0)
+
+[node name="R2_concrete_dark" type="MeshInstance3D" parent="Walls"]
+position = Vector3(10.1, 1.5, -1.0)
+mesh = SubResource("Box_3")
+material_override = ExtResource("9_r")
+
+[node name="R2_concrete_darkLabel" type="Label3D" parent="Walls"]
+position = Vector3(9.99, 2.75, -1.0)
+pixel_size = 0.0035
+text = "concrete_dark"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, -90, 0)
+
+[node name="R3_metal_gate_green" type="MeshInstance3D" parent="Walls"]
+position = Vector3(10.1, 1.5, 1.0)
+mesh = SubResource("Box_3")
+material_override = ExtResource("34_r")
+
+[node name="R3_metal_gate_greenLabel" type="Label3D" parent="Walls"]
+position = Vector3(9.99, 2.75, 1.0)
+pixel_size = 0.0035
+text = "metal_gate_green"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, -90, 0)
+
+[node name="R4_metal_meter_white" type="MeshInstance3D" parent="Walls"]
+position = Vector3(10.1, 1.5, 3.0)
+mesh = SubResource("Box_3")
+material_override = ExtResource("35_r")
+
+[node name="R4_metal_meter_whiteLabel" type="Label3D" parent="Walls"]
+position = Vector3(9.99, 2.75, 3.0)
+pixel_size = 0.0035
+text = "metal_meter_white"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, -90, 0)
+
+[node name="R5_metal_rust" type="MeshInstance3D" parent="Walls"]
+position = Vector3(10.1, 1.5, 5.0)
+mesh = SubResource("Box_3")
+material_override = ExtResource("36_r")
+
+[node name="R5_metal_rustLabel" type="Label3D" parent="Walls"]
+position = Vector3(9.99, 2.75, 5.0)
+pixel_size = 0.0035
+text = "metal_rust"
+font_size = 40
+outline_size = 10
+modulate = Color(1, 1, 0.85, 1)
+rotation_degrees = Vector3(0, -90, 0)
+
+[node name="DecalWall" type="MeshInstance3D" parent="Walls"]
+position = Vector3(0, 1.5, 0.05)
+mesh = SubResource("Box_4")
+material_override = ExtResource("16_r")
+
+[node name="DecalWallBack" type="MeshInstance3D" parent="Walls"]
+position = Vector3(0, 1.5, -0.05)
+mesh = SubResource("Box_4")
+material_override = ExtResource("3_r")
+
+[node name="Decals" type="Node3D" parent="."]
+
+[node name="notice_water" parent="Decals" instance=ExtResource("37_r")]
+position = Vector3(-2.3, 1.55, 0.1)
+
+[node name="tuition" parent="Decals" instance=ExtResource("38_r")]
+position = Vector3(-1.5, 1.45, 0.1)
+
+[node name="ganesh" parent="Decals" instance=ExtResource("39_r")]
+position = Vector3(-0.6, 1.6, 0.1)
+
+[node name="lost_dog" parent="Decals" instance=ExtResource("40_r")]
+position = Vector3(0.3, 1.45, 0.1)
+
+[node name="room_rent" parent="Decals" instance=ExtResource("41_r")]
+position = Vector3(1.1, 1.5, 0.1)
+
+[node name="stencil_no_bills" parent="Decals" instance=ExtResource("42_r")]
+position = Vector3(-0.2, 2.45, 0.1)
+
+[node name="crack_a" parent="Decals" instance=ExtResource("43_r")]
+position = Vector3(2.1, 1.7, 0.1)
+
+[node name="hand_grime" parent="Decals" instance=ExtResource("44_r")]
+position = Vector3(2.6, 1.15, 0.1)
+
+[node name="paan_a" parent="Decals" instance=ExtResource("45_r")]
+position = Vector3(2.5, 0.35, 0.1)
+
+[node name="water_stain" parent="Decals" instance=ExtResource("46_r")]
+position = Vector3(-4, 3.0, 2)
+rotation_degrees = Vector3(90, 0, 0)
+
+[node name="paan_b" parent="Decals" instance=ExtResource("47_r")]
+position = Vector3(3.0, 0.0, 0.6)
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="Collision" type="StaticBody3D" parent="."]
+
+[node name="Shape0" type="CollisionShape3D" parent="Collision"]
+position = Vector3(0, -0.05, 0)
+shape = SubResource("Shape_0")
+
+[node name="Shape1" type="CollisionShape3D" parent="Collision"]
+position = Vector3(0, 1.5, -6.1)
+shape = SubResource("Shape_1")
+
+[node name="Shape2" type="CollisionShape3D" parent="Collision"]
+position = Vector3(0, 1.5, 6.1)
+shape = SubResource("Shape_2")
+
+[node name="Shape3" type="CollisionShape3D" parent="Collision"]
+position = Vector3(-10.1, 1.5, 0)
+shape = SubResource("Shape_3")
+
+[node name="Shape4" type="CollisionShape3D" parent="Collision"]
+position = Vector3(10.1, 1.5, 0)
+shape = SubResource("Shape_4")
+
+[node name="Shape5" type="CollisionShape3D" parent="Collision"]
+position = Vector3(0, 1.5, 0)
+shape = SubResource("Shape_5")
+
+[node name="TubeLight0" parent="." instance=ExtResource("48_r")]
+position = Vector3(-6, 2.95, 3)
+flicker = 0.0
+
+[node name="TubeLight1" parent="." instance=ExtResource("48_r")]
+position = Vector3(0, 2.95, 3)
+flicker = 0.0
+
+[node name="TubeLight2" parent="." instance=ExtResource("48_r")]
+position = Vector3(6, 2.95, 3)
+flicker = 0.6
+
+[node name="TubeLight3" parent="." instance=ExtResource("48_r")]
+position = Vector3(-6, 2.95, -3)
+flicker = 0.0
+
+[node name="TubeLight4" parent="." instance=ExtResource("48_r")]
+position = Vector3(6, 2.95, -3)
+flicker = 0.0
+
+[node name="SodiumLamp" type="OmniLight3D" parent="."]
+position = Vector3(2.5, 2.6, 1.5)
+light_color = Color(1, 0.55, 0.18, 1)
+light_energy = 1.4
+omni_range = 5.0
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("49_r")]
+position = Vector3(0, 0, 4.5)
+
+[node name="Camcorder" parent="." instance=ExtResource("50_r")]
+
+[node name="HUD" parent="." instance=ExtResource("51_r")]
+
+[node name="DebugOverlay" type="CanvasLayer" parent="."]
+layer = 20
+script = ExtResource("52_r")
+
+[node name="Label" type="Label" parent="DebugOverlay"]
+offset_left = 70.0
+offset_top = 96.0
+offset_right = 870.0
+offset_bottom = 260.0
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 14
+
+[node name="BenchmarkPoints" type="Node3D" parent="."]
+
+[node name="P0" type="Marker3D" parent="BenchmarkPoints" groups=["benchmark_points"]]
+position = Vector3(0, 0, 4.5)
+
+[node name="P1" type="Marker3D" parent="BenchmarkPoints" groups=["benchmark_points"]]
+position = Vector3(-6, 0, -3)
+
+[node name="P2" type="Marker3D" parent="BenchmarkPoints" groups=["benchmark_points"]]
+position = Vector3(6, 0, 3)

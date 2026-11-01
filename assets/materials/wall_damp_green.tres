@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://shaders/surfaces/surface.gdshader" id="shader"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/plaster_damp/plaster_damp_albedo.jpg" id="albedo"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/plaster_damp/plaster_damp_normal.jpg" id="normal"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/plaster_damp/plaster_damp_roughness.jpg" id="roughness"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/overlay_leaks_a/overlay_leaks_a_mask.jpg" id="leak"]
+
+[resource]
+shader = ExtResource("shader")
+shader_parameter/albedo_tex = ExtResource("albedo")
+shader_parameter/normal_tex = ExtResource("normal")
+shader_parameter/roughness_tex = ExtResource("roughness")
+shader_parameter/tile_size = 2.0
+shader_parameter/leak_tex = ExtResource("leak")
+shader_parameter/leak_strength = 0.3
+shader_parameter/macro_strength = 0.3

@@ -27,3 +27,6 @@ desktop.ini
 # --- Local tooling ---
 node_modules/
 .claude/settings.local.json
+
+# Intermediate build outputs of tools/ scripts
+tools/_build/

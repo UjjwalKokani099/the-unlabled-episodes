@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://shaders/surfaces/surface.gdshader" id="shader"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/wood_varnished/wood_varnished_albedo.jpg" id="albedo"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/wood_varnished/wood_varnished_normal.jpg" id="normal"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/wood_varnished/wood_varnished_roughness.jpg" id="roughness"]
+
+[resource]
+shader = ExtResource("shader")
+shader_parameter/albedo_tex = ExtResource("albedo")
+shader_parameter/normal_tex = ExtResource("normal")
+shader_parameter/roughness_tex = ExtResource("roughness")
+shader_parameter/tile_size = 1.5
+shader_parameter/roughness_offset = -0.1
+shader_parameter/macro_strength = 0.15

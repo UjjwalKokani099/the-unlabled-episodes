@@ -84,6 +84,22 @@ Useful headless commands (run from project root):
 - Lighting plan: baked LightmapGI for static light (owner presses Bake in the editor),
   real-time lights only for flicker / flashlight / power cut.
 
+## Materials and decals (Phase 1)
+- `shaders/surfaces/surface.gdshader` = THE wall/floor shader: world-space projection (no UVs,
+  `tile_size` in metres), macro variation, per-storey weathering (rising damp + tide line,
+  leak streaks from under slabs, top grime) and a two-tone dado band. Storeys are 3 m.
+- Library: `assets/materials/*.tres`, generated from the table in `tools/gen_materials.py`
+  (edit the table, re-run; don't hand-edit the .tres). Textures: CC0 ambientCG via
+  `tools/fetch_textures.py` (credits in assets/materials/CREDITS.md).
+- After adding any texture: `--import`, `python tools/configure_texture_imports.py`,
+  `--import` again (VRAM compression + mipmaps + normal-map flag).
+- Imported normal maps are 2-channel (RG): custom shaders must rebuild Z themselves.
+- Decals: `scenes/decals/<name>.tscn` — place the node ON the surface with +Z pointing out
+  of it. Posters come from `tools/gen_posters.gd` (Godot renders Devanagari) then
+  `tools/gen_decals.py` ages them and draws stains/cracks.
+- Preview everything in `scenes/test/material_gallery.tscn` (built by
+  `tools/gen_material_gallery.py`). Tube light fixture: `scenes/props/tube_light.tscn`.
+
 ## Camera / screen
 - Every level instances `ui/hud/camcorder.tscn` (OSD on layer 2, VHS shader on layer 3) and
   `ui/hud/hud.tscn` (layer 10, stays crisp above the VHS effect). Debug overlay = layer 20.

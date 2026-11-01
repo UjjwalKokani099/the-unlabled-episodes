@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/decals/crack_b.png" id="1_tex"]
+
+[node name="Decal_crack_b" type="Node3D"]
+
+[node name="Decal" type="Decal" parent="."]
+rotation_degrees = Vector3(90, 0, 0)
+size = Vector3(0.500, 0.3, 0.750)
+texture_albedo = ExtResource("1_tex")
+normal_fade = 0.5
+upper_fade = 0.05
+lower_fade = 0.05

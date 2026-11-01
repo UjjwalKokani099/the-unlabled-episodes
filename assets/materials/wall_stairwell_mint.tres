@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://shaders/surfaces/surface.gdshader" id="shader"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/plaster_painted/plaster_painted_albedo.jpg" id="albedo"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/plaster_painted/plaster_painted_normal.jpg" id="normal"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/plaster_painted/plaster_painted_roughness.jpg" id="roughness"]
+
+[resource]
+shader = ExtResource("shader")
+shader_parameter/albedo_tex = ExtResource("albedo")
+shader_parameter/normal_tex = ExtResource("normal")
+shader_parameter/roughness_tex = ExtResource("roughness")
+shader_parameter/tile_size = 2.0
+shader_parameter/tint = Color(0.76, 0.89, 0.8, 1)
+shader_parameter/dado_height = 1.2
+shader_parameter/dado_tint = Color(0.36, 0.5, 0.42, 1)
+shader_parameter/damp_height = 0.35
+shader_parameter/damp_strength = 0.35
+shader_parameter/top_grime = 0.2
+shader_parameter/macro_strength = 0.3
+shader_parameter/normal_strength = 0.45

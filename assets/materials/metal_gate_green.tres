@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://shaders/surfaces/surface.gdshader" id="shader"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/metal_painted_green/metal_painted_green_albedo.jpg" id="albedo"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/metal_painted_green/metal_painted_green_normal.jpg" id="normal"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/metal_painted_green/metal_painted_green_roughness.jpg" id="roughness"]
+[ext_resource type="Texture2D" path="res://assets/materials/textures/metal_painted_green/metal_painted_green_metallic.jpg" id="metallic"]
+
+[resource]
+shader = ExtResource("shader")
+shader_parameter/albedo_tex = ExtResource("albedo")
+shader_parameter/normal_tex = ExtResource("normal")
+shader_parameter/roughness_tex = ExtResource("roughness")
+shader_parameter/tile_size = 1.0
+shader_parameter/metallic_tex = ExtResource("metallic")
+shader_parameter/metallic_amount = 1.0
+shader_parameter/roughness_offset = 0.15
