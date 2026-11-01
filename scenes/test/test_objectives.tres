@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="ObjectiveSet" format=3]
+
+[ext_resource type="Script" path="res://scripts/objectives/objective_set.gd" id="1_set"]
+[ext_resource type="Script" path="res://scripts/objectives/objective_data.gd" id="2_data"]
+
+[sub_resource type="Resource" id="Objective_tape"]
+script = ExtResource("2_data")
+id = &"find_tape"
+text = "Find the tape in the dark room"
+complete_on = &"vhs_tape"
+
+[sub_resource type="Resource" id="Objective_storage"]
+script = ExtResource("2_data")
+id = &"open_storage"
+text = "Get into the storage room"
+complete_on = &"storage_opened"
+starts_after = &"find_tape"
+
+[sub_resource type="Resource" id="Objective_batteries"]
+script = ExtResource("2_data")
+id = &"collect_batteries"
+text = "Collect batteries"
+complete_on = &"battery"
+required = 3
+starts_after = &"open_storage"
+
+[resource]
+script = ExtResource("1_set")
+objectives = Array[ExtResource("2_data")]([SubResource("Objective_tape"), SubResource("Objective_storage"), SubResource("Objective_batteries")])

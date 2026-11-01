@@ -11,6 +11,10 @@ signal closed
 @export var locked: bool = false
 @export var locked_message: String = "It's locked."
 @export var start_open: bool = false
+## Events id that unlocks this door (e.g. an objective id like &"find_key").
+@export var unlock_event: StringName
+## Events id fired the first time the door opens (e.g. &"storage_opened").
+@export var opened_event: StringName
 
 var is_open: bool = false
 var _tween: Tween
@@ -23,6 +27,10 @@ var _tween: Tween
 
 func _ready() -> void:
 	interactable.interacted.connect(_on_interacted)
+	if unlock_event != &"":
+		Events.fired.connect(_on_event)
+		if Events.has_fired(unlock_event):
+			unlock()
 	if start_open:
 		hinge.rotation.y = deg_to_rad(open_angle)
 		is_open = true
@@ -36,6 +44,8 @@ func open_away_from(from_position: Vector3) -> void:
 	is_open = true
 	_update_prompt()
 	opened.emit()
+	if opened_event != &"" and not Events.has_fired(opened_event):
+		Events.fire(opened_event)
 
 
 func close() -> void:
@@ -47,6 +57,11 @@ func close() -> void:
 
 func unlock() -> void:
 	locked = false
+
+
+func _on_event(id: StringName) -> void:
+	if id == unlock_event:
+		unlock()
 
 
 func _on_interacted(by: Node3D) -> void:

@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/interaction/pickup.gd" id="1_pickup"]
+[ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="2_interactable"]
+
+[sub_resource type="StandardMaterial3D" id="Material_body"]
+albedo_color = Color(0.75, 0.55, 0.12, 1)
+metallic = 0.3
+roughness = 0.45
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_body"]
+material = SubResource("Material_body")
+top_radius = 0.017
+bottom_radius = 0.017
+height = 0.05
+radial_segments = 12
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_use"]
+size = Vector3(0.18, 0.16, 0.18)
+
+[node name="Battery" type="Node3D"]
+script = ExtResource("1_pickup")
+item_id = &"battery"
+display_name = "battery"
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Interactable" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+script = ExtResource("2_interactable")
+prompt = "Take battery"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
+shape = SubResource("BoxShape3D_use")

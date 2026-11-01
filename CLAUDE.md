@@ -24,6 +24,16 @@ Useful headless commands (run from project root):
   node the body itself (see `scenes/props/door.tscn`), don't rotate a parent of it.
 - Physics layers: 1 world, 2 player, 3 interactable (value 4). The Interactor ray masks 1|4.
 - HUD messages from anywhere: `get_tree().call_group("hud", "show_message", "text")`.
+- Test scripts: `await process_frame` before touching autoloads (their `_ready` hasn't run
+  yet in `_initialize`).
+
+## Gameplay wiring (Events + Objectives)
+- `Events.fire(&"id")` announces anything; Pickups fire their `item_id`, Doors fire
+  `opened_event`, completed objectives fire their own `id`.
+- A level's objectives are an `ObjectiveSet` .tres (see `scenes/test/test_objectives.tres`)
+  loaded by an `ObjectiveLoader` node. Each objective: `complete_on` event, `required`
+  count, `starts_after` objective id.
+- Props react to events via exports, e.g. Door `unlock_event = &"find_tape"`.
 
 ## Layout
 - `scenes/`   hub, menus, test scenes

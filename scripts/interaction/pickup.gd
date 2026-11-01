@@ -1,7 +1,7 @@
 class_name Pickup
 extends Node3D
-## An item the player can take. Emits `picked_up`, shows a message, then removes itself.
-## (The objectives system will listen for `picked_up`.)
+## An item the player can take. Fires `item_id` on the Events bus (objectives count it),
+## shows a message, then removes itself.
 
 signal picked_up(item_id: StringName)
 
@@ -18,5 +18,6 @@ func _ready() -> void:
 func _on_interacted(_by: Node3D) -> void:
 	interactable.enabled = false
 	picked_up.emit(item_id)
+	Events.fire(item_id)
 	get_tree().call_group("hud", "show_message", "Picked up: %s" % display_name)
 	queue_free()

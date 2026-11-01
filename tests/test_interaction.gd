@@ -78,12 +78,12 @@ func _initialize() -> void:
 
 	# --- Locked door ---
 	var locked = room.get_node("LockedDoor")
-	await stand_at(Vector3(8, 0, -10.5), 0, 0)
+	await stand_at(Vector3(8, 0, -11.0), 0, 0)
 	check(focused_prompt() == "Open", "locked door focused (got %s)" % focused_prompt())
 	await tap_interact()
 	await frames(30)
 	check(not locked.is_open, "locked door stays shut")
-	check(room.get_node("HUD/Message").text == "Locked from the other side.", "locked message shown")
+	check(room.get_node("HUD/Message").text == "Locked. Maybe the tape has a clue.", "locked message shown")
 	await frames(20)
 	check(absf(locked.hinge.rotation.y) < 0.001, "rattle returns to closed")
 
