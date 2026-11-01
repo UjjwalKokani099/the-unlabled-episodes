@@ -67,6 +67,15 @@ Useful headless commands (run from project root):
   generator afterwards so it references the data. Low preset hides VoxelGI.
 - `call_group("hud", "show_note", bbcode, handwritten)` shows paper/screens (NoteView).
 - Disabled Interactables leave the physics layer, so they never block the look-ray.
+- Footsteps (`scripts/player/footsteps.gd`, child of Player): surface = `metadata/surface` on
+  the collision shape underfoot (levelkit tags every collider via `surface_of(material)`;
+  slabs use their top material) or on the body; sounds `assets/audio/sfx/step_<surface>.wav`.
+- `Inspectable` (Model + Interactable children): `call_group("hud", "inspect", item)` opens
+  InspectView (HUD, layer 24): a visual-only copy in its own lit world, drag/WASD turns,
+  scroll zooms, E takes (if `item_id`) or puts back. `inspected_event` fires once.
+- `scenes/props/drawer.tscn` (Drawer = the AnimatableBody3D): slides along local +Z; children
+  ride along; collision is only the bottom + front so the look-ray reaches what's inside;
+  `locked` + `unlock_event`; open state is a Game flag.
 
 ## Menus + intro (Phases 4-5)
 - Main scene = `scenes/menus/main_menu.tscn`, diegetic: the VCR-OSD menu UI lives in the

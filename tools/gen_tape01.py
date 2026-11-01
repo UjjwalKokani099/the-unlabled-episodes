@@ -91,8 +91,18 @@ def story_beats(lv) -> None:
     for pos, size in (((-8.2, 12.42, -15.6), (2.0, 0.8, 0.9)), ((-5.0, 12.38, -17.6), (1.2, 0.75, 0.8)),
                       ((-3.2, 12.55, -15.0), (0.9, 1.1, 0.6)), ((-9.0, 12.5, -21.5), (1.9, 0.6, 1.4))):
         lv.box(pos, size, "fabric_sheet")
+    papers = usable(lv, ".", "Newspapers", (-10.55, 12.05, -15.65), (0.42, 0.12, 0.5), "Look at the newspapers",
+                    {"title": '"Newspapers"',
+                     "description": '"Weeks of them, still folded, pushed under the door. The newest is from 23 July 1997."'},
+                    "res://scripts/interaction/inspectable.gd")
+    pmodel = lv.add("Model", "Node3D", papers)
     for i in range(6):
-        lv.box((-10.6 + (i % 2) * 0.06, 12.03 + i * 0.012, -15.6 - (i % 3) * 0.05), (0.32, 0.012, 0.42), "paper", collide=False)
+        lv.box(((i % 2) * 0.06 - 0.05, -0.02 + i * 0.012, -(i % 3) * 0.05 + 0.05), (0.32, 0.012, 0.42), "paper",
+               collide=False, parent=pmodel)
+    lv.add("Headline", "Label3D", pmodel, {"position": v3(-0.05, 0.045, 0.0), "rotation_degrees": v3(-90, 0, 0),
+                                           "pixel_size": "0.0006", "font_size": "48", "outline_size": "0",
+                                           "modulate": "Color(0.1, 0.1, 0.1, 1)",
+                                           "text": '"MUMBAI SAMACHAR\n23 JULY 1997\n—————"'})
     lv.add("Calendar", "Label3D", ".", {"position": v3(-2.13, 13.6, -16.0), "rotation_degrees": v3(0, -90, 0),
                                          "pixel_size": "0.002", "shaded": "true", "outline_size": "0", "font_size": "48",
                                          "modulate": "Color(0.25, 0.1, 0.1, 1)", "text": '"JULY 1997\\nजुलाई 1997"'})
@@ -191,7 +201,30 @@ def main() -> None:
     wall(lv, (4, 25.5), (7.5, 25.5), 0, 2.6, 0.2, ext, inn, +1, [{"along": 5.75, "w": 1.4, "bottom": 0.9, "top": 2.0, "kind": "vent"}])
     wall(lv, (7.5, 22), (7.5, 25.5), 0, 2.6, 0.2, ext, inn, +1)
     wall(lv, (4, 22), (4, 25.5), 0, 2.6, 0.2, ext, inn, -1, [{"along": 23.0, "w": 1.0, "bottom": 0, "top": 2.1, "kind": "hole"}])
-    lv.box((6.6, 0.38, 24.9), (1.5, 0.76, 0.6), "wood_planks")                       # table
+    # table: top, legs, aprons, and a drawer (Kishan's ID card + a spare camcorder battery)
+    lv.box((6.6, 0.74, 24.9), (1.5, 0.04, 0.6), "wood_planks")
+    for lx in (5.9, 7.3):
+        for lz in (24.65, 25.15):
+            lv.box((lx, 0.36, lz), (0.05, 0.72, 0.05), "wood_planks")
+    lv.box((6.6, 0.65, 25.17), (1.4, 0.14, 0.02), "wood_planks", collide=False)
+    lv.box((5.98, 0.65, 24.62), (0.26, 0.14, 0.02), "wood_planks", collide=False)
+    lv.box((6.96, 0.65, 24.62), (0.76, 0.14, 0.02), "wood_planks", collide=False)
+    lv.collider((6.6, 0.36, 24.9), (1.5, 0.5, 0.6), "wood")  # keeps the player out from under it
+    drawer = lv.scene("TableDrawer", "res://scenes/props/drawer.tscn", ".",
+                      {"position": v3(6.35, 0.655, 24.86), "rotation_degrees": v3(0, 180, 0)})
+    card = usable(lv, drawer, "KishanID", (-0.08, -0.042, 0.02), (0.14, 0.05, 0.1), "Look at the ID card",
+                  {"title": "\"Kishan's ID card\"",
+                   "description": '"SHANTI VIHAR CHS — WATCHMAN No. 07 — KISHAN LAL, since 1991. Left in the drawer. '
+                                  'He never came back for it. Someone has cut the photo out."',
+                   "inspected_event": '&"kishan_card"'}, "res://scripts/interaction/inspectable.gd")
+    model = lv.add("Model", "Node3D", card)
+    lv.box((0, 0, 0), (0.086, 0.003, 0.054), "paper", collide=False, parent=model)
+    lv.box((-0.026, 0.0012, 0), (0.024, 0.002, 0.03), "glass_dark", collide=False, parent=model)
+    lv.add("Text", "Label3D", model, {"position": v3(0.012, 0.0022, 0), "rotation_degrees": v3(-90, 0, 0),
+                                      "pixel_size": "0.00012", "font_size": "48", "outline_size": "0",
+                                      "modulate": "Color(0.15, 0.12, 0.1, 1)",
+                                      "text": '"SHANTI VIHAR CHS\nWATCHMAN\nKISHAN LAL\nNo. 07  1991"'})
+    lv.scene("Battery", "res://scenes/props/battery.tscn", drawer, {"position": v3(0.12, -0.035, -0.06)})
     lv.box((5.3, 0.23, 24.4), (0.4, 0.46, 0.4), "metal_rust", collide=False)          # stool
     lv.scene("CabinTube", "res://scenes/props/tube_light.tscn", ".", {"position": v3(5.75, 2.6, 23.75)}, groups=["mains"])
     lv.add("CabinFan", "AudioStreamPlayer3D", ".", {"position": v3(5.75, 2.4, 23.75), "stream": sound(lv, "fan_hum"),

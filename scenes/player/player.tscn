@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
 [ext_resource type="Script" path="res://scripts/interaction/interactor.gd" id="2_interactor"]
 [ext_resource type="Script" path="res://scripts/player/camera_shake.gd" id="3_shake"]
+[ext_resource type="Script" path="res://scripts/player/footsteps.gd" id="4_steps"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 resource_local_to_scene = true
@@ -42,3 +43,6 @@ spot_range = 20.0
 spot_attenuation = 1.2
 spot_angle = 26.0
 spot_angle_attenuation = 1.6
+
+[node name="Footsteps" type="Node" parent="."]
+script = ExtResource("4_steps")

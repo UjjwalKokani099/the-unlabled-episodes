@@ -434,6 +434,7 @@ material_override = ExtResource("4_r")
 [node name="S1" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.8, -0.1, 2.1)
 shape = SubResource("BoxShape3D_5")
+metadata/surface = "tile"
 
 [node name="M3" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.8, 3.08, 2.94)
@@ -448,6 +449,7 @@ material_override = ExtResource("4_r")
 [node name="S2" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.8, 3.0, 2.94)
 shape = SubResource("BoxShape3D_8")
+metadata/surface = "concrete"
 
 [node name="M5" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.575, 1.45, -0.0575)
@@ -462,6 +464,7 @@ material_override = ExtResource("7_r")
 [node name="S3" type="CollisionShape3D" parent="Collision"]
 position = Vector3(0.575, 1.45, 0)
 shape = SubResource("BoxShape3D_10")
+metadata/surface = "concrete"
 
 [node name="M7" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.8, 0.425, -0.0575)
@@ -476,6 +479,7 @@ material_override = ExtResource("7_r")
 [node name="S4" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.8, 0.425, 0)
 shape = SubResource("BoxShape3D_12")
+metadata/surface = "concrete"
 
 [node name="M9" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.8, 2.525, -0.0575)
@@ -490,6 +494,7 @@ material_override = ExtResource("7_r")
 [node name="S5" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.8, 2.525, 0)
 shape = SubResource("BoxShape3D_14")
+metadata/surface = "concrete"
 
 [node name="M11" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.18, 1.5, 0)
@@ -594,6 +599,7 @@ material_override = ExtResource("7_r")
 [node name="S6" type="CollisionShape3D" parent="Collision"]
 position = Vector3(3.025, 1.45, 0)
 shape = SubResource("BoxShape3D_10")
+metadata/surface = "concrete"
 
 [node name="M31" type="MeshInstance3D" parent="Static"]
 position = Vector3(-0.0575, 1.45, 2.1)
@@ -608,6 +614,7 @@ material_override = ExtResource("7_r")
 [node name="S7" type="CollisionShape3D" parent="Collision"]
 position = Vector3(0, 1.45, 2.1)
 shape = SubResource("BoxShape3D_21")
+metadata/surface = "concrete"
 
 [node name="M33" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.6575, 1.45, 2.1)
@@ -622,6 +629,7 @@ material_override = ExtResource("7_r")
 [node name="S8" type="CollisionShape3D" parent="Collision"]
 position = Vector3(3.6, 1.45, 2.1)
 shape = SubResource("BoxShape3D_21")
+metadata/surface = "concrete"
 
 [node name="M35" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.075, 1.45, 4.2575)
@@ -636,6 +644,7 @@ material_override = ExtResource("7_r")
 [node name="S9" type="CollisionShape3D" parent="Collision"]
 position = Vector3(0.075, 1.45, 4.2)
 shape = SubResource("BoxShape3D_23")
+metadata/surface = "concrete"
 
 [node name="M37" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.75, 2.55, 4.2575)
@@ -650,6 +659,7 @@ material_override = ExtResource("7_r")
 [node name="S10" type="CollisionShape3D" parent="Collision"]
 position = Vector3(0.75, 2.55, 4.2)
 shape = SubResource("BoxShape3D_25")
+metadata/surface = "concrete"
 
 [node name="M39" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.18, 1.1, 4.2)
@@ -679,6 +689,7 @@ material_override = ExtResource("7_r")
 [node name="S11" type="CollisionShape3D" parent="Collision"]
 position = Vector3(2.475, 1.45, 4.2)
 shape = SubResource("BoxShape3D_29")
+metadata/surface = "concrete"
 
 [node name="Door" parent="." instance=ExtResource("12_r")]
 position = Vector3(0.2, 0, 4.2)
@@ -701,6 +712,7 @@ material_override = ExtResource("4_r")
 [node name="S12" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.8, -0.1, 5.16)
 shape = SubResource("BoxShape3D_33")
+metadata/surface = "tile"
 
 [node name="M47" type="MeshInstance3D" parent="Static"]
 position = Vector3(-0.1775, 1.45, 5.1)
@@ -715,6 +727,7 @@ material_override = ExtResource("10_r")
 [node name="S13" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-0.12, 1.45, 5.1)
 shape = SubResource("BoxShape3D_35")
+metadata/surface = "concrete"
 
 [node name="M49" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.7775, 1.45, 5.1)
@@ -729,6 +742,7 @@ material_override = ExtResource("10_r")
 [node name="S14" type="CollisionShape3D" parent="Collision"]
 position = Vector3(3.72, 1.45, 5.1)
 shape = SubResource("BoxShape3D_35")
+metadata/surface = "concrete"
 
 [node name="M51" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.8, 1.45, 6.0575)
@@ -743,6 +757,7 @@ material_override = ExtResource("10_r")
 [node name="S15" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.8, 1.45, 6.0)
 shape = SubResource("BoxShape3D_37")
+metadata/surface = "concrete"
 
 [node name="CorridorBulb" type="OmniLight3D" parent="."]
 position = Vector3(1.8, 2.6, 5.1)
@@ -780,6 +795,7 @@ material_override = ExtResource("17_r")
 [node name="S16" type="CollisionShape3D" parent="Collision"]
 position = Vector3(0.55, 0.18, 1.35)
 shape = SubResource("BoxShape3D_42")
+metadata/surface = "wood"
 
 [node name="M56" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.55, 0.42, 1.35)
@@ -799,6 +815,7 @@ material_override = ExtResource("17_r")
 [node name="S17" type="CollisionShape3D" parent="Collision"]
 position = Vector3(3.2, 0.73, 1.8)
 shape = SubResource("BoxShape3D_46")
+metadata/surface = "wood"
 
 [node name="M59" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.2, 0.36, 1.2)
@@ -823,6 +840,7 @@ material_override = ExtResource("19_r")
 [node name="S18" type="CollisionShape3D" parent="Collision"]
 position = Vector3(2.55, 0.11, 1.8)
 shape = SubResource("BoxShape3D_50")
+metadata/surface = "metal"
 
 [node name="M63" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.15, 0.765, 1.75)
@@ -879,6 +897,7 @@ material_override = ExtResource("23_r")
 [node name="S19" type="CollisionShape3D" parent="Collision"]
 position = Vector3(2.85, 0.27, 3.75)
 shape = SubResource("BoxShape3D_57")
+metadata/surface = "metal"
 
 [node name="M72" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.15, 0.78, 3.8)
@@ -888,6 +907,7 @@ material_override = ExtResource("20_r")
 [node name="S20" type="CollisionShape3D" parent="Collision"]
 position = Vector3(3.15, 0.78, 3.8)
 shape = SubResource("BoxShape3D_59")
+metadata/surface = "tile"
 
 [node name="TubeLight" parent="." instance=ExtResource("24_r")]
 position = Vector3(1.6, 2.85, 0.9)
@@ -1120,6 +1140,7 @@ material_override = ExtResource("33_r")
 [node name="S21" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.8, -6.1, -6.0)
 shape = SubResource("BoxShape3D_83")
+metadata/surface = "concrete"
 
 [node name="M80" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.05, -4.5, -10.9425)
@@ -1184,6 +1205,7 @@ material_override = ExtResource("20_r")
 [node name="S22" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-6.5, -4.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M92" type="MeshInstance3D" parent="Static"]
 position = Vector3(-7.05, -4.5, -10.855)
@@ -1313,6 +1335,7 @@ material_override = ExtResource("20_r")
 [node name="S23" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-2.5, -4.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M117" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.05, -4.5, -10.855)
@@ -1442,6 +1465,7 @@ material_override = ExtResource("20_r")
 [node name="S24" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.5, -4.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M142" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.95, -4.5, -10.855)
@@ -1571,6 +1595,7 @@ material_override = ExtResource("20_r")
 [node name="S25" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.5, -4.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M167" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.95, -4.5, -10.855)
@@ -1700,6 +1725,7 @@ material_override = ExtResource("20_r")
 [node name="S26" type="CollisionShape3D" parent="Collision"]
 position = Vector3(9.5, -4.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M192" type="MeshInstance3D" parent="Static"]
 position = Vector3(8.95, -4.5, -10.855)
@@ -1839,6 +1865,7 @@ material_override = ExtResource("20_r")
 [node name="S27" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-6.5, -1.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M219" type="MeshInstance3D" parent="Static"]
 position = Vector3(-7.05, -1.5, -10.855)
@@ -1968,6 +1995,7 @@ material_override = ExtResource("20_r")
 [node name="S28" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-2.5, -1.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M244" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.05, -1.5, -10.855)
@@ -2097,6 +2125,7 @@ material_override = ExtResource("20_r")
 [node name="S29" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.5, -1.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M269" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.95, -1.5, -10.855)
@@ -2226,6 +2255,7 @@ material_override = ExtResource("20_r")
 [node name="S30" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.5, -1.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M294" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.95, -1.5, -10.855)
@@ -2355,6 +2385,7 @@ material_override = ExtResource("20_r")
 [node name="S31" type="CollisionShape3D" parent="Collision"]
 position = Vector3(9.5, -1.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M319" type="MeshInstance3D" parent="Static"]
 position = Vector3(8.95, -1.5, -10.855)
@@ -2494,6 +2525,7 @@ material_override = ExtResource("20_r")
 [node name="S32" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-6.5, 1.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M346" type="MeshInstance3D" parent="Static"]
 position = Vector3(-7.05, 1.5, -10.855)
@@ -2623,6 +2655,7 @@ material_override = ExtResource("35_r")
 [node name="S33" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-2.5, 1.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M371" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.05, 1.5, -10.855)
@@ -2752,6 +2785,7 @@ material_override = ExtResource("20_r")
 [node name="S34" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.5, 1.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M396" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.95, 1.5, -10.855)
@@ -2881,6 +2915,7 @@ material_override = ExtResource("21_r")
 [node name="S35" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.5, 1.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M421" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.95, 1.5, -10.855)
@@ -3010,6 +3045,7 @@ material_override = ExtResource("35_r")
 [node name="S36" type="CollisionShape3D" parent="Collision"]
 position = Vector3(9.5, 1.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M446" type="MeshInstance3D" parent="Static"]
 position = Vector3(8.95, 1.5, -10.855)
@@ -3149,6 +3185,7 @@ material_override = ExtResource("20_r")
 [node name="S37" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-6.5, 4.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M473" type="MeshInstance3D" parent="Static"]
 position = Vector3(-7.05, 4.5, -10.855)
@@ -3278,6 +3315,7 @@ material_override = ExtResource("20_r")
 [node name="S38" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-2.5, 4.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M498" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.05, 4.5, -10.855)
@@ -3407,6 +3445,7 @@ material_override = ExtResource("20_r")
 [node name="S39" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.5, 4.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M523" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.95, 4.5, -10.855)
@@ -3536,6 +3575,7 @@ material_override = ExtResource("20_r")
 [node name="S40" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.5, 4.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M548" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.95, 4.5, -10.855)
@@ -3665,6 +3705,7 @@ material_override = ExtResource("20_r")
 [node name="S41" type="CollisionShape3D" parent="Collision"]
 position = Vector3(9.5, 4.5, -11.01)
 shape = SubResource("BoxShape3D_90")
+metadata/surface = "tile"
 
 [node name="M573" type="MeshInstance3D" parent="Static"]
 position = Vector3(8.95, 4.5, -10.855)
@@ -3749,6 +3790,7 @@ material_override = ExtResource("19_r")
 [node name="S42" type="CollisionShape3D" parent="Collision"]
 position = Vector3(6.0, 2.75, -8.5)
 shape = SubResource("BoxShape3D_96")
+metadata/surface = "metal"
 
 [node name="M589" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.4, 5.45, -8.5)
@@ -3766,7 +3808,7 @@ mesh = SubResource("BoxMesh_99")
 material_override = ExtResource("36_r")
 cast_shadow = 0
 
-[node name="SodiumLight" type="OmniLight3D" parent="."]
+[node name="SodiumLight" type="OmniLight3D" parent="." groups=["mains"]]
 position = Vector3(4.85, 5.1, -8.5)
 light_color = Color(1, 0.55, 0.2, 1)
 light_energy = 2.2

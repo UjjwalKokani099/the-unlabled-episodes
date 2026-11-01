@@ -115,19 +115,21 @@ class Level:
             props["cast_shadow"] = "0"
         self.nodes.append(self._node_text(f"M{self._mesh_count}", "MeshInstance3D", parent, props))
         if collide:
-            self.collider(pos, size)
+            self.collider(pos, size, surface_of(mat))
 
-    def collider(self, pos, size) -> None:
+    def collider(self, pos, size, surface="concrete") -> None:
+        """Box collider. `surface` (metadata on the shape) picks the footstep sound."""
         self._shape_count += 1
         self.nodes.append(self._node_text(f"S{self._shape_count}", "CollisionShape3D", "Collision",
-                                          {"position": v3(*pos), "shape": f'SubResource("{self._box_shape(size)}")'}))
+                                          {"position": v3(*pos), "shape": f'SubResource("{self._box_shape(size)}")',
+                                           "metadata/surface": f'"{surface}"'}))
 
-    def convex_collider(self, points) -> None:
+    def convex_collider(self, points, surface="tile") -> None:
         self._shape_count += 1
         pts = ", ".join(f"{r(p[0])}, {r(p[1])}, {r(p[2])}" for p in points)
         sid = self.sub("ConvexPolygonShape3D", {"points": f"PackedVector3Array({pts})"})
         self.nodes.append(self._node_text(f"S{self._shape_count}", "CollisionShape3D", "Collision",
-                                          {"shape": f'SubResource("{sid}")'}))
+                                          {"shape": f'SubResource("{sid}")', "metadata/surface": f'"{surface}"'}))
 
     def write(self, path: str) -> None:
         header = ["[gd_scene format=3]", ""]
@@ -136,6 +138,23 @@ class Level:
         with open(path, "w", encoding="utf-8", newline="\n") as f:
             f.write("\n".join(header) + "\n\n" + "\n".join(self.subs) + "\n" + "\n".join(self.nodes))
         print(f"wrote {os.path.relpath(path, ROOT)}: {self._mesh_count} kit boxes, {self._shape_count} colliders")
+
+
+# ---------------------------------------------------------------------- surfaces
+
+def surface_of(mat: str) -> str:
+    """Footstep surface for a material name (scripts/player/footsteps.gd plays the sound)."""
+    if any(k in mat for k in ("tile", "kota", "mosaic", "glass")):
+        return "tile"
+    if "wood" in mat or "door" in mat:
+        return "wood"
+    if "metal" in mat or "paint_car" in mat:
+        return "metal"
+    if any(k in mat for k in ("dirt", "foliage")):
+        return "dirt"
+    if any(k in mat for k in ("fabric", "cardboard", "paper")):
+        return "soft"
+    return "concrete"
 
 
 # ---------------------------------------------------------------------- walls
@@ -223,7 +242,7 @@ def slab(lv, x0, x1, z0, z1, y_top, thick, top_mat, bottom_mat, collide=True):
     lv.box(((x0 + x1) / 2, y_top - 0.02, (z0 + z1) / 2), (x1 - x0, 0.04, z1 - z0), top_mat, collide=False)
     lv.box(((x0 + x1) / 2, y_top - thick / 2 - 0.02, (z0 + z1) / 2), (x1 - x0, thick - 0.04, z1 - z0), bottom_mat, collide=False)
     if collide:
-        lv.collider(((x0 + x1) / 2, y_top - thick / 2, (z0 + z1) / 2), (x1 - x0, thick, z1 - z0))
+        lv.collider(((x0 + x1) / 2, y_top - thick / 2, (z0 + z1) / 2), (x1 - x0, thick, z1 - z0), surface_of(top_mat))
 
 
 def stair_flight(lv, x0, x1, z_start, z_end, y_start, steps, rise, step_mat="floor_kota", under_mat="wall_paint_white"):

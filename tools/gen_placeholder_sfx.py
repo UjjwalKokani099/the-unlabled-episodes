@@ -315,6 +315,74 @@ def switch_clack(rng):
             for i in range(n)]
 
 
+# ---- Phase 3: footsteps per surface, drawers, handling items (appended: rng order kept)
+
+def _env_noise(rng, seconds, lp, decay):
+    n = int(RATE * seconds)
+    noise = lowpass([rng.uniform(-1, 1) for _ in range(n)], lp)
+    return [noise[i] * math.exp(-i / RATE * decay) for i in range(n)]
+
+
+def step_concrete(rng):
+    grit = _env_noise(rng, 0.16, 0.35, 32)
+    return [g + 0.45 * math.sin(2 * math.pi * 85 * i / RATE) * math.exp(-i / RATE * 45) for i, g in enumerate(grit)]
+
+
+def step_tile(rng):
+    click = _env_noise(rng, 0.12, 0.7, 60)
+    return [c + 0.25 * math.sin(2 * math.pi * 1900 * i / RATE) * math.exp(-i / RATE * 70) for i, c in enumerate(click)]
+
+
+def step_wood(rng):
+    knock = _env_noise(rng, 0.2, 0.15, 30)
+    return [k * 0.6 + 0.7 * math.sin(2 * math.pi * 170 * i / RATE) * math.exp(-i / RATE * 28) for i, k in enumerate(knock)]
+
+
+def step_metal(rng):
+    n = int(RATE * 0.35)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        ring = sum(math.sin(2 * math.pi * f * t) * a for f, a in ((410, 0.4), (1130, 0.3), (2270, 0.2)))
+        out.append(ring * math.exp(-t * 14) + rng.uniform(-1, 1) * math.exp(-t * 60) * 0.6)
+    return out
+
+
+def step_dirt(rng):
+    n = int(RATE * 0.2)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        grain = rng.uniform(-1, 1) * (1.0 if rng.random() < 0.3 else 0.2)
+        out.append(grain * math.exp(-t * 18))
+    return lowpass(out, 0.5)
+
+
+def step_soft(rng):
+    return lowpass(_env_noise(rng, 0.15, 0.08, 30), 0.3)
+
+
+def drawer_slide(rng):
+    n = int(RATE * 0.45)
+    noise = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.25)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        chatter = 0.6 + 0.4 * math.sin(2 * math.pi * 38 * t)
+        env = min(t / 0.04, 1.0) * min((0.45 - t) / 0.08, 1.0)
+        out.append(noise[i] * chatter * env)
+    return out
+
+
+def rustle(rng):
+    n = int(RATE * 0.3)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        out.append(rng.uniform(-1, 1) * (0.3 + 0.7 * rng.random() ** 6) * math.sin(math.pi * t / 0.3))
+    return lowpass(out, 0.6)
+
+
 def write(name, samples):
     peak = max(abs(s) for s in samples) or 1.0
     OUT.mkdir(parents=True, exist_ok=True)
@@ -356,6 +424,10 @@ def main():
     write("gate_clang.wav", gate_clang(rng))
     write("power_down.wav", power_down(rng))
     write("switch_clack.wav", switch_clack(rng))
+    for name, fn in (("step_concrete", step_concrete), ("step_tile", step_tile), ("step_wood", step_wood),
+                     ("step_metal", step_metal), ("step_dirt", step_dirt), ("step_soft", step_soft),
+                     ("drawer_slide", drawer_slide), ("rustle", rustle)):
+        write(name + ".wav", fn(rng))
 
 
 if __name__ == "__main__":

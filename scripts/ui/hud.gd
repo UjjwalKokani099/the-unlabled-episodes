@@ -41,6 +41,11 @@ func show_note(text: String, handwritten: bool = false) -> void:
 	($NoteView as NoteView).open(text, handwritten)
 
 
+## Hold an item close and turn it over (InspectView). See Inspectable.
+func inspect(item: Inspectable) -> void:
+	($InspectView as InspectView).open(item)
+
+
 func show_message(text: String, duration: float = 2.5) -> void:
 	message_label.text = text
 	if _message_tween:
