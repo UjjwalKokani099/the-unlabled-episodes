@@ -62,6 +62,8 @@ func apply() -> void:
 	_apply_global()
 	for node in get_tree().root.find_children("*", "WorldEnvironment", true, false):
 		_apply_environment(node as WorldEnvironment)
+	for node in get_tree().root.find_children("*", "VoxelGI", true, false):
+		_apply_voxel_gi(node as VoxelGI)
 	_fps_label.visible = Settings.show_fps
 
 
@@ -97,9 +99,17 @@ func _apply_environment(world: WorldEnvironment) -> void:
 	env.glow_enabled = authored.glow and p.glow
 
 
+## Baked bounce light: off on Low, low quality on Medium, full on High.
+func _apply_voxel_gi(gi: VoxelGI) -> void:
+	gi.visible = Settings.graphics_quality > Quality.LOW
+	RenderingServer.voxel_gi_set_quality(RenderingServer.VOXEL_GI_QUALITY_HIGH if Settings.graphics_quality == Quality.HIGH else RenderingServer.VOXEL_GI_QUALITY_LOW)
+
+
 func _on_node_added(node: Node) -> void:
 	if node is WorldEnvironment:
 		_apply_environment(node)
+	elif node is VoxelGI:
+		_apply_voxel_gi(node)
 
 
 func _on_setting_changed(key: StringName) -> void:

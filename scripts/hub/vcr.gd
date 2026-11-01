@@ -20,6 +20,9 @@ func _process(delta: float) -> void:
 	var hub := _hub()
 	if hub:
 		interactable.prompt = hub.vcr_prompt()
+		var box_area := hub.room.get_node_or_null("TapeBox/Interactable") as Interactable
+		if box_area:
+			box_area.prompt = hub.box_prompt()
 
 
 func _on_interacted(_by: Node3D) -> void:

@@ -1,6 +1,6 @@
 extends SceneTree
-# Hub: tape labels/locks, picking up and swapping tapes, VCR prompts, insert -> chapter,
-# return to hub -> resume, complete -> watched dot. Uses a separate save file.
+# Nikhil's room: box hands out unlabeled tapes in order, VCR plays/resumes, chores fire
+# objectives, story stages switch on the bible's room changes. Uses a separate save file.
 # Run: <console exe> --path . --quit-after 20000 --script res://tests/test_hub.gd
 
 var fails := 0
@@ -11,35 +11,9 @@ func check(cond: bool, msg: String) -> void:
 	if not cond:
 		fails += 1
 
-func physics(n: int) -> void:
+func frames(n: int) -> void:
 	for i in n:
 		await physics_frame
-
-func player():
-	return root.get_tree().get_first_node_in_group("player")
-
-func look_from(pos: Vector3, pitch_deg: float) -> void:
-	var p = player()
-	p.global_position = pos
-	p.velocity = Vector3.ZERO
-	p.rotation.y = 0.0
-	p._pitch = pitch_deg
-	p.head.rotation.x = deg_to_rad(pitch_deg)
-	await physics(6)
-
-func focused_prompt() -> String:
-	var f = player().interactor.focused
-	return f.prompt if f else "<nothing>"
-
-func tap_interact() -> void:
-	Input.action_press("interact")
-	var ev := InputEventAction.new()
-	ev.action = &"interact"
-	ev.pressed = true
-	Input.parse_input_event(ev)
-	await physics(2)
-	Input.action_release("interact")
-	await physics(1)
 
 func message() -> String:
 	return current_scene.get_node("HUD/Message").text
@@ -47,74 +21,74 @@ func message() -> String:
 func _initialize() -> void:
 	await process_frame
 	game = root.get_node("Game")
+	var objectives: Node = root.get_node("Objectives")
 	game.save_path = "user://test_save.json"
 	game.delete_save()
 	change_scene_to_file("res://scenes/hub/hub.tscn")
 	await scene_changed
-	await physics(10)
+	await frames(10)
 	var hub: Node = current_scene
-	var t1 = hub.get_node("Shelf/Tape01")
-	var t2 = hub.get_node("Shelf/Tape02")
-	var test_tape = hub.get_node("Shelf/TapeTest")
 
-	# --- Labels ---
-	check(t1.label.text == "TAPE 01\nTHE WATCHMAN", "tape 01 labelled ('%s')" % t1.label.text)
-	check(t2.label.text == "" and t2.interactable.prompt == "Unlabeled tape", "locked tape 02 is blank")
-	check(not t1.watched_dot.visible, "no watched dot yet")
-	check(hub.vcr.interactable.prompt == "VCR", "VCR idle prompt")
+	# --- Stage 0 room ---
+	check(hub.stage == 0, "fresh save: stage 0")
+	var main_tapes: Array = hub._box_tapes.filter(func(t): return t.chapter_id != &"tape_00_test")
+	check(main_tapes.size() == 4, "box holds the four tapes he bought (%d)" % main_tapes.size())
+	check(main_tapes.all(func(t): return t.label.text == ""), "every tape is unlabeled")
+	check(not hub.room.get_node("Van").visible and not hub.room.get_node("DeliveryBag").visible, "no van, no bag yet")
 
-	# --- Pick up by looking + E ---
-	await look_from(Vector3(-2.28, 0, -1.4), -37)
-	check(focused_prompt() == "Take TAPE 01 - THE WATCHMAN", "looking at tape 01 (%s)" % focused_prompt())
-	await tap_interact()
-	check(hub.held == t1 and t1.get_parent().name == "Hand", "tape 01 in hand")
-	check(t1.interactable.collision_layer == 0, "held tape doesn't block the look-ray")
-	t2.interactable.interact(player())
-	check(hub.held == t1 and message().begins_with("No label"), "locked tape refuses")
-
-	# Unbuilt tape won't play
+	# --- Box + VCR ---
+	check(hub.box_prompt() == "Take the next tape", "box prompt")
+	hub.use_box()
+	check(hub.held != null and hub.held.chapter_id == &"tape_01_watchman", "box gives tape 1 first")
+	check(hub.vcr_prompt() == "Play the tape", "VCR prompt while holding")
 	hub.use_vcr()
-	check(message().contains("isn't made yet") and not hub.busy, "tape 01 not built: message, nothing starts")
+	if hub.held.chapter.is_built():
+		check(hub.busy, "tape 1 starts playing")
+		await game.transition_finished
+		game.return_to_hub()
+		await game.transition_finished
+		hub = current_scene
+		await frames(5)
+	else:
+		check(message().contains("isn't made yet") and not hub.busy, "unbuilt tape just hisses")
+		hub.use_box()
+		check(hub.held == null, "using the box again puts the tape back")
 
-	# Swap for the test tape
-	var home: Transform3D = t1._home_transform
-	test_tape.interactable.interact(player())
-	check(hub.held == test_tape and t1.get_parent().name == "Shelf" and t1.transform.is_equal_approx(home), "swap puts tape 01 back on the shelf")
-	check(t1.interactable.enabled and t1.interactable.collision_layer != 0, "tape 01 usable again")
+	# --- Chores ---
+	hub.eat_dinner()
+	hub.read_messages()
+	hub.get_node("HUD/NoteView").close()
+	hub.charge_phone()
+	await frames(2)
+	check(objectives.is_completed(&"eat") and objectives.is_completed(&"maa") and objectives.is_completed(&"charge"), "chores completed")
+	check(hub.room.get_node("Phone").global_position.distance_to(hub.room.get_node("ChargingSpot").global_position) < 0.01, "phone moved to the charger")
 
-	# Look at the VCR while holding (ray not blocked by the tape in hand)
-	await look_from(Vector3(1.465, 0, -1.3), -47)
-	check(focused_prompt() == "Insert TEST TAPE - GREY ROOM", "VCR prompt while holding (%s)" % focused_prompt())
+	# --- Story stages ---
+	hub.stage = 4
+	hub.apply_stage()
+	await frames(2)
+	main_tapes = hub._box_tapes.filter(func(t): return t.chapter_id != &"tape_00_test")
+	check(main_tapes.size() == 5, "after tape 4 the box holds a fifth tape")
+	check(hub.room.get_node("Van").visible and hub.room.get_node("DeliveryBag").visible, "van and delivery bag appear")
+	check(hub._scratch != null and hub._scratch.text == "108", "108 scratched inside the door")
+	hub.read_diary()
+	var note: String = hub.get_node("HUD/NoteView/Root/Paper/Margin/Text").text
+	check(note.contains("3:12 AM, out."), "diary has the entry he didn't write")
+	hub.get_node("HUD/NoteView").close()
 
-	# --- Insert -> chapter starts ---
-	await tap_interact()
-	check(hub.busy and hub.tv.mode == 1 and not player().input_enabled, "insert: TV blue, player frozen")
-	await game.transition_finished
-	check(current_scene.name == "TestRoom" and game.current_chapter.id == &"tape_00_test", "test tape playing")
-	await physics(10)
-	check(game.saved_checkpoint_id() == &"start", "start checkpoint saved")
-
-	# --- Leave mid-tape -> Resume in the hub ---
-	game.return_to_hub()
-	await game.transition_finished
-	hub = current_scene
-	check(hub.name == "Hub" and game.current_chapter == null, "back in the hub")
-	check(hub.vcr.interactable.prompt == "Resume TEST TAPE - GREY ROOM", "VCR offers resume (%s)" % hub.vcr.interactable.prompt)
+	# --- Test tape plays from the hub (debug builds) ---
+	var test_tape = hub.room.get_node_or_null("TestTape")
+	check(test_tape != null, "test tape on the desk in debug builds")
+	hub.pick_up(test_tape)
 	hub.use_vcr()
 	await game.transition_finished
-	check(current_scene.name == "TestRoom" and player().global_position.distance_to(Vector3(0, 0, 9)) < 0.3, "resumed at the checkpoint")
-
-	# --- Finish -> watched ---
+	check(current_scene.name == "TestRoom", "test tape plays")
 	game.complete_chapter()
 	await game.transition_finished
-	hub = current_scene
-	await physics(3)
-	check(hub.name == "Hub", "completion returns to the hub")
-	check(hub.get_node("Shelf/TapeTest").watched_dot.visible, "test tape marked watched")
-	check(hub.vcr.interactable.prompt == "VCR", "no resume after finishing")
+	check(current_scene.name == "Hub" and current_scene.stage == 0, "back in the hub; test tape doesn't advance the story")
 
 	game.delete_save()
 	current_scene.queue_free()
-	await physics(3)
+	await frames(3)
 	print("RESULT fails=", fails)
 	quit(fails)

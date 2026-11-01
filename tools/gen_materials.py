@@ -68,6 +68,11 @@ MATERIALS = {
     "wood_door_varnished": ("wood_varnished", 1.5, {"roughness_offset": -0.1, "macro_strength": 0.15}),
     "wood_frame_blue": ("wood_painted_blue", 1.0, {"macro_strength": 0.15}),
     "wood_planks": ("wood_planks", 1.5, {"macro_strength": 0.2}),
+    # --- Hub / props ---
+    "metal_trunk_blue": ("metal_painted_white", 1.0, {"metallic": True, "tint": (0.32, 0.46, 0.72), "roughness_offset": 0.1}),
+    "fabric_sheet": ("paper", 0.6, {"tint": (0.5, 0.58, 0.78), "normal_strength": 0.3, "roughness_offset": 0.2}),
+    "fabric_curtain": ("paper", 0.8, {"tint": (0.75, 0.42, 0.3), "normal_strength": 0.3, "roughness_offset": 0.2}),
+    "cardboard": ("paper", 0.5, {"tint": (0.62, 0.45, 0.28), "normal_strength": 0.5}),
     # --- Misc ---
     "paper": ("paper", 0.5, {"macro_strength": 0.1}),
 }

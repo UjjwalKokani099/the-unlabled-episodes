@@ -17,10 +17,11 @@ func _initialize() -> void:
 		if not file.ends_with(".tres"):
 			continue
 		materials += 1
-		var mat := load("res://assets/materials/" + file) as ShaderMaterial
-		check(mat != null and mat.shader != null, "%s loads as a ShaderMaterial" % file)
+		var loaded: Material = load("res://assets/materials/" + file)
+		check(loaded != null, "%s loads" % file)
+		var mat := loaded as ShaderMaterial
 		if mat == null:
-			continue
+			continue  # plain StandardMaterial3D (glass, door panel, emissive lamp glass)
 		for param in ["albedo_tex", "normal_tex", "roughness_tex"]:
 			var tex := mat.get_shader_parameter(param) as Texture2D
 			check(tex != null, "%s has %s" % [file, param])

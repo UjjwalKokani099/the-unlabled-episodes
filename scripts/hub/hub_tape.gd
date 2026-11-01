@@ -1,8 +1,7 @@
 class_name HubTape
 extends Node3D
-## A tape on the hub shelf. Reads its chapter from Game: unlocked tapes get a hand-written
-## label, locked ones stay blank (unlabeled), watched ones get a red dot.
-## The player picks it up (it moves into their hand) and inserts it in the VCR.
+## One of the unlabeled tapes in Nikhil's box. The Hub hands the next one to the player
+## (it moves into their hand) and the VCR plays it.
 
 ## Chapter id from chapters/chapter_list.tres.
 @export var chapter_id: StringName
@@ -43,13 +42,10 @@ func display_name() -> String:
 
 
 func refresh() -> void:
-	if is_unlocked():
-		label.text = "%s\n%s" % [chapter.title, chapter.subtitle]
-		interactable.prompt = "Take " + display_name()
-	else:
-		label.text = ""
-		interactable.prompt = "Unlabeled tape"
-	watched_dot.visible = chapter != null and Game.is_completed(chapter_id)
+	# The tapes are never labeled (story rule: a label is a name). Blank sticker, no marks.
+	label.text = ""
+	watched_dot.visible = false
+	interactable.enabled = false  # tapes are taken through the box, not one by one
 
 
 ## Moves the tape into the player's hand (child of `hand`, a Node3D on the camera).
@@ -65,7 +61,6 @@ func put_back() -> void:
 	is_held = false
 	reparent(_home_parent, false)
 	transform = _home_transform
-	interactable.enabled = true
 
 
 func _on_interacted(_by: Node3D) -> void:

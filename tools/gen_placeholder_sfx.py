@@ -115,6 +115,34 @@ def beep(freq, seconds, rng):
     return out
 
 
+def doorbell(rng):
+    out = []
+    for freq, start in ((659.3, 0.0), (523.3, 0.55)):
+        seg = [0.0] * int(RATE * start)
+        for i in range(int(RATE * 1.4)):
+            t = i / RATE
+            env = math.exp(-t * 2.6)
+            seg.append(env * (math.sin(2 * math.pi * freq * t) + 0.3 * math.sin(2 * math.pi * freq * 2.76 * t)))
+        if not out:
+            out = seg
+        else:
+            out += [0.0] * (len(seg) - len(out))
+            out = [a + b for a, b in zip(out, seg)]
+    return out
+
+
+def fan_hum(rng):
+    n = int(RATE * 3.0)
+    hiss = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.04)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        edge = min(t / 0.02, 1.0, (3.0 - t) / 0.02)
+        whoosh = 0.6 + 0.4 * math.sin(2 * math.pi * 4.0 * t)
+        out.append(edge * (0.25 * math.sin(2 * math.pi * 50 * t) + hiss[i] * 2.5 * whoosh))
+    return out
+
+
 def write(name, samples):
     peak = max(abs(s) for s in samples) or 1.0
     OUT.mkdir(parents=True, exist_ok=True)
@@ -140,6 +168,8 @@ def main():
     write("ui_blip.wav", [x * 0.5 for x in beep(1200, 0.035, rng)])
     select = beep(880, 0.05, rng) + beep(1320, 0.07, rng)
     write("ui_select.wav", select)
+    write("doorbell.wav", doorbell(rng))
+    write("fan_hum.wav", fan_hum(rng))
 
 
 if __name__ == "__main__":

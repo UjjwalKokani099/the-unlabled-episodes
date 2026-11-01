@@ -36,6 +36,11 @@ func _process(_delta: float) -> void:
 		prompt_label.text = (verb % _interact_key()) + " " + target.prompt
 
 
+## Show a piece of paper / screen text (diary, register, bill, chat). See NoteView.
+func show_note(text: String, handwritten: bool = false) -> void:
+	($NoteView as NoteView).open(text, handwritten)
+
+
 func show_message(text: String, duration: float = 2.5) -> void:
 	message_label.text = text
 	if _message_tween:
