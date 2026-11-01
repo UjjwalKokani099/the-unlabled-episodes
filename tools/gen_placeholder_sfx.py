@@ -73,6 +73,37 @@ def sting(rng):
     return out
 
 
+def vcr_insert(rng):
+    n = int(RATE * 1.3)
+    noise = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.2)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        clunk1 = (noise[i] * 1.2 + math.sin(2 * math.pi * 140 * t)) * math.exp(-t * 35)
+        t2 = t - 0.32
+        clunk2 = (noise[i] + math.sin(2 * math.pi * 95 * t)) * math.exp(-t2 * 30) if t2 > 0 else 0.0
+        t3 = t - 0.45
+        motor = 0.0
+        if t3 > 0:
+            whirr = math.sin(2 * math.pi * (180 + 40 * min(t3 / 0.3, 1.0)) * t)
+            motor = 0.25 * (whirr + 0.4 * noise[i]) * min(t3 / 0.1, 1.0) * math.exp(-max(t3 - 0.6, 0) * 8)
+        out.append(clunk1 + clunk2 + motor)
+    return out
+
+
+def tv_static(rng):
+    n = int(RATE * 2.0)
+    raw = [rng.uniform(-1, 1) for _ in range(n)]
+    hiss = lowpass(raw, 0.6)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        # Fade the very ends so the loop restart doesn't click.
+        edge = min(t / 0.02, 1.0, (2.0 - t) / 0.02)
+        out.append(edge * hiss[i])
+    return out
+
+
 def write(name, samples):
     peak = max(abs(s) for s in samples) or 1.0
     OUT.mkdir(parents=True, exist_ok=True)
@@ -93,6 +124,8 @@ def main():
     write("knock.wav", knocks)
     write("door_slam.wav", slam(rng))
     write("sting.wav", sting(rng))
+    write("vcr_insert.wav", vcr_insert(rng))
+    write("tv_static.wav", tv_static(rng))
 
 
 if __name__ == "__main__":

@@ -156,6 +156,18 @@ func complete_chapter() -> void:
 	_change_level(_hub_path(), "■ STOP", PackedStringArray([finished.title, "END OF TAPE"]))
 
 
+## Leave the current tape without finishing it (keeps the checkpoint for Resume).
+func return_to_hub() -> void:
+	if _transitioning:
+		return
+	var leaving := current_chapter
+	current_chapter = null
+	Events.reset()
+	_flags = {}
+	tape_time_at_load = 0.0
+	_change_level(_hub_path(), "■ STOP", PackedStringArray([leaving.title if leaving else ""]))
+
+
 # --- Flags (small per-chapter facts that must survive a checkpoint load) ------
 
 func set_flag(key: String, value: Variant = true) -> void:

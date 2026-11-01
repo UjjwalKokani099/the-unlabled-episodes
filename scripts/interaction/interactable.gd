@@ -17,12 +17,16 @@ const LAYER := 4
 @export var prompt: String = "Use"
 ## 0 = press once. Above 0 = seconds the key must be held.
 @export_range(0.0, 10.0, 0.1) var hold_time: float = 0.0
-## Disabled interactables can't be focused or used.
-@export var enabled: bool = true
+## Disabled interactables can't be focused or used, and don't block the look-ray
+## (they leave the interactable physics layer).
+@export var enabled: bool = true:
+	set(value):
+		enabled = value
+		collision_layer = LAYER if enabled else 0
 
 
 func _ready() -> void:
-	collision_layer = LAYER
+	collision_layer = LAYER if enabled else 0
 	collision_mask = 0
 	monitoring = false
 
