@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://scripts/ui/objective_panel.gd" id="3_objectives"]
 [ext_resource type="PackedScene" path="res://ui/menus/pause_menu.tscn" id="4_pause"]
 [ext_resource type="Script" path="res://scripts/ui/note_view.gd" id="5_note"]
+[ext_resource type="PackedScene" path="res://ui/hud/subtitles.tscn" id="6_subs"]
 
 [sub_resource type="StyleBoxFlat" id="Style_paper"]
 bg_color = Color(0.93, 0.9, 0.8, 1)
@@ -151,3 +152,5 @@ offset_bottom = -44.0
 theme_override_font_sizes/font_size = 18
 text = "[E]  put it down"
 horizontal_alignment = 1
+
+[node name="Subtitles" parent="." instance=ExtResource("6_subs")]
