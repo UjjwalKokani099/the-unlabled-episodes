@@ -4,6 +4,10 @@ First-person found-footage horror game. Godot 4.7.2, GDScript, Forward+, Jolt ph
 The owner is a React developer new to Godot: all scenes (.tscn), resources (.tres) and
 settings are written as text files, not built in the editor.
 
+## Story and current brief
+- `docs/story.md` is the story bible: source of truth for names, dates, places, rules.
+- `docs/brief_visuals_and_demo.md` is the active brief (visual upgrade + demo).
+
 ## Godot binaries
 - Editor:  `C:\Users\ujjwa\Tools\Godot\Godot_v4.7.2-stable_win64.exe`
 - Console (prints stdout/errors, use for automated runs):
