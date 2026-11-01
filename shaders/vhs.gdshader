@@ -7,6 +7,8 @@ uniform sampler2D screen_tex : hint_screen_texture, filter_linear, repeat_disabl
 
 uniform float strength : hint_range(0.0, 1.0) = 1.0;
 uniform float glitch : hint_range(0.0, 1.0) = 0.0;
+// VCR freeze-frame (the Spot key): judder + a noisy tracking band near the bottom.
+uniform float pause_amount : hint_range(0.0, 1.0) = 0.0;
 uniform float aberration_px = 1.6;   // red/blue split, in screen pixels
 uniform float bleed = 0.35;          // horizontal colour smear
 uniform float noise_amount = 0.055;
@@ -33,6 +35,10 @@ void fragment() {
 	float bottom = smoothstep(0.975, 1.0, uv.y);
 	float bottom_shift = bottom * (hash(vec2(floor(uv.y / px.y), t)) - 0.5) * 0.03;
 	uv.x += (wobble + band_shift + bottom_shift) * strength;
+	float pause_center = 0.86 + sin(t * 0.7) * 0.03;
+	float pause_band = pause_amount * (1.0 - smoothstep(0.0, 0.03, abs(uv.y - pause_center)));
+	uv.y += pause_amount * (hash(vec2(floor(t * 24.0), 3.0)) - 0.5) * 0.004;
+	uv.x += pause_band * (hash(vec2(floor(uv.y / px.y), floor(t * 30.0))) - 0.5) * 0.09;
 
 	// Chromatic split + smear.
 	float ab = aberration_px * (1.0 + glitch * 5.0) * strength * px.x;
@@ -54,6 +60,7 @@ void fragment() {
 	float grain = hash(floor(FRAGCOORD.xy) + fract(t * 7.3) * 113.0) - 0.5;
 	col += grain * noise_amount * (1.0 + glitch * 3.0) * strength;
 	col += bottom * grain * 0.4 * strength;
+	col = mix(col, vec3(0.55 + grain * 1.6), pause_band * 0.75);
 
 	// Vignette.
 	vec2 d = SCREEN_UV - 0.5;

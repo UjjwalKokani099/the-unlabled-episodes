@@ -40,6 +40,13 @@ func _process(delta: float) -> void:
 	_timer = randf_range(1.5, 9.0) / flicker
 
 
+## Mains power (PowerGrid): off at once; back on with the choke's stuttering start.
+func set_power(powered: bool) -> void:
+	on = powered
+	if powered and is_node_ready():
+		_stutter()
+
+
 func _stutter() -> void:
 	var tween := create_tween()
 	for i in randi_range(2, 6):

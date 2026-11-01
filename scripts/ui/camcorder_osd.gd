@@ -19,6 +19,15 @@ const REC_COLOR := Color(0.95, 0.12, 0.1)
 		queue_redraw()
 
 var elapsed: float = 0.0
+## Shows "PAUSE" instead of the blinking REC (the camcorder's freeze-frame).
+var paused_display: bool = false:
+	set(value):
+		paused_display = value
+		if is_node_ready():
+			_rec_label.text = "❚❚ PAUSE" if value else "REC"
+			_rec_label.visible = true
+			_rec_on = not value
+			queue_redraw()
 var _start_unix: int = 0
 var _shown_second: int = -1
 var _rec_on: bool = true
@@ -43,6 +52,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	elapsed += delta
+	if paused_display:
+		return
 	var rec_on := recording and fmod(elapsed, 1.0) < 0.6
 	if rec_on != _rec_on:
 		_rec_on = rec_on
@@ -50,6 +61,32 @@ func _process(delta: float) -> void:
 		queue_redraw()
 	if int(elapsed) != _shown_second:
 		_update_clock()
+
+
+## The tape's current time of day, in seconds after midnight.
+func time_of_day() -> int:
+	var dt := Time.get_datetime_dict_from_unix_time(_start_unix + int(elapsed))
+	return dt.hour * 3600 + dt.minute * 60 + dt.second
+
+
+## The tape's current time as a register would write it, e.g. "03:12 AM".
+func clock_text() -> String:
+	var dt := Time.get_datetime_dict_from_unix_time(_start_unix + int(elapsed))
+	var hour12: int = dt.hour % 12
+	return "%02d:%02d %s" % [12 if hour12 == 0 else hour12, dt.minute, "PM" if dt.hour >= 12 else "AM"]
+
+
+## Moves the clock forward to the next time it reads `hh_mm_ss` ("03:11:20"): what a tape
+## shows after the camcorder was stopped and started again. Stored in `elapsed`, so
+## checkpoints keep it.
+func jump_to_time(hh_mm_ss: String) -> void:
+	var parts := hh_mm_ss.split(":")
+	var target := int(parts[0]) * 3600 + int(parts[1]) * 60 + (int(parts[2]) if parts.size() > 2 else 0)
+	var delta := target - time_of_day()
+	if delta < 0:
+		delta += 86400
+	elapsed = floorf(elapsed) + delta
+	_update_clock()
 
 
 func _update_clock() -> void:

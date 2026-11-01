@@ -36,6 +36,15 @@ def usable(lv, parent, name, pos, size, prompt, node_props=None, node_script=Non
     return node
 
 
+def sound(lv, name):
+    return f'ExtResource("{lv.ext(f"res://assets/audio/sfx/{name}.wav", "AudioStream")}")'
+
+
+def character(lv, name, kind, parent, pos, yaw, props=None):
+    return lv.scene(name, f"res://scenes/characters/{kind}.tscn", parent,
+                    {"position": v3(*pos), "rotation_degrees": v3(0, yaw, 0), **(props or {})})
+
+
 def scooter(lv, x, z, paint, facing=1):
     lv.box((x, 0.45, z), (0.32, 0.35, 1.25), paint, collide=False)
     lv.box((x, 0.68, z - 0.1 * facing), (0.3, 0.1, 0.55), "glass_dark", collide=False)
@@ -58,6 +67,66 @@ def tree(lv, x, z):
     lv.box((x, 1.6, z), (0.35, 3.2, 0.35), "wood_planks")
     for dx, dy, dz, s in ((0, 3.6, 0, 3.0), (0.8, 3.2, 0.5, 2.0), (-0.7, 3.3, -0.6, 2.2), (0.2, 4.4, 0.1, 2.0)):
         lv.box((x + dx, dy, z + dz), (s, s * 0.6, s), "foliage", collide=False)
+
+
+def story_beats(lv) -> None:
+    """3:12 AM onwards (story bible, Tape 1): Deshmukh walks out, CCTV-only balcony figure,
+    4B dressing, the Cameraman's three hidden appearances + the ending shot, zones, power.
+    Timing and dialogue live in chapters/tape_01_watchman/scripts/tape01_director.gd."""
+    walk = lv.add("Deshmukh", "Node3D", ".", {
+        "script": script(lv, "res://scripts/characters/npc_walker.gd"),
+        "points": "PackedVector3Array(-2, 0, 2, -0.5, 0, 10, 1, 0, 20, 2.5, 0, 26.6, 2.5, 0, 29.6, -4, 0, 31.6, -34, 0, 31.6)",
+        "speed": "1.15", "start_event": '&"deshmukh_walk"',
+        "waypoint_events": 'PackedStringArray("", "", "", "deshmukh_at_gate", "deshmukh_left")',
+        "arrived_event": '&"deshmukh_gone"', "step_sound": sound(lv, "footstep_chappal")})
+    character(lv, "Body", "deshmukh", walk, (0, 0, 0), 0)
+    # ...yet on the CCTV he stands on his balcony (only cameras see this node)
+    bal = lv.add("BalconyDeshmukh", "Node3D", ".", {"script": script(lv, "res://scripts/characters/cctv_only.gd"),
+                                                     "position": v3(-4.9, 12.0, -13.15), "rotation_degrees": v3(0, 180, 0),
+                                                     "visible": "false"})
+    character(lv, "Body", "deshmukh", bal, (0, 0, 0), 0)
+    lv.add("Light", "OmniLight3D", bal, {"position": v3(0.3, 2.2, -0.9), "light_color": "Color(0.8, 0.85, 1, 1)",
+                                         "light_energy": "2.4", "omni_range": "3.5"})
+    # flat 4B: empty for eight months
+    for pos, size in (((-8.2, 12.42, -15.6), (2.0, 0.8, 0.9)), ((-5.0, 12.38, -17.6), (1.2, 0.75, 0.8)),
+                      ((-3.2, 12.55, -15.0), (0.9, 1.1, 0.6)), ((-9.0, 12.5, -21.5), (1.9, 0.6, 1.4))):
+        lv.box(pos, size, "fabric_sheet")
+    for i in range(6):
+        lv.box((-10.6 + (i % 2) * 0.06, 12.03 + i * 0.012, -15.6 - (i % 3) * 0.05), (0.32, 0.012, 0.42), "paper", collide=False)
+    lv.add("Calendar", "Label3D", ".", {"position": v3(-2.13, 13.6, -16.0), "rotation_degrees": v3(0, -90, 0),
+                                         "pixel_size": "0.002", "shaded": "true", "outline_size": "0", "font_size": "48",
+                                         "modulate": "Color(0.25, 0.1, 0.1, 1)", "text": '"JULY 1997\\nजुलाई 1997"'})
+    lv.box((-2.2, 13.55, -16.0), (0.02, 0.6, 0.42), "paper", collide=False)
+    lv.box((-10.85, 13.4, -16.4), (0.05, 0.22, 0.13), "metal_meter_white", collide=False)   # 4B intercom panel
+    lv.box((-10.83, 12.78, -16.38), (0.05, 0.22, 0.06), "glass_dark", collide=False)        # handset, off the hook
+    lv.add("FlatBreath", "AudioStreamPlayer3D", ".", {"position": v3(-10.8, 12.8, -16.4), "stream": sound(lv, "breathing"),
+                                                       "volume_db": "-4.0", "unit_size": "2.0", "bus": '&"SFX"'})
+    # the Cameraman: three hidden appearances (spot them) + the last CCTV frame
+    character(lv, "CamStairs", "cameraman", ".", (-12.2, 0, -15.2), 180,
+              {"active": "false", "cctv_only": "true", "tracking_noise": "0.0"})
+    lv.add("SpotCCTV", "Node3D", ".", {"position": v3(7.0, 0.97, 24.87), "script": script(lv, "res://scripts/story/spottable.gd"),
+                                        "spot_id": '&"t1_cctv_stairs"', "monitor": 'NodePath("../CCTV")',
+                                        "monitor_camera": "2", "active": "false"})
+    character(lv, "Cam4B", "cameraman", ".", (-4.25, 12.0, -20.6), 180,
+              {"active": "false", "spot_id": '&"t1_flat_4b"', "vanish_when_unseen": "true"})
+    character(lv, "CamTank", "cameraman", ".", (28.0, 0, 4.0), 116.6,
+              {"active": "false", "spot_id": '&"t1_water_tank"', "vanish_when_unseen": "true"})
+    character(lv, "CamEnding", "cameraman", ".", (26.9, 0, -4.0), -70,
+              {"active": "false", "tracking_noise": "0.0", "steady_dot": "true"})
+    character(lv, "RaghuStandIn", "raghu", ".", (28.6, 0, -3.0), 180, {"visible": "false"})
+    # zones that move the night along (they fire Events ids; the director and objectives listen)
+    trig = "res://scripts/events/trigger_zone.gd"
+    for name, pos, size, ev, armed in (("BalconyZone", (-5, 1.2, -7), (9, 2.4, 7), "balcony_checked", "cctv_deshmukh"),
+                                       ("FlatZone", (-7, 13.2, -16.5), (5, 2.4, 4), "4b_checked", "take_key"),
+                                       ("CabinZone2", (5.75, 1.2, 23.75), (3.2, 2.4, 3.2), "cabin_return2", "check_4b"),
+                                       ("MeterZone", (28, 1.2, -4), (3.6, 2.4, 3.6), "meter_room_reached", "power_cut")):
+        area(lv, ".", name, pos, size, {"script": script(lv, trig), "event_id": f'&"{ev}"', "armed_by": f'&"{armed}"'})
+    # mains power + the story director
+    glow = ", ".join(f'ExtResource("{lv.ext(f"res://assets/materials/{m}.tres", "Material")}")'
+                     for m in ("glass_sodium", "glass_lit_warm", "glass_lit_tv"))
+    lv.add("Power", "Node", ".", {"script": script(lv, "res://scripts/props/power_grid.gd"),
+                                  "glow_materials": f"Array[BaseMaterial3D]([{glow}])"})
+    lv.add("Story", "Node", ".", {"script": script(lv, SCRIPTS + "tape01_director.gd")})
 
 
 def main() -> None:
@@ -92,6 +161,22 @@ def main() -> None:
         if x < 2.0:
             lv.box((x, 1.0, 28), (0.03, 2.0, 0.03), "metal_gate_green", collide=False)
     lv.collider((-0.5, 1.0, 28), (5.0, 2.0, 0.15))
+    # wicket gate in the pedestrian gap (hinge at x=3). Opens outwards for Deshmukh only.
+    wicket = lv.add("Wicket", "Node3D", ".", {"position": v3(3.0, 0, 28)})
+    for i in range(5):
+        lv.box((-0.12 - i * 0.2, 0.75, 0), (0.03, 1.5, 0.03), "metal_gate_green", collide=False, parent=wicket)
+    for y in (0.15, 0.75, 1.45):
+        lv.box((-0.5, y, 0), (0.95, 0.05, 0.04), "metal_gate_green", collide=False, parent=wicket)
+    lv.collider((2.5, 1.0, 28), (1.0, 2.0, 0.15))
+    # the lane outside: asphalt, the facing compound wall, dark buildings, one lamp
+    lv.box((0, -0.095, 33.5), (96, 0.2, 11), "ground_asphalt", collide=False)
+    wall(lv, (-48, 39), (48, 39), 0, 2.4, 0.23, "wall_exterior_peach", "brick_red", -1, collide=False)
+    for x, w, h, mat in ((-30, 16, 12, "wall_exterior_sky"), (-10, 14, 9, "wall_exterior_cream"),
+                         (12, 18, 15, "wall_exterior_peach"), (34, 14, 9, "wall_exterior_cream")):
+        lv.box((x, h / 2, 45), (w, h, 10), mat, collide=False)
+    for x, y in ((-33, 4.5), (13, 7.5), (8, 10.5)):
+        lv.box((x, y, 39.97), (1.2, 1.1, 0.05), "glass_lit_warm", collide=False, shadow=False)
+    sodium_lamp(lv, -12, 37.6, facing_x=1)
     for y in (0.2, 1.0, 1.9):
         lv.box((-0.5, y, 28), (5.0, 0.06, 0.05), "metal_gate_green", collide=False)
     lv.add("SocietyName", "Label3D", ".", {"position": v3(-0.2, 2.75, 28.2), "pixel_size": "0.006", "shaded": "true",
@@ -108,7 +193,10 @@ def main() -> None:
     wall(lv, (4, 22), (4, 25.5), 0, 2.6, 0.2, ext, inn, -1, [{"along": 23.0, "w": 1.0, "bottom": 0, "top": 2.1, "kind": "hole"}])
     lv.box((6.6, 0.38, 24.9), (1.5, 0.76, 0.6), "wood_planks")                       # table
     lv.box((5.3, 0.23, 24.4), (0.4, 0.46, 0.4), "metal_rust", collide=False)          # stool
-    lv.scene("CabinTube", "res://scenes/props/tube_light.tscn", ".", {"position": v3(5.75, 2.6, 23.75)})
+    lv.scene("CabinTube", "res://scenes/props/tube_light.tscn", ".", {"position": v3(5.75, 2.6, 23.75)}, groups=["mains"])
+    lv.add("CabinFan", "AudioStreamPlayer3D", ".", {"position": v3(5.75, 2.4, 23.75), "stream": sound(lv, "fan_hum"),
+                                                     "volume_db": "-16.0", "unit_size": "3.0", "autoplay": "true",
+                                                     "bus": '&"Ambience"'}, groups=["mains"])
     cctv = lv.add("CCTV", "Node3D", ".", {"position": v3(7.0, 0.76, 25.0), "script": script(lv, "res://scripts/props/cctv_monitor.gd"),
                                           "cameras": 'Array[NodePath]([NodePath("../CamSpots/Gate"), NodePath("../CamSpots/Courtyard"), NodePath("../CamSpots/StairsB"), NodePath("../CamSpots/MeterRoom")])',
                                           "names": 'PackedStringArray("CAM 1  GATE", "CAM 2  B WING", "CAM 3  B STAIRS", "CAM 4  METER ROOM")'})
@@ -123,13 +211,26 @@ def main() -> None:
     keys = usable(lv, ".", "KeyBoard", (7.38, 1.5, 23.2), (0.2, 0.4, 0.6), "Take the spare key for 4B",
                   {"event_id": '&"key_4b"', "message": '"Spare key: 4B. The tag says DESHMUKH."'}, "res://scripts/interaction/event_on_use.gd")
     lv.box((0, 0, 0), (0.03, 0.35, 0.5), "wood_door_dark", collide=False, parent=keys)
-    icom = usable(lv, ".", "Intercom", (4.12, 1.4, 24.6), (0.2, 0.3, 0.25), "Intercom", {"event_id": '&"intercom_used"', "message": '"Intercom. Just a dial tone."', "once": "false"},
-                  "res://scripts/interaction/event_on_use.gd")
+    icom = usable(lv, ".", "Intercom", (4.12, 1.4, 24.6), (0.2, 0.3, 0.25), "Intercom",
+                  {"ring_event": '&"intercom_ring"', "answered_event": '&"intercom_answered"', "use_event": '&"intercom_used"',
+                   "idle_message": '"Intercom. Just a dial tone."', "ring_sound": sound(lv, "intercom_buzz"),
+                   "answer_prompt": '"Answer the intercom (4B)"'}, "res://scripts/props/ringing_phone.gd")
     lv.box((0, 0, 0), (0.06, 0.22, 0.14), "metal_meter_white", collide=False, parent=icom)
+    led = lv.add("Led", "Node3D", icom, {"position": v3(0.035, 0.06, -0.03)})
+    lv.box((0, 0, 0), (0.01, 0.02, 0.02), "glass_sodium", collide=False, shadow=False, parent=led)
+    lv.add("Glow", "OmniLight3D", led, {"light_color": "Color(1, 0.15, 0.05, 1)", "light_energy": "0.4", "omni_range": "0.6"})
+    lv.add("Breath", "AudioStreamPlayer3D", icom, {"stream": sound(lv, "breathing"), "volume_db": "-2.0", "unit_size": "2.0",
+                                                   "bus": '&"SFX"'})
+    phone = usable(lv, ".", "Phone", (5.97, 0.8, 24.85), (0.24, 0.2, 0.25), "Use the phone",
+                   {"use_event": '&"phone_used"', "ring_sound": sound(lv, "phone_ring")}, "res://scripts/props/ringing_phone.gd")
+    lv.box((0, 0, 0), (0.18, 0.07, 0.21), "glass_dark", collide=False, parent=phone)
+    lv.box((0, 0.06, 0), (0.2, 0.04, 0.06), "glass_dark", collide=False, parent=phone)
     lv.add("CamSpots", "Node3D", ".")
-    for name, pos, rot in (("Gate", (0, 3.0, 22), (-12, 180, 0)), ("Courtyard", (6, 3.5, 6), (16.5, 29.8, 0)),
-                           ("StairsB", (-12.5, 2.6, -12.0), (-12, 0, 0)), ("MeterRoom", (18, 3.0, -4), (-14, -90, 0))):
-        lv.add(name, "Marker3D", "CamSpots", {"position": v3(*pos), "rotation_degrees": v3(*rot)})
+    # B WING feed: narrow lens on the 4B balcony. METER ROOM feed: inside, from the far corner.
+    for name, pos, rot, fov in (("Gate", (0, 3.0, 22), (-12, 180, 0), 75), ("Courtyard", (-1, 5.5, 0), (28.6, 16.5, 0), 15),
+                                ("StairsB", (-12.5, 2.6, -12.0), (-12, 0, 0), 75),
+                                ("MeterRoom", (29.55, 2.6, -5.55), (-28, 137.7, 0), 70)):
+        lv.add(name, "Marker3D", "CamSpots", {"position": v3(*pos), "rotation_degrees": v3(*rot), "metadata/fov": f"{fov}.0"})
     # ---- meter room (x 26..30, z -6..-2) + society water tank beside it
     slab(lv, 26, 30, -6, -2, 0.05, 0.05, "concrete_rough", "concrete_rough")
     slab(lv, 25.9, 30.1, -6.1, -1.9, 2.9, 0.15, "concrete_dark", "wall_bare_stained")
@@ -144,7 +245,12 @@ def main() -> None:
             lv.box((29.82, y, z), (0.15, 0.42, 0.32), "metal_meter_white", collide=False)
             lv.box((29.74, y + 0.06, z), (0.01, 0.1, 0.14), "glass_dark", collide=False)
     lv.box((29.85, 2.2, -4.0), (0.08, 0.7, 3.6), "glass_dark", collide=False)  # cable tray / wires
-    lv.scene("MeterTube", "res://scenes/props/tube_light.tscn", ".", {"position": v3(28, 2.8, -4), "flicker": "0.8"})
+    lv.scene("MeterTube", "res://scenes/props/tube_light.tscn", ".", {"position": v3(28, 2.8, -4), "flicker": "0.8"},
+             groups=["mains"])
+    main = usable(lv, ".", "MainSwitch", (28.6, 1.45, -2.2), (0.45, 0.55, 0.35), "Reset the main switch",
+                  {"event_id": '&"main_switch"'}, "res://scripts/interaction/event_on_use.gd")
+    lv.box((0, 0, -0.04), (0.36, 0.48, 0.12), "metal_meter_white", collide=False, parent=main)
+    lv.box((0.2, -0.05, -0.08), (0.05, 0.22, 0.05), "paint_car_red", collide=False, parent=main)
     for name, pos in (("water_stain", (28, 2.79, -3.2)), ("crack_b", (26.12, 1.6, -5.2)), ("hand_grime", (29.75, 1.4, -2.6))):
         rot = (90, 0, 0) if name == "water_stain" else ((0, 90, 0) if pos[0] < 27 else (0, -90, 0))
         lv.scene(name, f"res://scenes/decals/{name}.tscn", ".", {"position": v3(*pos), "rotation_degrees": v3(*rot)})
@@ -180,17 +286,12 @@ def main() -> None:
     lv.add("ObjectiveLoader", "Node", ".", {"script": script(lv, "res://scripts/objectives/objective_loader.gd"),
                                            "objective_set": f'ExtResource("{lv.ext("res://chapters/tape_01_watchman/objectives.tres", "Resource")}")'})
     lv.add("Checkpoints", "Node3D", ".")
-    for name, pos in (("start", (5.75, 0, 23.6)), ("courtyard", (0, 0, 2)), ("terraces", (-12.5, 15, -15.5))):
+    for name, pos in (("start", (5.75, 0, 23.6)), ("courtyard", (0, 0, 2)), ("terraces", (-12.5, 15, -15.5)),
+                      ("wing_b4", (-12.5, 12, -15.0))):
         area(lv, "Checkpoints", name, pos, (3, 3, 3), {"script": script(lv, "res://scripts/chapters/checkpoint.gd"), "checkpoint_id": f'&"{name}"'})
     area(lv, ".", "CabinZone", (5.75, 1.2, 23.75), (3.2, 2.4, 3.2), {"script": script(lv, "res://scripts/events/trigger_zone.gd"),
                                                                     "event_id": '&"back_at_cabin"', "armed_by": '&"lock_terraces"'})
-    lv.add("EndRound", "Node", ".", {"script": script(lv, "res://scripts/events/method_reaction.gd"),
-                                     "targets": 'Array[NodePath]([NodePath("/root/Game")])', "method": '&"complete_chapter"',
-                                     "on_event": '&"back_at_cabin"', "delay": "3.0"})
-    lv.add("EndMessage", "Node", ".", {"script": script(lv, "res://scripts/events/method_reaction.gd"),
-                                       "targets": 'Array[NodePath]([NodePath("../HUD")])', "method": '&"show_message"',
-                                       "args": '["First round done. Everything is quiet. (Story events: next build step.)", 4.0]',
-                                       "on_event": '&"back_at_cabin"'})
+    story_beats(lv)
     player_rig(lv, 5.75, 23.6, 0.0, debug=False)
     benchmark_points(lv, [(5.75, 0, 23.6), (0, 0, 2), (-12.5, 6, -14.8), (0, 0, -10), (28, 0, -4)])
     lv.write(os.path.join(OUT_DIR, "shanti_vihar.tscn"))
@@ -200,7 +301,21 @@ def main() -> None:
             ("check_cctv", "Check the CCTV monitor", "cctv_checked", 1, "sign_register"),
             ("patrol", "Patrol the four wings", "patrol_point", 4, "check_cctv"),
             ("lock_terraces", "Padlock the terrace doors", "terrace_locked", 4, "patrol"),
-            ("return_cabin", "Go back to the cabin", "back_at_cabin", 1, "lock_terraces")]
+            ("return_cabin", "Go back to the cabin", "back_at_cabin", 1, "lock_terraces"),
+            # 3 AM: the wrong thing, escalation, ending (story bible)
+            ("sign_3am", "Write the 3 AM round in the register", "register_3am", 1, "return_cabin"),
+            ("watch_gate", "Keep an eye on the gate", "deshmukh_left", 1, "sign_3am"),
+            ("log_deshmukh", "Write Mr. Deshmukh's exit in the register", "deshmukh_logged", 1, "watch_gate"),
+            ("cctv_again", "Check the CCTV", "cctv_deshmukh", 1, "log_deshmukh"),
+            ("look_balcony", "Look up at the 4B balcony", "balcony_checked", 1, "cctv_again"),
+            ("answer_intercom", "Answer the intercom", "intercom_answered", 1, "look_balcony"),
+            ("take_key", "Take the spare key for 4B", "key_4b", 1, "answer_intercom"),
+            ("check_4b", "Go up and check flat 4B", "4b_checked", 1, "take_key"),
+            ("back_to_cabin", "Go back to the cabin", "cabin_return2", 1, "check_4b"),
+            ("read_register", "Write the 4B check in the register", "register_read_late", 1, "back_to_cabin"),
+            ("call_secretary", "Phone the society secretary", "secretary_called", 1, "read_register"),
+            ("meter_room", "Go to the meter room (by D Wing)", "meter_room_reached", 1, "call_secretary"),
+            ("main_switch", "Reset the main switch", "main_switch", 1, "meter_room")]
     lines = ['[gd_resource type="Resource" script_class="ObjectiveSet" format=3]', "",
              '[ext_resource type="Script" path="res://scripts/objectives/objective_set.gd" id="1_set"]',
              '[ext_resource type="Script" path="res://scripts/objectives/objective_data.gd" id="2_data"]', ""]

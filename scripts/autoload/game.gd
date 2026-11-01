@@ -240,6 +240,32 @@ func get_flag(key: String, default: Variant = null) -> Variant:
 	return _flags.get(key, default)
 
 
+# --- Spotting the Cameraman (kept across tapes and replays; all 12 = Ending B) -
+
+## Remembers a spotted appearance. Returns true the first time.
+func mark_spotted(spot_id: StringName) -> bool:
+	var list: Array = _save.get("spotted", [])
+	if String(spot_id) in list:
+		return false
+	list.append(String(spot_id))
+	_save["spotted"] = list
+	_write_save()
+	return true
+
+
+func is_spotted(spot_id: StringName) -> bool:
+	return String(spot_id) in (_save.get("spotted", []) as Array)
+
+
+## How many appearances were spotted (ids starting with `prefix`, e.g. "t1_").
+func spotted_count(prefix: String = "") -> int:
+	var n := 0
+	for id: String in _save.get("spotted", []):
+		if id.begins_with(prefix):
+			n += 1
+	return n
+
+
 # --- Save file ----------------------------------------------------------------
 
 func load_save() -> void:
@@ -251,6 +277,7 @@ func load_save() -> void:
 		_save.completed = data.get("completed", [])
 		_save.checkpoint = data.get("checkpoint", {})
 		_save.intro_seen = data.get("intro_seen", false)
+		_save.spotted = data.get("spotted", [])
 	else:
 		push_warning("Game: save file unreadable, starting fresh")
 

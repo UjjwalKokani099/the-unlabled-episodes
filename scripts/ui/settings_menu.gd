@@ -29,7 +29,7 @@ const ROWS: Array[Dictionary] = [
 ]
 const ACTION_NAMES := {&"move_forward": "Move forward", &"move_back": "Move back", &"move_left": "Move left",
 	&"move_right": "Move right", &"sprint": "Sprint", &"crouch": "Crouch", &"flashlight": "Flashlight",
-	&"interact": "Use / interact", &"objectives": "Show objectives"}
+	&"interact": "Use / interact", &"spot": "Pause tape (spot him)", &"objectives": "Show objectives"}
 const ROW_FONT_SIZE := 20
 
 ## Setting key (or action name for rebind rows) -> its control, for refresh and tests.

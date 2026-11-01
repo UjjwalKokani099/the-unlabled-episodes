@@ -24,6 +24,11 @@ func glitch(amount: float, duration: float) -> void:
 	_material.set_shader_parameter(&"glitch", _glitch)
 
 
+## Freeze-frame look on/off (shader judder + tracking band).
+func set_paused(paused: bool) -> void:
+	_material.set_shader_parameter(&"pause_amount", 1.0 if paused else 0.0)
+
+
 func get_glitch() -> float:
 	return _glitch
 

@@ -1,0 +1,174 @@
+[gd_scene format=3]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1"]
+radius = 0.075
+height = 0.88
+radial_segments = 10
+rings = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2"]
+albedo_color = Color(0.86, 0.85, 0.8, 1)
+roughness = 0.85
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3"]
+radius = 0.075
+height = 0.88
+radial_segments = 10
+rings = 3
+
+[sub_resource type="BoxMesh" id="BoxMesh_4"]
+size = Vector3(0.1, 0.06, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5"]
+albedo_color = Color(0.3, 0.2, 0.12, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_6"]
+size = Vector3(0.1, 0.06, 0.25)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7"]
+radius = 0.17
+height = 0.66
+radial_segments = 10
+rings = 3
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8"]
+radius = 0.05
+height = 0.66
+radial_segments = 10
+rings = 3
+
+[sub_resource type="SphereMesh" id="SphereMesh_9"]
+radius = 0.045
+height = 0.09
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_10"]
+albedo_color = Color(0.42, 0.29, 0.21, 1)
+roughness = 0.85
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_11"]
+radius = 0.05
+height = 0.66
+radial_segments = 10
+rings = 3
+
+[sub_resource type="SphereMesh" id="SphereMesh_12"]
+radius = 0.045
+height = 0.09
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_13"]
+top_radius = 0.045
+bottom_radius = 0.05
+height = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_14"]
+radius = 0.105
+height = 0.24
+
+[sub_resource type="SphereMesh" id="SphereMesh_15"]
+radius = 0.112
+height = 0.112
+is_hemisphere = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_16"]
+albedo_color = Color(0.62, 0.62, 0.6, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_17"]
+size = Vector3(0.03, 0.05, 0.04)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_18"]
+top_radius = 0.18
+bottom_radius = 0.22
+height = 0.72
+radial_segments = 12
+
+[sub_resource type="BoxMesh" id="BoxMesh_19"]
+size = Vector3(0.17, 0.035, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_20"]
+albedo_color = Color(0.05, 0.04, 0.03, 1)
+roughness = 0.3
+
+[node name="Deshmukh" type="Node3D"]
+
+[node name="Body" type="Node3D" parent="."]
+
+[node name="LegL" type="MeshInstance3D" parent="Body"]
+position = Vector3(-0.1, 0.44, 0)
+mesh = SubResource("CapsuleMesh_1")
+material_override = SubResource("StandardMaterial3D_2")
+
+[node name="LegR" type="MeshInstance3D" parent="Body"]
+position = Vector3(0.1, 0.44, 0)
+mesh = SubResource("CapsuleMesh_3")
+material_override = SubResource("StandardMaterial3D_2")
+
+[node name="FootL" type="MeshInstance3D" parent="Body"]
+position = Vector3(-0.1, 0.03, -0.05)
+mesh = SubResource("BoxMesh_4")
+material_override = SubResource("StandardMaterial3D_5")
+
+[node name="FootR" type="MeshInstance3D" parent="Body"]
+position = Vector3(0.1, 0.03, -0.05)
+mesh = SubResource("BoxMesh_6")
+material_override = SubResource("StandardMaterial3D_5")
+
+[node name="Torso" type="MeshInstance3D" parent="Body"]
+position = Vector3(0, 1.18, 0)
+scale = Vector3(1.05, 1, 0.68)
+mesh = SubResource("CapsuleMesh_7")
+material_override = SubResource("StandardMaterial3D_2")
+
+[node name="ArmL" type="MeshInstance3D" parent="Body"]
+position = Vector3(-0.235, 1.13, 0)
+rotation_degrees = Vector3(0, 0, 4)
+mesh = SubResource("CapsuleMesh_8")
+material_override = SubResource("StandardMaterial3D_2")
+
+[node name="HandL" type="MeshInstance3D" parent="Body"]
+position = Vector3(-0.2491, 0.79, 0)
+mesh = SubResource("SphereMesh_9")
+material_override = SubResource("StandardMaterial3D_10")
+
+[node name="ArmR" type="MeshInstance3D" parent="Body"]
+position = Vector3(0.235, 1.13, 0)
+rotation_degrees = Vector3(0, 0, -4)
+mesh = SubResource("CapsuleMesh_11")
+material_override = SubResource("StandardMaterial3D_2")
+
+[node name="HandR" type="MeshInstance3D" parent="Body"]
+position = Vector3(0.2491, 0.79, 0)
+mesh = SubResource("SphereMesh_12")
+material_override = SubResource("StandardMaterial3D_10")
+
+[node name="Neck" type="MeshInstance3D" parent="Body"]
+position = Vector3(0, 1.5, 0)
+mesh = SubResource("CylinderMesh_13")
+material_override = SubResource("StandardMaterial3D_10")
+
+[node name="Head" type="MeshInstance3D" parent="Body"]
+position = Vector3(0, 1.62, 0)
+mesh = SubResource("SphereMesh_14")
+material_override = SubResource("StandardMaterial3D_10")
+
+[node name="Hair" type="MeshInstance3D" parent="Body"]
+position = Vector3(0, 1.64, 0.012)
+mesh = SubResource("SphereMesh_15")
+material_override = SubResource("StandardMaterial3D_16")
+
+[node name="Nose" type="MeshInstance3D" parent="Body"]
+position = Vector3(0, 1.6, -0.105)
+mesh = SubResource("BoxMesh_17")
+material_override = SubResource("StandardMaterial3D_10")
+
+[node name="Kurta" type="MeshInstance3D" parent="Body"]
+position = Vector3(0, 0.98, 0)
+scale = Vector3(1, 1, 0.72)
+mesh = SubResource("CylinderMesh_18")
+material_override = SubResource("StandardMaterial3D_2")
+
+[node name="Glasses" type="MeshInstance3D" parent="Body"]
+position = Vector3(0, 1.635, -0.104)
+mesh = SubResource("BoxMesh_19")
+material_override = SubResource("StandardMaterial3D_20")

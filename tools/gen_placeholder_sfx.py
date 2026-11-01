@@ -217,6 +217,104 @@ def horn(rng):
             for i in range(n)]
 
 
+# ---- Tape 1 story sounds (added after the first set, so the rng order above is unchanged)
+
+def intercom_buzz(rng):
+    """Old building intercom: two harsh buzzes, then a gap (loops)."""
+    out = []
+    for _ in range(2):
+        n = int(RATE * 0.4)
+        for i in range(n):
+            t = i / RATE
+            env = min(t / 0.01, 1.0) * min((0.4 - t) / 0.01, 1.0)
+            saw = ((t * 220) % 1.0) * 2 - 1
+            out.append(env * (0.6 * saw + 0.4 * math.sin(2 * math.pi * 440 * t)))
+        out += silence(0.15)
+    return out + silence(1.2)
+
+
+def breathing(rng):
+    """Slow, close breathing through a cheap handset (6 s loop)."""
+    n = int(RATE * 6.0)
+    noise = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.18)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        phase = (t % 3.0) / 3.0
+        env = math.sin(math.pi * min(phase / 0.45, 1.0)) ** 2 if phase < 0.45 else             0.7 * math.sin(math.pi * min((phase - 0.5) / 0.4, 1.0)) ** 2 if 0.5 < phase < 0.9 else 0.0
+        hum = 0.04 * math.sin(2 * math.pi * 50 * t)
+        out.append(noise[i] * env * 1.6 + hum)
+    return out
+
+
+def phone_ring(rng):
+    """Indian landline double ring: 400/450 Hz, ring-ring, pause (loops)."""
+    out = []
+    for _ in range(2):
+        n = int(RATE * 0.4)
+        for i in range(n):
+            t = i / RATE
+            env = min(t / 0.01, 1.0) * min((0.4 - t) / 0.01, 1.0)
+            trill = 0.5 + 0.5 * math.sin(2 * math.pi * 25 * t)
+            out.append(env * trill * (math.sin(2 * math.pi * 400 * t) + math.sin(2 * math.pi * 450 * t)) * 0.5)
+        out += silence(0.2)
+    return out + silence(1.8)
+
+
+def footstep(rng):
+    """Chappal on concrete: a soft slap."""
+    n = int(RATE * 0.12)
+    noise = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.3)
+    return [noise[i] * math.exp(-i / RATE * 45) + 0.3 * math.sin(2 * math.pi * 90 * i / RATE) * math.exp(-i / RATE * 40)
+            for i in range(n)]
+
+
+def gate_creak(rng):
+    """Rusty hinge: a wavering squeal."""
+    n = int(RATE * 1.3)
+    out = []
+    ph = 0.0
+    for i in range(n):
+        t = i / RATE
+        f = 520 + 180 * math.sin(2 * math.pi * 0.9 * t) + 60 * math.sin(2 * math.pi * 7 * t)
+        ph += 2 * math.pi * f / RATE
+        env = min(t / 0.08, 1.0) * min((1.3 - t) / 0.2, 1.0)
+        out.append(env * (0.5 * math.sin(ph) + 0.25 * math.sin(2.01 * ph) + 0.1 * rng.uniform(-1, 1)))
+    return out
+
+
+def gate_clang(rng):
+    """Iron gate shutting: metallic hit with ringing partials."""
+    n = int(RATE * 1.6)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        ring = sum(math.sin(2 * math.pi * f * t) * a for f, a in ((180, 0.5), (437, 0.35), (811, 0.25), (1290, 0.15)))
+        out.append(ring * math.exp(-t * 3.5) + rng.uniform(-1, 1) * math.exp(-t * 40) * 0.8)
+    return out
+
+
+def power_down(rng):
+    """Mains dying: a clunk and the hum winding down."""
+    n = int(RATE * 2.2)
+    out = []
+    ph = 0.0
+    for i in range(n):
+        t = i / RATE
+        f = 100 * math.exp(-t * 1.4) + 20
+        ph += 2 * math.pi * f / RATE
+        out.append(0.5 * math.sin(ph) * math.exp(-t * 1.2) + rng.uniform(-1, 1) * math.exp(-t * 30) * 0.9)
+    return out
+
+
+def switch_clack(rng):
+    """Big main switch lever thrown."""
+    n = int(RATE * 0.35)
+    noise = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.4)
+    return [noise[i] * math.exp(-i / RATE * 25) + 0.6 * math.sin(2 * math.pi * 140 * i / RATE) * math.exp(-i / RATE * 18)
+            for i in range(n)]
+
+
 def write(name, samples):
     peak = max(abs(s) for s in samples) or 1.0
     OUT.mkdir(parents=True, exist_ok=True)
@@ -250,6 +348,14 @@ def main():
     write("dog_bark.wav", dog_bark(rng))
     write("traffic_loop.wav", traffic(rng))
     write("horn_far.wav", lowpass(horn(rng), 0.08))
+    write("intercom_buzz.wav", intercom_buzz(rng))
+    write("breathing.wav", breathing(rng))
+    write("phone_ring.wav", phone_ring(rng))
+    write("footstep_chappal.wav", footstep(rng))
+    write("gate_creak.wav", gate_creak(rng))
+    write("gate_clang.wav", gate_clang(rng))
+    write("power_down.wav", power_down(rng))
+    write("switch_clack.wav", switch_clack(rng))
 
 
 if __name__ == "__main__":

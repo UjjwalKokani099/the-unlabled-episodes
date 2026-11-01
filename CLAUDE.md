@@ -115,9 +115,32 @@ Useful headless commands (run from project root):
 - `chapters/tape_01_watchman/shanti_vihar.tscn` + `objectives.tres` from `tools/gen_tape01.py`.
   Wings A-D (G+4, stilt parking), cabin (CCTV monitor with live feeds, gate register, 4B key,
   intercom), meter room, water tank, parking, lamps, ambience.
-- Playable now: Raghu's duties (register -> CCTV -> patrol 4 wings -> padlock 4 terraces ->
-  back to cabin -> tape ends). Story beats (Deshmukh at 3:12, intercom breathing, register
-  entries, power cut, ending) are the next brief.
+- Full night playable: first round (register -> CCTV -> patrol -> padlocks -> cabin), tape cut
+  to 03:10, Deshmukh walks out at 3:12 (NPCWalker), CCTV-only balcony figure, intercom
+  breathing, flat 4B, stranger's register entries, secretary call + power cut, meter room,
+  last CCTV frame with the red dot -> static -> hub. Beats/dialogue/timing live in
+  `chapters/tape_01_watchman/scripts/tape01_director.gd` (`time_scale` speeds it up for
+  tests); the director rebuilds its state from Events counts in `_restore()`.
+- Register times quoted by the stranger's entries = Game flags `t1_t_<event>` (camcorder clock).
+
+## Story systems (shared by every tape)
+- Tape cut: `call_group("camcorder", "tape_cut", "03:10:40")` (static, black, clock jumps;
+  stored in OSD `elapsed`, so checkpoints keep it). OSD: `clock_text()`, `time_of_day()`.
+- Spotting the Cameraman: `Spottable` (scripts/story) in group "spottable"; the Spot key `spot`
+  (Q) is the camcorder's PAUSE (freezes the tree + VHS pause band). Ids like `t1_flat_4b`
+  persist in the save (`Game.mark_spotted/spotted_count`); 12 total = Ending B. A Spottable
+  with `monitor` + `monitor_camera` counts only while that CCTV feed shows.
+- Characters: `tools/gen_characters.py` -> `scenes/characters/` (deshmukh, raghu, cameraman;
+  primitive stand-ins, -Z forward). `Cameraman`: `active`, `spot_id`, `vanish_when_unseen`
+  (needs real line of sight), `cctv_only`, `steady_dot`. `NPCWalker`: scripted walks.
+- CCTV-only things: render layer 20 (`CCTVOnly`); the player camera's cull mask excludes it.
+  CCTV markers can set `metadata/fov` for a narrow lens.
+- `PowerGrid`: group "mains" nodes switch off (set_power / Light3D / audio) + emissive
+  `glow_materials` (restored on exit). Kit sodium lamps + wing tube lights are in "mains".
+- `RingingPhone`: phones/intercoms (ring_event, answered_event, use_event, blinking Led).
+- Fonts for paper: `[font=res://ui/fonts/hand_raghu.tres]`, `hand_stranger.tres` in BBCode.
+- Older input tests (test_camera, test_interaction, test_events, test_player) are timing-
+  flaky under uncapped frames; rerun before assuming a regression.
 
 ## Camera / screen
 - Every level instances `ui/hud/camcorder.tscn` (OSD on layer 2, VHS shader on layer 3) and

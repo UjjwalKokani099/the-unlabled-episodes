@@ -108,7 +108,7 @@ var key_bindings: Dictionary = {}:
 
 ## Actions the player may rebind (shown in Settings > Controls).
 const REBINDABLE: Array[StringName] = [&"move_forward", &"move_back", &"move_left", &"move_right",
-	&"sprint", &"crouch", &"flashlight", &"interact", &"objectives"]
+	&"sprint", &"crouch", &"flashlight", &"interact", &"spot", &"objectives"]
 
 # Volumes are linear 0.0 (silent) .. 1.0 (full).
 var master_volume: float = 0.8:

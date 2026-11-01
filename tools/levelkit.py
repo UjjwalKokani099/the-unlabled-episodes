@@ -353,7 +353,7 @@ def residential_wing(lv: Level, name: str, ox: float, oz: float, *, letter: str,
             # landing ceiling tube light
             lv.scene("Tube", "res://scenes/props/tube_light.tscn", group,
                      {"position": v3(X(1.5), y + STOREY - 0.06, Z(9.3)),
-                      "flicker": "0.7" if fl in flicker_floors else "0.0"})
+                      "flicker": "0.7" if fl in flicker_floors else "0.0"}, groups=["mains"])
     # terrace cabin roof + overhead water tank on it
     top = 5 * STOREY
     slab(lv, X(0), X(CORE), Z(CORE_BACK), Z(D), top + STOREY, 0.15, "concrete_dark", "wall_paint_white")
@@ -453,7 +453,7 @@ def sodium_lamp(lv: Level, x, z, height=6.0, facing_x=1.0, shadow=False, parent=
         "position": v3(x + facing_x * 1.15, height - 0.4, z), "light_color": "Color(1, 0.55, 0.2, 1)",
         "light_energy": "2.2", "light_size": "0.2", "omni_range": "16.0", "omni_attenuation": "1.4",
         "shadow_enabled": "true" if shadow else "false", "light_volumetric_fog_energy": "1.5",
-        "distance_fade_enabled": "true", "distance_fade_begin": "55.0", "distance_fade_length": "15.0"})
+        "distance_fade_enabled": "true", "distance_fade_begin": "55.0", "distance_fade_length": "15.0"}, groups=["mains"])
 
 
 def player_rig(lv: Level, x, z, yaw_deg=0.0, y=0.0, flashlight=True, debug=True) -> None:
