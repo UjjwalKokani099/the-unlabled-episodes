@@ -17,7 +17,10 @@ signal transition_finished
 
 const CHAPTER_LIST_PATH := "res://chapters/chapter_list.tres"
 const SAVE_VERSION := 1
+const MAIN_MENU_PATH := "res://scenes/menus/main_menu.tscn"
 const TITLE_CARD_SECONDS := 1.4
+## Hold time for a plain fade (no title text).
+const PLAIN_FADE_SECONDS := 0.25
 
 ## Tests point this somewhere else so they never touch the real save.
 var save_path: String = "user://save.json"
@@ -148,10 +151,7 @@ func complete_chapter() -> void:
 		(_save.completed as Array).append(String(finished.id))
 	_save.checkpoint = {}
 	_write_save()
-	current_chapter = null
-	Events.reset()
-	_flags = {}
-	tape_time_at_load = 0.0
+	_clear_chapter_state()
 	chapter_completed.emit(finished)
 	_change_level(_hub_path(), "■ STOP", PackedStringArray([finished.title, "END OF TAPE"]))
 
@@ -161,11 +161,44 @@ func return_to_hub() -> void:
 	if _transitioning:
 		return
 	var leaving := current_chapter
+	_clear_chapter_state()
+	_change_level(_hub_path(), "■ STOP", PackedStringArray([leaving.title if leaving else ""]))
+
+
+## Menu -> hub (plain fade).
+func enter_hub() -> void:
+	if _transitioning:
+		return
+	_clear_chapter_state()
+	_change_level(_hub_path(), "", PackedStringArray())
+
+
+## Anywhere -> main menu. A tape in progress keeps its checkpoint (Continue).
+func go_to_main_menu() -> void:
+	if _transitioning:
+		return
+	_clear_chapter_state()
+	_change_level(MAIN_MENU_PATH, "■ STOP", PackedStringArray())
+
+
+## Wipes the save file and starts in the hub.
+func new_game() -> void:
+	if _transitioning:
+		return
+	delete_save()
+	enter_hub()
+
+
+## Anything worth continuing: a finished tape or a saved checkpoint.
+func has_progress() -> bool:
+	return not (_save.completed as Array).is_empty() or has_checkpoint()
+
+
+func _clear_chapter_state() -> void:
 	current_chapter = null
 	Events.reset()
 	_flags = {}
 	tape_time_at_load = 0.0
-	_change_level(_hub_path(), "■ STOP", PackedStringArray([leaving.title if leaving else ""]))
 
 
 # --- Flags (small per-chapter facts that must survive a checkpoint load) ------
@@ -216,7 +249,8 @@ func _change_level(path: String, header: String, lines: PackedStringArray) -> vo
 	tree.change_scene_to_file(path)
 	await tree.scene_changed
 	_place_player_at_checkpoint()
-	await tree.create_timer(TITLE_CARD_SECONDS, true).timeout
+	var hold := PLAIN_FADE_SECONDS if lines.is_empty() else TITLE_CARD_SECONDS
+	await tree.create_timer(hold, true).timeout
 	tree.paused = false
 	await _transition.reveal()
 	_transitioning = false

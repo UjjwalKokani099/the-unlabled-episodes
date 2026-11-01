@@ -21,6 +21,7 @@ const AUDIO_BUSES := {
 ## Every persisted key. Add new settings here AND as a var below.
 const KEYS: Array[StringName] = [
 	&"mouse_sensitivity", &"invert_y", &"fov", &"crouch_toggle", &"head_bob", &"screen_effects",
+	&"brightness", &"fullscreen",
 	&"master_volume", &"music_volume", &"sfx_volume", &"ambience_volume",
 ]
 
@@ -64,6 +65,17 @@ var screen_effects: float = 1.0:
 		screen_effects = clampf(value, 0.0, 1.0)
 		_on_value_set(&"screen_effects")
 
+## Gamma-style brightness: 1.0 = unchanged, higher lifts the shadows.
+var brightness: float = 1.0:
+	set(value):
+		brightness = clampf(value, 0.6, 1.6)
+		_on_value_set(&"brightness")
+
+var fullscreen: bool = false:
+	set(value):
+		fullscreen = value
+		_on_value_set(&"fullscreen")
+
 # Volumes are linear 0.0 (silent) .. 1.0 (full).
 var master_volume: float = 0.8:
 	set(value):
@@ -86,7 +98,11 @@ var ambience_volume: float = 1.0:
 		_on_value_set(&"ambience_volume")
 
 
+var _brightness_rect: ColorRect
+
+
 func _ready() -> void:
+	_make_brightness_layer()
 	load_settings()
 
 
@@ -100,6 +116,8 @@ func load_settings() -> void:
 	_loading = false
 	for key: StringName in AUDIO_BUSES:
 		_apply_volume(key)
+	_apply_brightness()
+	_apply_fullscreen()
 
 
 func save_settings() -> void:
@@ -117,6 +135,10 @@ func _on_value_set(key: StringName) -> void:
 		return
 	if AUDIO_BUSES.has(key):
 		_apply_volume(key)
+	elif key == &"brightness":
+		_apply_brightness()
+	elif key == &"fullscreen":
+		_apply_fullscreen()
 	changed.emit(key)
 	if not _save_queued:
 		_save_queued = true
@@ -130,3 +152,31 @@ func _apply_volume(key: StringName) -> void:
 	var linear: float = get(key)
 	AudioServer.set_bus_volume_db(bus, linear_to_db(maxf(linear, 0.0001)))
 	AudioServer.set_bus_mute(bus, linear <= 0.0)
+
+
+func _make_brightness_layer() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 5
+	add_child(layer)
+	_brightness_rect = ColorRect.new()
+	_brightness_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_brightness_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://shaders/brightness.gdshader")
+	_brightness_rect.material = material
+	layer.add_child(_brightness_rect)
+
+
+func _apply_brightness() -> void:
+	(_brightness_rect.material as ShaderMaterial).set_shader_parameter(&"brightness", brightness)
+	_brightness_rect.visible = not is_equal_approx(brightness, 1.0)
+
+
+func _apply_fullscreen() -> void:
+	var current := DisplayServer.window_get_mode()
+	var is_full := current == DisplayServer.WINDOW_MODE_FULLSCREEN \
+		or current == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
+	if fullscreen and not is_full:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	elif not fullscreen and is_full:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)

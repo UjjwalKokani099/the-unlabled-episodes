@@ -48,7 +48,7 @@ func _process(_delta: float) -> void:
 	lines.append("mouse sensitivity %.2f   ([ / ] to change)" % Settings.mouse_sensitivity)
 	lines.append("screen effects %.1f   (F4 to cycle)" % Settings.screen_effects)
 	lines.append("F9: load checkpoint   F7: restart chapter")
-	lines.append("Esc: free mouse   click: recapture   F3: hide this text")
+	lines.append("Esc: pause menu   F3: hide this text")
 	_label.text = "\n".join(lines)
 
 

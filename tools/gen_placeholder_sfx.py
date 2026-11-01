@@ -104,6 +104,17 @@ def tv_static(rng):
     return out
 
 
+def beep(freq, seconds, rng):
+    n = int(RATE * seconds)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        env = min(t / 0.004, 1.0) * min((seconds - t) / 0.01, 1.0)
+        square = 1.0 if math.sin(2 * math.pi * freq * t) > 0 else -1.0
+        out.append(env * (0.35 * square + 0.65 * math.sin(2 * math.pi * freq * t)))
+    return out
+
+
 def write(name, samples):
     peak = max(abs(s) for s in samples) or 1.0
     OUT.mkdir(parents=True, exist_ok=True)
@@ -126,6 +137,9 @@ def main():
     write("sting.wav", sting(rng))
     write("vcr_insert.wav", vcr_insert(rng))
     write("tv_static.wav", tv_static(rng))
+    write("ui_blip.wav", [x * 0.5 for x in beep(1200, 0.035, rng)])
+    select = beep(880, 0.05, rng) + beep(1320, 0.07, rng)
+    write("ui_select.wav", select)
 
 
 if __name__ == "__main__":

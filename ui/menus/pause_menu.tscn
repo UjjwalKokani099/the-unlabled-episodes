@@ -1,0 +1,84 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="1_pause"]
+[ext_resource type="Theme" path="res://ui/themes/vcr_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://scripts/ui/menu_list.gd" id="3_list"]
+[ext_resource type="PackedScene" path="res://ui/menus/settings_menu.tscn" id="4_settings"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+layer = 30
+script = ExtResource("1_pause")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+
+[node name="Dim" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Header" type="Label" parent="Root"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 48.0
+offset_right = 374.0
+offset_bottom = 82.0
+theme_override_font_sizes/font_size = 28
+text = "|| PAUSE"
+
+[node name="Where" type="Label" parent="Root"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 86.0
+offset_right = 874.0
+offset_bottom = 114.0
+theme_override_colors/font_color = Color(0.7, 0.7, 0.68, 1)
+theme_override_font_sizes/font_size = 20
+
+[node name="List" type="VBoxContainer" parent="Root"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 170.0
+offset_right = 560.0
+offset_bottom = 470.0
+theme_override_constants/separation = 6
+script = ExtResource("3_list")
+
+[node name="Resume" type="Button" parent="Root/List"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "RESUME"
+
+[node name="Restart" type="Button" parent="Root/List"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "RESTART FROM CHECKPOINT"
+
+[node name="Settings" type="Button" parent="Root/List"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "SETTINGS"
+
+[node name="Eject" type="Button" parent="Root/List"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "EJECT TAPE"
+
+[node name="MainMenu" type="Button" parent="Root/List"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "MAIN MENU"
+
+[node name="Settings" parent="Root" instance=ExtResource("4_settings")]
+layout_mode = 1

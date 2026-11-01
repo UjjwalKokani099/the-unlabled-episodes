@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_hud"]
 [ext_resource type="Script" path="res://scripts/ui/crosshair.gd" id="2_crosshair"]
 [ext_resource type="Script" path="res://scripts/ui/objective_panel.gd" id="3_objectives"]
+[ext_resource type="PackedScene" path="res://ui/menus/pause_menu.tscn" id="4_pause"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 10
@@ -69,3 +70,5 @@ grow_horizontal = 0
 mouse_filter = 2
 theme_override_constants/separation = 4
 script = ExtResource("3_objectives")
+
+[node name="PauseMenu" parent="." instance=ExtResource("4_pause")]

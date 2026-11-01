@@ -1,0 +1,91 @@
+[gd_resource type="Theme" format=3]
+
+[sub_resource type="SystemFont" id="Font_vcr"]
+font_names = PackedStringArray("VCR OSD Mono", "Consolas", "Lucida Console", "Courier New", "Monospace")
+font_weight = 600
+
+[sub_resource type="StyleBoxFlat" id="Button_normal"]
+bg_color = Color(0, 0, 0, 0)
+content_margin_left = 14.0
+content_margin_top = 4.0
+content_margin_right = 14.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="Button_selected"]
+bg_color = Color(0.9, 0.9, 0.88, 1)
+content_margin_left = 14.0
+content_margin_top = 4.0
+content_margin_right = 14.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="Slider_track"]
+bg_color = Color(0.5, 0.5, 0.5, 0.6)
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="Slider_fill"]
+bg_color = Color(0.9, 0.9, 0.88, 1)
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="Slider_fill_focus"]
+bg_color = Color(1, 1, 1, 1)
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="Focus_outline"]
+bg_color = Color(0, 0, 0, 0)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.9, 0.88, 0.9)
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="Panel_dark"]
+bg_color = Color(0.02, 0.02, 0.03, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.9, 0.88, 0.5)
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
+
+[resource]
+default_font = SubResource("Font_vcr")
+default_font_size = 26
+Button/colors/font_color = Color(0.9, 0.9, 0.88, 1)
+Button/colors/font_disabled_color = Color(0.45, 0.45, 0.45, 1)
+Button/colors/font_focus_color = Color(0.03, 0.03, 0.06, 1)
+Button/colors/font_hover_color = Color(0.03, 0.03, 0.06, 1)
+Button/colors/font_hover_pressed_color = Color(0.03, 0.03, 0.06, 1)
+Button/colors/font_pressed_color = Color(0.03, 0.03, 0.06, 1)
+Button/styles/disabled = SubResource("Button_normal")
+Button/styles/focus = SubResource("Button_selected")
+Button/styles/hover = SubResource("Button_selected")
+Button/styles/hover_pressed = SubResource("Button_selected")
+Button/styles/normal = SubResource("Button_normal")
+Button/styles/pressed = SubResource("Button_selected")
+CheckButton/colors/font_color = Color(0.9, 0.9, 0.88, 1)
+CheckButton/colors/font_focus_color = Color(1, 1, 1, 1)
+CheckButton/colors/font_hover_color = Color(1, 1, 1, 1)
+CheckButton/styles/focus = SubResource("Focus_outline")
+CheckButton/styles/hover = SubResource("Button_normal")
+CheckButton/styles/normal = SubResource("Button_normal")
+CheckButton/styles/pressed = SubResource("Button_normal")
+HSlider/styles/focus = SubResource("Focus_outline")
+HSlider/styles/grabber_area = SubResource("Slider_fill")
+HSlider/styles/grabber_area_highlight = SubResource("Slider_fill_focus")
+HSlider/styles/slider = SubResource("Slider_track")
+Label/colors/font_color = Color(0.9, 0.9, 0.88, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.6)
+Label/constants/shadow_offset_x = 2
+Label/constants/shadow_offset_y = 2
+PanelContainer/styles/panel = SubResource("Panel_dark")

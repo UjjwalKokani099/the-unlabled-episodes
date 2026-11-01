@@ -69,11 +69,8 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	# Temporary until the pause menu exists: Esc frees the mouse, clicking recaptures it.
-	if event.is_action_pressed("pause"):
-		_set_mouse_captured(not _is_mouse_captured())
-		get_viewport().set_input_as_handled()
-		return
+	# Esc is handled by the pause menu. If the mouse got freed some other way (alt-tab),
+	# clicking in the game window grabs it again.
 	if not _is_mouse_captured():
 		if event is InputEventMouseButton and event.pressed:
 			_set_mouse_captured(true)
