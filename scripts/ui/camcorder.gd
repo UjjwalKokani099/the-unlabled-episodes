@@ -91,7 +91,7 @@ func try_spot() -> StringName:
 	if is_frozen or is_cutting or get_tree().paused:
 		return &""
 	var player := get_tree().get_first_node_in_group("player") as Player
-	if player and not player.input_enabled:
+	if player and not player.can_act():
 		return &""
 	var camera := get_viewport().get_camera_3d()
 	if camera == null:

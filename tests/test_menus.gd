@@ -50,22 +50,50 @@ func _initialize() -> void:
 	await scene_changed
 	await frames(5)
 	var menu: Node = current_scene
-	var list := "Panel/VBox/List/"
+	var list := "Screen/UI/Panel/VBox/List/"
 	check(not menu.get_node(list + "Continue").visible, "fresh save: no Continue")
-	check(root.gui_get_focus_owner() == menu.get_node(list + "NewGame"), "NEW GAME focused")
+	check(menu.focused_control() == menu.get_node(list + "NewGame"), "NEW GAME focused")
+
+	# --- Diegetic: the menu is on the CRT glass; a mouse click there presses the button ---
+	var backdrop = menu.get_node("Backdrop/Viewport/Scene")
+	check(backdrop.get_node("Room/TV/Screen").material_override.get_shader_parameter(&"screen_tex") != null, "menu shown on the TV")
+	var target: Rect2 = menu.get_node(list + "Settings").get_global_rect()
+	var win: Vector2 = menu.get_viewport_rect().size
+	var click := Vector2(-1, -1)
+	var scale: Vector2 = Vector2(menu.get_node("Backdrop/Viewport").size) / win
+	for gx in range(0, int(win.x), 6):
+		for gy in range(0, int(win.y), 6):
+			var uv: Vector2 = backdrop.screen_uv_at(Vector2(gx, gy) * scale)
+			if uv.x >= 0.0 and target.has_point(uv * Vector2(960, 720)):
+				click = Vector2(gx, gy)
+				break
+		if click.x >= 0.0:
+			break
+	check(click.x >= 0.0, "SETTINGS button found on the glass at %s" % click)
+	for pressed in [true, false]:
+		var ev := InputEventMouseButton.new()
+		ev.button_index = MOUSE_BUTTON_LEFT
+		ev.pressed = pressed
+		ev.position = click
+		ev.global_position = click
+		Input.parse_input_event(ev)
+		await frames(2)
+	check(menu.get_node("Screen/UI/Settings").visible, "clicking the TV opens SETTINGS")
+	await send_action(&"ui_cancel")
+	check(not menu.get_node("Screen/UI/Settings").visible, "Esc closes it again")
 
 	# --- Tapes: tape 1 playable entry, the rest blank cassettes ---
 	menu.get_node(list + "Tapes").pressed.emit()
-	var tapes: Array = menu.get_node("TapesPanel/VBox/List").get_children().filter(func(n): return n is Button)
+	var tapes: Array = menu.get_node("Screen/UI/TapesPanel/VBox/List").get_children().filter(func(n): return n is Button)
 	check(tapes.size() == 6, "5 tapes + back (%d)" % tapes.size())
 	check(not tapes[0].disabled and tapes[0].text.contains("THE WATCHMAN"), "tape 1 listed ('%s')" % tapes[0].text)
 	check(tapes.slice(1, 5).all(func(b): return b.disabled and b.text.begins_with("□")), "locked tapes are blank cassettes")
 	await send_action(&"ui_cancel")
-	check(menu.get_node("Panel").visible and not menu.get_node("TapesPanel").visible, "Esc back from tapes")
+	check(menu.get_node("Screen/UI/Panel").visible and not menu.get_node("Screen/UI/TapesPanel").visible, "Esc back from tapes")
 
 	# --- Settings tabs + rebinding ---
 	menu.get_node(list + "Settings").pressed.emit()
-	var sm = menu.get_node("Settings")
+	var sm = menu.get_node("Screen/UI/Settings")
 	check(sm.visible, "settings open")
 	sm.show_tab(2)
 	check(sm.controls[&"mouse_sensitivity"].visible and not sm.controls[&"brightness"].visible, "controls tab shows only its rows")
@@ -87,7 +115,7 @@ func _initialize() -> void:
 	check(settings._brightness_rect.visible, "brightness overlay on above 1.0")
 	sm.controls[&"brightness"].value = 1.0
 	await send_action(&"ui_cancel")
-	check(not sm.visible and menu.get_node("Panel").visible, "Esc closes settings")
+	check(not sm.visible and menu.get_node("Screen/UI/Panel").visible, "Esc closes settings")
 
 	# --- Into a tape, pause menu ---
 	game.start_chapter(&"tape_00_test")
@@ -110,11 +138,11 @@ func _initialize() -> void:
 	await game.transition_finished
 	menu = current_scene
 	menu.get_node(list + "NewGame").pressed.emit()
-	check(menu.get_node("Confirm").visible, "confirm shown")
+	check(menu.get_node("Screen/UI/Confirm").visible, "confirm shown")
 	await send_action(&"ui_cancel")
-	check(not menu.get_node("Confirm").visible and game.has_progress(), "Esc cancels, save kept")
+	check(not menu.get_node("Screen/UI/Confirm").visible and game.has_progress(), "Esc cancels, save kept")
 	menu.get_node(list + "NewGame").pressed.emit()
-	menu.get_node("Confirm/Panel/VBox/List/Yes").pressed.emit()
+	menu.get_node("Screen/UI/Confirm/Panel/VBox/List/Yes").pressed.emit()
 	await await_hub()
 	check(current_scene.name == "Hub" and not game.has_progress(), "YES erases progress, ends in the hub")
 

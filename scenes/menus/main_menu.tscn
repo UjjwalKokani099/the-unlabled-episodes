@@ -46,7 +46,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 stretch = true
-stretch_shrink = 2
 
 [node name="Viewport" type="SubViewport" parent="Backdrop"]
 own_world_3d = true
@@ -67,116 +66,142 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("7_vhs")
 
-[node name="Header" type="Label" parent="."]
+[node name="Screen" type="SubViewport" parent="."]
+disable_3d = true
+handle_input_locally = false
+gui_snap_controls_to_pixels = false
+size = Vector2i(960, 720)
+render_target_update_mode = 4
+
+[node name="UI" type="Control" parent="Screen"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+
+[node name="Background" type="ColorRect" parent="Screen/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.02, 0.05, 0.42, 1)
+
+[node name="Header" type="Label" parent="Screen/UI"]
 layout_mode = 0
-offset_left = 52.0
-offset_top = 34.0
-offset_right = 452.0
-offset_bottom = 68.0
+offset_left = 44.0
+offset_top = 30.0
+offset_right = 444.0
+offset_bottom = 64.0
 theme_override_font_sizes/font_size = 28
 text = "■ STOP      VIDEO 1"
 
-[node name="Clock" type="Label" parent="."]
+[node name="Clock" type="Label" parent="Screen/UI"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -260.0
-offset_top = 34.0
-offset_right = -52.0
-offset_bottom = 68.0
+offset_top = 30.0
+offset_right = -44.0
+offset_bottom = 64.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 28
 text = "PM 11:42"
 horizontal_alignment = 2
 
 
-[node name="Panel" type="PanelContainer" parent="."]
+[node name="Panel" type="PanelContainer" parent="Screen/UI"]
 layout_mode = 0
-offset_left = 52.0
-offset_top = 120.0
-offset_right = 560.0
-offset_bottom = 520.0
+offset_left = 60.0
+offset_top = 104.0
+offset_right = 580.0
+offset_bottom = 560.0
 theme_override_styles/panel = SubResource("Style_osd")
 
-[node name="VBox" type="VBoxContainer" parent="Panel"]
+[node name="VBox" type="VBoxContainer" parent="Screen/UI/Panel"]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="Title" type="Label" parent="Panel/VBox"]
+[node name="Title" type="Label" parent="Screen/UI/Panel/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "UNLABELED"
 
-[node name="Tagline" type="Label" parent="Panel/VBox"]
+[node name="Tagline" type="Label" parent="Screen/UI/Panel/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "five tapes. no labels."
 theme_override_colors/font_color = Color(0.75, 0.8, 1, 1)
 
-[node name="Gap" type="Control" parent="Panel/VBox"]
+[node name="Gap" type="Control" parent="Screen/UI/Panel/VBox"]
 custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 
-[node name="List" type="VBoxContainer" parent="Panel/VBox"]
+[node name="List" type="VBoxContainer" parent="Screen/UI/Panel/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 4
 script = ExtResource("3_list")
 
-[node name="Continue" type="Button" parent="Panel/VBox/List"]
+[node name="Continue" type="Button" parent="Screen/UI/Panel/VBox/List"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "CONTINUE"
 
-[node name="NewGame" type="Button" parent="Panel/VBox/List"]
+[node name="NewGame" type="Button" parent="Screen/UI/Panel/VBox/List"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "NEW GAME"
 
-[node name="Tapes" type="Button" parent="Panel/VBox/List"]
+[node name="Tapes" type="Button" parent="Screen/UI/Panel/VBox/List"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "TAPES"
 
-[node name="Settings" type="Button" parent="Panel/VBox/List"]
+[node name="Settings" type="Button" parent="Screen/UI/Panel/VBox/List"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "SETTINGS"
 
-[node name="Quit" type="Button" parent="Panel/VBox/List"]
+[node name="Quit" type="Button" parent="Screen/UI/Panel/VBox/List"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "QUIT"
 
-[node name="TapesPanel" type="PanelContainer" parent="."]
+[node name="TapesPanel" type="PanelContainer" parent="Screen/UI"]
 layout_mode = 0
-offset_left = 52.0
-offset_top = 120.0
-offset_right = 720.0
-offset_bottom = 600.0
+offset_left = 60.0
+offset_top = 104.0
+offset_right = 800.0
+offset_bottom = 640.0
 theme_override_styles/panel = SubResource("Style_osd")
 
-[node name="VBox" type="VBoxContainer" parent="TapesPanel"]
+[node name="VBox" type="VBoxContainer" parent="Screen/UI/TapesPanel"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Title" type="Label" parent="TapesPanel/VBox"]
+[node name="Title" type="Label" parent="Screen/UI/TapesPanel/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "TAPES"
 
-[node name="List" type="VBoxContainer" parent="TapesPanel/VBox"]
+[node name="List" type="VBoxContainer" parent="Screen/UI/TapesPanel/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 4
 script = ExtResource("3_list")
 
-[node name="Note" type="Label" parent="TapesPanel/VBox"]
+[node name="Note" type="Label" parent="Screen/UI/TapesPanel/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = ""
 theme_override_colors/font_color = Color(1, 0.8, 0.5, 1)
 
-[node name="Confirm" type="Control" parent="."]
+[node name="Confirm" type="Control" parent="Screen/UI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -185,40 +210,40 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panel" type="PanelContainer" parent="Confirm"]
+[node name="Panel" type="PanelContainer" parent="Screen/UI/Confirm"]
 layout_mode = 0
-offset_left = 340.0
+offset_left = 180.0
 offset_top = 250.0
-offset_right = 940.0
+offset_right = 780.0
 offset_bottom = 470.0
 theme_override_styles/panel = SubResource("Style_osd")
 
-[node name="VBox" type="VBoxContainer" parent="Confirm/Panel"]
+[node name="VBox" type="VBoxContainer" parent="Screen/UI/Confirm/Panel"]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="Question" type="Label" parent="Confirm/Panel/VBox"]
+[node name="Question" type="Label" parent="Screen/UI/Confirm/Panel/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Erase every watched tape and saved progress?"
 autowrap_mode = 3
 
-[node name="List" type="VBoxContainer" parent="Confirm/Panel/VBox"]
+[node name="List" type="VBoxContainer" parent="Screen/UI/Confirm/Panel/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 4
 script = ExtResource("3_list")
 
-[node name="No" type="Button" parent="Confirm/Panel/VBox/List"]
+[node name="No" type="Button" parent="Screen/UI/Confirm/Panel/VBox/List"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "NO, KEEP IT"
 
-[node name="Yes" type="Button" parent="Confirm/Panel/VBox/List"]
+[node name="Yes" type="Button" parent="Screen/UI/Confirm/Panel/VBox/List"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "YES, ERASE"
 
-[node name="Settings" parent="." instance=ExtResource("4_settings")]
+[node name="Settings" parent="Screen/UI" instance=ExtResource("4_settings")]
 layout_mode = 1
 
 [node name="Hum" type="AudioStreamPlayer" parent="."]

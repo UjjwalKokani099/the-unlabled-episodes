@@ -74,6 +74,11 @@ func close() -> void:
 	closed.emit()
 
 
+## True while a rebind row waits for the new key (Esc then cancels the rebind only).
+func is_waiting_for_key() -> bool:
+	return _waiting_action != &""
+
+
 func show_tab(index: int) -> void:
 	current_tab = index
 	_tabs.set_current_tab(index)

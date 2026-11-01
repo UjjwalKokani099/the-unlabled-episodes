@@ -69,8 +69,12 @@ Useful headless commands (run from project root):
 - Disabled Interactables leave the physics layer, so they never block the look-ray.
 
 ## Menus + intro (Phases 4-5)
-- Main scene = `scenes/menus/main_menu.tscn`: VCR-OSD blue panel over a live half-res
-  SubViewport of `scenes/menus/menu_backdrop.tscn` (Nikhil's room, tube light off, REC dot).
+- Main scene = `scenes/menus/main_menu.tscn`, diegetic: the VCR-OSD menu UI lives in the
+  `Screen` SubViewport (960x720) and is shown on the CRT in `menu_backdrop.tscn` (Nikhil's
+  room, tube light off, REC dot) via `shaders/crt_screen.gdshader`. MainMenu._input forwards
+  everything to the screen; mouse positions go through `MenuBackdrop.screen_uv_at()` (same
+  curvature as the shader). Camera framings IDLE / CLOSE (settings, tapes) / DIVE (start).
+  Menu UI paths start with `Screen/UI/`; tests read focus with `menu.focused_control()`.
   CONTINUE / NEW GAME (replays intro) / TAPES (locked = blank cassette) / SETTINGS / QUIT.
 - First launch autoplays `scenes/intro/intro.tscn` (built by `tools/gen_intro.py`, driven by
   `scripts/intro/intro_director.gd`; hold Space to skip; `intro_seen` in the save).
