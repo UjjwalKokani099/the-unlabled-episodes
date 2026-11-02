@@ -80,8 +80,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event is InputEventMouseMotion:
-		# Touches also arrive as emulated mouse motion; touch look comes from TouchControls.
-		if event.device != InputEvent.DEVICE_ID_EMULATION:
+		# Touches also arrive as mouse motion (emulated, and from the browser): in touch mode
+		# the view only turns via TouchControls.
+		if event.device != InputEvent.DEVICE_ID_EMULATION and not Settings.touch_mode:
 			_look((event as InputEventMouseMotion).screen_relative)
 	elif event.is_action_pressed("flashlight"):
 		toggle_flashlight()
@@ -94,8 +95,6 @@ func _physics_process(delta: float) -> void:
 	var move_input := Vector2.ZERO
 	if active:
 		move_input = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-		if move_input != Vector2.ZERO and Engine.get_physics_frames() % 30 == 0:
-			print("TOUCHDBG move_input=%s pos=%s vel=%s" % [move_input, global_position, velocity])  # TEMP
 
 	_update_crouch(delta, active)
 

@@ -170,17 +170,41 @@ func mouse_captured() -> bool:
 	return Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventScreenTouch and not touch_mode:
+var _fingers: Dictionary = {}  # touch index -> true while that finger is down
+var _last_touch_ms: int = -100000
+var _mouse_travel: float = 0.0
+
+
+## Called for every screen touch / drag (here and by TouchControls, which consumes them).
+func note_touch(event: InputEvent) -> void:
+	_last_touch_ms = Time.get_ticks_msec()
+	_mouse_travel = 0.0
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			_fingers[event.index] = true
+		else:
+			_fingers.erase(event.index)
+	if not touch_mode:
 		_want_capture = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or _want_capture
 		touch_mode = true
 		capture_mouse(_want_capture)
 		changed.emit(&"touch_mode")
-	elif touch_mode and event is InputEventMouseMotion and event.device != InputEvent.DEVICE_ID_EMULATION \
-			and (event as InputEventMouseMotion).relative.length() > 2.0:
-		touch_mode = false  # a real mouse / trackpad took over
-		capture_mouse(_want_capture)
-		changed.emit(&"touch_mode")
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch or event is InputEventScreenDrag:
+		note_touch(event)
+	elif touch_mode and event is InputEventMouseMotion and event.device != InputEvent.DEVICE_ID_EMULATION:
+		# Browsers also report finger drags as mouse movement: only a mouse that moves a fair
+		# distance with no finger on the screen for a second means a real mouse took over.
+		if not _fingers.is_empty() or Time.get_ticks_msec() - _last_touch_ms < 1000:
+			return
+		_mouse_travel += (event as InputEventMouseMotion).relative.length()
+		if _mouse_travel > 80.0:
+			touch_mode = false
+			_mouse_travel = 0.0
+			capture_mouse(_want_capture)
+			changed.emit(&"touch_mode")
 
 
 func load_settings() -> void:

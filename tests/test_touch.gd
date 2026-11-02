@@ -38,6 +38,15 @@ func drag(finger: int, pos: Vector2, rel: Vector2) -> void:
 	await process_frame
 
 
+func mouse_move(rel: Vector2) -> void:
+	var m := InputEventMouseMotion.new()
+	m.relative = rel
+	m.screen_relative = rel
+	Input.parse_input_event(m)
+	await process_frame
+	await process_frame
+
+
 func button_pos(name: StringName) -> Vector2:
 	return tc._button_center(tc.BUTTONS[name])
 
@@ -123,11 +132,25 @@ func _initialize() -> void:
 	await frames(3)
 	check(not paused and tc.visible, "resume: controls back")
 
-	# a real mouse takes over again
-	var real := InputEventMouseMotion.new()
-	real.relative = Vector2(30, 0)
-	real.screen_relative = Vector2(30, 0)
-	Input.parse_input_event(real)
+	# browsers also report finger drags as (non-emulated) mouse motion: must stay in touch mode
+	var z1: float = p.global_position.z
+	var start2 := Vector2(size.x * 0.15, size.y * 0.7)
+	await touch(0, start2, true)
+	for i in 6:
+		await drag(0, start2 + Vector2(0, -20 * (i + 1)), Vector2(0, -20))
+		await mouse_move(Vector2(0, -40))
+	await frames(40)
+	check(settings.touch_mode and tc.visible, "mouse motion during a finger drag: still touch mode")
+	check(p.global_position.z < z1 - 0.5, "...and the stick still walks (dz=%.2f)" % (p.global_position.z - z1))
+	await touch(0, start2, false)
+	await mouse_move(Vector2(200, 0))
+	await frames(3)
+	check(settings.touch_mode, "mouse motion right after a touch: still touch mode")
+
+	# a real mouse takes over: no finger for a second, then real movement
+	await create_timer(1.2).timeout
+	for i in 4:
+		await mouse_move(Vector2(30, 0))
 	await frames(2)
 	check(not settings.touch_mode, "real mouse movement: back to mouse mode")
 	for i in 3:  # mouse motion is accumulated and delivered late in the frame

@@ -10,7 +10,8 @@ const LOOK_SCALE := 0.8  # x Settings.mouse_sensitivity per pixel of drag
 const STICK_ZONE := 0.42  # left part of the screen that starts the move stick
 const DEAD_ZONE := 0.15
 
-## name -> {action, label, pos (fraction of the screen, from the bottom-right), radius, mode}
+## name -> {action, label, pos (fractions of the screen height, from the bottom-right; from the
+## bottom-left with "left": true), radius, mode}
 ## mode: "hold" (pressed while the finger is down) or "toggle".
 const BUTTONS := {
 	&"use": {"action": &"interact", "label": "USE", "pos": Vector2(0.085, 0.17), "r": 78.0, "mode": "hold"},
@@ -19,8 +20,9 @@ const BUTTONS := {
 	&"light": {"action": &"flashlight", "label": "LIGHT", "pos": Vector2(0.20, 0.30), "r": 48.0, "mode": "hold"},
 	&"nv": {"action": &"night_vision", "label": "NV", "pos": Vector2(0.17, 0.50), "r": 44.0, "mode": "hold"},
 	&"spot": {"action": &"spot", "label": "II REC", "pos": Vector2(0.075, 0.58), "r": 50.0, "mode": "hold"},
-	&"tasks": {"action": &"objectives", "label": "TASKS", "pos": Vector2(0.17, 0.90), "r": 40.0, "mode": "hold"},
-	&"pause": {"action": &"pause", "label": "MENU", "pos": Vector2(0.06, 0.90), "r": 40.0, "mode": "hold"},
+	# top-left corner (the objective list is top-right)
+	&"pause": {"action": &"pause", "label": "MENU", "pos": Vector2(0.06, 0.90), "r": 40.0, "mode": "hold", "left": true},
+	&"tasks": {"action": &"objectives", "label": "TASKS", "pos": Vector2(0.17, 0.90), "r": 40.0, "mode": "hold", "left": true},
 }
 
 var _canvas: Control
@@ -59,17 +61,9 @@ func _process(_delta: float) -> void:
 		_canvas.queue_redraw()
 
 
-var _dbg_drags: int = 0
-
-
 func _input(event: InputEvent) -> void:
-	if event is InputEventScreenTouch or event is InputEventScreenDrag:  # TEMP diagnostics
-		_dbg_drags += 1
-		if event is InputEventScreenTouch or _dbg_drags % 10 == 0:
-			var pl = get_tree().get_first_node_in_group("player")
-			print("TOUCHDBG %s idx=%d pos=%s size=%s shown=%s stick=%d look=%d can_act=%s input_enabled=%s cap=%s touch=%s" % [
-				event.get_class(), event.index, event.position, _size(), _shown, _stick_finger, _look_finger,
-				pl.can_act() if pl else "-", pl.input_enabled if pl else "-", Settings.mouse_captured(), Settings.touch_mode])
+	if event is InputEventScreenTouch or event is InputEventScreenDrag:
+		Settings.note_touch(event)  # we consume touches: Settings wouldn't see them otherwise
 	if not _shown:
 		return
 	if event is InputEventScreenTouch:
@@ -190,7 +184,8 @@ func _button_at(pos: Vector2) -> StringName:
 
 func _button_center(b: Dictionary) -> Vector2:
 	var s := _size()
-	return Vector2(s.x - b.pos.x * s.y * 1.6, s.y - b.pos.y * s.y)
+	var x: float = b.pos.x * s.y * 1.6
+	return Vector2(x if b.get("left", false) else s.x - x, s.y - b.pos.y * s.y)
 
 
 func _size() -> Vector2:
