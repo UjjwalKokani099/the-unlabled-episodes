@@ -271,8 +271,15 @@ func key_name(action: StringName) -> String:
 	for event in InputMap.action_get_events(action):
 		var key := event as InputEventKey
 		if key:
-			return OS.get_keycode_string(DisplayServer.keyboard_get_keycode_from_physical(key.physical_keycode))
+			return OS.get_keycode_string(_layout_keycode(key.physical_keycode))
 	return "-"
+
+
+## The key on this keyboard layout at a physical (US-position) key. Web can't map layouts.
+func _layout_keycode(physical: Key) -> Key:
+	if OS.has_feature("web"):
+		return physical
+	return DisplayServer.keyboard_get_keycode_from_physical(physical)
 
 
 func _apply_bindings() -> void:

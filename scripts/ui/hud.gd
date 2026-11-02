@@ -61,14 +61,11 @@ func show_message(text: String, duration: float = 2.5) -> void:
 	_message_tween.tween_property(message_label, "modulate:a", 0.0, 0.6)
 
 
-## Name of the key bound to "interact" on this keyboard layout (e.g. "E").
+## Name of the key bound to "interact" on this keyboard layout (e.g. "E"); "USE" (the
+## on-screen button) in touch mode.
 func _interact_key() -> String:
+	if Settings.touch_mode:
+		return "USE"
 	if _key_name.is_empty():
-		_key_name = "E"
-		for event in InputMap.action_get_events(&"interact"):
-			var key := event as InputEventKey
-			if key:
-				var keycode := DisplayServer.keyboard_get_keycode_from_physical(key.physical_keycode)
-				_key_name = OS.get_keycode_string(keycode)
-				break
+		_key_name = Settings.key_name(&"interact")
 	return _key_name
