@@ -59,7 +59,17 @@ func _process(_delta: float) -> void:
 		_canvas.queue_redraw()
 
 
+var _dbg_drags: int = 0
+
+
 func _input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch or event is InputEventScreenDrag:  # TEMP diagnostics
+		_dbg_drags += 1
+		if event is InputEventScreenTouch or _dbg_drags % 10 == 0:
+			var pl = get_tree().get_first_node_in_group("player")
+			print("TOUCHDBG %s idx=%d pos=%s size=%s shown=%s stick=%d look=%d can_act=%s input_enabled=%s cap=%s touch=%s" % [
+				event.get_class(), event.index, event.position, _size(), _shown, _stick_finger, _look_finger,
+				pl.can_act() if pl else "-", pl.input_enabled if pl else "-", Settings.mouse_captured(), Settings.touch_mode])
 	if not _shown:
 		return
 	if event is InputEventScreenTouch:
