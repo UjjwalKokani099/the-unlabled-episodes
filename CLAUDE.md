@@ -32,7 +32,7 @@ Useful headless commands (run from project root):
   tests that need mouse capture/rendering. List anything unverified in the commit/PR text
   so it gets tested on the laptop later.
 - Web build for playing on the iPad: `.github/workflows/web.yml` exports preset "Web"
-  (`export_presets.cfg`, no threads, ETC2/ASTC textures) on every push to main / `claude/**`
+  (`export_presets.cfg`, no threads, ETC2/ASTC textures only: made for iPad Safari) on every push to main / `claude/**`
   and uploads it to itch.io (secret `BUTLER_API_KEY`, variable `ITCH_GAME`); newest push wins.
   Web = Compatibility renderer (no VoxelGI/SSAO/SSIL/volumetric fog): check new levels with
   `--rendering-method gl_compatibility`. No threads on web (NavBaker bakes on the main thread).
