@@ -23,6 +23,17 @@ Useful headless commands (run from project root):
   They must not use class_name types or autoload names at compile time (untyped `var p`):
   `--script` compiles them before autoloads are registered.
 
+## Cloud sessions (Claude Code on the web, from the owner's iPad)
+- Detect with `CLAUDE_CODE_REMOTE=true`. The SessionStart hook runs `tools/cloud_setup.sh`:
+  Linux Godot 4.7.2 at `$GODOT` (also `godot` on PATH), `git lfs pull`, headless `--import`.
+- No GPU, no window: always pass `--headless`. Works: `--check-only`, `--import`, the Python
+  generators (`tools/gen_*.py`), logic-only tests (`TESTS=tests/test_x.gd bash tests/run_tests.sh`;
+  GODOT_HEADLESS=1 is set). Doesn't work: playtesting, screenshots, benchmarks, VoxelGI bakes,
+  tests that need mouse capture/rendering. List anything unverified in the commit/PR text
+  so it gets tested on the laptop later.
+- Work on a branch and push it (the owner merges after testing on the laptop). Keep commits
+  one-per-system as usual. Re-run generators instead of hand-editing generated scenes.
+
 ## Gotchas found so far
 - AnimatableBody3D only syncs collision when its *own* transform changes — make the moving
   node the body itself (see `scenes/props/door.tscn`), don't rotate a parent of it.
