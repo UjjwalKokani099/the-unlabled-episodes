@@ -22,6 +22,8 @@ signal vanished
 @export var vanish_when_unseen: bool = false
 @export var vanish_distance: float = 3.0
 @export var cctv_only: bool = false
+## How far away he can still be spotted (a figure on a far balcony needs more).
+@export var spot_max_distance: float = 30.0
 ## REC light always on instead of blinking (the last frame of a tape).
 @export var steady_dot: bool = false
 ## VHS glitch while seen (0 = none).
@@ -44,6 +46,7 @@ func _ready() -> void:
 		_spot = Spottable.new()
 		_spot.spot_id = spot_id
 		_spot.position = Vector3(0, 1.55, 0)
+		_spot.max_distance = spot_max_distance
 		add_child(_spot)
 	_refresh()
 

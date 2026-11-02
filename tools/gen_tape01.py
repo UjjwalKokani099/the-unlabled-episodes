@@ -119,8 +119,10 @@ def story_beats(lv) -> None:
                                         "monitor_camera": "2", "active": "false"})
     character(lv, "Cam4B", "cameraman", ".", (-4.25, 12.0, -20.6), 180,
               {"active": "false", "spot_id": '&"t1_flat_4b"', "vanish_when_unseen": "true"})
-    character(lv, "CamTank", "cameraman", ".", (28.0, 0, 4.0), 116.6,
-              {"active": "false", "spot_id": '&"t1_water_tank"', "vanish_when_unseen": "true"})
+    # spot 3: a figure on D wing's lit 3rd-floor balcony during the first round ("watching")
+    character(lv, "CamWindowD", "cameraman", ".", (27.1, 9.0, -13.3), 180,
+              {"active": "false", "spot_id": '&"t1_d_balcony"', "vanish_when_unseen": "true",
+               "spot_max_distance": "48.0", "vanish_distance": "6.0", "tracking_noise": "0.15"})
     character(lv, "CamEnding", "cameraman", ".", (26.9, 0, -4.0), -70,
               {"active": "false", "tracking_noise": "0.0", "steady_dot": "true"})
     character(lv, "RaghuStandIn", "raghu", ".", (28.6, 0, -3.0), 180, {"visible": "false"})
@@ -158,6 +160,22 @@ def story_beats(lv) -> None:
     lv.add("Label", "Label3D", parcel, {"position": v3(0, 0.111, 0), "rotation_degrees": v3(-90, 0, 0),
                                         "pixel_size": "0.0012", "font_size": "48", "outline_size": "0",
                                         "modulate": "Color(0.1, 0.1, 0.1, 1)", "text": '"IYER  2C"'})
+
+    # ---- the Cameraman stalks the dark courtyard after the power cut (Phase 5)
+    stalker = lv.scene("Stalker", npc, ".", {"position": v3(14, 0, -2), "display_name": '"?"', "active": "false",
+                                             "walk_speed": "0.85"})
+    character(lv, "Cameraman", "cameraman", "Stalker/Model", (0, 0, 0), 0, {"tracking_noise": "0.0"})
+    lv.add("Brain", "Node", stalker, {"script": script(lv, "res://scripts/characters/stalker.gd"),
+                                      "patrol_points": "PackedVector3Array(14, 0, -2, 22, 0, 1, 20, 0, 9, 9, 0, 7, 8, 0, -4)"})
+    # places to hide from his camera: crouch behind the cars, the covered car, the tank pillars
+    lv.box((11, 0.6, 2), (1.8, 1.2, 3.8), "fabric_sheet")  # a car under a dust cover
+    hide = "res://scripts/story/hiding_spot.gd"
+    for name, pos, size in (("HideBlueCar", (16, 0.9, 12), (3.2, 1.8, 4.8)), ("HideCoveredCar", (11, 0.9, 2), (3.4, 1.8, 5.2)),
+                            ("HideTank", (28, 0.9, 4), (4.6, 1.8, 4.6)), ("HideWestCars", (-18.2, 0.9, 12.2), (6.6, 1.8, 4.9))):
+        area(lv, ".", name, pos, size, {"script": script(lv, hide)})
+    # footsteps one floor up in B wing's stairs, matching Raghu's, on the way to 4B
+    area(lv, ".", "StepsAboveB", (-12.5, 6, -16.9), (3.0, 12.0, 5.8),
+         {"script": script(lv, "res://scripts/story/footsteps_above.gd"), "armed_by": '&"intercom_answered"'})
 
     # mains power + the story director
     glow = ", ".join(f'ExtResource("{lv.ext(f"res://assets/materials/{m}.tres", "Material")}")'
@@ -253,7 +271,8 @@ def main() -> None:
                                       "modulate": "Color(0.15, 0.12, 0.1, 1)",
                                       "text": '"SHANTI VIHAR CHS\nWATCHMAN\nKISHAN LAL\nNo. 07  1991"'})
     lv.scene("Battery", "res://scenes/props/battery.tscn", drawer, {"position": v3(0.12, -0.035, -0.06)})
-    lv.box((5.3, 0.23, 24.4), (0.4, 0.46, 0.4), "metal_rust", collide=False)          # stool
+    stool = lv.add("Stool", "Node3D", ".", {"position": v3(5.3, 0, 24.4)})  # moves by itself after the cut
+    lv.box((0, 0.23, 0), (0.4, 0.46, 0.4), "metal_rust", collide=False, parent=stool)
     lv.scene("CabinTube", "res://scenes/props/tube_light.tscn", ".", {"position": v3(5.75, 2.6, 23.75)}, groups=["mains"])
     lv.add("CabinFan", "AudioStreamPlayer3D", ".", {"position": v3(5.75, 2.4, 23.75), "stream": sound(lv, "fan_hum"),
                                                      "volume_db": "-16.0", "unit_size": "3.0", "autoplay": "true",

@@ -50,7 +50,9 @@ var _deshmukh_called: bool = false
 @onready var cam_stairs: Cameraman = level.get_node("CamStairs")
 @onready var spot_cctv: Spottable = level.get_node("SpotCCTV")
 @onready var cam_4b: Cameraman = level.get_node("Cam4B")
-@onready var cam_tank: Cameraman = level.get_node("CamTank")
+@onready var cam_window: Cameraman = level.get_node("CamWindowD")
+@onready var stalker: Stalker = level.get_node("Stalker/Brain")
+@onready var stool: Node3D = level.get_node("Stool")
 @onready var cam_ending: Cameraman = level.get_node("CamEnding")
 @onready var raghu: Node3D = level.get_node("RaghuStandIn")
 @onready var main_switch: Interactable = level.get_node("MainSwitch/Interactable")
@@ -84,7 +86,11 @@ func _restore() -> void:
 	spot_cctv.active = cam_stairs.active
 	cam_4b.active = Events.has_fired(&"intercom_answered") and not Events.has_fired(&"cabin_return2")
 	var dark := Events.count(&"power_cut") > Events.count(&"power_restored")
-	cam_tank.active = dark
+	cam_window.active = Events.has_fired(&"check_cctv") and not Events.has_fired(&"back_at_cabin")
+	if Events.has_fired(&"back_at_cabin"):
+		_move_stool()
+	if dark and not Events.has_fired(&"meter_room_reached"):
+		stalker.start_patrol.call_deferred()
 	main_switch.enabled = dark
 	if Events.has_fired(&"register_3am") and not left:
 		_after(3.0, func() -> void: Events.fire(&"deshmukh_walk"))
@@ -104,11 +110,13 @@ func _on_event(id: StringName) -> void:
 		&"back_at_cabin":
 			deshmukh_npc.active = false
 			iyer.active = false
+			cam_window.active = false
 			if Objectives.is_active(&"give_parcel"):
 				Objectives.complete(&"give_parcel")  # she gave up and went to bed
 			_cut_to_three()
 		&"check_cctv":
 			_iyer_comes_down()
+			cam_window.active = true
 		&"talked_iyer":
 			if Events.has_fired(&"parcel_given"):
 				_iyer_goes_home()
@@ -169,9 +177,10 @@ func _on_event(id: StringName) -> void:
 		&"power_cut":
 			_play("power_down", 0.0)
 			get_tree().call_group("camcorder", "glitch", 0.8, 1.2)
-			cam_tank.active = true
+			stalker.start_patrol()
 			main_switch.enabled = true
 		&"meter_room_reached":
+			stalker.stop()
 			_message("The main switch has tripped.", 3.0)
 		&"main_switch":
 			_ending()
@@ -194,6 +203,7 @@ func _cut_to_three() -> void:
 	if camcorder:
 		camcorder.tape_cut(CUT_TO)
 		await camcorder.cut_finished
+	_move_stool()
 	Game.save_checkpoint(&"start")
 	_say(VO, "Around three, I sat down to write the round in the register.", 4.5)
 
@@ -252,6 +262,12 @@ func _process(_delta: float) -> void:
 		_say("MR. DESHMUKH", "Watchman-ji.", 2.5)
 
 
+## After the tape cut, the stool has moved into the cabin's doorway. Nobody moved it.
+func _move_stool() -> void:
+	stool.position = Vector3(4.45, 0, 23.0)
+	stool.rotation_degrees = Vector3(0, 35, 0)
+
+
 func _deshmukh_goes_in() -> void:
 	deshmukh_npc.walk_to(DESHMUKH_STAIRS)
 	await deshmukh_npc.arrived
@@ -297,7 +313,7 @@ func _ending() -> void:
 	raghu.global_position = Vector3(clampf(at.x, 27.3, 29.3), 0.0, clampf(at.z, -5.3, -2.8))
 	raghu.visible = true
 	cam_ending.active = true
-	cam_tank.active = false
+	stalker.stop()
 	_show_cctv_frame()
 	get_tree().call_group("camcorder", "glitch", 0.6, 1.0)
 	await _wait(4.0)

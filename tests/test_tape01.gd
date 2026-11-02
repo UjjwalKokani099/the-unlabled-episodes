@@ -92,6 +92,11 @@ func _initialize() -> void:
 	await use(lv, "GateRegister", p)
 	await use(lv, "CCTV", p)
 	check(obj.is_completed(&"sign_register") and obj.is_completed(&"check_cctv"), "register signed, CCTV checked")
+
+	# spot #1: a figure on D wing's lit balcony during the round
+	check(lv.get_node("CamWindowD").active, "someone stands on D wing's 3rd-floor balcony")
+	await goto(p, Vector3(20, 0.05, 2))
+	check(await spot_at(lv.get_node("CamWindowD").global_position + Vector3(0, 1.5, 0)) == &"t1_d_balcony", "spotted him on D wing's balcony")
 	for letter in "ABCD":
 		await goto(p, lv.get_node("Wing%s/Patrol" % letter).global_position - Vector3(0, 1, 0))
 	check(obj.is_completed(&"patrol"), "patrolled the four wings")
@@ -105,8 +110,10 @@ func _initialize() -> void:
 	await goto(p, Vector3(5.75, 0.05, 23.6))
 	check(events.has_fired(&"back_at_cabin"), "back at the cabin ends the round")
 	await lv.get_node("Camcorder").cut_finished
+	await process_frame  # the director also awaits cut_finished, then moves the stool
 	check(osd.clock_text().begins_with("03:1") and osd.clock_text().ends_with("AM"), "tape cut: clock now %s" % osd.clock_text())
 	check(obj.is_active(&"sign_3am"), "objective: the 3 AM register entry")
+	check(lv.get_node("Stool").position.distance_to(Vector3(5.3, 0, 24.4)) > 1.0, "the stool has moved into the doorway")
 
 	# ---- 3:12: Deshmukh walks out
 	lv.get_node("Deshmukh").speed = 40.0
@@ -190,16 +197,16 @@ func _initialize() -> void:
 	check(not lv.get_node("Power").powered and not lv.get_node("CabinTube").on, "after reload: still no power")
 	check(osd.clock_text().begins_with("03:"), "after reload: clock still %s" % osd.clock_text())
 	check(obj.is_active(&"meter_room") and lv.get_node("BalconyDeshmukh").visible, "after reload: objective + balcony figure kept")
-	check(lv.get_node("MainSwitch/Interactable").enabled and lv.get_node("CamTank").active, "after reload: switch usable, tank cameo there")
-
-	# spot #3: under the water tank, on the way to the meter room
-	await goto(p, Vector3(20, 0.05, 8))
-	check(await spot_at(lv.get_node("CamTank").global_position + Vector3(0, 1.5, 0)) == &"t1_water_tank", "spotted him under the water tank")
+	var stalker = lv.get_node("Stalker/Brain")
+	check(lv.get_node("MainSwitch/Interactable").enabled and await until(func() -> bool: return stalker.state == 4),
+		"after reload: switch usable, the Cameraman patrols the courtyard")
 	check(game.spotted_count("t1_") == 3, "all three Tape 1 appearances spotted")
+	stalker.reload_on_catch = false  # the test teleports through his patrol
 
 	# ---- the meter room, the ending
 	await goto(p, Vector3(28.4, 0.05, -3.2))
 	check(events.has_fired(&"meter_room_reached"), "reached the meter room")
+	check(stalker.state == 0, "the stalk ends at the meter room")
 	lv.get_node("MainSwitch/Interactable").interact(p)
 	await wait(0.2)
 	check(lv.get_node("Power").powered, "main switch: the power is back")

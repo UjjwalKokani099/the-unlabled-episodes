@@ -182,6 +182,19 @@ Useful headless commands (run from project root):
   the real cause was the machine running out of memory (OneDrive syncing this folder grew to
   ~35 GB commit). If tests crash with D3D12 0x8007000e, check free RAM/commit first.
 
+## The Cameraman as a threat (Phase 5)
+- Design + escalation per tape: `docs/villain_cameraman.md` (story.md wins conflicts).
+- `Stalker` (scripts/characters/stalker.gd) = child `Brain` of an NPC with the cameraman
+  model under `Model`. States ABSENT/WATCHING/FOOTAGE_ONLY/FOLLOWING/PATROL/HUNT/SEARCH/
+  CAUGHT/FINAL; level scripts call `start_patrol()` / `follow()` / `stop()`. `exposure` 0..1
+  rises while the player is in his shot (45 deg, 16 m, line of sight, not hidden); 1 = CAUGHT
+  -> "TRACKING LOST" static -> `Game.load_checkpoint()` (`reload_on_catch` off in tests).
+  He never runs: the player always outpaces him. Exposure drives VHS glitch + hiss.
+- `HidingSpot` (Area3D, scripts/story): crouched inside = invisible to him.
+- `FootstepsAbove` (Area3D): answers each player step from one floor up (`armed_by`).
+- Tape 1: CamWindowD (D balcony, first round, spot `t1_d_balcony`), the stool moves after
+  the tape cut, StepsAboveB after the intercom, the courtyard stalk from power cut to meter room.
+
 ## Camera / screen
 - Every level instances `ui/hud/camcorder.tscn` (OSD on layer 2, VHS shader on layer 3) and
   `ui/hud/hud.tscn` (layer 10, stays crisp above the VHS effect). Debug overlay = layer 20.

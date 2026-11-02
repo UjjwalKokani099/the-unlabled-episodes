@@ -76,11 +76,14 @@
 [ext_resource type="PackedScene" path="res://scenes/characters/iyer.tscn" id="74_r"]
 [ext_resource type="Script" path="res://scripts/interaction/pickup.gd" id="75_r"]
 [ext_resource type="Material" path="res://assets/materials/cardboard.tres" id="76_r"]
-[ext_resource type="Script" path="res://scripts/props/power_grid.gd" id="77_r"]
-[ext_resource type="Script" path="res://chapters/tape_01_watchman/scripts/tape01_director.gd" id="78_r"]
-[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="79_r"]
-[ext_resource type="PackedScene" path="res://ui/hud/camcorder.tscn" id="80_r"]
-[ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="81_r"]
+[ext_resource type="Script" path="res://scripts/characters/stalker.gd" id="77_r"]
+[ext_resource type="Script" path="res://scripts/story/hiding_spot.gd" id="78_r"]
+[ext_resource type="Script" path="res://scripts/story/footsteps_above.gd" id="79_r"]
+[ext_resource type="Script" path="res://scripts/props/power_grid.gd" id="80_r"]
+[ext_resource type="Script" path="res://chapters/tape_01_watchman/scripts/tape01_director.gd" id="81_r"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="82_r"]
+[ext_resource type="PackedScene" path="res://ui/hud/camcorder.tscn" id="83_r"]
+[ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="84_r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0"]
 shader = ExtResource("2_r")
@@ -1182,6 +1185,27 @@ size = Vector3(0.42, 0.3, 0.36)
 
 [sub_resource type="BoxMesh" id="BoxMesh_355"]
 size = Vector3(0.36, 0.22, 0.28)
+
+[sub_resource type="BoxMesh" id="BoxMesh_356"]
+size = Vector3(1.8, 1.2, 3.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_357"]
+size = Vector3(1.8, 1.2, 3.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_358"]
+size = Vector3(3.2, 1.8, 4.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_359"]
+size = Vector3(3.4, 1.8, 5.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_360"]
+size = Vector3(4.6, 1.8, 4.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_361"]
+size = Vector3(6.6, 1.8, 4.9)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_362"]
+size = Vector3(3.0, 12.0, 5.8)
 
 [node name="ShantiVihar" type="Node3D"]
 
@@ -38803,8 +38827,11 @@ No. 07  1991"
 [node name="Battery" parent="TableDrawer" instance=ExtResource("37_r")]
 position = Vector3(0.12, -0.035, -0.06)
 
-[node name="M6289" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.3, 0.23, 24.4)
+[node name="Stool" type="Node3D" parent="."]
+position = Vector3(5.3, 0, 24.4)
+
+[node name="M6289" type="MeshInstance3D" parent="Stool"]
+position = Vector3(0, 0.23, 0)
 mesh = SubResource("BoxMesh_277")
 material_override = ExtResource("17_r")
 
@@ -40494,12 +40521,15 @@ active = false
 spot_id = &"t1_flat_4b"
 vanish_when_unseen = true
 
-[node name="CamTank" parent="." instance=ExtResource("69_r")]
-position = Vector3(28.0, 0, 4.0)
-rotation_degrees = Vector3(0, 116.6, 0)
+[node name="CamWindowD" parent="." instance=ExtResource("69_r")]
+position = Vector3(27.1, 9.0, -13.3)
+rotation_degrees = Vector3(0, 180, 0)
 active = false
-spot_id = &"t1_water_tank"
+spot_id = &"t1_d_balcony"
 vanish_when_unseen = true
+spot_max_distance = 48.0
+vanish_distance = 6.0
+tracking_noise = 0.15
 
 [node name="CamEnding" parent="." instance=ExtResource("69_r")]
 position = Vector3(26.9, 0, -4.0)
@@ -40607,21 +40637,82 @@ outline_size = 0
 modulate = Color(0.1, 0.1, 0.1, 1)
 text = "IYER  2C"
 
-[node name="Power" type="Node" parent="."]
+[node name="Stalker" parent="." instance=ExtResource("73_r")]
+position = Vector3(14, 0, -2)
+display_name = "?"
+active = false
+walk_speed = 0.85
+
+[node name="Cameraman" parent="Stalker/Model" instance=ExtResource("69_r")]
+position = Vector3(0, 0, 0)
+rotation_degrees = Vector3(0, 0, 0)
+tracking_noise = 0.0
+
+[node name="Brain" type="Node" parent="Stalker"]
 script = ExtResource("77_r")
+patrol_points = PackedVector3Array(14, 0, -2, 22, 0, 1, 20, 0, 9, 9, 0, 7, 8, 0, -4)
+
+[node name="M6503" type="MeshInstance3D" parent="Static"]
+position = Vector3(11, 0.6, 2)
+mesh = SubResource("BoxMesh_356")
+material_override = ExtResource("68_r")
+
+[node name="S1140" type="CollisionShape3D" parent="Collision"]
+position = Vector3(11, 0.6, 2)
+shape = SubResource("BoxShape3D_357")
+metadata/surface = "soft"
+
+[node name="HideBlueCar" type="Area3D" parent="."]
+position = Vector3(16, 0.9, 12)
+script = ExtResource("78_r")
+
+[node name="Shape" type="CollisionShape3D" parent="HideBlueCar"]
+shape = SubResource("BoxShape3D_358")
+
+[node name="HideCoveredCar" type="Area3D" parent="."]
+position = Vector3(11, 0.9, 2)
+script = ExtResource("78_r")
+
+[node name="Shape" type="CollisionShape3D" parent="HideCoveredCar"]
+shape = SubResource("BoxShape3D_359")
+
+[node name="HideTank" type="Area3D" parent="."]
+position = Vector3(28, 0.9, 4)
+script = ExtResource("78_r")
+
+[node name="Shape" type="CollisionShape3D" parent="HideTank"]
+shape = SubResource("BoxShape3D_360")
+
+[node name="HideWestCars" type="Area3D" parent="."]
+position = Vector3(-18.2, 0.9, 12.2)
+script = ExtResource("78_r")
+
+[node name="Shape" type="CollisionShape3D" parent="HideWestCars"]
+shape = SubResource("BoxShape3D_361")
+
+[node name="StepsAboveB" type="Area3D" parent="."]
+position = Vector3(-12.5, 6, -16.9)
+script = ExtResource("79_r")
+armed_by = &"intercom_answered"
+
+[node name="Shape" type="CollisionShape3D" parent="StepsAboveB"]
+shape = SubResource("BoxShape3D_362")
+
+[node name="Power" type="Node" parent="."]
+script = ExtResource("80_r")
 glow_materials = Array[BaseMaterial3D]([ExtResource("31_r"), ExtResource("20_r"), ExtResource("21_r")])
 
 [node name="Story" type="Node" parent="."]
-script = ExtResource("78_r")
+script = ExtResource("81_r")
 
-[node name="Player" parent="." instance=ExtResource("79_r")]
+[node name="Player" parent="." instance=ExtResource("82_r")]
 position = Vector3(5.75, 0.0, 23.6)
 rotation_degrees = Vector3(0, 0.0, 0)
 flashlight_on_start = true
 
-[node name="Camcorder" parent="." instance=ExtResource("80_r")]
+[node name="Camcorder" parent="." instance=ExtResource("83_r")]
 
-[node name="HUD" parent="." instance=ExtResource("81_r")]
+[node name="HUD" parent="." instance=ExtResource("84_r")]
 
 [node name="BenchmarkPoints" type="Node3D" parent="."]
 
