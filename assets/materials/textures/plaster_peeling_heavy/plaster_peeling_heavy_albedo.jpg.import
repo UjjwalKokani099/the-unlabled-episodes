@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cgouqp0ppfwnc"
 path.s3tc="res://.godot/imported/plaster_peeling_heavy_albedo.jpg-28809751f6c0b0784e0a61e7d8ac1abc.s3tc.ctex"
+path.etc2="res://.godot/imported/plaster_peeling_heavy_albedo.jpg-28809751f6c0b0784e0a61e7d8ac1abc.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/plaster_peeling_heavy/plaster_peeling_heavy_albedo.jpg"
-dest_files=["res://.godot/imported/plaster_peeling_heavy_albedo.jpg-28809751f6c0b0784e0a61e7d8ac1abc.s3tc.ctex"]
+dest_files=["res://.godot/imported/plaster_peeling_heavy_albedo.jpg-28809751f6c0b0784e0a61e7d8ac1abc.s3tc.ctex", "res://.godot/imported/plaster_peeling_heavy_albedo.jpg-28809751f6c0b0784e0a61e7d8ac1abc.etc2.ctex"]
 
 [params]
 

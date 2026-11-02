@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dxuwqcnk3psuc"
 path.s3tc="res://.godot/imported/notice_water.png-7c509f2fb19bd7ab0daaf4be817b0b8f.s3tc.ctex"
+path.etc2="res://.godot/imported/notice_water.png-7c509f2fb19bd7ab0daaf4be817b0b8f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/decals/notice_water.png"
-dest_files=["res://.godot/imported/notice_water.png-7c509f2fb19bd7ab0daaf4be817b0b8f.s3tc.ctex"]
+dest_files=["res://.godot/imported/notice_water.png-7c509f2fb19bd7ab0daaf4be817b0b8f.s3tc.ctex", "res://.godot/imported/notice_water.png-7c509f2fb19bd7ab0daaf4be817b0b8f.etc2.ctex"]
 
 [params]
 

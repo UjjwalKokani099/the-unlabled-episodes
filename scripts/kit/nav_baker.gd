@@ -21,4 +21,5 @@ func _ready() -> void:
 	bake_finished.connect(func() -> void:
 		is_baked = true
 		baked.emit())
-	bake_navigation_mesh(true)
+	# Web builds run without threads: bake on the main thread there.
+	bake_navigation_mesh(not OS.has_feature("web"))

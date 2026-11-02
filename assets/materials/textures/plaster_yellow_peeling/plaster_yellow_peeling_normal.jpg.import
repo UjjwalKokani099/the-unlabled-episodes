@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6t6dtpd3c54o"
 path.s3tc="res://.godot/imported/plaster_yellow_peeling_normal.jpg-7fa974c7b7ca38b4440e4e94b6caef3e.s3tc.ctex"
+path.etc2="res://.godot/imported/plaster_yellow_peeling_normal.jpg-7fa974c7b7ca38b4440e4e94b6caef3e.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/plaster_yellow_peeling/plaster_yellow_peeling_normal.jpg"
-dest_files=["res://.godot/imported/plaster_yellow_peeling_normal.jpg-7fa974c7b7ca38b4440e4e94b6caef3e.s3tc.ctex"]
+dest_files=["res://.godot/imported/plaster_yellow_peeling_normal.jpg-7fa974c7b7ca38b4440e4e94b6caef3e.s3tc.ctex", "res://.godot/imported/plaster_yellow_peeling_normal.jpg-7fa974c7b7ca38b4440e4e94b6caef3e.etc2.ctex"]
 
 [params]
 

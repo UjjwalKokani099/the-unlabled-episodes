@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://nsi1pefg5icf"
 path.s3tc="res://.godot/imported/lost_dog.png-44962eb59e580dd6484795121499d991.s3tc.ctex"
+path.etc2="res://.godot/imported/lost_dog.png-44962eb59e580dd6484795121499d991.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/decals/lost_dog.png"
-dest_files=["res://.godot/imported/lost_dog.png-44962eb59e580dd6484795121499d991.s3tc.ctex"]
+dest_files=["res://.godot/imported/lost_dog.png-44962eb59e580dd6484795121499d991.s3tc.ctex", "res://.godot/imported/lost_dog.png-44962eb59e580dd6484795121499d991.etc2.ctex"]
 
 [params]
 

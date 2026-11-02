@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdj8ikstqn7i5"
 path.s3tc="res://.godot/imported/crack_a.png-36ce36ce627a860e7bab424a16de76e6.s3tc.ctex"
+path.etc2="res://.godot/imported/crack_a.png-36ce36ce627a860e7bab424a16de76e6.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/decals/crack_a.png"
-dest_files=["res://.godot/imported/crack_a.png-36ce36ce627a860e7bab424a16de76e6.s3tc.ctex"]
+dest_files=["res://.godot/imported/crack_a.png-36ce36ce627a860e7bab424a16de76e6.s3tc.ctex", "res://.godot/imported/crack_a.png-36ce36ce627a860e7bab424a16de76e6.etc2.ctex"]
 
 [params]
 

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://7x0ovn6fpl43"
 path.s3tc="res://.godot/imported/tile_checker_albedo.jpg-4d98a836d61d042a56106a62bfb47850.s3tc.ctex"
+path.etc2="res://.godot/imported/tile_checker_albedo.jpg-4d98a836d61d042a56106a62bfb47850.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/tile_checker/tile_checker_albedo.jpg"
-dest_files=["res://.godot/imported/tile_checker_albedo.jpg-4d98a836d61d042a56106a62bfb47850.s3tc.ctex"]
+dest_files=["res://.godot/imported/tile_checker_albedo.jpg-4d98a836d61d042a56106a62bfb47850.s3tc.ctex", "res://.godot/imported/tile_checker_albedo.jpg-4d98a836d61d042a56106a62bfb47850.etc2.ctex"]
 
 [params]
 

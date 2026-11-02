@@ -80,7 +80,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event is InputEventMouseMotion:
-		_look((event as InputEventMouseMotion).screen_relative)
+		# Touches also arrive as emulated mouse motion; touch look comes from TouchControls.
+		if event.device != InputEvent.DEVICE_ID_EMULATION:
+			_look((event as InputEventMouseMotion).screen_relative)
 	elif event.is_action_pressed("flashlight"):
 		toggle_flashlight()
 	elif event.is_action_pressed("crouch") and Settings.crouch_toggle:
@@ -152,6 +154,11 @@ func set_flashlight(on: bool) -> void:
 	flashlight_toggled.emit(on)
 
 
+## Turns the view by `relative` pixels of mouse movement (TouchControls calls it too).
+func look(relative: Vector2) -> void:
+	_look(relative)
+
+
 func _look(relative: Vector2) -> void:
 	var sens := Settings.mouse_sensitivity
 	rotate_y(deg_to_rad(-relative.x * sens))
@@ -204,11 +211,11 @@ func _flashlight_target() -> Transform3D:
 
 
 func _is_mouse_captured() -> bool:
-	return Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
+	return Settings.mouse_captured()
 
 
 func _set_mouse_captured(captured: bool) -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if captured else Input.MOUSE_MODE_VISIBLE
+	Settings.capture_mouse(captured)
 
 
 func _on_setting_changed(key: StringName) -> void:

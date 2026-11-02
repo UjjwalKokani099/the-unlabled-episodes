@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ql2xsfcal0k2"
 path.s3tc="res://.godot/imported/plaster_bare_normal.jpg-88412024ff5eeb88a5b29e779d4c3ad4.s3tc.ctex"
+path.etc2="res://.godot/imported/plaster_bare_normal.jpg-88412024ff5eeb88a5b29e779d4c3ad4.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/plaster_bare/plaster_bare_normal.jpg"
-dest_files=["res://.godot/imported/plaster_bare_normal.jpg-88412024ff5eeb88a5b29e779d4c3ad4.s3tc.ctex"]
+dest_files=["res://.godot/imported/plaster_bare_normal.jpg-88412024ff5eeb88a5b29e779d4c3ad4.s3tc.ctex", "res://.godot/imported/plaster_bare_normal.jpg-88412024ff5eeb88a5b29e779d4c3ad4.etc2.ctex"]
 
 [params]
 

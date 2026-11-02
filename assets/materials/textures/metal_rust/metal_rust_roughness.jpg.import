@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://be6vemsennprl"
 path.s3tc="res://.godot/imported/metal_rust_roughness.jpg-5ee4966b4424f6d2f8e74b9fdea3b765.s3tc.ctex"
+path.etc2="res://.godot/imported/metal_rust_roughness.jpg-5ee4966b4424f6d2f8e74b9fdea3b765.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/metal_rust/metal_rust_roughness.jpg"
-dest_files=["res://.godot/imported/metal_rust_roughness.jpg-5ee4966b4424f6d2f8e74b9fdea3b765.s3tc.ctex"]
+dest_files=["res://.godot/imported/metal_rust_roughness.jpg-5ee4966b4424f6d2f8e74b9fdea3b765.s3tc.ctex", "res://.godot/imported/metal_rust_roughness.jpg-5ee4966b4424f6d2f8e74b9fdea3b765.etc2.ctex"]
 
 [params]
 

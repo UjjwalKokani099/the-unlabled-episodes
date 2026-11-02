@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dfrh86aers2r2"
 path.s3tc="res://.godot/imported/ganesh.png-a08e7c2bac318a9eef56f6761aba3706.s3tc.ctex"
+path.etc2="res://.godot/imported/ganesh.png-a08e7c2bac318a9eef56f6761aba3706.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/decals/ganesh.png"
-dest_files=["res://.godot/imported/ganesh.png-a08e7c2bac318a9eef56f6761aba3706.s3tc.ctex"]
+dest_files=["res://.godot/imported/ganesh.png-a08e7c2bac318a9eef56f6761aba3706.s3tc.ctex", "res://.godot/imported/ganesh.png-a08e7c2bac318a9eef56f6761aba3706.etc2.ctex"]
 
 [params]
 

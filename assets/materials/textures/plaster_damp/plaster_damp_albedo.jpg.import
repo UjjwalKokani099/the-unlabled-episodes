@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://da2v4p67wlsxs"
 path.s3tc="res://.godot/imported/plaster_damp_albedo.jpg-df8a4b74896e398cca0628c083299999.s3tc.ctex"
+path.etc2="res://.godot/imported/plaster_damp_albedo.jpg-df8a4b74896e398cca0628c083299999.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/plaster_damp/plaster_damp_albedo.jpg"
-dest_files=["res://.godot/imported/plaster_damp_albedo.jpg-df8a4b74896e398cca0628c083299999.s3tc.ctex"]
+dest_files=["res://.godot/imported/plaster_damp_albedo.jpg-df8a4b74896e398cca0628c083299999.s3tc.ctex", "res://.godot/imported/plaster_damp_albedo.jpg-df8a4b74896e398cca0628c083299999.etc2.ctex"]
 
 [params]
 

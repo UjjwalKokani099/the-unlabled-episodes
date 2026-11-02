@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dbn5jk58rfkmg"
 path.s3tc="res://.godot/imported/floor_mosaic_normal.jpg-adf94505dd6a67b87dfa99b3459f2048.s3tc.ctex"
+path.etc2="res://.godot/imported/floor_mosaic_normal.jpg-adf94505dd6a67b87dfa99b3459f2048.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/floor_mosaic/floor_mosaic_normal.jpg"
-dest_files=["res://.godot/imported/floor_mosaic_normal.jpg-adf94505dd6a67b87dfa99b3459f2048.s3tc.ctex"]
+dest_files=["res://.godot/imported/floor_mosaic_normal.jpg-adf94505dd6a67b87dfa99b3459f2048.s3tc.ctex", "res://.godot/imported/floor_mosaic_normal.jpg-adf94505dd6a67b87dfa99b3459f2048.etc2.ctex"]
 
 [params]
 

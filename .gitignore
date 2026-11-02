@@ -30,3 +30,6 @@ node_modules/
 
 # Intermediate build outputs of tools/ scripts
 tools/_build/
+
+# Web export output (built by GitHub Actions)
+/build/

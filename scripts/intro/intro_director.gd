@@ -16,6 +16,7 @@ const SKIP_HOLD := 0.8
 var finished: bool = false
 var _skip_time: float = 0.0
 var _time: float = 0.0
+var _fingers: int = 0  # touch play: holding a finger on the screen skips too
 
 
 func _ready() -> void:
@@ -30,13 +31,18 @@ func _ready() -> void:
 	_play()
 
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		_fingers = maxi(_fingers + (1 if event.pressed else -1), 0)
+
+
 func skip() -> void:
 	_finish()
 
 
 func _process(delta: float) -> void:
 	_time += delta
-	if Input.is_action_pressed(&"ui_accept") or Input.is_action_pressed(&"pause"):
+	if Input.is_action_pressed(&"ui_accept") or Input.is_action_pressed(&"pause") or _fingers > 0:
 		_skip_time += delta
 		if _skip_time >= SKIP_HOLD:
 			_finish()

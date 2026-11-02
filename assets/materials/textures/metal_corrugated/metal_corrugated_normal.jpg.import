@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c36xuipr3eiov"
 path.s3tc="res://.godot/imported/metal_corrugated_normal.jpg-95c7729c80a8d2ad475d600f900fee15.s3tc.ctex"
+path.etc2="res://.godot/imported/metal_corrugated_normal.jpg-95c7729c80a8d2ad475d600f900fee15.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/metal_corrugated/metal_corrugated_normal.jpg"
-dest_files=["res://.godot/imported/metal_corrugated_normal.jpg-95c7729c80a8d2ad475d600f900fee15.s3tc.ctex"]
+dest_files=["res://.godot/imported/metal_corrugated_normal.jpg-95c7729c80a8d2ad475d600f900fee15.s3tc.ctex", "res://.godot/imported/metal_corrugated_normal.jpg-95c7729c80a8d2ad475d600f900fee15.etc2.ctex"]
 
 [params]
 

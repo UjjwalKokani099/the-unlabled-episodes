@@ -37,7 +37,7 @@ var _starting: bool = false
 
 
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	Settings.capture_mouse(false)
 	if Game.should_autoplay_intro():
 		Game.play_intro.call_deferred()
 		return

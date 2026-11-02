@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://be0o4jxhkarx8"
 path.s3tc="res://.godot/imported/floor_kota_normal.jpg-f8227c1f9e19b7117880ba3cfedcefb3.s3tc.ctex"
+path.etc2="res://.godot/imported/floor_kota_normal.jpg-f8227c1f9e19b7117880ba3cfedcefb3.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/floor_kota/floor_kota_normal.jpg"
-dest_files=["res://.godot/imported/floor_kota_normal.jpg-f8227c1f9e19b7117880ba3cfedcefb3.s3tc.ctex"]
+dest_files=["res://.godot/imported/floor_kota_normal.jpg-f8227c1f9e19b7117880ba3cfedcefb3.s3tc.ctex", "res://.godot/imported/floor_kota_normal.jpg-f8227c1f9e19b7117880ba3cfedcefb3.etc2.ctex"]
 
 [params]
 

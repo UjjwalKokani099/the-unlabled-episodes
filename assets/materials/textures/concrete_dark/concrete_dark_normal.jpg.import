@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://34adn8c2p516"
 path.s3tc="res://.godot/imported/concrete_dark_normal.jpg-17ce714783845745b85f5d2f79bc773d.s3tc.ctex"
+path.etc2="res://.godot/imported/concrete_dark_normal.jpg-17ce714783845745b85f5d2f79bc773d.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/concrete_dark/concrete_dark_normal.jpg"
-dest_files=["res://.godot/imported/concrete_dark_normal.jpg-17ce714783845745b85f5d2f79bc773d.s3tc.ctex"]
+dest_files=["res://.godot/imported/concrete_dark_normal.jpg-17ce714783845745b85f5d2f79bc773d.s3tc.ctex", "res://.godot/imported/concrete_dark_normal.jpg-17ce714783845745b85f5d2f79bc773d.etc2.ctex"]
 
 [params]
 

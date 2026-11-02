@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://didpjs4sfjwvy"
 path.s3tc="res://.godot/imported/tile_polished_albedo.jpg-25869b0f4794f5f04c6129ebb7c26ebd.s3tc.ctex"
+path.etc2="res://.godot/imported/tile_polished_albedo.jpg-25869b0f4794f5f04c6129ebb7c26ebd.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/tile_polished/tile_polished_albedo.jpg"
-dest_files=["res://.godot/imported/tile_polished_albedo.jpg-25869b0f4794f5f04c6129ebb7c26ebd.s3tc.ctex"]
+dest_files=["res://.godot/imported/tile_polished_albedo.jpg-25869b0f4794f5f04c6129ebb7c26ebd.s3tc.ctex", "res://.godot/imported/tile_polished_albedo.jpg-25869b0f4794f5f04c6129ebb7c26ebd.etc2.ctex"]
 
 [params]
 

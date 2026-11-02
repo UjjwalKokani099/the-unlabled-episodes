@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bhnxtibp0ndvv"
 path.s3tc="res://.godot/imported/metal_painted_green_roughness.jpg-7a5f5c7152d020ff7ace8be5e22037f3.s3tc.ctex"
+path.etc2="res://.godot/imported/metal_painted_green_roughness.jpg-7a5f5c7152d020ff7ace8be5e22037f3.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/metal_painted_green/metal_painted_green_roughness.jpg"
-dest_files=["res://.godot/imported/metal_painted_green_roughness.jpg-7a5f5c7152d020ff7ace8be5e22037f3.s3tc.ctex"]
+dest_files=["res://.godot/imported/metal_painted_green_roughness.jpg-7a5f5c7152d020ff7ace8be5e22037f3.s3tc.ctex", "res://.godot/imported/metal_painted_green_roughness.jpg-7a5f5c7152d020ff7ace8be5e22037f3.etc2.ctex"]
 
 [params]
 

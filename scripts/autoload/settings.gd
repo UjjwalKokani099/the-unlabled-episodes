@@ -141,10 +141,46 @@ var ambience_volume: float = 1.0:
 
 var _brightness_rect: ColorRect
 
+## Touch play (iPad / web): true after the first screen touch, false again once a real mouse
+## moves. Not saved. In touch mode the mouse is never captured; `mouse_captured()` reports
+## what the game asked for instead, so gameplay code works the same with fingers.
+var touch_mode: bool = false
+var _want_capture: bool = false
+
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	_make_brightness_layer()
 	load_settings()
+
+
+## Every "grab / free the mouse" goes through here (player, pause menu, dialogue, inspect...).
+func capture_mouse(on: bool) -> void:
+	_want_capture = on
+	if touch_mode:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if on else Input.MOUSE_MODE_VISIBLE
+
+
+## True while the game is in "playing" mode (mouse grabbed, or wanted in touch mode).
+func mouse_captured() -> bool:
+	if touch_mode:
+		return _want_capture
+	return Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch and not touch_mode:
+		_want_capture = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or _want_capture
+		touch_mode = true
+		capture_mouse(_want_capture)
+		changed.emit(&"touch_mode")
+	elif touch_mode and event is InputEventMouseMotion and event.device != InputEvent.DEVICE_ID_EMULATION \
+			and (event as InputEventMouseMotion).relative.length() > 2.0:
+		touch_mode = false  # a real mouse / trackpad took over
+		capture_mouse(_want_capture)
+		changed.emit(&"touch_mode")
 
 
 func load_settings() -> void:

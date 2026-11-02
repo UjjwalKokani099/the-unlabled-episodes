@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0yguaxwlbcnw"
 path.s3tc="res://.godot/imported/concrete_rough_roughness.jpg-0d17bf8297a6694a8cd891bf61896469.s3tc.ctex"
+path.etc2="res://.godot/imported/concrete_rough_roughness.jpg-0d17bf8297a6694a8cd891bf61896469.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/concrete_rough/concrete_rough_roughness.jpg"
-dest_files=["res://.godot/imported/concrete_rough_roughness.jpg-0d17bf8297a6694a8cd891bf61896469.s3tc.ctex"]
+dest_files=["res://.godot/imported/concrete_rough_roughness.jpg-0d17bf8297a6694a8cd891bf61896469.s3tc.ctex", "res://.godot/imported/concrete_rough_roughness.jpg-0d17bf8297a6694a8cd891bf61896469.etc2.ctex"]
 
 [params]
 

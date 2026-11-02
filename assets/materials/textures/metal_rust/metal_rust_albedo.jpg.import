@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bqlhmlvxcwmpt"
 path.s3tc="res://.godot/imported/metal_rust_albedo.jpg-a0c2caf04a0f3a55e28faff71a6f5686.s3tc.ctex"
+path.etc2="res://.godot/imported/metal_rust_albedo.jpg-a0c2caf04a0f3a55e28faff71a6f5686.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/metal_rust/metal_rust_albedo.jpg"
-dest_files=["res://.godot/imported/metal_rust_albedo.jpg-a0c2caf04a0f3a55e28faff71a6f5686.s3tc.ctex"]
+dest_files=["res://.godot/imported/metal_rust_albedo.jpg-a0c2caf04a0f3a55e28faff71a6f5686.s3tc.ctex", "res://.godot/imported/metal_rust_albedo.jpg-a0c2caf04a0f3a55e28faff71a6f5686.etc2.ctex"]
 
 [params]
 

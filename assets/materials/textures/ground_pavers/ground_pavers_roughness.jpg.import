@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdw8qsdpjju73"
 path.s3tc="res://.godot/imported/ground_pavers_roughness.jpg-ff0716412d9e5282e2ff30817c66d7fd.s3tc.ctex"
+path.etc2="res://.godot/imported/ground_pavers_roughness.jpg-ff0716412d9e5282e2ff30817c66d7fd.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/ground_pavers/ground_pavers_roughness.jpg"
-dest_files=["res://.godot/imported/ground_pavers_roughness.jpg-ff0716412d9e5282e2ff30817c66d7fd.s3tc.ctex"]
+dest_files=["res://.godot/imported/ground_pavers_roughness.jpg-ff0716412d9e5282e2ff30817c66d7fd.s3tc.ctex", "res://.godot/imported/ground_pavers_roughness.jpg-ff0716412d9e5282e2ff30817c66d7fd.etc2.ctex"]
 
 [params]
 

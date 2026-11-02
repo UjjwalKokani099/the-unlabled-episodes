@@ -31,6 +31,16 @@ Useful headless commands (run from project root):
   GODOT_HEADLESS=1 is set). Doesn't work: playtesting, screenshots, benchmarks, VoxelGI bakes,
   tests that need mouse capture/rendering. List anything unverified in the commit/PR text
   so it gets tested on the laptop later.
+- Web build for playing on the iPad: `.github/workflows/web.yml` exports preset "Web"
+  (`export_presets.cfg`, no threads, ETC2/ASTC textures) on every push to main / `claude/**`
+  and uploads it to itch.io (secret `BUTLER_API_KEY`, variable `ITCH_GAME`); newest push wins.
+  Web = Compatibility renderer (no VoxelGI/SSAO/SSIL/volumetric fog): check new levels with
+  `--rendering-method gl_compatibility`. No threads on web (NavBaker bakes on the main thread).
+- Touch play: `Settings.touch_mode` (first screen touch; a real mouse switches back) +
+  `ui/hud` TouchControls (stick left, drag right to look, buttons send input actions). Grab or
+  free the mouse only via `Settings.capture_mouse(on)` and read `Settings.mouse_captured()`,
+  never `Input.mouse_mode` directly. Touches also emit emulated mouse events
+  (device `DEVICE_ID_EMULATION`): look code ignores those. Test: `tests/test_touch.gd`.
 - Work on a branch and push it (the owner merges after testing on the laptop). Keep commits
   one-per-system as usual. Re-run generators instead of hand-editing generated scenes.
 

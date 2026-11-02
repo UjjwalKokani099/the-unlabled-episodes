@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bj23wypmdjbtn"
 path.s3tc="res://.godot/imported/wood_painted_dark_roughness.jpg-5ee8cf334cc8282783c028d399219c00.s3tc.ctex"
+path.etc2="res://.godot/imported/wood_painted_dark_roughness.jpg-5ee8cf334cc8282783c028d399219c00.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/wood_painted_dark/wood_painted_dark_roughness.jpg"
-dest_files=["res://.godot/imported/wood_painted_dark_roughness.jpg-5ee8cf334cc8282783c028d399219c00.s3tc.ctex"]
+dest_files=["res://.godot/imported/wood_painted_dark_roughness.jpg-5ee8cf334cc8282783c028d399219c00.s3tc.ctex", "res://.godot/imported/wood_painted_dark_roughness.jpg-5ee8cf334cc8282783c028d399219c00.etc2.ctex"]
 
 [params]
 

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://km6euict6bqo"
 path.s3tc="res://.godot/imported/floor_mosaic_albedo.jpg-6cf6562efa0bc922896f725d5d6bf4b1.s3tc.ctex"
+path.etc2="res://.godot/imported/floor_mosaic_albedo.jpg-6cf6562efa0bc922896f725d5d6bf4b1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/floor_mosaic/floor_mosaic_albedo.jpg"
-dest_files=["res://.godot/imported/floor_mosaic_albedo.jpg-6cf6562efa0bc922896f725d5d6bf4b1.s3tc.ctex"]
+dest_files=["res://.godot/imported/floor_mosaic_albedo.jpg-6cf6562efa0bc922896f725d5d6bf4b1.s3tc.ctex", "res://.godot/imported/floor_mosaic_albedo.jpg-6cf6562efa0bc922896f725d5d6bf4b1.etc2.ctex"]
 
 [params]
 

@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://ui/hud/subtitles.tscn" id="6_subs"]
 [ext_resource type="Script" path="res://scripts/ui/inspect_view.gd" id="7_inspect"]
 [ext_resource type="Script" path="res://scripts/ui/dialogue_view.gd" id="8_dialogue"]
+[ext_resource type="Script" path="res://scripts/ui/touch_controls.gd" id="9_touch"]
 
 [sub_resource type="StyleBoxFlat" id="Style_paper"]
 bg_color = Color(0.93, 0.9, 0.8, 1)
@@ -162,3 +163,6 @@ script = ExtResource("8_dialogue")
 
 [node name="InspectView" type="CanvasLayer" parent="."]
 script = ExtResource("7_inspect")
+
+[node name="TouchControls" type="CanvasLayer" parent="."]
+script = ExtResource("9_touch")

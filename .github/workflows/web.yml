@@ -1,0 +1,89 @@
+# Builds the web version (played on the iPad in Safari) and uploads it to itch.io.
+# Runs on every push to main and to Claude's branches (claude/...): the newest build wins.
+# Needs once: repo secret BUTLER_API_KEY (itch.io API key) and repo variable ITCH_GAME
+# ("<itch username>/<game slug>"). Without them it still builds (artifact only).
+name: Web build
+
+on:
+  push:
+    branches: [main, "claude/**"]
+  workflow_dispatch:
+
+concurrency:
+  group: web-build
+  cancel-in-progress: true
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GODOT_VERSION: 4.7.2-stable
+      BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      ITCH_GAME: ${{ vars.ITCH_GAME }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # LFS files (textures, audio) cached so each build doesn't use LFS bandwidth.
+      - name: List LFS files
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-ids
+      - uses: actions/cache@v4
+        with:
+          path: .git/lfs
+          key: lfs-${{ hashFiles('.lfs-ids') }}
+          restore-keys: lfs-
+      - name: Pull LFS files
+        run: git lfs pull
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/godot
+            ~/.local/share/godot/export_templates
+          key: godot-${{ env.GODOT_VERSION }}-web
+      - name: Install Godot + web template
+        run: |
+          if [ ! -x ~/godot/godot ]; then
+            mkdir -p ~/godot && cd ~/godot
+            curl -fsSL -o g.zip "https://github.com/godotengine/godot/releases/download/$GODOT_VERSION/Godot_v${GODOT_VERSION}_linux.x86_64.zip"
+            unzip -q g.zip && mv "Godot_v${GODOT_VERSION}_linux.x86_64" godot && rm g.zip
+          fi
+          T=~/.local/share/godot/export_templates/${GODOT_VERSION/-/.}
+          if [ ! -f "$T/web_nothreads_release.zip" ]; then
+            mkdir -p "$T"
+            curl -fsSL -o /tmp/t.tpz "https://github.com/godotengine/godot/releases/download/$GODOT_VERSION/Godot_v${GODOT_VERSION}_export_templates.tpz"
+            unzip -q -j /tmp/t.tpz templates/web_nothreads_release.zip templates/version.txt -d "$T"
+            rm /tmp/t.tpz
+          fi
+
+      # Imported textures (ETC2/ASTC compression is slow) cached between builds.
+      - uses: actions/cache@v4
+        with:
+          path: .godot
+          key: import-${{ hashFiles('.lfs-ids', 'project.godot', '**/*.import') }}
+          restore-keys: import-
+      - name: Import project
+        run: ~/godot/godot --headless --path . --import 2>&1 | grep -E "ERROR|SCRIPT ERROR" | head -50 || true
+
+      - name: Export web build
+        run: |
+          mkdir -p build/web
+          ~/godot/godot --headless --path . --export-release "Web" build/web/index.html 2>&1 | tail -30
+          test -f build/web/index.pck
+          ls -la build/web
+          echo "### Web build: ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}" >> "$GITHUB_STEP_SUMMARY"
+          du -sh build/web >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+          retention-days: 3
+
+      - name: Upload to itch.io
+        if: env.BUTLER_API_KEY != '' && env.ITCH_GAME != ''
+        run: |
+          curl -fsSL -o butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
+          unzip -q butler.zip -d butler && chmod +x butler/butler
+          ./butler/butler push build/web "$ITCH_GAME:html" --userversion "${GITHUB_REF_NAME}-${GITHUB_SHA::7}"
+          echo "Uploaded to https://${ITCH_GAME%%/*}.itch.io/${ITCH_GAME#*/}" >> "$GITHUB_STEP_SUMMARY"

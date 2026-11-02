@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bwu2yhhkervqn"
 path.s3tc="res://.godot/imported/wood_painted_blue_albedo.jpg-0b2a5cdf43b6edca5a1999bb0e0f92e7.s3tc.ctex"
+path.etc2="res://.godot/imported/wood_painted_blue_albedo.jpg-0b2a5cdf43b6edca5a1999bb0e0f92e7.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/wood_painted_blue/wood_painted_blue_albedo.jpg"
-dest_files=["res://.godot/imported/wood_painted_blue_albedo.jpg-0b2a5cdf43b6edca5a1999bb0e0f92e7.s3tc.ctex"]
+dest_files=["res://.godot/imported/wood_painted_blue_albedo.jpg-0b2a5cdf43b6edca5a1999bb0e0f92e7.s3tc.ctex", "res://.godot/imported/wood_painted_blue_albedo.jpg-0b2a5cdf43b6edca5a1999bb0e0f92e7.etc2.ctex"]
 
 [params]
 

@@ -54,7 +54,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func open() -> void:
 	is_open = true
 	get_tree().paused = true
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	Settings.capture_mouse(false)
 	var chapter := Game.current_chapter
 	_where.text = "%s - %s" % [chapter.title, chapter.subtitle] if chapter else ""
 	_restart.visible = chapter != null and Game.has_checkpoint() and Game.checkpoint_chapter_id() == chapter.id
@@ -69,7 +69,7 @@ func close() -> void:
 	is_open = false
 	_root.visible = false
 	get_tree().paused = false
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Settings.capture_mouse(true)
 
 
 func _can_open() -> bool:

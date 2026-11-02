@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://okko8t0b662b"
 path.s3tc="res://.godot/imported/metal_corrugated_roughness.jpg-2c3169e6f77581d4e31f7bc89dea0e5e.s3tc.ctex"
+path.etc2="res://.godot/imported/metal_corrugated_roughness.jpg-2c3169e6f77581d4e31f7bc89dea0e5e.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/metal_corrugated/metal_corrugated_roughness.jpg"
-dest_files=["res://.godot/imported/metal_corrugated_roughness.jpg-2c3169e6f77581d4e31f7bc89dea0e5e.s3tc.ctex"]
+dest_files=["res://.godot/imported/metal_corrugated_roughness.jpg-2c3169e6f77581d4e31f7bc89dea0e5e.s3tc.ctex", "res://.godot/imported/metal_corrugated_roughness.jpg-2c3169e6f77581d4e31f7bc89dea0e5e.etc2.ctex"]
 
 [params]
 

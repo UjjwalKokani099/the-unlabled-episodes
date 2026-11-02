@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://chin3bt4hfmbo"
 path.s3tc="res://.godot/imported/floor_kota_roughness.jpg-615a79920366ea932b15bf8e7f66c98d.s3tc.ctex"
+path.etc2="res://.godot/imported/floor_kota_roughness.jpg-615a79920366ea932b15bf8e7f66c98d.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/materials/textures/floor_kota/floor_kota_roughness.jpg"
-dest_files=["res://.godot/imported/floor_kota_roughness.jpg-615a79920366ea932b15bf8e7f66c98d.s3tc.ctex"]
+dest_files=["res://.godot/imported/floor_kota_roughness.jpg-615a79920366ea932b15bf8e7f66c98d.s3tc.ctex", "res://.godot/imported/floor_kota_roughness.jpg-615a79920366ea932b15bf8e7f66c98d.etc2.ctex"]
 
 [params]
 

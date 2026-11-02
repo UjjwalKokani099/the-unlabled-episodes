@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bg871g6ifuklp"
 path.s3tc="res://.godot/imported/room_rent.png-c33427c9f8b9734ec19964bb1f1f383a.s3tc.ctex"
+path.etc2="res://.godot/imported/room_rent.png-c33427c9f8b9734ec19964bb1f1f383a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/decals/room_rent.png"
-dest_files=["res://.godot/imported/room_rent.png-c33427c9f8b9734ec19964bb1f1f383a.s3tc.ctex"]
+dest_files=["res://.godot/imported/room_rent.png-c33427c9f8b9734ec19964bb1f1f383a.s3tc.ctex", "res://.godot/imported/room_rent.png-c33427c9f8b9734ec19964bb1f1f383a.etc2.ctex"]
 
 [params]
 
