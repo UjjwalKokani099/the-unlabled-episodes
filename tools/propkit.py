@@ -32,7 +32,8 @@ COLOURS = {
     "cloth_khaki": {"albedo_color": "Color(0.5, 0.45, 0.33, 1)", "roughness": "1.0"},
     "cloth_towel": {"albedo_color": "Color(0.75, 0.62, 0.42, 1)", "roughness": "1.0"},
     "cloth_grey": {"albedo_color": "Color(0.32, 0.32, 0.34, 1)", "roughness": "1.0"},
-    "blanket": {"albedo_color": "Color(0.42, 0.12, 0.1, 1)", "roughness": "1.0"},
+    "blanket": {"albedo_color": "Color(0.3, 0.09, 0.08, 1)", "roughness": "1.0"},
+    "pillow": {"albedo_color": "Color(0.78, 0.76, 0.7, 1)", "roughness": "0.95"},
     "newsprint": {"albedo_color": "Color(0.72, 0.7, 0.62, 1)", "roughness": "0.95"},
     "calendar_red": {"albedo_color": "Color(0.7, 0.1, 0.08, 1)", "roughness": "0.8"},
     "brass": {"albedo_color": "Color(0.65, 0.5, 0.22, 1)", "metallic": "0.85", "roughness": "0.35"},
@@ -49,13 +50,22 @@ COLOURS = {
 }
 
 
+# Cloth colour + (vertical, horizontal) stripe counts for the clothesline (`mat` names).
+CLOTH_LOOKS = {
+    "cloth_check": ((0.22, 0.27, 0.42), (9.0, 12.0)),
+    "cloth_towel": ((0.78, 0.66, 0.46), (0.0, 0.0)),
+    "cloth_grey": ((0.26, 0.26, 0.29), (0.0, 0.0)),
+    "cloth_khaki": ((0.5, 0.45, 0.33), (0.0, 0.0)),
+    "cloth_maroon": ((0.4, 0.08, 0.1), (0.0, 0.0)),
+}
+
+
 class Props:
     """Wraps a Level: adds colour materials and rotated primitives."""
 
     def __init__(self, lv: Level, parent: str = "Static"):
         self.lv = lv
         self.parent = parent
-        self._models_node = None
         self._mats = {}
         self._meshes = {}
         self._n = 0
@@ -75,6 +85,8 @@ class Props:
         if key not in self._meshes:
             if kind == "box":
                 props = {"size": v3(*dims)}
+            elif kind == "sphere":
+                props = {"radius": "0.5", "height": "1.0", "radial_segments": "20", "rings": "10"}
             else:  # cyl: top radius, bottom radius, height, segments
                 props = {"top_radius": str(dims[0]), "bottom_radius": str(dims[1]),
                          "height": str(dims[2]), "radial_segments": str(int(dims[3])), "rings": "1"}
@@ -94,6 +106,15 @@ class Props:
 
     def box(self, pos, size, mat, rot=(0, 0, 0), parent=None, shadow=True):
         return self._put("box", tuple(size), pos, mat, rot, parent, shadow)
+
+    def soft(self, pos, size, mat, rot=(0, 0, 0), parent=None, shadow=True):
+        """Squashed sphere: pillows, folded quilts, sacks (soft shapes boxes can't do)."""
+        self._n += 1
+        props = {"position": v3(*pos), "rotation_degrees": v3(*rot), "scale": v3(*size),
+                 "mesh": f'SubResource("{self._mesh("sphere", (1,))}")', "material_override": self.m(mat)}
+        if not shadow:
+            props["cast_shadow"] = "0"
+        return self.lv.add(f"P{self._n}", "MeshInstance3D", parent or self.parent, props)
 
     def cyl(self, pos, r_top, r_bot, h, mat, rot=(0, 0, 0), seg=12, parent=None, shadow=True):
         return self._put("cyl", (r_top, r_bot, h, seg), pos, mat, rot, parent, shadow)
@@ -124,9 +145,7 @@ class Props:
         before yaw; only 0/90/180/270 yaws keep it exact). Extra keyword options are
         PropModel exports (hide_parts, render_layers, visibility_end, cast_shadows...)."""
         if parent is None:
-            if self._models_node is None:
-                self._models_node = self.lv.add("Props", "Node3D", ".")
-            parent = self._models_node
+            parent = self._models_parent()
         props = {"script": f'ExtResource("{self.lv.ext(script, "Script")}")',
                  "position": v3(*pos), "rotation_degrees": v3(pitch, yaw + 180.0, roll)}
         if scale != 1.0:
@@ -284,6 +303,33 @@ class Props:
         pitch = math.degrees(math.atan2(math.hypot(d[0], d[2]), d[1]))
         self.cyl(mid, r, r, length, "cable", rot=(pitch, yaw, 0), seg=5, shadow=False)
 
+    def _models_parent(self):
+        """One un-batched "Props" node per level, shared by every Props helper."""
+        if getattr(self.lv, "props_node", None) is None:
+            self.lv.props_node = self.lv.add("Props", "Node3D", ".")
+        return self.lv.props_node
+
+    def cloth(self, top_centre, w, h, colour, yaw=0.0, stripes=(0.0, 0.0), stripe_colour=(0.8, 0.78, 0.7),
+              folds=3.0, fold_depth=0.025, gather=0.0, sway=0.03, tilt=0.0, name="Cloth"):
+        """Hanging fabric (shaders/cloth.gdshader): a w x h panel hung from its top edge at
+        `top_centre`, its face toward -Z after `yaw` (both sides render). Not batched."""
+        def c(t):
+            return f"Color({t[0]}, {t[1]}, {t[2]}, 1)"
+        mat = self.lv.sub("ShaderMaterial", {
+            "shader": f'ExtResource("{self.lv.ext("res://shaders/cloth.gdshader", "Shader")}")',
+            "shader_parameter/albedo": c(colour), "shader_parameter/stripe_color": c(stripe_colour),
+            "shader_parameter/stripes": f"Vector2({stripes[0]}, {stripes[1]})",
+            "shader_parameter/size": f"Vector2({w}, {h})", "shader_parameter/folds": str(folds),
+            "shader_parameter/fold_depth": str(fold_depth), "shader_parameter/gather": str(gather),
+            "shader_parameter/sway": str(sway)})
+        mesh = self.lv.sub("QuadMesh", {"size": f"Vector2({w}, {h})", "subdivide_width": str(max(4, int(w * 24))),
+                                        "subdivide_depth": str(max(4, int(h * 16))),
+                                        "center_offset": f"Vector3(0, {-h / 2}, 0)"})
+        # QuadMesh faces +Z; turn 180 so the kit's "front is -Z after yaw" holds.
+        return self.lv.add(name, "MeshInstance3D", self._models_parent(), {
+            "position": v3(*top_centre), "rotation_degrees": v3(tilt, yaw + 180.0, 0),
+            "mesh": f'SubResource("{mesh}")', "material_override": f'SubResource("{mat}")'})
+
     def clothesline(self, a, b, items, sag=0.04):
         """Nylon line from a to b with clothes hanging: items = [(t 0..1, kind, mat)]."""
         self.wire(a, b, 0.003)
@@ -291,13 +337,14 @@ class Props:
         for t, kind, mat in items:
             p = tuple(a[i] + (b[i] - a[i]) * t for i in range(3))
             p = (p[0], p[1] - sag * 4 * t * (1 - t), p[2])
+            colour, stripes = CLOTH_LOOKS.get(mat, ((0.4, 0.4, 0.4), (0.0, 0.0)))
             if kind == "shirt":
-                self.box((p[0], p[1] - 0.3, p[2]), (0.42, 0.6, 0.02), mat, rot=(0, yaw, 2))
-                self.box((p[0], p[1] - 0.03, p[2]), (0.62, 0.06, 0.03), mat, rot=(0, yaw, 0))
+                self.cloth(p, 0.5, 0.62, colour, yaw=yaw, stripes=stripes, folds=2.5, fold_depth=0.018, name="Shirt")
             elif kind == "towel":
-                self.box((p[0], p[1] - 0.35, p[2]), (0.35, 0.7, 0.025), mat, rot=(0, yaw, -1))
+                self.cloth(p, 0.38, 0.72, colour, yaw=yaw, stripes=(0.0, 1.5), stripe_colour=(0.6, 0.15, 0.1),
+                           folds=2.0, fold_depth=0.012, name="Towel")
             else:  # trousers / dupatta
-                self.box((p[0], p[1] - 0.45, p[2]), (0.3, 0.9, 0.02), mat, rot=(0, yaw, 1))
+                self.cloth(p, 0.34, 0.95, colour, yaw=yaw, stripes=stripes, folds=1.5, fold_depth=0.02, name="Trousers")
 
     def hooks_with_bag(self, o, yaw=0.0):
         self.part(o, yaw, "box", (0, 0, -0.03), (0.3, 0.03, 0.03), "wood_door_dark")

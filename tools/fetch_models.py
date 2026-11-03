@@ -40,6 +40,13 @@ MODELS = {
     "alarm_clock_01": (512, "bedside alarm clock"),
     "plastic_thermos": (512, "flask on the desk"),
     "portable_cassette_player": (512, "Nikhil collects old media"),
+    "old_bed_frame": (1024, "Nikhil's iron bed"),
+    "book_encyclopedia_set_01": (512, "books on the shelf"),
+    "stationery_supplies": (512, "pens and pencils on the desk"),
+    "binder_notebook": (512, "notebook on the desk"),
+    "standing_picture_frame_01": (512, "photo of Maa on the desk"),
+    "pull_chain_light_socket": (512, "bare bulb holders (corridor, cabin porch)"),
+    "planter_pot_clay": (512, "pots by doors and on sills"),
     # Tape 1: Shanti Vihar, 1998
     "wooden_stool_01": (512, "the cabin stool that moves"),
     "security_camera_01": (512, "CCTV cameras on the wings"),
@@ -53,6 +60,10 @@ MODELS = {
     "plastic_crate_01": (512, "parking clutter"),
     "trashbag": (512, "garbage by the compound wall"),
     "can_rusted": (512, "litter"),
+    "cigarette_pack": (512, "on the watchman's table"),
+    "potted_plant_02": (512, "plants at the wing entrances"),
+    "security_light": (512, "flood light over the cabin door"),
+    "utility_box_02": (512, "electrical cabinets under the stilts"),
 }
 
 

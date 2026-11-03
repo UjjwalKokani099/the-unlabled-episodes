@@ -59,7 +59,7 @@ def main() -> None:
     wall(lv, (-0.12, 4.2), (-0.12, 6.0), 0, H, 0.23, "wall_stairwell_cream", "wall_stairwell_cream", -1)
     wall(lv, (3.72, 4.2), (3.72, 6.0), 0, H, 0.23, "wall_stairwell_cream", "wall_stairwell_cream", +1)
     wall(lv, (-0.12, 6.0), (3.72, 6.0), 0, H, 0.23, "wall_stairwell_cream", "wall_stairwell_cream", +1)
-    lv.add("CorridorBulb", "OmniLight3D", ".", {"position": v3(1.8, 2.6, 5.1), "light_color": "Color(1, 0.8, 0.55, 1)",
+    lv.add("CorridorBulb", "OmniLight3D", ".", {"position": v3(1.8, 2.62, 5.1), "light_color": "Color(1, 0.8, 0.55, 1)",
                                                "light_energy": "0.5", "omni_range": "4.0"})
     bag = lv.add("DeliveryBag", "Node3D", ".", {"position": v3(0.8, 0, 4.85)})
     lv.box((0, 0.2, 0), (0.38, 0.4, 0.3), "fabric_curtain", collide=False, parent=bag)
@@ -67,9 +67,10 @@ def main() -> None:
     interactable(lv, bag, "Interactable", (0, 0.25, 0), (0.5, 0.6, 0.45), "Read the bill")
 
     # ---- furniture
-    lv.box((0.55, 0.18, 1.35), (0.9, 0.36, 2.0), "wood_planks")                      # bed frame
+    Props(lv).model("old_bed_frame", (0.55, 0, 1.35), yaw=180, node_name="BedFrame")        # iron bed, head at the window
+    lv.collider((0.55, 0.25, 1.35), (0.9, 0.5, 2.0), "metal")
     lv.box((0.55, 0.42, 1.35), (0.86, 0.14, 1.96), "fabric_sheet", collide=False)     # mattress + sheet
-    lv.box((0.55, 0.53, 0.55), (0.6, 0.1, 0.35), "wall_paint_white", collide=False)   # pillow
+    Props(lv).soft((0.55, 0.535, 0.55), (0.58, 0.11, 0.36), "pillow", rot=(0, -4, 2))           # pillow
     lv.box((3.2, 0.73, 1.8), (0.65, 0.04, 1.3), "wood_planks")                        # desk top
     for dz in (1.2, 2.4):
         lv.box((3.2, 0.36, dz), (0.6, 0.72, 0.04), "wood_planks", collide=False)
@@ -77,9 +78,7 @@ def main() -> None:
     lv.add("LaptopGlow", "OmniLight3D", ".", {"position": v3(3.0, 0.95, 1.75), "light_color": "Color(0.55, 0.65, 1, 1)",
                                              "light_energy": "0.25", "omni_range": "1.6"})
     lv.box((3.45, 1.55, 1.8), (0.25, 0.03, 1.0), "wood_planks", collide=False)        # wall shelf
-    for i, m in enumerate(("cardboard", "fabric_curtain", "fabric_sheet", "wood_door_dark")):
-        lv.box((3.45, 1.66, 1.45 + i * 0.12), (0.18, 0.2, 0.06), m, collide=False)    # books
-    lv.box((1.25, 1.5, 0.08), (0.06, 1.3, 0.04), "fabric_curtain", collide=False)     # curtain bunched left
+    Props(lv).model("book_encyclopedia_set_01", (3.44, 1.565, 1.32), yaw=90, node_name="Books")
     # steel trunk + CRT + VCR against the front wall, facing the bed (-Z)
     lv.box((2.85, 0.27, 3.75), (1.3, 0.54, 0.6), "metal_trunk_blue")
     Props(lv).model("television_02", TV_POS, node_name="CRT", scale=TV_SCALE)                  # CRT body
@@ -203,24 +202,25 @@ def dress_room(lv: Level) -> None:
     # desk: lamp (the main light), water, tumbler, pens, extension board under the desk
     lamp = p.desk_lamp((3.36, 0.75, 2.06))
     lv.add("DeskLamp", "OmniLight3D", ".", {"position": v3(lamp[0] - 0.05, lamp[1] + 0.02, lamp[2]),
-        "light_color": "Color(1, 0.72, 0.42, 1)", "light_energy": "1.6", "light_size": "0.08",
+        "light_color": "Color(1, 0.72, 0.42, 1)", "light_energy": "1.25", "light_size": "0.08",
         "shadow_enabled": "true", "omni_range": "5.0", "omni_attenuation": "1.6",
         "light_volumetric_fog_energy": "1.5"})
     p.tumbler((2.98, 0.75, 1.42))
     p.model("plastic_thermos", (3.42, 0.75, 1.24), yaw=60)
     p.model("alarm_clock_01", (3.05, 0.82, 2.2), yaw=110, script="res://scripts/props/wall_clock.gd")
     p.model("portable_cassette_player", (3.45, 1.62, 2.1), yaw=90)
-    p.pen_stand((3.02, 0.75, 2.36))
-    p.books((3.4, 0.75, 2.36), yaw=8, n=3)
+    p.model("stationery_supplies", (3.0, 0.82, 2.34), yaw=100)
+    p.model("standing_picture_frame_01", (3.42, 0.75, 2.36), yaw=-20, node_name="MaaPhoto")
+    p.books((3.38, 0.75, 1.45), yaw=8, n=3)
     p.model("plastic_monobloc_chair_01", (2.4, 0, 1.85), yaw=-90, collide=(0.6, 0.5, 0.6), surface="soft")
     p.extension_board((3.3, 0, 1.45), yaw=90)
     p.wire((3.3, 0.02, 1.6), (3.47, 0.02, 2.6))
     p.wire((3.475, 0.02, 2.6), (3.475, 0.9, 2.6))
     p.newspaper_stack((3.15, 0, 2.15), yaw=4)
     # bed: folded blanket at the foot, a second pillow, phone charger cable
-    lv.box((0.55, 0.545, 2.08), (0.78, 0.11, 0.38), "fabric_curtain", collide=False)
-    p.box((0.55, 0.6, 2.08), (0.78, 0.01, 0.38), "blanket", shadow=False)
-    p.box((0.62, 0.56, 0.75), (0.5, 0.09, 0.3), "cloth_check", rot=(0, 12, 0))
+    p.soft((0.55, 0.53, 2.05), (0.8, 0.1, 0.42), "blanket", rot=(0, 3, 0))
+    p.soft((0.57, 0.58, 2.03), (0.72, 0.07, 0.34), "blanket", rot=(0, -5, 1))
+    p.soft((0.66, 0.555, 0.8), (0.5, 0.09, 0.3), "cloth_check", rot=(0, 14, -3))
     p.mosquito_coil((1.2, 0, 0.9))
     # corners: steel almirah (front right), water can, broom, slippers
     p.steel_almirah((3.02, 0, 0.38), yaw=180, w=0.82, h=1.75, d=0.5, top=False)
@@ -239,8 +239,24 @@ def dress_room(lv: Level) -> None:
     p.switchboard((1.78, 1.3, 4.085), n=3)
     p.wire((1.55, 1.37, 4.075), (1.55, 2.86, 4.075))
     p.wire((1.55, 2.875, 4.075), (1.6, 2.875, 0.95))
-    # curtain rod over the window
+    # curtain rod over the window, cheap printed curtains pulled to the sides (the lane stays visible)
     p.cyl((1.8, 2.22, 0.15), 0.012, 0.012, 1.7, "steel", rot=(0, 0, 90), seg=6)
+    for x, w in ((1.02, 0.42), (2.55, 0.36)):
+        p.cloth((x, 2.2, 0.17), w, 1.4, (0.5, 0.33, 0.12), yaw=180, stripes=(7.0, 0.0), stripe_colour=(0.62, 0.45, 0.2),
+                folds=w * 14, fold_depth=0.035, gather=1.0, sway=0.012, name="Curtain")
+    # bedsheet hanging over the mattress edge (room side)
+    p.cloth((0.985, 0.48, 1.35), 1.9, 0.22, (0.2, 0.3, 0.5), yaw=-90, stripes=(14.0, 0.0), stripe_colour=(0.75, 0.75, 0.8),
+            folds=9.0, fold_depth=0.012, sway=0.004, tilt=-6, name="SheetDrape")
+    # grime and wear
+    for name, pos, rot in (("hand_grime", (1.52, 1.18, 4.08), (0, 180, 0)), ("water_stain", (0.45, 2.895, 0.5), (90, 0, 0)),
+                           ("crack_a", (0.12, 2.35, 3.0), (0, 90, 0)), ("crack_b", (3.48, 0.6, 3.1), (0, -90, 0)),
+                           ("room_rent", (1.1, 1.5, 5.88), (0, 180, 0)), ("tuition", (3.6, 1.45, 5.2), (0, -90, 0)),
+                           ("paan_a", (-0.0, 0.35, 5.6), (0, 90, 0))):
+        lv.scene(name, f"res://scenes/decals/{name}.tscn", ".", {"position": v3(*pos), "rotation_degrees": v3(*rot)})
+    # corridor: a bare bulb on a pull-chain holder, a money plant by Nikhil's door
+    p.model("pull_chain_light_socket", (1.8, 2.9, 5.1), node_name="CorridorSocket")
+    p.cyl((1.8, 2.7, 5.1), 0.03, 0.03, 0.06, "bulb_warm", seg=10, shadow=False)
+    p.model("potted_plant_02", (0.35, 0, 4.7), yaw=30, scale=0.75)
     # corridor: shared-bathroom bucket, shoes outside the door
     p.bucket_and_mug((3.3, 0, 5.6))
     p.model("plastic_jerrycan", (2.85, 0, 5.75), yaw=20)
