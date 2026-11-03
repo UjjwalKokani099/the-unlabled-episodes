@@ -27,6 +27,17 @@ SceneLoader="*res://core/scene_loader.gd"
 ObjectiveManager="*res://systems/objectives/objective_manager.gd"
 GameManager="*res://core/game_manager.gd"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+gdscript/warnings/inferred_declaration=0
+gdscript/warnings/unsafe_property_access=0
+gdscript/warnings/unsafe_method_access=0
+gdscript/warnings/directory_rules={
+"res://tests": 0,
+"res://tools": 0
+}
+
 [display]
 
 window/size/viewport_width=1280

@@ -1,6 +1,6 @@
 extends Node
 ## Applies the graphics preset (SettingsManager.graphics_quality) and draws the FPS counter.
-## Registered as the autoload "Graphics".
+## Registered as the autoload "GraphicsManager".
 ##
 ## Levels author their WorldEnvironment with the features they WANT (SSAO, volumetric fog,
 ## glow, SSIL). The preset can only switch those off or lower their quality, never add a

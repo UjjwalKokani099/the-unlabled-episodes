@@ -1,5 +1,5 @@
 extends Node
-## Tracks the current level's objectives, registered as the autoload "Objectives".
+## Tracks the current level's objectives, registered as the autoload "ObjectiveManager".
 ##
 ## React analogy: a reducer whose actions are Events ids. Load an ObjectiveSet with
 ## begin(); objectives become active once their `starts_after` objective is done, gain

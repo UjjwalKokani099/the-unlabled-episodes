@@ -52,7 +52,7 @@ Useful headless commands (run from project root):
 - Test scripts: `await process_frame` before touching autoloads (their `_ready` hasn't run
   yet in `_initialize`).
 
-## Gameplay wiring (Events + Objectives)
+## Gameplay wiring (EventBus + ObjectiveManager)
 - `EventBus.fire(&"id")` announces anything; Pickups fire their `item_id`, Doors fire
   `opened_event`, completed objectives fire their own `id`.
 - A level's objectives are an `ObjectiveSet` .tres (see `tests/scenes/test_objectives.tres`)
@@ -66,7 +66,7 @@ Useful headless commands (run from project root):
 - Flicker lights by `light_energy`, never `visible` (visible = the player's on/off state).
 - Placeholder SFX come from `python tools/gen_placeholder_sfx.py`; replace files in place.
 
-## Chapters / saving (Game autoload)
+## Chapters / saving (GameManager + SaveManager autoloads)
 - `data/chapter_list.tres` lists the tapes in order (+ debug chapters, hub scene).
   Each tape has `chapters/<tape>/chapter.tres` (title, scene_path, camcorder start time);
   empty scene_path = not built yet. Test chapter: `tests/scenes/test_chapter.tres`.
@@ -74,8 +74,8 @@ Useful headless commands (run from project root):
   (end a level with a MethodReaction targeting `/root/GameManager`). Save: `user://save.json`.
 - A level needs: Player, HUD, Camcorder, ObjectiveLoader, and `Checkpoint` areas (origin on
   the floor, respawn faces -Z; one at the spawn so Continue works immediately).
-- Checkpoint = Events counts + Game flags + camcorder time. Anything that must survive a
-  reload is either derived from Events counts or stored with `GameManager.set_flag()` (Pickups do).
+- Checkpoint = EventBus counts + GameManager flags + camcorder time. Anything that must survive a
+  reload is either derived from EventBus counts or stored with `GameManager.set_flag()` (Pickups do).
   While objectives rebuild, `EventBus.replaying` is true and EventReactions ignore events.
 
 ## Hub: Nikhil's room (Phase 3)
@@ -96,7 +96,7 @@ Useful headless commands (run from project root):
   scroll zooms, E takes (if `item_id`) or puts back. `inspected_event` fires once.
 - `systems/props/drawer.tscn` (Drawer = the AnimatableBody3D): slides along local +Z; children
   ride along; collision is only the bottom + front so the look-ray reaches what's inside;
-  `locked` + `unlock_event`; open state is a Game flag.
+  `locked` + `unlock_event`; open state is a GameManager flag.
 
 ## Menus + intro (Phases 4-5)
 - Main scene = `ui/menus/main_menu.tscn`, diegetic: the VCR-OSD menu UI lives in the
@@ -115,15 +115,15 @@ Useful headless commands (run from project root):
 - Tests that open the main menu must call `GameManager.mark_intro_seen()` first.
 
 ## Graphics / performance (target: 60 FPS at 1080p on the RTX 3050 Ti laptop)
-- `Graphics` autoload applies Low/Medium/High (`PRESETS`): render scale, FXAA, LOD threshold,
+- `GraphicsManager` autoload applies Low/Medium/High (`PRESETS`): render scale, FXAA, LOD threshold,
   shadows, SSAO/SSIL/volumetric fog quality, VoxelGI (off on Low). Presets only switch level
   features off, never add them. FPS counter = SettingsManager.show_fps.
 - Benchmark: `<console exe> --path . --script res://tools/benchmark.gd -- <scene> [sec]`
   (fullscreen, VSync off, Marker3Ds in group `benchmark_points`). Tape 1 map: Medium ~248 FPS.
 - GI = VoxelGI baked by script (`tools/bake_voxelgi.gd`) for interiors; night exteriors use
   local lights + SSIL only. Emissive props that switch off (tube lights) use gi_mode disabled.
-- Brightness is a gamma overlay owned by the Settings autoload (canvas layer 5).
-- PS1 mode (`SettingsManager.ps1_mode`, off by default): Graphics sets 3D scale <= 0.5, no FXAA, and
+- Brightness is a gamma overlay owned by the SettingsManager autoload (canvas layer 5).
+- PS1 mode (`SettingsManager.ps1_mode`, off by default): GraphicsManager sets 3D scale <= 0.5, no FXAA, and
   the global shader uniform `ps1_amount` (project.godot [shader_globals]; read it back from
   `GraphicsManager.ps1_amount`, the RenderingServer getter is editor-only). surface.gdshader uses it
   for vertex snapping (POSITION), partial affine warping, 256-texel point sampling. The
@@ -131,9 +131,9 @@ Useful headless commands (run from project root):
   under the OSD. Benchmark it with `... benchmark.gd -- <scene> <sec> ps1`.
 - Night vision: camcorder `set_night_vision()` / key N: VHS shader `night_vision` (gain,
   green, grain, tunnel vignette) + an IR OmniLight on the camera; drains `osd.battery_level`
-  (240 s full), Events `battery` (battery pickups) adds 0.5.
-- Tests/scratch scripts that change Settings must restore them even on failure paths
-  (Settings saves to the player's real settings.cfg).
+  (240 s full), EventBus `battery` (battery pickups) adds 0.5.
+- Tests/scratch scripts that change SettingsManager must restore them even on failure paths
+  (SettingsManager saves to the player's real settings.cfg).
 
 ## Materials and decals (Phase 1)
 - `assets/shaders/surfaces/surface.gdshader` = the wall/floor shader: world-space projection (no UVs,
@@ -165,8 +165,8 @@ Useful headless commands (run from project root):
   breathing, flat 4B, stranger's register entries, secretary call + power cut, meter room,
   last CCTV frame with the red dot -> static -> hub. Beats/dialogue/timing live in
   `chapters/chapter_01/scripts/tape01_director.gd` (`time_scale` speeds it up for
-  tests); the director rebuilds its state from Events counts in `_restore()`.
-- Register times quoted by the stranger's entries = Game flags `t1_t_<event>` (camcorder clock).
+  tests); the director rebuilds its state from EventBus counts in `_restore()`.
+- Register times quoted by the stranger's entries = GameManager flags `t1_t_<event>` (camcorder clock).
 
 ## Story systems (shared by every tape)
 - Tape cut: `call_group("camcorder", "tape_cut", "03:10:40")` (static, black, clock jumps;
@@ -186,7 +186,7 @@ Useful headless commands (run from project root):
 - Fonts for paper: `[font=res://assets/fonts/hand_raghu.tres]`, `hand_stranger.tres` in BBCode.
 - Dialogue: JSON in `data/dialogue/<tape>/*.json` (format in `systems/dialogue/dialogue.gd`: nodes
   with speaker/text/next/choices/branch; `if` = "event:x" / "flag:x" / "!..."; `set` flags
-  (stored as Game flags `dlg_<name>`), `event` fires). Play: `call_group("hud",
+  (stored as GameManager flags `dlg_<name>`), `event` fires). Play: `call_group("hud",
   "start_dialogue", path, start)` -> HUD/DialogueView (await `finished`). Tests: `instant`,
   `advance()`, `choose(i)`, `choice_texts()`. Read flags with `Dialogue.flag("name")`.
 - NPC base: `assets/characters/npc.tscn` (CharacterBody3D + Model + Agent + Talk). Put a
@@ -227,7 +227,7 @@ Useful headless commands (run from project root):
   free the level before quit() (sounds still playing at exit report leaks).
 
 ## Grounded look, props, characters, sound (Nov 2026 pass)
-- Film look: `assets/shaders/film_grade.gdshader` on a Graphics-owned canvas layer 1 (under the
+- Film look: `assets/shaders/film_grade.gdshader` on a GraphicsManager-owned canvas layer 1 (under the
   camcorder OSD/VHS, HUD). `SettingsManager.film_look` 0..1. `GraphicsManager.set_dread(0..1)` darkens /
   desaturates (the Stalker drives it from exposure).
 - Real models: `python tools/fetch_models.py` (Poly Haven CC0 glTF, small props 512 px;
@@ -275,6 +275,9 @@ SceneLoader, ObjectiveManager, GameManager (project.godot [autoload]).
   `metadata/authored_graphics` (levelkit does it); GraphicsManager enables them only on
   Forward+ and when the preset allows (no warnings on the web renderer).
 - Bug log: docs/bugs.md.
+- Static typing: `python tools/lint_typing.py` must report 0 (CI: .github/workflows/checks.yml).
+  Typed vars/params/returns everywhere in game code; tests/ and tools/ are exempt (tests
+  reach autoloads untyped). project.godot warns on untyped declarations in the editor.
 
 ## Layout
 - `scenes/`   hub, menus, test scenes

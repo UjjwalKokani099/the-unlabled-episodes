@@ -79,7 +79,7 @@ func _input(event: InputEvent) -> void:
 			_stick_pos = d.position
 			_apply_stick()
 		elif d.index == _look_finger:
-			var player = get_tree().get_first_node_in_group("player")
+			var player := get_tree().get_first_node_in_group("player") as Player
 			if player:
 				player.look(d.relative * LOOK_SCALE)
 		get_viewport().set_input_as_handled()

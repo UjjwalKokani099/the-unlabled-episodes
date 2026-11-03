@@ -19,7 +19,7 @@ extends RefCounted
 ## - A node shows `text` by `speaker`, then goes to `next`, offers `choices`, or ends.
 ## - `branch` nodes show nothing: the first entry whose `if` holds wins.
 ## - Conditions (`if`, a string or a list that must all hold): "event:<id>" (fired on the
-##   Events bus), "flag:<name>" (a dialogue flag is truthy), "!" in front negates.
+##   EventBus), "flag:<name>" (a dialogue flag is truthy), "!" in front negates.
 ## - `set` (on a node or a choice) stores dialogue flags; `event` fires an Events id.
 ##   Flags live in Game flags as "dlg_<name>", so checkpoints keep them.
 

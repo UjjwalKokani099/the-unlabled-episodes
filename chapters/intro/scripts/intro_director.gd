@@ -11,7 +11,7 @@ const SKIP_HOLD := 0.8
 @onready var _fade: ColorRect = $UI/Fade
 @onready var _card: Label = $UI/Card
 @onready var _skip: Label = $UI/Skip
-@onready var _vhs = $Camcorder
+@onready var _vhs: Camcorder = $Camcorder
 
 var finished: bool = false
 var _skip_time: float = 0.0

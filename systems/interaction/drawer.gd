@@ -4,7 +4,7 @@ extends AnimatableBody3D
 ## it (notes, Pickups, Inspectables) rides along. The drawer is the physics body itself:
 ## AnimatableBody3D only syncs collision when its own transform changes.
 ## Child: Interactable (on the front panel). Locked drawers rattle; `unlock_event` opens
-## the lock. Stays open/closed across checkpoints (Game flag).
+## the lock. Stays open/closed across checkpoints (GameManager flag).
 
 signal opened
 signal closed

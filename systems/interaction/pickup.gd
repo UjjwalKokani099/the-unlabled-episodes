@@ -1,7 +1,7 @@
 class_name Pickup
 extends Node3D
-## An item the player can take. Fires `item_id` on the Events bus (objectives count it),
-## shows a message, then removes itself. Stays gone after a checkpoint load (Game flag).
+## An item the player can take. Fires `item_id` on the EventBus (objectives count it),
+## shows a message, then removes itself. Stays gone after a checkpoint load (GameManager flag).
 
 signal picked_up(item_id: StringName)
 

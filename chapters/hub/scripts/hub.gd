@@ -15,7 +15,7 @@ const PLAY_DELAY := 1.1
 const TAPE_SCENE := preload("res://chapters/hub/hub_tape.tscn")
 const DOORBELL := preload("res://assets/audio/sfx/doorbell.wav")
 ## Nikhil's thoughts on coming back to the room after each tape (stage = tapes watched).
-## Present tense, quiet: he's alive, for now. Each plays once (Game flag).
+## Present tense, quiet: he's alive, for now. Each plays once (GameManager flag).
 const ARRIVAL_THOUGHTS := {
 	0: ["Four tapes, a hundred and fifty rupees. The man didn't even look up when I paid.", 5.0],
 	1: ["A watchman. Some housing society in '98. Whoever filmed that never stopped the camera.", 5.0],

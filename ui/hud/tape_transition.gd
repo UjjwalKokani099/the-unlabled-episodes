@@ -2,7 +2,7 @@ class_name TapeTransition
 extends CanvasLayer
 ## Full-screen black card used between levels, styled like a VCR screen:
 ##   "PLAY ►" top-left, tape title in the middle.
-## Built in code; owned by the Game autoload. Keeps running while the game is paused.
+## Built in code; owned by the SceneLoader autoload. Keeps running while the game is paused.
 
 const FADE_OUT := 0.45
 const FADE_IN := 0.6

@@ -31,9 +31,9 @@ func seconds_now() -> int:
 	if stopped_at >= 0:
 		return stopped_at
 	for node in get_tree().get_nodes_in_group("camcorder"):
-		var osd = node.get(&"osd")
-		if osd and osd.has_method(&"time_of_day"):
-			return osd.time_of_day()
+		var camcorder := node as Camcorder
+		if camcorder and camcorder.osd:
+			return camcorder.osd.time_of_day()
 	var t := Time.get_time_dict_from_system()
 	return t.hour * 3600 + t.minute * 60 + t.second
 

@@ -1,5 +1,5 @@
 extends Node
-## Global settings store, registered as the autoload "Settings".
+## Global settings store, registered as the autoload "SettingsManager".
 ##
 ## React analogy: a context provider backed by localStorage. Any script can read
 ## `SettingsManager.mouse_sensitivity`, assign to it, and subscribe to `SettingsManager.changed`.
@@ -79,7 +79,7 @@ var fullscreen: bool = false:
 		fullscreen = value
 		_on_value_set(&"fullscreen")
 
-## 0 = Low, 1 = Medium, 2 = High. Applied by the Graphics autoload.
+## 0 = Low, 1 = Medium, 2 = High. Applied by the GraphicsManager autoload.
 var graphics_quality: int = 1:
 	set(value):
 		graphics_quality = clampi(value, 0, 2)

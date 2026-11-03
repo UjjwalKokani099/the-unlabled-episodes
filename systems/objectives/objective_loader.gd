@@ -2,7 +2,7 @@ class_name ObjectiveLoader
 extends Node
 ## Drop into a level to start its objectives when the level loads.
 ## Objectives rebuild their progress from Events counts, so after a checkpoint load
-## (Game restores the counts first) they pick up exactly where the player was.
+## (GameManager restores the counts first) they pick up exactly where the player was.
 
 @export var objective_set: ObjectiveSet
 

@@ -46,7 +46,7 @@ func has_fired(id: StringName) -> bool:
 	return count(id) > 0
 
 
-## Forget everything (Game calls this when a chapter starts).
+## Forget everything (GameManager calls this when a chapter starts).
 func reset() -> void:
 	_counts.clear()
 

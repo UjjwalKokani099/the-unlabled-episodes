@@ -80,7 +80,7 @@ func _can_open() -> bool:
 	return not GameManager.is_transitioning() and not get_tree().paused
 
 
-## Hide without unpausing: Game keeps the tree paused while it changes level.
+## Hide without unpausing: SceneLoader keeps the tree paused while it changes level.
 func _leave() -> void:
 	is_open = false
 	_root.visible = false

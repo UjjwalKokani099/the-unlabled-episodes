@@ -1,3 +1,4 @@
+class_name Camcorder
 extends Node
 ## Camcorder overlay root (ui/hud/camcorder.tscn): OSD + VHS effect.
 ## Anything can glitch the picture: get_tree().call_group("camcorder", "glitch", 0.8, 0.5)
