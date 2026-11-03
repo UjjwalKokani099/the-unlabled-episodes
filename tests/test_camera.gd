@@ -19,11 +19,11 @@ func seconds(s: float) -> void:
 
 func _initialize() -> void:
 	await process_frame
-	var settings: Node = root.get_node("Settings")
+	var settings: Node = root.get_node("SettingsManager")
 	var old_effects: float = settings.screen_effects
 	var old_bob: bool = settings.head_bob
 	settings.screen_effects = 1.0
-	var room: Node = load("res://scenes/test/test_room.tscn").instantiate()
+	var room: Node = load("res://tests/scenes/test_room.tscn").instantiate()
 	root.add_child(room)
 	await frames(10)
 	var camcorder = room.get_node("Camcorder")

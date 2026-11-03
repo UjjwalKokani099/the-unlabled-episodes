@@ -20,9 +20,9 @@ func frames(n: int) -> void:
 
 func _initialize() -> void:
 	await process_frame
-	var game: Node = root.get_node("Game")
-	var settings: Node = root.get_node("Settings")
-	var events: Node = root.get_node("Events")
+	var game: Node = root.get_node("GameManager")
+	var settings: Node = root.get_node("SettingsManager")
+	var events: Node = root.get_node("EventBus")
 	var was_ps1: bool = settings.ps1_mode
 	game.save_path = "user://test_save.json"
 	game.delete_save()
@@ -38,12 +38,12 @@ func _initialize() -> void:
 	await frames(2)
 	check(root.scaling_3d_scale <= 0.5 and root.scaling_3d_scale < normal_scale + 0.001, "PS1: 3D at half resolution (%.2f)" % root.scaling_3d_scale)
 	check(root.screen_space_aa == Viewport.SCREEN_SPACE_AA_DISABLED, "PS1: no FXAA")
-	check(is_equal_approx(root.get_node("Graphics").ps1_amount, 1.0), "PS1: shaders wobble/warp/point-sample")
+	check(is_equal_approx(root.get_node("GraphicsManager").ps1_amount, 1.0), "PS1: shaders wobble/warp/point-sample")
 	check(cam._retro.visible, "PS1: pixelate + dither pass on")
 	settings.ps1_mode = false
 	await frames(2)
 	check(is_equal_approx(root.scaling_3d_scale, normal_scale) and not cam._retro.visible
-		and is_equal_approx(root.get_node("Graphics").ps1_amount, 0.0), "PS1 off: back to the default look")
+		and is_equal_approx(root.get_node("GraphicsManager").ps1_amount, 0.0), "PS1 off: back to the default look")
 
 	# --- Night vision ---
 	var camera: Camera3D = root.get_viewport().get_camera_3d()

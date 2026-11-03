@@ -1,14 +1,14 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_hud"]
-[ext_resource type="Script" path="res://scripts/ui/crosshair.gd" id="2_crosshair"]
-[ext_resource type="Script" path="res://scripts/ui/objective_panel.gd" id="3_objectives"]
+[ext_resource type="Script" path="res://ui/hud/hud.gd" id="1_hud"]
+[ext_resource type="Script" path="res://ui/hud/crosshair.gd" id="2_crosshair"]
+[ext_resource type="Script" path="res://ui/hud/objective_panel.gd" id="3_objectives"]
 [ext_resource type="PackedScene" path="res://ui/menus/pause_menu.tscn" id="4_pause"]
-[ext_resource type="Script" path="res://scripts/ui/note_view.gd" id="5_note"]
+[ext_resource type="Script" path="res://ui/hud/note_view.gd" id="5_note"]
 [ext_resource type="PackedScene" path="res://ui/hud/subtitles.tscn" id="6_subs"]
-[ext_resource type="Script" path="res://scripts/ui/inspect_view.gd" id="7_inspect"]
-[ext_resource type="Script" path="res://scripts/ui/dialogue_view.gd" id="8_dialogue"]
-[ext_resource type="Script" path="res://scripts/ui/touch_controls.gd" id="9_touch"]
+[ext_resource type="Script" path="res://ui/hud/inspect_view.gd" id="7_inspect"]
+[ext_resource type="Script" path="res://ui/hud/dialogue_view.gd" id="8_dialogue"]
+[ext_resource type="Script" path="res://ui/hud/touch_controls.gd" id="9_touch"]
 
 [sub_resource type="StyleBoxFlat" id="Style_paper"]
 bg_color = Color(0.93, 0.9, 0.8, 1)

@@ -34,7 +34,7 @@ Escalation in every tape goes from "something's off" to "he is here":
 6. **The last frame.** The tape's ending shot: he is behind the subject, the red dot is the
    last thing on screen. Static.
 
-## AI states (scripts/characters/stalker.gd)
+## AI states (systems/characters/stalker.gd)
 
 | State | What he does | Exits |
 |---|---|---|

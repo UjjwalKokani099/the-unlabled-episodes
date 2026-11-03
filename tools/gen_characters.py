@@ -1,26 +1,26 @@
 """Builds the stand-in characters from primitives (-Z = forward, feet at y=0):
-scenes/characters/deshmukh.tscn  - Mr. Deshmukh of 4B: 70s, a slight stoop, white kurta-pajama
+assets/characters/deshmukh.tscn  - Mr. Deshmukh of 4B: 70s, a slight stoop, white kurta-pajama
                                    under a grey Nehru jacket, thick black spectacles, white
                                    moustache, white hair around a bald crown, steel watch.
-scenes/characters/raghu.tscn     - Raghu the watchman, 52: khaki uniform with epaulettes, pocket
+assets/characters/raghu.tscn     - Raghu the watchman, 52: khaki uniform with epaulettes, pocket
                                    flaps, brass badge, belt, peaked cap, thick moustache.
-scenes/characters/cameraman.tscn - the Cameraman: thin, grey ribbed sweater, a VHS shoulder
+assets/characters/cameraman.tscn - the Cameraman: thin, grey ribbed sweater, a VHS shoulder
                                    camcorder held over his face (hood, viewfinder, mic, handle),
-                                   blinking red REC light (scripts/characters/cameraman.gd).
-scenes/characters/iyer.tscn      - Mrs. Iyer of 2C, 60s: green saree with a gold border and front
+                                   blinking red REC light (systems/characters/cameraman.gd).
+assets/characters/iyer.tscn      - Mrs. Iyer of 2C, 60s: green saree with a gold border and front
                                    pleats, the pallu over her shoulder (cloth, sways), maroon
                                    blouse, shawl, grey bun with jasmine, bindi, gold bangles.
 
 Skeleton (pivots, all Node3D): Body/Pelvis/HipL|HipR/KneeL|KneeR, Body/Chest/ShoulderL|R/
 ElbowL|R, Body/Head (NPC head tracking turns it; top of the neck at HEAD_Y), Head/EyelidL|R.
-scripts/characters/character_life.gd (child "Life") breathes, blinks and walks them.
+systems/characters/character_life.gd (child "Life") breathes, blinks and walks them.
 Keep the names Body, Body/Head, RecDot and RecLight: scripts look them up.
 Run: python tools/gen_characters.py
 """
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, "scenes", "characters")
+OUT = os.path.join(ROOT, "assets", "characters")
 
 HEAD_Y = 1.52  # Body/Head pivot height (top of the neck)
 HIP_Y = 0.92
@@ -126,7 +126,7 @@ class Scene:
     def cloth(self, name, color, pos, w, h, parent="Body", rot=(0, 0, 0), stripes=(0.0, 0.0), stripe_color=(0.8, 0.7, 0.3),
               folds=2.0, fold_depth=0.015, sway=0.02):
         mat = self.sub("ShaderMaterial", {
-            "shader": f'ExtResource("{self.ext_res("Shader", "res://shaders/cloth.gdshader")}")',
+            "shader": f'ExtResource("{self.ext_res("Shader", "res://assets/shaders/cloth.gdshader")}")',
             "shader_parameter/albedo": col(color), "shader_parameter/stripe_color": col(stripe_color),
             "shader_parameter/stripes": f"Vector2({stripes[0]}, {stripes[1]})",
             "shader_parameter/stripe_width": "0.12",
@@ -143,7 +143,7 @@ class Scene:
         self.nodes.append(self._node(name, typ, parent, props))
 
     def life(self, **exports):
-        props = {"script": f'ExtResource("{self.ext_res("Script", "res://scripts/characters/character_life.gd")}")'}
+        props = {"script": f'ExtResource("{self.ext_res("Script", "res://systems/characters/character_life.gd")}")'}
         for k, val in exports.items():
             props[k] = ("true" if val else "false") if isinstance(val, bool) else str(val)
         self.node("Life", "Node", props)
@@ -330,7 +330,7 @@ def iyer():
 
 
 def cameraman():
-    s = Scene("Cameraman", "res://scripts/characters/cameraman.gd")
+    s = Scene("Cameraman", "res://systems/characters/cameraman.gd")
     skin, sweater, trousers, black = (0.36, 0.3, 0.26), (0.36, 0.36, 0.36), (0.1, 0.1, 0.11), (0.03, 0.03, 0.035)
     pose = {"ShoulderR": (60, 0, 0), "ElbowR": (111, 0, 0), "ShoulderL": (75, -30, 0), "ElbowL": (75, 0, 0)}
     skeleton(s, skin=skin, top=sweater, sleeve=sweater, legs=trousers, shoes=black, thin=0.85, arm_pose=pose)

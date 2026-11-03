@@ -25,9 +25,9 @@ func active_ids() -> Array:
 
 func _initialize() -> void:
 	await process_frame
-	game = root.get_node("Game")
-	events = root.get_node("Events")
-	objectives = root.get_node("Objectives")
+	game = root.get_node("GameManager")
+	events = root.get_node("EventBus")
+	objectives = root.get_node("ObjectiveManager")
 	game.save_path = "user://test_save.json"
 	game.delete_save()
 

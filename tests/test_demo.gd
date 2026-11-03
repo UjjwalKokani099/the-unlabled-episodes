@@ -47,14 +47,14 @@ func heard(text: String, timeout: float = 8.0) -> bool:
 
 func _initialize() -> void:
 	await process_frame
-	game = root.get_node("Game")
-	var settings = root.get_node("Settings")
+	game = root.get_node("GameManager")
+	var settings = root.get_node("SettingsManager")
 	var saved_subs: bool = settings.subtitles
 	settings.subtitles = true
 	game.save_path = "user://test_save.json"
 	game.delete_save()
 	game.mark_intro_seen()  # the menu would autoplay the intro otherwise
-	change_scene_to_file("res://scenes/menus/main_menu.tscn")
+	change_scene_to_file("res://ui/menus/main_menu.tscn")
 	await scene_changed
 	await frames(5)
 	check(current_scene.name == "MainMenu", "main menu is up")

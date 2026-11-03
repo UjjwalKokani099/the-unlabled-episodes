@@ -1,0 +1,160 @@
+[gd_resource type="Resource" script_class="ObjectiveSet" format=3]
+
+[ext_resource type="Script" path="res://systems/objectives/objective_set.gd" id="1_set"]
+[ext_resource type="Script" path="res://systems/objectives/objective_data.gd" id="2_data"]
+
+[sub_resource type="Resource" id="O_sign_register"]
+script = ExtResource("2_data")
+id = &"sign_register"
+text = "Sign in at the gate register"
+complete_on = &"register_signed"
+required = 1
+starts_after = &""
+
+[sub_resource type="Resource" id="O_check_cctv"]
+script = ExtResource("2_data")
+id = &"check_cctv"
+text = "Check the CCTV monitor"
+complete_on = &"cctv_checked"
+required = 1
+starts_after = &"sign_register"
+
+[sub_resource type="Resource" id="O_give_parcel"]
+script = ExtResource("2_data")
+id = &"give_parcel"
+text = "Give Mrs. Iyer her parcel"
+complete_on = &"parcel_given"
+required = 1
+starts_after = &"check_cctv"
+
+[sub_resource type="Resource" id="O_patrol"]
+script = ExtResource("2_data")
+id = &"patrol"
+text = "Patrol the four wings"
+complete_on = &"patrol_point"
+required = 4
+starts_after = &"check_cctv"
+
+[sub_resource type="Resource" id="O_lock_terraces"]
+script = ExtResource("2_data")
+id = &"lock_terraces"
+text = "Padlock the terrace doors"
+complete_on = &"terrace_locked"
+required = 4
+starts_after = &"patrol"
+
+[sub_resource type="Resource" id="O_return_cabin"]
+script = ExtResource("2_data")
+id = &"return_cabin"
+text = "Go back to the cabin"
+complete_on = &"back_at_cabin"
+required = 1
+starts_after = &"lock_terraces"
+
+[sub_resource type="Resource" id="O_sign_3am"]
+script = ExtResource("2_data")
+id = &"sign_3am"
+text = "Write the 3 AM round in the register"
+complete_on = &"register_3am"
+required = 1
+starts_after = &"return_cabin"
+
+[sub_resource type="Resource" id="O_watch_gate"]
+script = ExtResource("2_data")
+id = &"watch_gate"
+text = "Keep an eye on the gate"
+complete_on = &"deshmukh_left"
+required = 1
+starts_after = &"sign_3am"
+
+[sub_resource type="Resource" id="O_log_deshmukh"]
+script = ExtResource("2_data")
+id = &"log_deshmukh"
+text = "Write Mr. Deshmukh's exit in the register"
+complete_on = &"deshmukh_logged"
+required = 1
+starts_after = &"watch_gate"
+
+[sub_resource type="Resource" id="O_cctv_again"]
+script = ExtResource("2_data")
+id = &"cctv_again"
+text = "Check the CCTV"
+complete_on = &"cctv_deshmukh"
+required = 1
+starts_after = &"log_deshmukh"
+
+[sub_resource type="Resource" id="O_look_balcony"]
+script = ExtResource("2_data")
+id = &"look_balcony"
+text = "Look up at the 4B balcony"
+complete_on = &"balcony_checked"
+required = 1
+starts_after = &"cctv_again"
+
+[sub_resource type="Resource" id="O_answer_intercom"]
+script = ExtResource("2_data")
+id = &"answer_intercom"
+text = "Answer the intercom"
+complete_on = &"intercom_answered"
+required = 1
+starts_after = &"look_balcony"
+
+[sub_resource type="Resource" id="O_take_key"]
+script = ExtResource("2_data")
+id = &"take_key"
+text = "Take the spare key for 4B"
+complete_on = &"key_4b"
+required = 1
+starts_after = &"answer_intercom"
+
+[sub_resource type="Resource" id="O_check_4b"]
+script = ExtResource("2_data")
+id = &"check_4b"
+text = "Go up and check flat 4B"
+complete_on = &"4b_checked"
+required = 1
+starts_after = &"take_key"
+
+[sub_resource type="Resource" id="O_back_to_cabin"]
+script = ExtResource("2_data")
+id = &"back_to_cabin"
+text = "Go back to the cabin"
+complete_on = &"cabin_return2"
+required = 1
+starts_after = &"check_4b"
+
+[sub_resource type="Resource" id="O_read_register"]
+script = ExtResource("2_data")
+id = &"read_register"
+text = "Write the 4B check in the register"
+complete_on = &"register_read_late"
+required = 1
+starts_after = &"back_to_cabin"
+
+[sub_resource type="Resource" id="O_call_secretary"]
+script = ExtResource("2_data")
+id = &"call_secretary"
+text = "Phone the society secretary"
+complete_on = &"secretary_called"
+required = 1
+starts_after = &"read_register"
+
+[sub_resource type="Resource" id="O_meter_room"]
+script = ExtResource("2_data")
+id = &"meter_room"
+text = "Go to the meter room (by D Wing)"
+complete_on = &"meter_room_reached"
+required = 1
+starts_after = &"call_secretary"
+
+[sub_resource type="Resource" id="O_main_switch"]
+script = ExtResource("2_data")
+id = &"main_switch"
+text = "Reset the main switch"
+complete_on = &"main_switch"
+required = 1
+starts_after = &"meter_room"
+
+[resource]
+script = ExtResource("1_set")
+objectives = Array[ExtResource("2_data")]([SubResource("O_sign_register"), SubResource("O_check_cctv"), SubResource("O_give_parcel"), SubResource("O_patrol"), SubResource("O_lock_terraces"), SubResource("O_return_cabin"), SubResource("O_sign_3am"), SubResource("O_watch_gate"), SubResource("O_log_deshmukh"), SubResource("O_cctv_again"), SubResource("O_look_balcony"), SubResource("O_answer_intercom"), SubResource("O_take_key"), SubResource("O_check_4b"), SubResource("O_back_to_cabin"), SubResource("O_read_register"), SubResource("O_call_secretary"), SubResource("O_meter_room"), SubResource("O_main_switch")])

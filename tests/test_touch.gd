@@ -53,8 +53,8 @@ func button_pos(name: StringName) -> Vector2:
 
 func _initialize() -> void:
 	await process_frame
-	settings = root.get_node("/root/Settings")
-	var room: Node = load("res://scenes/test/test_room.tscn").instantiate()
+	settings = root.get_node("/root/SettingsManager")
+	var room: Node = load("res://tests/scenes/test_room.tscn").instantiate()
 	root.add_child(room)
 	p = room.get_node("Player")
 	tc = room.get_node("HUD/TouchControls")

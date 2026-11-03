@@ -1,5 +1,5 @@
 """Writes the material library: assets/materials/<name>.tres (ShaderMaterials using
-shaders/surfaces/surface.gdshader). THIS TABLE IS THE SOURCE OF TRUTH: tweak a line and
+assets/shaders/surfaces/surface.gdshader). THIS TABLE IS THE SOURCE OF TRUTH: tweak a line and
 re-run `python tools/gen_materials.py` (don't hand-edit the .tres files).
 
 tile = metres one texture repeat covers. Colours are linear-ish RGB 0..1.
@@ -8,7 +8,7 @@ import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "assets", "materials")
-SHADER = "res://shaders/surfaces/surface.gdshader"
+SHADER = "res://assets/shaders/surfaces/surface.gdshader"
 LEAKS = "res://assets/materials/textures/overlay_leaks_a/overlay_leaks_a_mask.jpg"
 LEAKS_B = "res://assets/materials/textures/overlay_leaks_b/overlay_leaks_b_mask.jpg"
 

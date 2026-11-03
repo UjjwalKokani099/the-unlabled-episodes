@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://systems/interaction/interactor.gd" id="2_interactor"]
+[ext_resource type="Script" path="res://player/camera_shake.gd" id="3_shake"]
+[ext_resource type="Script" path="res://player/footsteps.gd" id="4_steps"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+resource_local_to_scene = true
+radius = 0.3
+height = 1.75
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+collision_layer = 2
+floor_snap_length = 0.3
+script = ExtResource("1_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.63, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+cull_mask = 524287
+current = true
+fov = 75.0
+near = 0.05
+far = 200.0
+
+[node name="Interactor" type="RayCast3D" parent="Head/Camera3D"]
+script = ExtResource("2_interactor")
+
+[node name="CameraShake" type="Node" parent="Head/Camera3D"]
+script = ExtResource("3_shake")
+
+[node name="Flashlight" type="SpotLight3D" parent="."]
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 3.0
+shadow_enabled = true
+spot_range = 20.0
+spot_attenuation = 1.2
+spot_angle = 26.0
+spot_angle_attenuation = 1.6
+
+[node name="Footsteps" type="Node" parent="."]
+script = ExtResource("4_steps")

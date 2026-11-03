@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/ui/settings_menu.gd" id="1_settings"]
+[ext_resource type="Script" path="res://ui/menus/settings_menu.gd" id="1_settings"]
 [ext_resource type="Theme" path="res://ui/themes/vcr_theme.tres" id="2_theme"]
-[ext_resource type="Script" path="res://scripts/ui/menu_list.gd" id="3_list"]
+[ext_resource type="Script" path="res://ui/menus/menu_list.gd" id="3_list"]
 
 [node name="SettingsMenu" type="Control"]
 process_mode = 3

@@ -20,11 +20,11 @@ func message() -> String:
 
 func _initialize() -> void:
 	await process_frame
-	game = root.get_node("Game")
-	var objectives: Node = root.get_node("Objectives")
+	game = root.get_node("GameManager")
+	var objectives: Node = root.get_node("ObjectiveManager")
 	game.save_path = "user://test_save.json"
 	game.delete_save()
-	change_scene_to_file("res://scenes/hub/hub.tscn")
+	change_scene_to_file("res://chapters/hub/hub.tscn")
 	await scene_changed
 	await frames(10)
 	var hub: Node = current_scene

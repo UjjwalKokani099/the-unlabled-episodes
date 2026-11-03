@@ -15,7 +15,7 @@ func _initialize() -> void:
 	for a in ["move_forward", "move_back", "move_left", "move_right", "sprint", "crouch", "flashlight", "interact", "pause"]:
 		check(InputMap.has_action(a) and InputMap.action_get_events(a).size() > 0, "action " + a)
 
-	var s: Node = root.get_node("Settings")
+	var s: Node = root.get_node("SettingsManager")
 	check(AudioServer.get_bus_index("SFX") != -1, "SFX bus exists")
 	var old_sens: float = s.mouse_sensitivity
 	var old_vol: float = s.sfx_volume

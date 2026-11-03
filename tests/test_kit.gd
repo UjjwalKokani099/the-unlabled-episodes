@@ -15,7 +15,7 @@ func physics(n: int) -> void:
 
 func _initialize() -> void:
 	await process_frame
-	var level: Node = load("res://scenes/test/kit_preview.tscn").instantiate()
+	var level: Node = load("res://tests/scenes/kit_preview.tscn").instantiate()
 	root.add_child(level)
 	await physics(5)
 	var batcher = level.get_node("Static")

@@ -43,7 +43,7 @@ func focused_prompt() -> String:
 	return f.prompt if f else "<nothing>"
 
 func _initialize() -> void:
-	room = load("res://scenes/test/test_room.tscn").instantiate()
+	room = load("res://tests/scenes/test_room.tscn").instantiate()
 	root.add_child(room)
 	p = room.get_node("Player")
 	await frames(30)

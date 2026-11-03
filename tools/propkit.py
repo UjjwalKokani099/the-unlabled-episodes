@@ -143,7 +143,7 @@ class Props:
 
     # ------------------------------------------------------------------ real models
     def model(self, name, pos, yaw=0.0, pitch=0.0, roll=0.0, scale=1.0, parent=None, collide=None,
-              surface="concrete", node_name=None, script="res://scripts/props/prop_model.gd", **opts):
+              surface="concrete", node_name=None, script="res://systems/props/prop_model.gd", **opts):
         """Instance assets/models/<name>/<name>.gltf (CC0, tools/fetch_models.py).
         Same facing convention as the primitives: the model's front ends up along -Z
         after `yaw` (glTF fronts are +Z, so the instance is turned 180 degrees).
@@ -317,12 +317,12 @@ class Props:
 
     def cloth(self, top_centre, w, h, colour, yaw=0.0, stripes=(0.0, 0.0), stripe_colour=(0.8, 0.78, 0.7),
               folds=3.0, fold_depth=0.025, gather=0.0, sway=0.03, tilt=0.0, name="Cloth"):
-        """Hanging fabric (shaders/cloth.gdshader): a w x h panel hung from its top edge at
+        """Hanging fabric (assets/shaders/cloth.gdshader): a w x h panel hung from its top edge at
         `top_centre`, its face toward -Z after `yaw` (both sides render). Not batched."""
         def c(t):
             return f"Color({t[0]}, {t[1]}, {t[2]}, 1)"
         mat = self.lv.sub("ShaderMaterial", {
-            "shader": f'ExtResource("{self.lv.ext("res://shaders/cloth.gdshader", "Shader")}")',
+            "shader": f'ExtResource("{self.lv.ext("res://assets/shaders/cloth.gdshader", "Shader")}")',
             "shader_parameter/albedo": c(colour), "shader_parameter/stripe_color": c(stripe_colour),
             "shader_parameter/stripes": f"Vector2({stripes[0]}, {stripes[1]})",
             "shader_parameter/size": f"Vector2({w}, {h})", "shader_parameter/folds": str(folds),

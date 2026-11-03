@@ -52,21 +52,21 @@ func run_dialogue(view, picks: Array = []) -> Array:
 
 func _initialize() -> void:
 	await process_frame
-	var game: Node = root.get_node("Game")
-	events = root.get_node("Events")
-	var obj: Node = root.get_node("Objectives")
+	var game: Node = root.get_node("GameManager")
+	events = root.get_node("EventBus")
+	var obj: Node = root.get_node("ObjectiveManager")
 	game.save_path = "user://test_save.json"
 	game.delete_save()
 
 	# --- Dialogue rules (no level needed) ---
-	var D = load("res://scripts/dialogue/dialogue.gd")
-	var iyer_d = D.load_file("res://dialogue/tape01/iyer.json")
+	var D = load("res://systems/dialogue/dialogue.gd")
+	var iyer_d = D.load_file("res://data/dialogue/tape01/iyer.json")
 	check(iyer_d != null and iyer_d.resolve(iyer_d.start) == "hello", "iyer.json loads; first meeting branches to hello")
 	check(not D.check("event:parcel_2c") and D.check("!event:parcel_2c"), "event conditions + negation")
 	D.set_flag("x_test", true)
 	check(D.check("flag:x_test") and D.check(["flag:x_test", "!flag:nope"]), "flag conditions, lists must all hold")
 	check(iyer_d.choices("ask_choices").size() == 3, "without the parcel: 'find it' + 'Kishan?' + 'up late' (no 'here it is')")
-	for f in ["res://dialogue/tape01/deshmukh.json", "res://dialogue/tape01/secretary.json"]:
+	for f in ["res://data/dialogue/tape01/deshmukh.json", "res://data/dialogue/tape01/secretary.json"]:
 		var d = D.load_file(f)
 		var broken := []
 		for id: String in d.nodes:

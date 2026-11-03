@@ -1,9 +1,9 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/ui/camcorder.gd" id="1_camcorder"]
-[ext_resource type="Script" path="res://scripts/ui/camcorder_osd.gd" id="2_osd"]
-[ext_resource type="Script" path="res://scripts/ui/vhs_effect.gd" id="3_vhs"]
-[ext_resource type="Shader" path="res://shaders/vhs.gdshader" id="4_vhs_shader"]
+[ext_resource type="Script" path="res://ui/hud/camcorder.gd" id="1_camcorder"]
+[ext_resource type="Script" path="res://ui/hud/camcorder_osd.gd" id="2_osd"]
+[ext_resource type="Script" path="res://ui/hud/vhs_effect.gd" id="3_vhs"]
+[ext_resource type="Shader" path="res://assets/shaders/vhs.gdshader" id="4_vhs_shader"]
 
 [sub_resource type="SystemFont" id="SystemFont_osd"]
 font_names = PackedStringArray("VCR OSD Mono", "Consolas", "Lucida Console", "Courier New", "Monospace")

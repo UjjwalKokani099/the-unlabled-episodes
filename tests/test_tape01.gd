@@ -70,9 +70,9 @@ func spot_at(target: Vector3) -> StringName:
 
 func _initialize() -> void:
 	await process_frame
-	game = root.get_node("Game")
-	obj = root.get_node("Objectives")
-	events = root.get_node("Events")
+	game = root.get_node("GameManager")
+	obj = root.get_node("ObjectiveManager")
+	events = root.get_node("EventBus")
 	game.save_path = "user://test_save.json"
 	game.delete_save()
 	check(game.start_chapter(&"tape_01_watchman"), "tape 1 is built and starts")

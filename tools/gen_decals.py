@@ -4,7 +4,7 @@
    sun-fade, paper grain, stains, fold creases, torn edges, missing corners.
 2. Draws procedural decals: paan (betel) spit stains, a ceiling/wall water stain, cracks,
    hand grime.
-3. Writes assets/decals/<name>.png and scenes/decals/<name>.tscn (a Node3D whose Decal
+3. Writes assets/decals/<name>.png and assets/decals/<name>.tscn (a Node3D whose Decal
    projects along -Z: put the node on a wall surface with +Z pointing out of the wall).
 
 Run from the project root:  python tools/gen_decals.py   (deterministic: fixed seeds)
@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(ROOT, "tools", "_build", "posters")
 OUT = os.path.join(ROOT, "assets", "decals")
-SCENES = os.path.join(ROOT, "scenes", "decals")
+SCENES = os.path.join(ROOT, "assets", "decals")
 PAPER = os.path.join(ROOT, "assets", "materials", "textures", "paper", "paper_albedo.jpg")
 
 # name: width in metres (height follows the image aspect)

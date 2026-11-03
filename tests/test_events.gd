@@ -26,8 +26,8 @@ func teleport(pos: Vector3) -> void:
 
 func _initialize() -> void:
 	await process_frame
-	events = root.get_node("Events")
-	room = load("res://scenes/test/test_room.tscn").instantiate()
+	events = root.get_node("EventBus")
+	room = load("res://tests/scenes/test_room.tscn").instantiate()
 	root.add_child(room)
 	p = room.get_node("Player")
 	await frames(20)

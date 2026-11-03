@@ -19,7 +19,7 @@ func teleport(pos: Vector3) -> void:
 	await frames(5)
 
 func _initialize() -> void:
-	var room: Node = load("res://scenes/test/test_room.tscn").instantiate()
+	var room: Node = load("res://tests/scenes/test_room.tscn").instantiate()
 	root.add_child(room)
 	p = room.get_node("Player")
 	await frames(30)

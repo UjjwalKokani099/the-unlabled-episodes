@@ -16,14 +16,14 @@ func frames(n: int) -> void:
 
 func _initialize() -> void:
 	await process_frame
-	var settings: Node = root.get_node("Settings")
-	var graphics: Node = root.get_node("Graphics")
+	var settings: Node = root.get_node("SettingsManager")
+	var graphics: Node = root.get_node("GraphicsManager")
 	var old_quality: int = settings.graphics_quality
 	var old_fps: bool = settings.show_fps
 	var old_ps1: bool = settings.ps1_mode
 	settings.ps1_mode = false  # presets are checked in the default look (PS1 has test_retro)
 
-	var room: Node = load("res://scenes/test/test_room.tscn").instantiate()
+	var room: Node = load("res://tests/scenes/test_room.tscn").instantiate()
 	root.add_child(room)
 	# A level that did NOT ask for volumetric fog or SSAO:
 	var plain := WorldEnvironment.new()

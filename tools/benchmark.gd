@@ -15,9 +15,9 @@ const WARMUP_SECONDS := 1.5
 func _initialize() -> void:
 	await process_frame
 	var args := OS.get_cmdline_user_args()
-	var scene_path := args[0] if args.size() > 0 else "res://scenes/test/test_room.tscn"
+	var scene_path := args[0] if args.size() > 0 else "res://tests/scenes/test_room.tscn"
 	var per_point := float(args[1]) if args.size() > 1 else 3.0
-	var settings: Node = root.get_node("Settings")
+	var settings: Node = root.get_node("SettingsManager")
 	var saved_quality: int = settings.graphics_quality
 	var saved_ps1: bool = settings.ps1_mode
 	settings.ps1_mode = "ps1" in args

@@ -11,11 +11,11 @@ func check(cond: bool, msg: String) -> void:
 
 func _initialize() -> void:
 	await process_frame
-	var game: Node = root.get_node("Game")
+	var game: Node = root.get_node("GameManager")
 	game.save_path = "user://test_save.json"
 	game.delete_save()
 	check(game.should_autoplay_intro(), "first launch: intro autoplays")
-	change_scene_to_file("res://scenes/menus/main_menu.tscn")
+	change_scene_to_file("res://ui/menus/main_menu.tscn")
 	await scene_changed
 	await game.transition_finished
 	check(current_scene.name == "Intro", "main menu hands over to the intro")

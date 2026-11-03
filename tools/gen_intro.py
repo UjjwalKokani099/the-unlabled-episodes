@@ -1,6 +1,6 @@
-"""Builds scenes/intro/intro.tscn: Sunday flea market at dusk + Nikhil's room (for the
+"""Builds chapters/intro/intro.tscn: Sunday flea market at dusk + Nikhil's room (for the
 "that night" shot), camera shot markers, VCR blue-screen UI. Driven by
-scripts/intro/intro_director.gd.  Run: python tools/gen_intro.py
+chapters/intro/scripts/intro_director.gd.  Run: python tools/gen_intro.py
 """
 import os
 import random
@@ -29,8 +29,8 @@ def stall(lv, x, z, side, rng, tarp, vendor=False):
 
 def main() -> None:
     rng = random.Random(1998)
-    lv = Level("Intro", "res://scripts/intro/intro_director.gd")
-    sky_mat = lv.sub("ShaderMaterial", {"shader": f'ExtResource("{lv.ext("res://shaders/sky_city_night.gdshader", "Shader")}")',
+    lv = Level("Intro", "res://chapters/intro/scripts/intro_director.gd")
+    sky_mat = lv.sub("ShaderMaterial", {"shader": f'ExtResource("{lv.ext("res://assets/shaders/sky_city_night.gdshader", "Shader")}")',
                                         "shader_parameter/zenith_color": "Color(0.08, 0.09, 0.17, 1)",
                                         "shader_parameter/horizon_color": "Color(0.62, 0.33, 0.15, 1)",
                                         "shader_parameter/glow_height": "0.3", "shader_parameter/star_density": "0.0"})
@@ -76,7 +76,7 @@ def main() -> None:
         lv.box((3.08, 0.84, -25.12 + i * 0.07), (0.19, 0.1, 0.025), "glass_dark", collide=False)
     # Nikhil's room, far away, for the "that night" shot
     home = lv.add("Home", "Node3D", ".", {"position": v3(100, 0, 0)})
-    lv.scene("Room", "res://scenes/hub/nikhil_room.tscn", home)
+    lv.scene("Room", "res://chapters/hub/nikhil_room.tscn", home)
     thud = lv.ext("res://assets/audio/sfx/vcr_click.wav", "AudioStream")
     lv.add("Thud", "AudioStreamPlayer3D", home, {"position": v3(1.75, 0.2, 3.75), "stream": f'ExtResource("{thud}")', "bus": '&"SFX"'})
     # camera + shots
@@ -108,7 +108,7 @@ def main() -> None:
                                     "offset_bottom": "-30.0", "grow_horizontal": "0", "grow_vertical": "0",
                                     "theme_override_fonts/font": f'SubResource("{font}")', "theme_override_font_sizes/font_size": "18",
                                     "horizontal_alignment": "2", "text": '"Hold [Space] to skip"'})
-    lv.write(os.path.join(ROOT, "scenes", "intro", "intro.tscn"))
+    lv.write(os.path.join(ROOT, "chapters", "intro", "intro.tscn"))
 
 
 if __name__ == "__main__":

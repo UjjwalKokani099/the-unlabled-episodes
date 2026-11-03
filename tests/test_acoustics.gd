@@ -24,7 +24,7 @@ func wet() -> float:
 
 
 func space() -> StringName:
-	return load("res://scripts/audio/acoustic_zone.gd").current_space()
+	return load("res://systems/audio/acoustic_zone.gd").current_space()
 
 
 func stand(p, pos: Vector3) -> void:
@@ -36,7 +36,7 @@ func stand(p, pos: Vector3) -> void:
 
 func _initialize() -> void:
 	await process_frame
-	var game: Node = root.get_node("Game")
+	var game: Node = root.get_node("GameManager")
 	game.save_path = "user://test_save.json"
 	game.delete_save()
 	var bus := AudioServer.get_bus_index(&"SFX")

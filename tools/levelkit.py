@@ -41,7 +41,7 @@ class Level:
         if root_script:
             props["script"] = f'ExtResource("{self.ext(root_script, "Script")}")'
         self.nodes.append(self._node_text(root_name, "Node3D", None, props))
-        self.add("Static", "Node3D", ".", {"script": f'ExtResource("{self.ext("res://scripts/kit/static_batcher.gd", "Script")}")'})
+        self.add("Static", "Node3D", ".", {"script": f'ExtResource("{self.ext("res://systems/level/static_batcher.gd", "Script")}")'})
         self.add("Collision", "StaticBody3D", ".")
 
     # ------------------------------------------------------------------ resources
@@ -143,7 +143,7 @@ class Level:
 # ---------------------------------------------------------------------- surfaces
 
 def surface_of(mat: str) -> str:
-    """Footstep surface for a material name (scripts/player/footsteps.gd plays the sound)."""
+    """Footstep surface for a material name (player/footsteps.gd plays the sound)."""
     if any(k in mat for k in ("tile", "kota", "mosaic", "glass")):
         return "tile"
     if "wood" in mat or "door" in mat:
@@ -341,7 +341,7 @@ def residential_wing(lv: Level, name: str, ox: float, oz: float, *, letter: str,
             ops = [{"along": Z(door_z), "w": 1.2, "bottom": 0, "top": 2.2, "kind": "door", "frame": "wood_door_dark"}]
             wall(lv, (X(CORE), Z(CORE_BACK)), (X(CORE), Z(D)), y, STOREY, T, "wall_paint_white", core_wall, +1, ops)
             flat = f"{fl}{letter}"
-            info["doors"][flat] = lv.scene(f"Door{flat}", "res://scenes/props/door.tscn", group, {
+            info["doors"][flat] = lv.scene(f"Door{flat}", "res://systems/props/door.tscn", group, {
                 "position": v3(X(CORE), y, Z(door_z + 0.55)), "rotation_degrees": v3(0, 90, 0),
                 "locked": "false" if flat in unlocked_doors else "true",
                 "locked_message": '"Locked. Nobody answers."',
@@ -357,7 +357,7 @@ def residential_wing(lv: Level, name: str, ox: float, oz: float, *, letter: str,
         else:  # terrace cabin: door out to the terrace on the right side
             ops = [{"along": Z(9.0), "w": 1.1, "bottom": 0, "top": 2.15, "kind": "door", "frame": "wood_door_dark"}]
             wall(lv, (X(CORE), Z(CORE_BACK)), (X(CORE), Z(D)), y, STOREY, T, exterior, core_wall, +1, ops)
-            info["terrace_door"] = lv.scene("TerraceDoor", "res://scenes/props/door.tscn", group, {
+            info["terrace_door"] = lv.scene("TerraceDoor", "res://systems/props/door.tscn", group, {
                 "position": v3(X(CORE), y, Z(9.0 + 0.55)), "rotation_degrees": v3(0, 90, 0)})
             slab(lv, X(0), X(CORE), Z(LANDING), Z(D), y, 0.15, "floor_kota", "wall_paint_white")
 
@@ -370,7 +370,7 @@ def residential_wing(lv: Level, name: str, ox: float, oz: float, *, letter: str,
             slab(lv, X(0.12), X(CORE - 0.12), Z(CORE_BACK + 0.05), Z(MID_Z), y + 1.5, 0.15, "floor_kota", "wall_paint_white")
             stair_flight(lv, X(1.58), X(CORE - 0.12), Z(MID_Z), Z(LANDING), y + 1.5, STEPS, RISE)
             # landing ceiling tube light
-            lv.scene("Tube", "res://scenes/props/tube_light.tscn", group,
+            lv.scene("Tube", "res://systems/props/tube_light.tscn", group,
                      {"position": v3(X(1.5), y + STOREY - 0.06, Z(9.3)),
                       "flicker": "0.7" if fl in flicker_floors else "0.0"}, groups=["mains"])
     # terrace cabin roof + overhead water tank on it
@@ -441,7 +441,7 @@ def residential_wing(lv: Level, name: str, ox: float, oz: float, *, letter: str,
 # ---------------------------------------------------------------------- shared level setup
 
 def night_environment(lv: Level, fog_density=0.012, moon=True) -> None:
-    sky_mat = lv.sub("ShaderMaterial", {"shader": f'ExtResource("{lv.ext("res://shaders/sky_city_night.gdshader", "Shader")}")'})
+    sky_mat = lv.sub("ShaderMaterial", {"shader": f'ExtResource("{lv.ext("res://assets/shaders/sky_city_night.gdshader", "Shader")}")'})
     sky = lv.sub("Sky", {"sky_material": f'SubResource("{sky_mat}")'})
     env = lv.sub("Environment", {
         "background_mode": "2", "sky": f'SubResource("{sky}")',
@@ -464,10 +464,10 @@ def night_environment(lv: Level, fog_density=0.012, moon=True) -> None:
 
 
 def acoustic_zone(lv: Level, name: str, centre, size, space: str, parent=".") -> str:
-    """Reverb for the listener while inside (scripts/audio/acoustic_zone.gd): open, yard,
+    """Reverb for the listener while inside (systems/audio/acoustic_zone.gd): open, yard,
     small_room, hard_room, empty_room, corridor, stair. Nested zones: the smallest wins."""
     path = lv.add(name, "Area3D", parent, {"position": v3(*centre),
-                                           "script": f'ExtResource("{lv.ext("res://scripts/audio/acoustic_zone.gd", "Script")}")',
+                                           "script": f'ExtResource("{lv.ext("res://systems/audio/acoustic_zone.gd", "Script")}")',
                                            "space": f'"{space}"'})
     shape = lv.sub("BoxShape3D", {"size": v3(*size)})
     lv.add("Shape", "CollisionShape3D", path, {"shape": f'SubResource("{shape}")'})
@@ -488,13 +488,13 @@ def sodium_lamp(lv: Level, x, z, height=6.0, facing_x=1.0, shadow=False, parent=
 
 
 def player_rig(lv: Level, x, z, yaw_deg=0.0, y=0.0, flashlight=True, debug=True) -> None:
-    lv.scene("Player", "res://scenes/player/player.tscn", ".", {
+    lv.scene("Player", "res://player/player.tscn", ".", {
         "position": v3(x, y, z), "rotation_degrees": v3(0, yaw_deg, 0),
         "flashlight_on_start": "true" if flashlight else "false"})
     lv.scene("Camcorder", "res://ui/hud/camcorder.tscn", ".")
     lv.scene("HUD", "res://ui/hud/hud.tscn", ".")
     if debug:
-        lv.add("DebugOverlay", "CanvasLayer", ".", {"layer": "20", "script": f'ExtResource("{lv.ext("res://scripts/ui/debug_overlay.gd", "Script")}")'})
+        lv.add("DebugOverlay", "CanvasLayer", ".", {"layer": "20", "script": f'ExtResource("{lv.ext("res://ui/hud/debug_overlay.gd", "Script")}")'})
         lv.add("Label", "Label", "DebugOverlay", {
             "offset_left": "70.0", "offset_top": "96.0", "offset_right": "870.0", "offset_bottom": "260.0",
             "theme_override_colors/font_color": "Color(0.85, 0.85, 0.85, 1)",

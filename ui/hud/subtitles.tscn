@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/ui/subtitles.gd" id="1_subs"]
+[ext_resource type="Script" path="res://ui/hud/subtitles.gd" id="1_subs"]
 
 [node name="Subtitles" type="CanvasLayer"]
 layer = 15

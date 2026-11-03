@@ -1,7 +1,7 @@
 extends SceneTree
 ## Bakes every VoxelGI in a scene and saves its data next to the scene as <scene>_gi.res
 ## (one VoxelGI per scene is supported; the generator then references that file).
-## Usage: <console exe> --path . --script res://tools/bake_voxelgi.gd -- res://scenes/hub/nikhil_room.tscn
+## Usage: <console exe> --path . --script res://tools/bake_voxelgi.gd -- res://chapters/hub/nikhil_room.tscn
 
 func _initialize() -> void:
 	await process_frame

@@ -36,8 +36,8 @@ func await_hub() -> void:
 
 func _initialize() -> void:
 	await process_frame
-	game = root.get_node("Game")
-	settings = root.get_node("Settings")
+	game = root.get_node("GameManager")
+	settings = root.get_node("SettingsManager")
 	var saved_settings := {}
 	for key in settings.KEYS:
 		saved_settings[key] = settings.get(key)
@@ -46,7 +46,7 @@ func _initialize() -> void:
 	game.mark_intro_seen()
 
 	# --- Main menu, fresh save ---
-	change_scene_to_file("res://scenes/menus/main_menu.tscn")
+	change_scene_to_file("res://ui/menus/main_menu.tscn")
 	await scene_changed
 	await frames(5)
 	var menu: Node = current_scene

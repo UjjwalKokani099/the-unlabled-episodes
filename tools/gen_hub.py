@@ -1,6 +1,6 @@
-"""Builds scenes/hub/nikhil_room.tscn: Nikhil's rented single room (story bible), the
+"""Builds chapters/hub/nikhil_room.tscn: Nikhil's rented single room (story bible), the
 corridor outside his door, and the lane + building opposite seen through the window.
-Used by the hub (scenes/hub/hub.tscn) and as the main-menu backdrop.
+Used by the hub (chapters/hub/hub.tscn) and as the main-menu backdrop.
 Run: python tools/gen_hub.py   (then: bake GI with tools/bake_voxelgi.gd)
 Room: x 0..3.6, z 0..4.2, floor y 0, ceiling 2.9. Window (z=0) looks down at the lane (y -6).
 """
@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from levelkit import ROOT, Level, acoustic_zone, slab, sodium_lamp, v3, wall  # noqa: E402
 from propkit import Props  # noqa: E402
 
-GI_DATA = "res://scenes/hub/nikhil_room_gi.res"
+GI_DATA = "res://chapters/hub/nikhil_room_gi.res"
 # CC0 CRT model (assets/models/television_02): placed so the gameplay screen quad sits on its glass.
 TV_POS = (3.15, 0.54, 3.78)
 TV_SCALE = 1.35
@@ -20,7 +20,7 @@ H = 2.9
 
 def interactable(lv, parent, name, pos, size, prompt, hold=0.0):
     path = lv.add(name, "Area3D", parent, {
-        "position": v3(*pos), "script": f'ExtResource("{lv.ext("res://scripts/interaction/interactable.gd", "Script")}")',
+        "position": v3(*pos), "script": f'ExtResource("{lv.ext("res://systems/interaction/interactable.gd", "Script")}")',
         "prompt": f'"{prompt}"', "hold_time": str(hold)})
     shape = lv.sub("BoxShape3D", {"size": v3(*size)})
     lv.add("Shape", "CollisionShape3D", path, {"shape": f'SubResource("{shape}")'})
@@ -29,7 +29,7 @@ def interactable(lv, parent, name, pos, size, prompt, hold=0.0):
 
 def main() -> None:
     lv = Level("NikhilRoom")
-    sky_mat = lv.sub("ShaderMaterial", {"shader": f'ExtResource("{lv.ext("res://shaders/sky_city_night.gdshader", "Shader")}")'})
+    sky_mat = lv.sub("ShaderMaterial", {"shader": f'ExtResource("{lv.ext("res://assets/shaders/sky_city_night.gdshader", "Shader")}")'})
     sky = lv.sub("Sky", {"sky_material": f'SubResource("{sky_mat}")'})
     env = lv.sub("Environment", {
         "background_mode": "2", "sky": f'SubResource("{sky}")', "ambient_light_source": "2",
@@ -50,7 +50,7 @@ def main() -> None:
     wall(lv, (3.6, 0), (3.6, 4.2), 0, H, 0.23, "wall_exterior_peach", "wall_paint_mint", +1)
     door_op = {"along": 0.75, "w": 1.2, "bottom": 0, "top": 2.2, "kind": "door", "frame": "wood_door_dark"}
     wall(lv, (0, 4.2), (3.6, 4.2), 0, H, 0.23, "wall_stairwell_cream", "wall_paint_mint", +1, [door_op])
-    lv.scene("Door", "res://scenes/props/door.tscn", ".", {"position": v3(0.2, 0, 4.2)})
+    lv.scene("Door", "res://systems/props/door.tscn", ".", {"position": v3(0.2, 0, 4.2)})
     # outer wall below the window down to the lane
     lv.box((1.8, -3.0, -0.06), (5.0, 6.0, 0.12), "wall_exterior_peach", collide=False)
 
@@ -84,13 +84,13 @@ def main() -> None:
     Props(lv).model("television_02", TV_POS, node_name="CRT", scale=TV_SCALE)                  # CRT body
     lv.collider((3.15, 0.78, 3.8), (0.56, 0.46, 0.46), "metal")
     # ceiling tube light on the left wall
-    lv.scene("TubeLight", "res://scenes/props/tube_light.tscn", ".", {"position": v3(1.6, H - 0.05, 0.9), "on": "false"})
-    lv.scene("LightSwitch", "res://scenes/props/light_switch.tscn", ".", {
+    lv.scene("TubeLight", "res://systems/props/tube_light.tscn", ".", {"position": v3(1.6, H - 0.05, 0.9), "on": "false"})
+    lv.scene("LightSwitch", "res://systems/props/light_switch.tscn", ".", {
         "position": v3(1.55, 1.3, 4.072), "rotation_degrees": v3(0, 180, 0),
         "light_paths": 'Array[NodePath]([NodePath("../TubeLight")])', "is_on": "false"})
     # ceiling fan
     fan = lv.add("CeilingFan", "Node3D", ".", {"position": v3(1.8, H - 0.02, 2.1),
-                                              "script": f'ExtResource("{lv.ext("res://scripts/props/ceiling_fan.gd", "Script")}")',
+                                              "script": f'ExtResource("{lv.ext("res://systems/props/ceiling_fan.gd", "Script")}")',
                                               "blades_path": 'NodePath("Model/ceiling_fan_blades")'})
     Props(lv).model("ceiling_fan", (0, 0, 0), parent=fan, node_name="Model")
     hum_stream = lv.ext("res://assets/audio/sfx/fan_hum.wav", "AudioStream")
@@ -98,8 +98,8 @@ def main() -> None:
                                               "unit_size": "2.0", "bus": '&"Ambience"'})
 
     # ---- TV (the hub CRT): screen faces -Z toward the bed
-    tv = lv.add("TV", "Node3D", ".", {"script": f'ExtResource("{lv.ext("res://scripts/hub/tv.gd", "Script")}")'})
-    screen_mat = lv.sub("ShaderMaterial", {"render_priority": "0", "shader": f'ExtResource("{lv.ext("res://shaders/tv_screen.gdshader", "Shader")}")'})
+    tv = lv.add("TV", "Node3D", ".", {"script": f'ExtResource("{lv.ext("res://chapters/hub/scripts/tv.gd", "Script")}")'})
+    screen_mat = lv.sub("ShaderMaterial", {"render_priority": "0", "shader": f'ExtResource("{lv.ext("res://assets/shaders/tv_screen.gdshader", "Shader")}")'})
     quad = lv.sub("QuadMesh", {"material": f'SubResource("{screen_mat}")', "size": "Vector2(0.44, 0.33)"})
     lv.add("Screen", "MeshInstance3D", tv, {"position": v3(3.15, 0.9, 3.6), "rotation_degrees": v3(0, 180, 0), "mesh": f'SubResource("{quad}")'})
     font = lv.sub("SystemFont", {"font_names": 'PackedStringArray("VCR OSD Mono", "Consolas", "Courier New")', "font_weight": "600"})
@@ -112,7 +112,7 @@ def main() -> None:
                                                "volume_db": "-18.0", "unit_size": "2.5", "bus": '&"SFX"'})
     # ---- VCR beside the TV
     vcr = lv.add("VCR", "Node3D", ".", {"position": v3(2.45, 0.585, 3.75), "rotation_degrees": v3(0, 180, 0),
-                                       "script": f'ExtResource("{lv.ext("res://scripts/hub/vcr.gd", "Script")}")'})
+                                       "script": f'ExtResource("{lv.ext("res://chapters/hub/scripts/vcr.gd", "Script")}")'})
     vcr_body = lv.sub("BoxMesh", {"size": v3(0.43, 0.09, 0.3)})
     lv.add("Body", "MeshInstance3D", vcr, {"mesh": f'SubResource("{vcr_body}")', "material_override": lv.mat("glass_dark")})
     slot = lv.sub("BoxMesh", {"size": v3(0.24, 0.022, 0.01)})
@@ -166,7 +166,7 @@ def main() -> None:
         wall(lv, (-9, -11), (13, -11), -6 + fl * 3, 3, 0.23, "wall_exterior_sky", "wall_paint_white", +1, ops, collide=False)
     sodium_lamp(lv, 6.0, -8.5, height=5.5, facing_x=-1.0)
     van = lv.add("Van", "Node3D", ".", {"position": v3(-1.0, -6.0, -6.5),
-                                       "script": f'ExtResource("{lv.ext("res://scripts/props/vanish_when_unseen.gd", "Script")}")'})
+                                       "script": f'ExtResource("{lv.ext("res://systems/props/vanish_when_unseen.gd", "Script")}")'})
     white = lv.sub("StandardMaterial3D", {"albedo_color": "Color(0.82, 0.82, 0.8, 1)", "roughness": "0.45", "metallic": "0.3"})
     head = lv.sub("StandardMaterial3D", {"albedo_color": "Color(1, 0.95, 0.8, 1)", "emission_enabled": "true",
                                          "emission": "Color(1, 0.92, 0.75, 1)", "emission_energy_multiplier": "4.0"})
@@ -194,7 +194,7 @@ def main() -> None:
     if os.path.exists(os.path.join(ROOT, GI_DATA[6:])):
         gi["data"] = f'ExtResource("{lv.ext(GI_DATA, "VoxelGIData")}")'
     lv.add("VoxelGI", "VoxelGI", ".", gi)
-    lv.write(os.path.join(ROOT, "scenes", "hub", "nikhil_room.tscn"))
+    lv.write(os.path.join(ROOT, "chapters", "hub", "nikhil_room.tscn"))
 
 
 def dress_room(lv: Level) -> None:
@@ -209,7 +209,7 @@ def dress_room(lv: Level) -> None:
         "light_volumetric_fog_energy": "1.5"})
     p.tumbler((2.98, 0.75, 1.42))
     p.model("plastic_thermos", (3.42, 0.75, 1.24), yaw=60)
-    p.model("alarm_clock_01", (3.05, 0.82, 2.2), yaw=110, script="res://scripts/props/wall_clock.gd")
+    p.model("alarm_clock_01", (3.05, 0.82, 2.2), yaw=110, script="res://systems/props/wall_clock.gd")
     p.model("portable_cassette_player", (3.45, 1.62, 2.1), yaw=90)
     p.model("stationery_supplies", (3.0, 0.82, 2.34), yaw=100)
     p.model("standing_picture_frame_01", (3.42, 0.75, 2.36), yaw=-20, node_name="MaaPhoto")
@@ -235,7 +235,7 @@ def dress_room(lv: Level) -> None:
     p.clothesline((0.12, 2.12, 1.75), (1.05, 2.12, 0.12), [
         (0.2, "shirt", "cloth_check"), (0.45, "towel", "cloth_towel"), (0.75, "trousers", "cloth_grey")])
     # walls: clock over the window, calendar between desk and TV, mirror + hooks by the door
-    p.model("wall_clock", (1.8, 2.5, 0.115), yaw=180, script="res://scripts/props/wall_clock.gd")
+    p.model("wall_clock", (1.8, 2.5, 0.115), yaw=180, script="res://systems/props/wall_clock.gd")
     p.calendar((3.485, 1.65, 3.05), yaw=90)
     p.mirror((0.115, 1.55, 3.35), yaw=-90)
     p.switchboard((1.78, 1.3, 4.085), n=3)
@@ -254,7 +254,7 @@ def dress_room(lv: Level) -> None:
                            ("crack_a", (0.12, 2.35, 3.0), (0, 90, 0)), ("crack_b", (3.48, 0.6, 3.1), (0, -90, 0)),
                            ("room_rent", (1.1, 1.5, 5.88), (0, 180, 0)), ("tuition", (3.6, 1.45, 5.2), (0, -90, 0)),
                            ("paan_a", (-0.0, 0.35, 5.6), (0, 90, 0))):
-        lv.scene(name, f"res://scenes/decals/{name}.tscn", ".", {"position": v3(*pos), "rotation_degrees": v3(*rot)})
+        lv.scene(name, f"res://assets/decals/{name}.tscn", ".", {"position": v3(*pos), "rotation_degrees": v3(*rot)})
     # corridor: a bare bulb on a pull-chain holder, a money plant by Nikhil's door
     p.model("pull_chain_light_socket", (1.8, 2.9, 5.1), node_name="CorridorSocket")
     p.cyl((1.8, 2.7, 5.1), 0.03, 0.03, 0.06, "bulb_warm", seg=10, shadow=False)

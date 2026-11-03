@@ -1,0 +1,367 @@
+extends Node
+## Chapter flow and save data, registered as the autoload "Game".
+##
+##   GameManager.start_chapter(&"tape_01_watchman")  # fresh start, with the tape card
+##   GameManager.load_checkpoint()                    # continue from the last checkpoint
+##   GameManager.complete_chapter()                   # "END OF TAPE", unlock next, go to hub
+##
+## A checkpoint save is: chapter id, checkpoint id, the Events counts, flags (e.g. which
+## pickups are gone) and the camcorder clock. Objectives rebuild themselves from the
+## Events counts when the level loads, so they don't need saving separately.
+
+signal chapter_started(chapter: ChapterData)
+signal chapter_completed(chapter: ChapterData)
+signal checkpoint_saved(id: StringName)
+## Emitted when a level change has fully finished (screen visible, game unpaused).
+signal transition_finished
+
+const CHAPTER_LIST_PATH := "res://data/chapter_list.tres"
+const SAVE_VERSION := 1
+const MAIN_MENU_PATH := "res://ui/menus/main_menu.tscn"
+const INTRO_PATH := "res://chapters/intro/intro.tscn"
+const TITLE_CARD_SECONDS := 1.4
+## Hold time for a plain fade (no title text).
+const PLAIN_FADE_SECONDS := 0.25
+
+## Tests point this somewhere else so they never touch the real save.
+var save_path: String = "user://save.json"
+var chapter_list: ChapterList
+## The tape being played, or null (hub, menus, scenes run on their own).
+var current_chapter: ChapterData
+## Camcorder clock (seconds into the tape) when the current level loaded.
+var tape_time_at_load: float = 0.0
+
+var _save: Dictionary = {}
+var _flags: Dictionary = {}
+var _pending_checkpoint: StringName = &""
+var _transitioning: bool = false
+var _transition: TapeTransition
+
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	chapter_list = load(CHAPTER_LIST_PATH)
+	_transition = TapeTransition.new()
+	add_child(_transition)
+	load_save()
+	_adopt_current_scene.call_deferred()
+
+
+# --- Chapters ---------------------------------------------------------------
+
+func get_chapter(id: StringName) -> ChapterData:
+	for chapter in chapter_list.chapters + chapter_list.debug_chapters:
+		if chapter.id == id:
+			return chapter
+	return null
+
+
+func is_completed(id: StringName) -> bool:
+	return (_save.completed as Array).has(String(id))
+
+
+func is_unlocked(id: StringName) -> bool:
+	var chapters := chapter_list.chapters
+	for i in chapters.size():
+		if chapters[i].id == id:
+			return i == 0 or is_completed(chapters[i - 1].id)
+	return get_chapter(id) != null  # debug chapters
+
+
+func is_transitioning() -> bool:
+	return _transitioning
+
+
+## Starts a chapter from the beginning. Returns false if it can't be started.
+func start_chapter(id: StringName) -> bool:
+	var chapter := get_chapter(id)
+	if chapter == null or not chapter.is_built() or _transitioning:
+		return false
+	current_chapter = chapter
+	EventBus.reset()
+	_flags = {}
+	tape_time_at_load = 0.0
+	_pending_checkpoint = &""
+	_save.checkpoint = {}
+	_write_save()
+	chapter_started.emit(chapter)
+	_change_level(chapter.scene_path, "PLAY ►", PackedStringArray([chapter.title, chapter.subtitle]))
+	return true
+
+
+func restart_chapter() -> bool:
+	return current_chapter != null and start_chapter(current_chapter.id)
+
+
+# --- Checkpoints ------------------------------------------------------------
+
+func has_checkpoint() -> bool:
+	return not (_save.checkpoint as Dictionary).is_empty()
+
+
+## Chapter id of the saved checkpoint (for a "Continue" button), or &"".
+func checkpoint_chapter_id() -> StringName:
+	return StringName(_save.checkpoint.get("chapter", ""))
+
+
+## Id of the saved checkpoint, or &"".
+func saved_checkpoint_id() -> StringName:
+	return StringName(_save.checkpoint.get("checkpoint", ""))
+
+
+func save_checkpoint(id: StringName) -> void:
+	# Blocked only while the level is still loading behind the tape card (paused). The
+	# spawn checkpoint saves as the picture fades in, so "Continue" works right away.
+	if current_chapter == null or get_tree().paused:
+		return
+	_save.checkpoint = {
+		"chapter": String(current_chapter.id),
+		"checkpoint": String(id),
+		"events": EventBus.snapshot(),
+		"flags": _flags.duplicate(),
+		"tape_time": _current_tape_time(),
+	}
+	_write_save()
+	checkpoint_saved.emit(id)
+
+
+## Reloads the level at the last checkpoint. Returns false if there's nothing to load.
+func load_checkpoint() -> bool:
+	if not has_checkpoint() or _transitioning:
+		return false
+	var saved: Dictionary = _save.checkpoint
+	var chapter := get_chapter(StringName(saved.chapter))
+	if chapter == null or not chapter.is_built():
+		return false
+	current_chapter = chapter
+	EventBus.restore(saved.get("events", {}))
+	_flags = (saved.get("flags", {}) as Dictionary).duplicate()
+	tape_time_at_load = float(saved.get("tape_time", 0.0))
+	_pending_checkpoint = StringName(saved.get("checkpoint", ""))
+	_change_level(chapter.scene_path, "PLAY ►", PackedStringArray([chapter.title, chapter.subtitle]))
+	return true
+
+
+# --- Completion ---------------------------------------------------------------
+
+func complete_chapter() -> void:
+	if current_chapter == null or _transitioning:
+		return
+	var finished := current_chapter
+	if not is_completed(finished.id):
+		(_save.completed as Array).append(String(finished.id))
+	_save.checkpoint = {}
+	_write_save()
+	_clear_chapter_state()
+	chapter_completed.emit(finished)
+	_change_level(_hub_path(), "■ STOP", PackedStringArray([finished.title, "END OF TAPE"]))
+
+
+## Leave the current tape without finishing it (keeps the checkpoint for Resume).
+func return_to_hub() -> void:
+	if _transitioning:
+		return
+	var leaving := current_chapter
+	_clear_chapter_state()
+	_change_level(_hub_path(), "■ STOP", PackedStringArray([leaving.title if leaving else ""]))
+
+
+## Menu -> hub (plain fade).
+func enter_hub() -> void:
+	if _transitioning:
+		return
+	_clear_chapter_state()
+	_change_level(_hub_path(), "", PackedStringArray())
+
+
+## Anywhere -> main menu. A tape in progress keeps its checkpoint (Continue).
+func go_to_main_menu() -> void:
+	if _transitioning:
+		return
+	_clear_chapter_state()
+	_change_level(MAIN_MENU_PATH, "■ STOP", PackedStringArray())
+
+
+## Wipes the save file and starts again with the intro (or the hub if there is none).
+func new_game() -> void:
+	if _transitioning:
+		return
+	delete_save()
+	if ResourceLoader.exists(INTRO_PATH):
+		play_intro()
+	else:
+		enter_hub()
+
+
+# --- Intro (flea market -> home) ---------------------------------------------
+
+## True only on the very first launch (no save yet, intro never seen).
+func should_autoplay_intro() -> bool:
+	return not _save.get("intro_seen", false) and ResourceLoader.exists(INTRO_PATH)
+
+
+func mark_intro_seen() -> void:
+	_save["intro_seen"] = true
+	_write_save()
+
+
+func play_intro() -> void:
+	if _transitioning:
+		return
+	_clear_chapter_state()
+	_change_level(INTRO_PATH, "PLAY ►", PackedStringArray())
+
+
+## Called by the intro when it ends or is skipped.
+func finish_intro() -> void:
+	mark_intro_seen()
+	enter_hub()
+
+
+## Anything worth continuing: a finished tape or a saved checkpoint.
+func has_progress() -> bool:
+	return not (_save.completed as Array).is_empty() or has_checkpoint()
+
+
+func _clear_chapter_state() -> void:
+	current_chapter = null
+	EventBus.reset()
+	_flags = {}
+	tape_time_at_load = 0.0
+
+
+# --- Flags (small per-chapter facts that must survive a checkpoint load) ------
+
+func set_flag(key: String, value: Variant = true) -> void:
+	_flags[key] = value
+
+
+func get_flag(key: String, default: Variant = null) -> Variant:
+	return _flags.get(key, default)
+
+
+# --- Spotting the Cameraman (kept across tapes and replays; all 12 = Ending B) -
+
+## Remembers a spotted appearance. Returns true the first time.
+func mark_spotted(spot_id: StringName) -> bool:
+	var list: Array = _save.get("spotted", [])
+	if String(spot_id) in list:
+		return false
+	list.append(String(spot_id))
+	_save["spotted"] = list
+	_write_save()
+	return true
+
+
+func is_spotted(spot_id: StringName) -> bool:
+	return String(spot_id) in (_save.get("spotted", []) as Array)
+
+
+## How many appearances were spotted (ids starting with `prefix`, e.g. "t1_").
+func spotted_count(prefix: String = "") -> int:
+	var n := 0
+	for id: String in _save.get("spotted", []):
+		if id.begins_with(prefix):
+			n += 1
+	return n
+
+
+# --- Memory (one-off moments that must never repeat, e.g. Nikhil's thoughts) ---
+
+## Remembers `key` in the save file (unlike flags, it survives leaving a tape and New Game
+## only clears it with the rest of the save). Returns true the first time.
+func remember(key: String) -> bool:
+	var list: Array = _save.get("memory", [])
+	if key in list:
+		return false
+	list.append(key)
+	_save["memory"] = list
+	_write_save()
+	return true
+
+
+func remembers(key: String) -> bool:
+	return key in (_save.get("memory", []) as Array)
+
+
+# --- Save file ----------------------------------------------------------------
+
+func load_save() -> void:
+	_save = {"version": SAVE_VERSION, "completed": [], "checkpoint": {}}
+	if not FileAccess.file_exists(save_path):
+		return
+	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(save_path))
+	if data is Dictionary:
+		_save.completed = data.get("completed", [])
+		_save.checkpoint = data.get("checkpoint", {})
+		_save.intro_seen = data.get("intro_seen", false)
+		_save.spotted = data.get("spotted", [])
+		_save.memory = data.get("memory", [])
+	else:
+		push_warning("Game: save file unreadable, starting fresh")
+
+
+func delete_save() -> void:
+	if FileAccess.file_exists(save_path):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(save_path))
+	load_save()
+
+
+func _write_save() -> void:
+	var file := FileAccess.open(save_path, FileAccess.WRITE)
+	if file == null:
+		push_warning("Game: could not write %s (error %d)" % [save_path, FileAccess.get_open_error()])
+		return
+	file.store_string(JSON.stringify(_save, "\t"))
+
+
+# --- Internals ------------------------------------------------------------------
+
+func _change_level(path: String, header: String, lines: PackedStringArray) -> void:
+	_transitioning = true
+	var tree := get_tree()
+	tree.paused = true
+	await _transition.cover(header, lines)
+	tree.change_scene_to_file(path)
+	await tree.scene_changed
+	_place_player_at_checkpoint()
+	var hold := PLAIN_FADE_SECONDS if lines.is_empty() else TITLE_CARD_SECONDS
+	await tree.create_timer(hold, true).timeout
+	tree.paused = false
+	await _transition.reveal()
+	_transitioning = false
+	transition_finished.emit()
+
+
+func _place_player_at_checkpoint() -> void:
+	if _pending_checkpoint == &"":
+		return
+	var player := get_tree().get_first_node_in_group("player") as Player
+	for node in get_tree().get_nodes_in_group("checkpoints"):
+		var checkpoint := node as Checkpoint
+		if checkpoint.checkpoint_id == _pending_checkpoint and player:
+			player.teleport(checkpoint.global_transform)
+			break
+	_pending_checkpoint = &""
+
+
+func _current_tape_time() -> float:
+	var camcorder := get_tree().get_first_node_in_group("camcorder")
+	return camcorder.osd.elapsed if camcorder else tape_time_at_load
+
+
+func _hub_path() -> String:
+	if chapter_list.hub_scene != "":
+		return chapter_list.hub_scene
+	return ProjectSettings.get_setting("application/run/main_scene")
+
+
+## Running a chapter's level directly (F5 / F6 in the editor) still counts as playing it.
+func _adopt_current_scene() -> void:
+	var scene := get_tree().current_scene
+	if scene == null or current_chapter != null:
+		return
+	for chapter in chapter_list.chapters + chapter_list.debug_chapters:
+		if chapter.scene_path == scene.scene_file_path:
+			current_chapter = chapter
+			return

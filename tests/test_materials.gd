@@ -34,11 +34,11 @@ func _initialize() -> void:
 	check(materials >= 30, "library has %d materials (expected 30+)" % materials)
 
 	var decals := 0
-	for file in DirAccess.get_files_at("res://scenes/decals"):
+	for file in DirAccess.get_files_at("res://assets/decals"):
 		if not file.ends_with(".tscn"):
 			continue
 		decals += 1
-		var scene: Node = load("res://scenes/decals/" + file).instantiate()
+		var scene: Node = load("res://assets/decals/" + file).instantiate()
 		var decal := scene.get_node_or_null("Decal") as Decal
 		check(decal != null and decal.texture_albedo != null, "%s has a textured Decal" % file)
 		if decal:
@@ -48,7 +48,7 @@ func _initialize() -> void:
 	print("PASS %d decals checked" % decals)
 	check(decals >= 10, "found %d decals (expected 10+)" % decals)
 
-	var gallery: Node = load("res://scenes/test/material_gallery.tscn").instantiate()
+	var gallery: Node = load("res://tests/scenes/material_gallery.tscn").instantiate()
 	root.add_child(gallery)
 	for i in 5:
 		await process_frame

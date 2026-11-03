@@ -1,5 +1,5 @@
 extends SceneTree
-# The Cameraman as a threat (scripts/characters/stalker.gd) in Tape 1's dark courtyard:
+# The Cameraman as a threat (systems/characters/stalker.gd) in Tape 1's dark courtyard:
 # patrol, being held in his shot -> HUNT -> CAUGHT, hiding (crouched in a HidingSpot) keeps
 # you out of frame, losing him -> SEARCH, FOLLOWING only moves while unwatched, and the
 # footsteps one floor up in B wing's stairs. Separate save file.
@@ -61,8 +61,8 @@ func place(brain, at: Vector3, look: Vector3) -> void:
 
 func _initialize() -> void:
 	await process_frame
-	game = root.get_node("Game")
-	events = root.get_node("Events")
+	game = root.get_node("GameManager")
+	events = root.get_node("EventBus")
 	game.save_path = "user://test_save_stalker.json"
 	game.delete_save()
 	check(game.start_chapter(&"tape_01_watchman"), "tape 1 starts")

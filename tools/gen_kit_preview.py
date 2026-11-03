@@ -1,4 +1,4 @@
-"""Builds scenes/test/kit_preview.tscn: one Shanti Vihar style wing at night, with a
+"""Builds tests/scenes/kit_preview.tscn: one Shanti Vihar style wing at night, with a
 street lamp, ground, and the player. Used to review and benchmark the building kit.
 Run: python tools/gen_kit_preview.py
 """
@@ -23,7 +23,7 @@ def main() -> None:
     sodium_lamp(lv, -4.0, 16.0, facing_x=1.0)
     player_rig(lv, 6.0, 20.0, 180.0)
     benchmark_points(lv, [(6, 0, 20), (1.5, 6.0, 9.2), (7.5, 15.0, 5.0), (8.0, 12.0, 3.0)])
-    lv.write(os.path.join(ROOT, "scenes", "test", "kit_preview.tscn"))
+    lv.write(os.path.join(ROOT, "tests", "scenes", "kit_preview.tscn"))
 
 
 if __name__ == "__main__":

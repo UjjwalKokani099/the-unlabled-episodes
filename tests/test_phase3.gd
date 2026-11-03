@@ -20,8 +20,8 @@ func physics(n: int) -> void:
 
 func _initialize() -> void:
 	await process_frame
-	var game: Node = root.get_node("Game")
-	var events: Node = root.get_node("Events")
+	var game: Node = root.get_node("GameManager")
+	var events: Node = root.get_node("EventBus")
 	game.save_path = "user://test_save.json"
 	game.delete_save()
 	check(game.start_chapter(&"tape_01_watchman"), "tape 1 starts")
@@ -103,12 +103,12 @@ func _initialize() -> void:
 	item.add_child(model)
 	var area := Area3D.new()
 	area.name = "Interactable"
-	area.set_script(load("res://scripts/interaction/interactable.gd"))
+	area.set_script(load("res://systems/interaction/interactable.gd"))
 	var shape := CollisionShape3D.new()
 	shape.shape = BoxShape3D.new()
 	area.add_child(shape)
 	item.add_child(area)
-	item.set_script(load("res://scripts/interaction/inspectable.gd"))
+	item.set_script(load("res://systems/interaction/inspectable.gd"))
 	item.set(&"title", "Lighter")
 	item.set(&"item_id", &"lighter")
 	lv.add_child(item)
@@ -122,7 +122,7 @@ func _initialize() -> void:
 	await physics(2)
 	check(events.has_fired(&"lighter") and not is_instance_valid(item) and game.get_flag("picked:Lighter", false), "taking it fires its item id, it's gone and remembered")
 
-	var locked = load("res://scenes/props/drawer.tscn").instantiate()
+	var locked = load("res://systems/props/drawer.tscn").instantiate()
 	locked.set(&"locked", true)
 	locked.set(&"unlock_event", &"desk_key")
 	lv.add_child(locked)

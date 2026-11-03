@@ -2,8 +2,8 @@ extends SceneTree
 # Objectives: chaining, counters, past events, completion events; then a full test-room run.
 # Run: <console exe> --path . --quit-after 4000 --script res://tests/test_objectives.gd
 
-const ObjectiveDataScript = preload("res://scripts/objectives/objective_data.gd")
-const ObjectiveSetScript = preload("res://scripts/objectives/objective_set.gd")
+const ObjectiveDataScript = preload("res://systems/objectives/objective_data.gd")
+const ObjectiveSetScript = preload("res://systems/objectives/objective_set.gd")
 
 var fails := 0
 var p
@@ -60,8 +60,8 @@ func panel_lines() -> Array:
 
 func _initialize() -> void:
 	await process_frame  # let autoloads run _ready (Objectives subscribes to Events there)
-	events = root.get_node("Events")
-	objectives = root.get_node("Objectives")
+	events = root.get_node("EventBus")
+	objectives = root.get_node("ObjectiveManager")
 	var finished := [0]
 	objectives.all_completed.connect(func(): finished[0] += 1)
 
@@ -88,7 +88,7 @@ func _initialize() -> void:
 	finished[0] = 0
 
 	# --- Full run in the test room ---
-	room = load("res://scenes/test/test_room.tscn").instantiate()
+	room = load("res://tests/scenes/test_room.tscn").instantiate()
 	root.add_child(room)
 	p = room.get_node("Player")
 	await frames(20)

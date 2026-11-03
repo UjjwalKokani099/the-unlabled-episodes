@@ -1,11 +1,11 @@
-"""Builds scenes/test/material_gallery.tscn: a 20 x 12 m room showing every material in
+"""Builds tests/scenes/material_gallery.tscn: a 20 x 12 m room showing every material in
 assets/materials (labelled panels and floor strips) plus the decals, lit by tube lights and
 a sodium lamp. Re-run after adding materials:  python tools/gen_material_gallery.py
 """
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, "scenes", "test", "material_gallery.tscn")
+OUT = os.path.join(ROOT, "tests", "scenes", "material_gallery.tscn")
 
 W, D, H = 20.0, 12.0, 3.0  # room width (x), depth (z), height
 BACK = ["wall_paint_cream", "wall_paint_mint", "wall_paint_sky", "wall_paint_peach", "wall_paint_white",
@@ -138,13 +138,13 @@ volumetric_fog_length = 32.0
     panel("Walls", "DecalWallBack", "tile_white", (0, H / 2, -0.05), (6.4, H, 0.1))
     node("Decals", "Node3D", ".")
     for name, x, y in DECALS:
-        did = res(f"res://scenes/decals/{name}.tscn", "PackedScene")
+        did = res(f"res://assets/decals/{name}.tscn", "PackedScene")
         node(name, None, "Decals", {"position": v3(x, y, 0.1)}, instance=did)
     # Water stain on the ceiling (decal faces down) and paan on the floor (faces up).
     node("water_stain", None, "Decals", {"position": v3(-4, H, 2), "rotation_degrees": v3(90, 0, 0)},
-         instance=res("res://scenes/decals/water_stain.tscn", "PackedScene"))
+         instance=res("res://assets/decals/water_stain.tscn", "PackedScene"))
     node("paan_b", None, "Decals", {"position": v3(3.0, 0.0, 0.6), "rotation_degrees": v3(-90, 0, 0)},
-         instance=res("res://scenes/decals/paan_b.tscn", "PackedScene"))
+         instance=res("res://assets/decals/paan_b.tscn", "PackedScene"))
 
     # Collision: floor, walls, centre wall.
     node("Collision", "StaticBody3D", ".")
@@ -156,17 +156,17 @@ volumetric_fog_length = 32.0
         node(f"Shape{i}", "CollisionShape3D", "Collision", {"position": v3(*pos), "shape": f'SubResource("{sid}")'})
 
     # Lights: tube lights (one flickering), a sodium lamp glow by the decal wall.
-    tube = res("res://scenes/props/tube_light.tscn", "PackedScene")
+    tube = res("res://systems/props/tube_light.tscn", "PackedScene")
     for i, (x, z, flicker) in enumerate([(-6, 3, 0.0), (0, 3, 0.0), (6, 3, 0.6), (-6, -3, 0.0), (6, -3, 0.0)]):
         node(f"TubeLight{i}", None, ".", {"position": v3(x, H - 0.05, z), "flicker": str(flicker)}, instance=tube)
     node("SodiumLamp", "OmniLight3D", ".", {"position": v3(2.5, 2.6, 1.5), "light_color": "Color(1, 0.55, 0.18, 1)",
                                             "light_energy": "1.4", "omni_range": "5.0", "shadow_enabled": "true"})
 
     # Player, HUD, camcorder look, debug overlay, benchmark points.
-    node("Player", None, ".", {"position": v3(0, 0, 4.5)}, instance=res("res://scenes/player/player.tscn", "PackedScene"))
+    node("Player", None, ".", {"position": v3(0, 0, 4.5)}, instance=res("res://player/player.tscn", "PackedScene"))
     node("Camcorder", None, ".", instance=res("res://ui/hud/camcorder.tscn", "PackedScene"))
     node("HUD", None, ".", instance=res("res://ui/hud/hud.tscn", "PackedScene"))
-    node("DebugOverlay", "CanvasLayer", ".", {"layer": "20", "script": f'ExtResource("{res("res://scripts/ui/debug_overlay.gd", "Script")}")'})
+    node("DebugOverlay", "CanvasLayer", ".", {"layer": "20", "script": f'ExtResource("{res("res://ui/hud/debug_overlay.gd", "Script")}")'})
     node("Label", "Label", "DebugOverlay", {"offset_left": "70.0", "offset_top": "96.0", "offset_right": "870.0", "offset_bottom": "260.0",
                                             "theme_override_colors/font_color": "Color(0.85, 0.85, 0.85, 1)",
                                             "theme_override_colors/font_outline_color": "Color(0, 0, 0, 1)",
