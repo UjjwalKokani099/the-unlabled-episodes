@@ -59,14 +59,15 @@
 [ext_resource type="PackedScene" path="res://assets/models/potted_plant_02/potted_plant_02.gltf" id="57_r"]
 [ext_resource type="PackedScene" path="res://assets/models/plastic_jerrycan/plastic_jerrycan.gltf" id="58_r"]
 [ext_resource type="PackedScene" path="res://assets/models/metal_trash_can/metal_trash_can.gltf" id="59_r"]
-[ext_resource type="Material" path="res://assets/materials/ground_asphalt.tres" id="60_r"]
-[ext_resource type="Material" path="res://assets/materials/wall_exterior_sky.tres" id="61_r"]
-[ext_resource type="Material" path="res://assets/materials/glass_lit_warm.tres" id="62_r"]
-[ext_resource type="Material" path="res://assets/materials/glass_lit_tv.tres" id="63_r"]
-[ext_resource type="Material" path="res://assets/materials/metal_rust.tres" id="64_r"]
-[ext_resource type="Material" path="res://assets/materials/glass_sodium.tres" id="65_r"]
-[ext_resource type="Script" path="res://scripts/props/vanish_when_unseen.gd" id="66_r"]
-[ext_resource type="VoxelGIData" path="res://scenes/hub/nikhil_room_gi.res" id="67_r"]
+[ext_resource type="Script" path="res://scripts/audio/acoustic_zone.gd" id="60_r"]
+[ext_resource type="Material" path="res://assets/materials/ground_asphalt.tres" id="61_r"]
+[ext_resource type="Material" path="res://assets/materials/wall_exterior_sky.tres" id="62_r"]
+[ext_resource type="Material" path="res://assets/materials/glass_lit_warm.tres" id="63_r"]
+[ext_resource type="Material" path="res://assets/materials/glass_lit_tv.tres" id="64_r"]
+[ext_resource type="Material" path="res://assets/materials/metal_rust.tres" id="65_r"]
+[ext_resource type="Material" path="res://assets/materials/glass_sodium.tres" id="66_r"]
+[ext_resource type="Script" path="res://scripts/props/vanish_when_unseen.gd" id="67_r"]
+[ext_resource type="VoxelGIData" path="res://scenes/hub/nikhil_room_gi.res" id="68_r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0"]
 shader = ExtResource("2_r")
@@ -747,96 +748,102 @@ size = Vector3(0.03, 0.08, 0.02)
 [sub_resource type="BoxShape3D" id="BoxShape3D_152"]
 size = Vector3(0.45, 0.75, 0.45)
 
-[sub_resource type="BoxMesh" id="BoxMesh_153"]
-size = Vector3(40, 0.2, 14)
+[sub_resource type="BoxShape3D" id="BoxShape3D_153"]
+size = Vector3(3.6, 2.9, 4.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_154"]
-size = Vector3(40, 0.2, 14)
+size = Vector3(3.84, 2.9, 1.9)
 
 [sub_resource type="BoxMesh" id="BoxMesh_155"]
-size = Vector3(1.9, 3, 0.115)
+size = Vector3(40, 0.2, 14)
 
-[sub_resource type="BoxMesh" id="BoxMesh_156"]
-size = Vector3(1.2, 0.9, 0.115)
+[sub_resource type="BoxShape3D" id="BoxShape3D_156"]
+size = Vector3(40, 0.2, 14)
 
 [sub_resource type="BoxMesh" id="BoxMesh_157"]
-size = Vector3(0.06, 1.2, 0.1)
+size = Vector3(1.9, 3, 0.115)
 
 [sub_resource type="BoxMesh" id="BoxMesh_158"]
-size = Vector3(1.2, 0.06, 0.14)
+size = Vector3(1.2, 0.9, 0.115)
 
 [sub_resource type="BoxMesh" id="BoxMesh_159"]
-size = Vector3(0.036, 1.08, 0.08)
+size = Vector3(0.06, 1.2, 0.1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_160"]
-size = Vector3(1.08, 1.08, 0.012)
+size = Vector3(1.2, 0.06, 0.14)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_161"]
-size = Vector3(1.08, 1.08, 0.012)
+[sub_resource type="BoxMesh" id="BoxMesh_161"]
+size = Vector3(0.036, 1.08, 0.08)
 
 [sub_resource type="BoxMesh" id="BoxMesh_162"]
-size = Vector3(0.016, 1.2, 0.016)
+size = Vector3(1.08, 1.08, 0.012)
 
-[sub_resource type="BoxMesh" id="BoxMesh_163"]
-size = Vector3(1.2, 0.03, 0.008)
+[sub_resource type="BoxShape3D" id="BoxShape3D_163"]
+size = Vector3(1.08, 1.08, 0.012)
 
 [sub_resource type="BoxMesh" id="BoxMesh_164"]
-size = Vector3(2.8, 3, 0.115)
+size = Vector3(0.016, 1.2, 0.016)
 
 [sub_resource type="BoxMesh" id="BoxMesh_165"]
-size = Vector3(2.9, 3, 0.115)
+size = Vector3(1.2, 0.03, 0.008)
 
 [sub_resource type="BoxMesh" id="BoxMesh_166"]
-size = Vector3(0.12, 5.5, 0.12)
+size = Vector3(2.8, 3, 0.115)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_167"]
-size = Vector3(0.12, 5.5, 0.12)
+[sub_resource type="BoxMesh" id="BoxMesh_167"]
+size = Vector3(2.9, 3, 0.115)
 
 [sub_resource type="BoxMesh" id="BoxMesh_168"]
-size = Vector3(1.2, 0.08, 0.08)
+size = Vector3(0.12, 5.5, 0.12)
 
-[sub_resource type="BoxMesh" id="BoxMesh_169"]
-size = Vector3(0.45, 0.12, 0.22)
+[sub_resource type="BoxShape3D" id="BoxShape3D_169"]
+size = Vector3(0.12, 5.5, 0.12)
 
 [sub_resource type="BoxMesh" id="BoxMesh_170"]
+size = Vector3(1.2, 0.08, 0.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_171"]
+size = Vector3(0.45, 0.12, 0.22)
+
+[sub_resource type="BoxMesh" id="BoxMesh_172"]
 size = Vector3(0.36, 0.04, 0.16)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_171"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_173"]
 albedo_color = Color(0.82, 0.82, 0.8, 1)
 roughness = 0.45
 metallic = 0.3
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_172"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_174"]
 albedo_color = Color(1, 0.95, 0.8, 1)
 emission_enabled = true
 emission = Color(1, 0.92, 0.75, 1)
 emission_energy_multiplier = 4.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_173"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_175"]
 albedo_color = Color(0.8, 0.05, 0.03, 1)
 emission_enabled = true
 emission = Color(1, 0.04, 0.02, 1)
 emission_energy_multiplier = 3.0
 
-[sub_resource type="BoxMesh" id="BoxMesh_174"]
+[sub_resource type="BoxMesh" id="BoxMesh_176"]
 size = Vector3(3.4, 1.35, 1.45)
 
-[sub_resource type="BoxMesh" id="BoxMesh_175"]
+[sub_resource type="BoxMesh" id="BoxMesh_177"]
 size = Vector3(3.0, 0.45, 1.47)
 
-[sub_resource type="BoxMesh" id="BoxMesh_176"]
-size = Vector3(0.02, 0.14, 0.18)
-
-[sub_resource type="BoxMesh" id="BoxMesh_177"]
-size = Vector3(0.02, 0.14, 0.18)
-
 [sub_resource type="BoxMesh" id="BoxMesh_178"]
-size = Vector3(0.02, 0.18, 0.1)
+size = Vector3(0.02, 0.14, 0.18)
 
 [sub_resource type="BoxMesh" id="BoxMesh_179"]
+size = Vector3(0.02, 0.14, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_180"]
 size = Vector3(0.02, 0.18, 0.1)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_180"]
+[sub_resource type="BoxMesh" id="BoxMesh_181"]
+size = Vector3(0.02, 0.18, 0.1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_182"]
 top_radius = 0.3
 bottom_radius = 0.3
 height = 0.2
@@ -2102,54 +2109,70 @@ rotation_degrees = Vector3(0, -4.0, 0)
 mesh = SubResource("BoxMesh_95")
 material_override = SubResource("StandardMaterial3D_84")
 
+[node name="RoomAcoustics" type="Area3D" parent="."]
+position = Vector3(1.8, 1.45, 2.1)
+script = ExtResource("60_r")
+space = "small_room"
+
+[node name="Shape" type="CollisionShape3D" parent="RoomAcoustics"]
+shape = SubResource("BoxShape3D_153")
+
+[node name="CorridorAcoustics" type="Area3D" parent="."]
+position = Vector3(1.8, 1.45, 5.15)
+script = ExtResource("60_r")
+space = "corridor"
+
+[node name="Shape" type="CollisionShape3D" parent="CorridorAcoustics"]
+shape = SubResource("BoxShape3D_154")
+
 [node name="M67" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.8, -6.1, -6.0)
-mesh = SubResource("BoxMesh_153")
-material_override = ExtResource("60_r")
+mesh = SubResource("BoxMesh_155")
+material_override = ExtResource("61_r")
 
 [node name="S23" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.8, -6.1, -6.0)
-shape = SubResource("BoxShape3D_154")
+shape = SubResource("BoxShape3D_156")
 metadata/surface = "concrete"
 
 [node name="M68" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.05, -4.5, -10.9425)
-mesh = SubResource("BoxMesh_155")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_157")
+material_override = ExtResource("62_r")
 
 [node name="M69" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.05, -4.5, -11.0575)
-mesh = SubResource("BoxMesh_155")
+mesh = SubResource("BoxMesh_157")
 material_override = ExtResource("4_r")
 
 [node name="M70" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -5.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M71" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -5.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M72" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -3.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M73" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -3.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M74" type="MeshInstance3D" parent="Static"]
 position = Vector3(-7.07, -4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M75" type="MeshInstance3D" parent="Static"]
 position = Vector3(-5.93, -4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M76" type="MeshInstance3D" parent="Static"]
@@ -2159,127 +2182,127 @@ material_override = ExtResource("8_r")
 
 [node name="M77" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -5.07, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M78" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -4.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M79" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -4.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S24" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-6.5, -4.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M80" type="MeshInstance3D" parent="Static"]
 position = Vector3(-7.05, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M81" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.9278, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M82" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.8056, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M83" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.6833, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M84" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5611, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M85" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.4389, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M86" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.3167, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M87" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.1944, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M88" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.0722, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M89" type="MeshInstance3D" parent="Static"]
 position = Vector3(-5.95, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M90" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -5.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M91" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -4.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M92" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -3.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M93" type="MeshInstance3D" parent="Static"]
 position = Vector3(-4.5, -4.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M94" type="MeshInstance3D" parent="Static"]
 position = Vector3(-4.5, -4.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M95" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -5.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M96" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -5.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M97" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -3.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M98" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -3.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M99" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.07, -4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M100" type="MeshInstance3D" parent="Static"]
 position = Vector3(-1.93, -4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M101" type="MeshInstance3D" parent="Static"]
@@ -2289,127 +2312,127 @@ material_override = ExtResource("8_r")
 
 [node name="M102" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -5.07, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M103" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -4.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M104" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -4.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S25" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-2.5, -4.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M105" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.05, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M106" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.9278, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M107" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.8056, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M108" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.6833, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M109" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5611, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M110" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.4389, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M111" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.3167, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M112" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.1944, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M113" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.0722, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M114" type="MeshInstance3D" parent="Static"]
 position = Vector3(-1.95, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M115" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -5.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M116" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -4.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M117" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -3.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M118" type="MeshInstance3D" parent="Static"]
 position = Vector3(-0.5, -4.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M119" type="MeshInstance3D" parent="Static"]
 position = Vector3(-0.5, -4.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M120" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -5.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M121" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -5.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M122" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -3.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M123" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -3.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M124" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.93, -4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M125" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.07, -4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M126" type="MeshInstance3D" parent="Static"]
@@ -2419,127 +2442,127 @@ material_override = ExtResource("8_r")
 
 [node name="M127" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -5.07, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M128" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -4.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M129" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -4.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S26" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.5, -4.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M130" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.95, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M131" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.0722, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M132" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.1944, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M133" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.3167, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M134" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.4389, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M135" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5611, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M136" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.6833, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M137" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.8056, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M138" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.9278, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M139" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.05, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M140" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -5.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M141" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -4.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M142" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -3.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M143" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.5, -4.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M144" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.5, -4.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M145" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -5.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M146" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -5.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M147" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -3.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M148" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -3.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M149" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.93, -4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M150" type="MeshInstance3D" parent="Static"]
 position = Vector3(6.07, -4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M151" type="MeshInstance3D" parent="Static"]
@@ -2549,127 +2572,127 @@ material_override = ExtResource("8_r")
 
 [node name="M152" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -5.07, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M153" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -4.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M154" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -4.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S27" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.5, -4.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M155" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.95, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M156" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.0722, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M157" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.1944, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M158" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.3167, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M159" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.4389, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M160" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5611, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M161" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.6833, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M162" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.8056, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M163" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.9278, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M164" type="MeshInstance3D" parent="Static"]
 position = Vector3(6.05, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M165" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -5.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M166" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -4.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M167" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -3.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M168" type="MeshInstance3D" parent="Static"]
 position = Vector3(7.5, -4.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M169" type="MeshInstance3D" parent="Static"]
 position = Vector3(7.5, -4.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M170" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -5.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M171" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -5.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M172" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -3.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M173" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -3.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M174" type="MeshInstance3D" parent="Static"]
 position = Vector3(8.93, -4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M175" type="MeshInstance3D" parent="Static"]
 position = Vector3(10.07, -4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M176" type="MeshInstance3D" parent="Static"]
@@ -2679,137 +2702,137 @@ material_override = ExtResource("8_r")
 
 [node name="M177" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -5.07, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M178" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -4.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M179" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -4.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S28" type="CollisionShape3D" parent="Collision"]
 position = Vector3(9.5, -4.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M180" type="MeshInstance3D" parent="Static"]
 position = Vector3(8.95, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M181" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.0722, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M182" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.1944, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M183" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.3167, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M184" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.4389, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M185" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5611, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M186" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.6833, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M187" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.8056, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M188" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.9278, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M189" type="MeshInstance3D" parent="Static"]
 position = Vector3(10.05, -4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M190" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -5.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M191" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -4.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M192" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -3.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M193" type="MeshInstance3D" parent="Static"]
 position = Vector3(11.55, -4.5, -10.9425)
-mesh = SubResource("BoxMesh_165")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_167")
+material_override = ExtResource("62_r")
 
 [node name="M194" type="MeshInstance3D" parent="Static"]
 position = Vector3(11.55, -4.5, -11.0575)
-mesh = SubResource("BoxMesh_165")
+mesh = SubResource("BoxMesh_167")
 material_override = ExtResource("4_r")
 
 [node name="M195" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.05, -1.5, -10.9425)
-mesh = SubResource("BoxMesh_155")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_157")
+material_override = ExtResource("62_r")
 
 [node name="M196" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.05, -1.5, -11.0575)
-mesh = SubResource("BoxMesh_155")
+mesh = SubResource("BoxMesh_157")
 material_override = ExtResource("4_r")
 
 [node name="M197" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -2.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M198" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -2.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M199" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -0.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M200" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -0.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M201" type="MeshInstance3D" parent="Static"]
 position = Vector3(-7.07, -1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M202" type="MeshInstance3D" parent="Static"]
 position = Vector3(-5.93, -1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M203" type="MeshInstance3D" parent="Static"]
@@ -2819,127 +2842,127 @@ material_override = ExtResource("8_r")
 
 [node name="M204" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -2.07, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M205" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -1.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M206" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -1.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S29" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-6.5, -1.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M207" type="MeshInstance3D" parent="Static"]
 position = Vector3(-7.05, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M208" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.9278, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M209" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.8056, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M210" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.6833, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M211" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5611, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M212" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.4389, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M213" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.3167, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M214" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.1944, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M215" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.0722, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M216" type="MeshInstance3D" parent="Static"]
 position = Vector3(-5.95, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M217" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -2.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M218" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -1.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M219" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, -0.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M220" type="MeshInstance3D" parent="Static"]
 position = Vector3(-4.5, -1.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M221" type="MeshInstance3D" parent="Static"]
 position = Vector3(-4.5, -1.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M222" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -2.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M223" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -2.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M224" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -0.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M225" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -0.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M226" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.07, -1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M227" type="MeshInstance3D" parent="Static"]
 position = Vector3(-1.93, -1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M228" type="MeshInstance3D" parent="Static"]
@@ -2949,127 +2972,127 @@ material_override = ExtResource("8_r")
 
 [node name="M229" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -2.07, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M230" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -1.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M231" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -1.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S30" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-2.5, -1.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M232" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.05, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M233" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.9278, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M234" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.8056, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M235" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.6833, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M236" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5611, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M237" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.4389, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M238" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.3167, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M239" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.1944, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M240" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.0722, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M241" type="MeshInstance3D" parent="Static"]
 position = Vector3(-1.95, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M242" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -2.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M243" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -1.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M244" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, -0.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M245" type="MeshInstance3D" parent="Static"]
 position = Vector3(-0.5, -1.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M246" type="MeshInstance3D" parent="Static"]
 position = Vector3(-0.5, -1.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M247" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -2.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M248" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -2.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M249" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -0.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M250" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -0.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M251" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.93, -1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M252" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.07, -1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M253" type="MeshInstance3D" parent="Static"]
@@ -3079,127 +3102,127 @@ material_override = ExtResource("8_r")
 
 [node name="M254" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -2.07, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M255" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -1.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M256" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -1.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S31" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.5, -1.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M257" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.95, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M258" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.0722, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M259" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.1944, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M260" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.3167, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M261" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.4389, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M262" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5611, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M263" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.6833, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M264" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.8056, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M265" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.9278, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M266" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.05, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M267" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -2.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M268" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -1.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M269" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, -0.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M270" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.5, -1.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M271" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.5, -1.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M272" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -2.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M273" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -2.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M274" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -0.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M275" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -0.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M276" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.93, -1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M277" type="MeshInstance3D" parent="Static"]
 position = Vector3(6.07, -1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M278" type="MeshInstance3D" parent="Static"]
@@ -3209,127 +3232,127 @@ material_override = ExtResource("8_r")
 
 [node name="M279" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -2.07, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M280" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -1.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M281" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -1.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S32" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.5, -1.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M282" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.95, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M283" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.0722, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M284" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.1944, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M285" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.3167, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M286" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.4389, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M287" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5611, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M288" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.6833, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M289" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.8056, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M290" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.9278, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M291" type="MeshInstance3D" parent="Static"]
 position = Vector3(6.05, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M292" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -2.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M293" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -1.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M294" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, -0.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M295" type="MeshInstance3D" parent="Static"]
 position = Vector3(7.5, -1.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M296" type="MeshInstance3D" parent="Static"]
 position = Vector3(7.5, -1.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M297" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -2.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M298" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -2.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M299" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -0.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M300" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -0.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M301" type="MeshInstance3D" parent="Static"]
 position = Vector3(8.93, -1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M302" type="MeshInstance3D" parent="Static"]
 position = Vector3(10.07, -1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M303" type="MeshInstance3D" parent="Static"]
@@ -3339,137 +3362,137 @@ material_override = ExtResource("8_r")
 
 [node name="M304" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -2.07, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M305" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -1.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M306" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -1.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S33" type="CollisionShape3D" parent="Collision"]
 position = Vector3(9.5, -1.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M307" type="MeshInstance3D" parent="Static"]
 position = Vector3(8.95, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M308" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.0722, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M309" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.1944, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M310" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.3167, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M311" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.4389, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M312" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5611, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M313" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.6833, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M314" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.8056, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M315" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.9278, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M316" type="MeshInstance3D" parent="Static"]
 position = Vector3(10.05, -1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M317" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -2.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M318" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -1.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M319" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, -0.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M320" type="MeshInstance3D" parent="Static"]
 position = Vector3(11.55, -1.5, -10.9425)
-mesh = SubResource("BoxMesh_165")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_167")
+material_override = ExtResource("62_r")
 
 [node name="M321" type="MeshInstance3D" parent="Static"]
 position = Vector3(11.55, -1.5, -11.0575)
-mesh = SubResource("BoxMesh_165")
+mesh = SubResource("BoxMesh_167")
 material_override = ExtResource("4_r")
 
 [node name="M322" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.05, 1.5, -10.9425)
-mesh = SubResource("BoxMesh_155")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_157")
+material_override = ExtResource("62_r")
 
 [node name="M323" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.05, 1.5, -11.0575)
-mesh = SubResource("BoxMesh_155")
+mesh = SubResource("BoxMesh_157")
 material_override = ExtResource("4_r")
 
 [node name="M324" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 0.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M325" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 0.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M326" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 2.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M327" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 2.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M328" type="MeshInstance3D" parent="Static"]
 position = Vector3(-7.07, 1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M329" type="MeshInstance3D" parent="Static"]
 position = Vector3(-5.93, 1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M330" type="MeshInstance3D" parent="Static"]
@@ -3479,127 +3502,127 @@ material_override = ExtResource("8_r")
 
 [node name="M331" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 0.93, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M332" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 1.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M333" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 1.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S34" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-6.5, 1.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M334" type="MeshInstance3D" parent="Static"]
 position = Vector3(-7.05, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M335" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.9278, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M336" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.8056, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M337" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.6833, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M338" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5611, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M339" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.4389, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M340" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.3167, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M341" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.1944, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M342" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.0722, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M343" type="MeshInstance3D" parent="Static"]
 position = Vector3(-5.95, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M344" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 0.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M345" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 1.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M346" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 2.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M347" type="MeshInstance3D" parent="Static"]
 position = Vector3(-4.5, 1.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M348" type="MeshInstance3D" parent="Static"]
 position = Vector3(-4.5, 1.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M349" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 0.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M350" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 0.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M351" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 2.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M352" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 2.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M353" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.07, 1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M354" type="MeshInstance3D" parent="Static"]
 position = Vector3(-1.93, 1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M355" type="MeshInstance3D" parent="Static"]
@@ -3609,127 +3632,127 @@ material_override = ExtResource("8_r")
 
 [node name="M356" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 0.93, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M357" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 1.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M358" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 1.5, -11.01)
-mesh = SubResource("BoxMesh_160")
-material_override = ExtResource("62_r")
+mesh = SubResource("BoxMesh_162")
+material_override = ExtResource("63_r")
 
 [node name="S35" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-2.5, 1.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M359" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.05, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M360" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.9278, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M361" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.8056, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M362" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.6833, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M363" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5611, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M364" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.4389, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M365" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.3167, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M366" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.1944, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M367" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.0722, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M368" type="MeshInstance3D" parent="Static"]
 position = Vector3(-1.95, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M369" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 0.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M370" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 1.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M371" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 2.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M372" type="MeshInstance3D" parent="Static"]
 position = Vector3(-0.5, 1.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M373" type="MeshInstance3D" parent="Static"]
 position = Vector3(-0.5, 1.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M374" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 0.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M375" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 0.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M376" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 2.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M377" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 2.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M378" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.93, 1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M379" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.07, 1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M380" type="MeshInstance3D" parent="Static"]
@@ -3739,127 +3762,127 @@ material_override = ExtResource("8_r")
 
 [node name="M381" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 0.93, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M382" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 1.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M383" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 1.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S36" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.5, 1.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M384" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.95, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M385" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.0722, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M386" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.1944, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M387" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.3167, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M388" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.4389, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M389" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5611, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M390" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.6833, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M391" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.8056, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M392" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.9278, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M393" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.05, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M394" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 0.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M395" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 1.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M396" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 2.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M397" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.5, 1.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M398" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.5, 1.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M399" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 0.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M400" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 0.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M401" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 2.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M402" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 2.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M403" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.93, 1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M404" type="MeshInstance3D" parent="Static"]
 position = Vector3(6.07, 1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M405" type="MeshInstance3D" parent="Static"]
@@ -3869,127 +3892,127 @@ material_override = ExtResource("8_r")
 
 [node name="M406" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 0.93, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M407" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 1.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M408" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 1.5, -11.01)
-mesh = SubResource("BoxMesh_160")
-material_override = ExtResource("63_r")
+mesh = SubResource("BoxMesh_162")
+material_override = ExtResource("64_r")
 
 [node name="S37" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.5, 1.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M409" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.95, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M410" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.0722, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M411" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.1944, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M412" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.3167, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M413" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.4389, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M414" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5611, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M415" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.6833, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M416" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.8056, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M417" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.9278, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M418" type="MeshInstance3D" parent="Static"]
 position = Vector3(6.05, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M419" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 0.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M420" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 1.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M421" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 2.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M422" type="MeshInstance3D" parent="Static"]
 position = Vector3(7.5, 1.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M423" type="MeshInstance3D" parent="Static"]
 position = Vector3(7.5, 1.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M424" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 0.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M425" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 0.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M426" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 2.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M427" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 2.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M428" type="MeshInstance3D" parent="Static"]
 position = Vector3(8.93, 1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M429" type="MeshInstance3D" parent="Static"]
 position = Vector3(10.07, 1.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M430" type="MeshInstance3D" parent="Static"]
@@ -3999,137 +4022,137 @@ material_override = ExtResource("8_r")
 
 [node name="M431" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 0.93, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M432" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 1.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M433" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 1.5, -11.01)
-mesh = SubResource("BoxMesh_160")
-material_override = ExtResource("62_r")
+mesh = SubResource("BoxMesh_162")
+material_override = ExtResource("63_r")
 
 [node name="S38" type="CollisionShape3D" parent="Collision"]
 position = Vector3(9.5, 1.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M434" type="MeshInstance3D" parent="Static"]
 position = Vector3(8.95, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M435" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.0722, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M436" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.1944, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M437" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.3167, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M438" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.4389, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M439" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5611, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M440" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.6833, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M441" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.8056, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M442" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.9278, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M443" type="MeshInstance3D" parent="Static"]
 position = Vector3(10.05, 1.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M444" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 0.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M445" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 1.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M446" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 2.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M447" type="MeshInstance3D" parent="Static"]
 position = Vector3(11.55, 1.5, -10.9425)
-mesh = SubResource("BoxMesh_165")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_167")
+material_override = ExtResource("62_r")
 
 [node name="M448" type="MeshInstance3D" parent="Static"]
 position = Vector3(11.55, 1.5, -11.0575)
-mesh = SubResource("BoxMesh_165")
+mesh = SubResource("BoxMesh_167")
 material_override = ExtResource("4_r")
 
 [node name="M449" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.05, 4.5, -10.9425)
-mesh = SubResource("BoxMesh_155")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_157")
+material_override = ExtResource("62_r")
 
 [node name="M450" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.05, 4.5, -11.0575)
-mesh = SubResource("BoxMesh_155")
+mesh = SubResource("BoxMesh_157")
 material_override = ExtResource("4_r")
 
 [node name="M451" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 3.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M452" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 3.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M453" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 5.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M454" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 5.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M455" type="MeshInstance3D" parent="Static"]
 position = Vector3(-7.07, 4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M456" type="MeshInstance3D" parent="Static"]
 position = Vector3(-5.93, 4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M457" type="MeshInstance3D" parent="Static"]
@@ -4139,127 +4162,127 @@ material_override = ExtResource("8_r")
 
 [node name="M458" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 3.93, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M459" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 4.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M460" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 4.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S39" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-6.5, 4.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M461" type="MeshInstance3D" parent="Static"]
 position = Vector3(-7.05, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M462" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.9278, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M463" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.8056, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M464" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.6833, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M465" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5611, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M466" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.4389, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M467" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.3167, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M468" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.1944, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M469" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.0722, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M470" type="MeshInstance3D" parent="Static"]
 position = Vector3(-5.95, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M471" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 3.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M472" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 4.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M473" type="MeshInstance3D" parent="Static"]
 position = Vector3(-6.5, 5.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M474" type="MeshInstance3D" parent="Static"]
 position = Vector3(-4.5, 4.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M475" type="MeshInstance3D" parent="Static"]
 position = Vector3(-4.5, 4.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M476" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 3.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M477" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 3.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M478" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 5.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M479" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 5.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M480" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.07, 4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M481" type="MeshInstance3D" parent="Static"]
 position = Vector3(-1.93, 4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M482" type="MeshInstance3D" parent="Static"]
@@ -4269,127 +4292,127 @@ material_override = ExtResource("8_r")
 
 [node name="M483" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 3.93, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M484" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 4.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M485" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 4.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S40" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-2.5, 4.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M486" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.05, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M487" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.9278, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M488" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.8056, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M489" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.6833, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M490" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5611, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M491" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.4389, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M492" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.3167, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M493" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.1944, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M494" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.0722, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M495" type="MeshInstance3D" parent="Static"]
 position = Vector3(-1.95, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M496" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 3.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M497" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 4.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M498" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.5, 5.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M499" type="MeshInstance3D" parent="Static"]
 position = Vector3(-0.5, 4.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M500" type="MeshInstance3D" parent="Static"]
 position = Vector3(-0.5, 4.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M501" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 3.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M502" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 3.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M503" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 5.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M504" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 5.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M505" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.93, 4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M506" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.07, 4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M507" type="MeshInstance3D" parent="Static"]
@@ -4399,127 +4422,127 @@ material_override = ExtResource("8_r")
 
 [node name="M508" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 3.93, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M509" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 4.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M510" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 4.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S41" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.5, 4.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M511" type="MeshInstance3D" parent="Static"]
 position = Vector3(0.95, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M512" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.0722, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M513" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.1944, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M514" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.3167, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M515" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.4389, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M516" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5611, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M517" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.6833, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M518" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.8056, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M519" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.9278, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M520" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.05, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M521" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 3.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M522" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 4.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M523" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 5.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M524" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.5, 4.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M525" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.5, 4.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M526" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 3.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M527" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 3.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M528" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 5.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M529" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 5.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M530" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.93, 4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M531" type="MeshInstance3D" parent="Static"]
 position = Vector3(6.07, 4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M532" type="MeshInstance3D" parent="Static"]
@@ -4529,127 +4552,127 @@ material_override = ExtResource("8_r")
 
 [node name="M533" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 3.93, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M534" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 4.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M535" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 4.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S42" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.5, 4.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M536" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.95, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M537" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.0722, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M538" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.1944, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M539" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.3167, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M540" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.4389, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M541" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5611, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M542" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.6833, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M543" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.8056, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M544" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.9278, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M545" type="MeshInstance3D" parent="Static"]
 position = Vector3(6.05, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M546" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 3.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M547" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 4.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M548" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.5, 5.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M549" type="MeshInstance3D" parent="Static"]
 position = Vector3(7.5, 4.5, -10.9425)
-mesh = SubResource("BoxMesh_164")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_166")
+material_override = ExtResource("62_r")
 
 [node name="M550" type="MeshInstance3D" parent="Static"]
 position = Vector3(7.5, 4.5, -11.0575)
-mesh = SubResource("BoxMesh_164")
+mesh = SubResource("BoxMesh_166")
 material_override = ExtResource("4_r")
 
 [node name="M551" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 3.45, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M552" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 3.45, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M553" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 5.55, -10.9425)
-mesh = SubResource("BoxMesh_156")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_158")
+material_override = ExtResource("62_r")
 
 [node name="M554" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 5.55, -11.0575)
-mesh = SubResource("BoxMesh_156")
+mesh = SubResource("BoxMesh_158")
 material_override = ExtResource("4_r")
 
 [node name="M555" type="MeshInstance3D" parent="Static"]
 position = Vector3(8.93, 4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M556" type="MeshInstance3D" parent="Static"]
 position = Vector3(10.07, 4.5, -11)
-mesh = SubResource("BoxMesh_157")
+mesh = SubResource("BoxMesh_159")
 material_override = ExtResource("8_r")
 
 [node name="M557" type="MeshInstance3D" parent="Static"]
@@ -4659,123 +4682,123 @@ material_override = ExtResource("8_r")
 
 [node name="M558" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 3.93, -11)
-mesh = SubResource("BoxMesh_158")
+mesh = SubResource("BoxMesh_160")
 material_override = ExtResource("8_r")
 
 [node name="M559" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 4.5, -11)
-mesh = SubResource("BoxMesh_159")
+mesh = SubResource("BoxMesh_161")
 material_override = ExtResource("8_r")
 
 [node name="M560" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 4.5, -11.01)
-mesh = SubResource("BoxMesh_160")
+mesh = SubResource("BoxMesh_162")
 material_override = ExtResource("34_r")
 
 [node name="S43" type="CollisionShape3D" parent="Collision"]
 position = Vector3(9.5, 4.5, -11.01)
-shape = SubResource("BoxShape3D_161")
+shape = SubResource("BoxShape3D_163")
 metadata/surface = "tile"
 
 [node name="M561" type="MeshInstance3D" parent="Static"]
 position = Vector3(8.95, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M562" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.0722, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M563" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.1944, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M564" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.3167, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M565" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.4389, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M566" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5611, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M567" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.6833, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M568" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.8056, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M569" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.9278, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M570" type="MeshInstance3D" parent="Static"]
 position = Vector3(10.05, 4.5, -10.855)
-mesh = SubResource("BoxMesh_162")
+mesh = SubResource("BoxMesh_164")
 material_override = ExtResource("9_r")
 
 [node name="M571" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 3.98, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M572" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 4.5, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M573" type="MeshInstance3D" parent="Static"]
 position = Vector3(9.5, 5.02, -10.855)
-mesh = SubResource("BoxMesh_163")
+mesh = SubResource("BoxMesh_165")
 material_override = ExtResource("9_r")
 
 [node name="M574" type="MeshInstance3D" parent="Static"]
 position = Vector3(11.55, 4.5, -10.9425)
-mesh = SubResource("BoxMesh_165")
-material_override = ExtResource("61_r")
+mesh = SubResource("BoxMesh_167")
+material_override = ExtResource("62_r")
 
 [node name="M575" type="MeshInstance3D" parent="Static"]
 position = Vector3(11.55, 4.5, -11.0575)
-mesh = SubResource("BoxMesh_165")
+mesh = SubResource("BoxMesh_167")
 material_override = ExtResource("4_r")
 
 [node name="M576" type="MeshInstance3D" parent="Static"]
 position = Vector3(6.0, 2.75, -8.5)
-mesh = SubResource("BoxMesh_166")
-material_override = ExtResource("64_r")
+mesh = SubResource("BoxMesh_168")
+material_override = ExtResource("65_r")
 
 [node name="S44" type="CollisionShape3D" parent="Collision"]
 position = Vector3(6.0, 2.75, -8.5)
-shape = SubResource("BoxShape3D_167")
+shape = SubResource("BoxShape3D_169")
 metadata/surface = "metal"
 
 [node name="M577" type="MeshInstance3D" parent="Static"]
 position = Vector3(5.4, 5.45, -8.5)
-mesh = SubResource("BoxMesh_168")
-material_override = ExtResource("64_r")
+mesh = SubResource("BoxMesh_170")
+material_override = ExtResource("65_r")
 
 [node name="M578" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.85, 5.35, -8.5)
-mesh = SubResource("BoxMesh_169")
+mesh = SubResource("BoxMesh_171")
 material_override = ExtResource("37_r")
 
 [node name="M579" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.85, 5.27, -8.5)
-mesh = SubResource("BoxMesh_170")
-material_override = ExtResource("65_r")
+mesh = SubResource("BoxMesh_172")
+material_override = ExtResource("66_r")
 cast_shadow = 0
 
 [node name="SodiumLight" type="OmniLight3D" parent="." groups=["mains"]]
@@ -4793,60 +4816,60 @@ distance_fade_length = 15.0
 
 [node name="Van" type="Node3D" parent="."]
 position = Vector3(-1.0, -6.0, -6.5)
-script = ExtResource("66_r")
+script = ExtResource("67_r")
 
 [node name="Body" type="MeshInstance3D" parent="Van"]
 position = Vector3(0, 0.95, 0)
-mesh = SubResource("BoxMesh_174")
-material_override = SubResource("StandardMaterial3D_171")
+mesh = SubResource("BoxMesh_176")
+material_override = SubResource("StandardMaterial3D_173")
 
 [node name="Glass" type="MeshInstance3D" parent="Van"]
 position = Vector3(0.05, 1.35, 0)
-mesh = SubResource("BoxMesh_175")
+mesh = SubResource("BoxMesh_177")
 material_override = ExtResource("34_r")
 
 [node name="HeadL" type="MeshInstance3D" parent="Van"]
 position = Vector3(1.71, 0.7, 0.5)
-mesh = SubResource("BoxMesh_176")
-material_override = SubResource("StandardMaterial3D_172")
+mesh = SubResource("BoxMesh_178")
+material_override = SubResource("StandardMaterial3D_174")
 
 [node name="HeadR" type="MeshInstance3D" parent="Van"]
 position = Vector3(1.71, 0.7, -0.5)
-mesh = SubResource("BoxMesh_177")
-material_override = SubResource("StandardMaterial3D_172")
+mesh = SubResource("BoxMesh_179")
+material_override = SubResource("StandardMaterial3D_174")
 
 [node name="TailL" type="MeshInstance3D" parent="Van"]
 position = Vector3(-1.71, 0.75, 0.6)
-mesh = SubResource("BoxMesh_178")
-material_override = SubResource("StandardMaterial3D_173")
+mesh = SubResource("BoxMesh_180")
+material_override = SubResource("StandardMaterial3D_175")
 
 [node name="TailR" type="MeshInstance3D" parent="Van"]
 position = Vector3(-1.71, 0.75, -0.6)
-mesh = SubResource("BoxMesh_179")
-material_override = SubResource("StandardMaterial3D_173")
+mesh = SubResource("BoxMesh_181")
+material_override = SubResource("StandardMaterial3D_175")
 
 [node name="Wheel0" type="MeshInstance3D" parent="Van"]
 position = Vector3(1.1, 0.3, 0.7)
 rotation_degrees = Vector3(90, 0, 0)
-mesh = SubResource("CylinderMesh_180")
+mesh = SubResource("CylinderMesh_182")
 material_override = ExtResource("34_r")
 
 [node name="Wheel1" type="MeshInstance3D" parent="Van"]
 position = Vector3(1.1, 0.3, -0.7)
 rotation_degrees = Vector3(90, 0, 0)
-mesh = SubResource("CylinderMesh_180")
+mesh = SubResource("CylinderMesh_182")
 material_override = ExtResource("34_r")
 
 [node name="Wheel2" type="MeshInstance3D" parent="Van"]
 position = Vector3(-1.1, 0.3, 0.7)
 rotation_degrees = Vector3(90, 0, 0)
-mesh = SubResource("CylinderMesh_180")
+mesh = SubResource("CylinderMesh_182")
 material_override = ExtResource("34_r")
 
 [node name="Wheel3" type="MeshInstance3D" parent="Van"]
 position = Vector3(-1.1, 0.3, -0.7)
 rotation_degrees = Vector3(90, 0, 0)
-mesh = SubResource("CylinderMesh_180")
+mesh = SubResource("CylinderMesh_182")
 material_override = ExtResource("34_r")
 
 [node name="Headlights" type="SpotLight3D" parent="Van"]
@@ -4865,4 +4888,4 @@ aabb = AABB(-1.8, 0, -0.8, 3.6, 1.8, 1.6)
 position = Vector3(1.8, 1.45, 2.4)
 size = Vector3(4.2, 3.2, 5.6)
 subdiv = 1
-data = ExtResource("67_r")
+data = ExtResource("68_r")

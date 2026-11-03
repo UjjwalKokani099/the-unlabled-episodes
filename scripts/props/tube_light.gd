@@ -2,7 +2,8 @@ class_name TubeLight
 extends Node3D
 ## Fluorescent tube-light fixture (the standard Indian corridor/stairwell light).
 ## Optional flicker: occasional dropouts and a stuttering start, like an old choke.
-## Expects children: Tube (MeshInstance3D, emissive), Light (OmniLight3D).
+## Expects children: Tube (MeshInstance3D, emissive), Light (OmniLight3D); optional Hum
+## (AudioStreamPlayer3D): the choke's buzz, only while lit (cuts out in the flicker).
 
 ## Start switched on.
 @export var on: bool = true:
@@ -19,10 +20,15 @@ var _timer: float = 0.0
 
 @onready var _tube: MeshInstance3D = $Tube
 @onready var _light: OmniLight3D = $Light
+@onready var _hum: AudioStreamPlayer3D = get_node_or_null("Hum")
 @onready var _material: StandardMaterial3D = _tube.get_active_material(0).duplicate()
 
 
 func _ready() -> void:
+	if _hum:
+		_hum.finished.connect(func() -> void:
+			if _light.visible:
+				_hum.play())
 	_tube.material_override = _material
 	_energy = _light.light_energy
 	_emission = _material.emission_energy_multiplier
@@ -62,3 +68,8 @@ func _apply(level: float) -> void:
 	_light.light_energy = _energy * level
 	_light.visible = level > 0.0
 	_material.emission_energy_multiplier = _emission * level
+	if _hum and is_inside_tree():
+		if level > 0.0 and not _hum.playing:
+			_hum.play(randf() * 1.9)
+		elif level <= 0.0 and _hum.playing:
+			_hum.stop()

@@ -383,6 +383,39 @@ def rustle(rng):
     return lowpass(out, 0.6)
 
 
+def tube_hum(rng):
+    """Fluorescent tube + choke: 100 Hz mains buzz with harmonics and a faint crackle.
+    Exactly 200 cycles (2 s) so the loop is seamless."""
+    n = int(RATE * 2.0)
+    crackle = [rng.uniform(-1, 1) if rng.random() < 0.002 else 0.0 for _ in range(n)]
+    out = []
+    for i in range(n):
+        t = i / RATE
+        buzz = (math.sin(2 * math.pi * 100 * t) * 0.5 + math.sin(2 * math.pi * 200 * t) * 0.25
+                + math.sin(2 * math.pi * 300 * t) * 0.18 + math.sin(2 * math.pi * 500 * t) * 0.07)
+        out.append(buzz * 0.6 + crackle[i] * 0.4)
+    return out
+
+
+def train_far(rng):
+    """A local train far away: two-tone horn, then the rumble of the rake passing."""
+    n = int(RATE * 7.0)
+    rumble = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.01)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        horn = 0.0
+        for start, length, f in ((0.3, 0.9, 311.0), (1.35, 1.6, 277.0)):
+            if start <= t < start + length:
+                env = min((t - start) / 0.08, 1.0, (start + length - t) / 0.2)
+                horn += env * (math.sin(2 * math.pi * f * t) + 0.5 * math.sin(2 * math.pi * f * 2 * t)
+                               + 0.3 * math.sin(2 * math.pi * f * 1.5 * t))
+        clack = 1.0 + 0.4 * (math.sin(2 * math.pi * 1.7 * t) > 0.92)
+        swell = math.sin(min(t / 7.0, 1.0) * math.pi)
+        out.append(horn * 0.35 + rumble[i] * 9.0 * swell * clack)
+    return lowpass(out, 0.15)
+
+
 def write(name, samples):
     peak = max(abs(s) for s in samples) or 1.0
     OUT.mkdir(parents=True, exist_ok=True)
@@ -428,6 +461,8 @@ def main():
                      ("step_metal", step_metal), ("step_dirt", step_dirt), ("step_soft", step_soft),
                      ("drawer_slide", drawer_slide), ("rustle", rustle)):
         write(name + ".wav", fn(rng))
+    write("tube_hum.wav", tube_hum(rng))
+    write("train_far.wav", train_far(rng))
 
 
 if __name__ == "__main__":

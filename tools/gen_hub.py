@@ -8,7 +8,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from levelkit import ROOT, Level, slab, sodium_lamp, v3, wall  # noqa: E402
+from levelkit import ROOT, Level, acoustic_zone, slab, sodium_lamp, v3, wall  # noqa: E402
 from propkit import Props  # noqa: E402
 
 GI_DATA = "res://scenes/hub/nikhil_room_gi.res"
@@ -152,6 +152,8 @@ def main() -> None:
     lv.add("ChargingSpot", "Marker3D", ".", {"position": v3(3.35, 0.76, 2.65)})
 
     dress_room(lv)
+    acoustic_zone(lv, "RoomAcoustics", (1.8, 1.45, 2.1), (3.6, 2.9, 4.2), "small_room")
+    acoustic_zone(lv, "CorridorAcoustics", (1.8, 1.45, 5.15), (3.84, 2.9, 1.9), "corridor")
 
     # ---- outside: lane below, building opposite, street lamp, the van spot
     lv.box((1.8, -6.1, -6.0), (40, 0.2, 14), "ground_asphalt")

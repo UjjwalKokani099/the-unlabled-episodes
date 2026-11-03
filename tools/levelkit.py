@@ -463,6 +463,17 @@ def night_environment(lv: Level, fog_density=0.012, moon=True) -> None:
             "directional_shadow_max_distance": "60.0", "light_volumetric_fog_energy": "0.3"})
 
 
+def acoustic_zone(lv: Level, name: str, centre, size, space: str, parent=".") -> str:
+    """Reverb for the listener while inside (scripts/audio/acoustic_zone.gd): open, yard,
+    small_room, hard_room, empty_room, corridor, stair. Nested zones: the smallest wins."""
+    path = lv.add(name, "Area3D", parent, {"position": v3(*centre),
+                                           "script": f'ExtResource("{lv.ext("res://scripts/audio/acoustic_zone.gd", "Script")}")',
+                                           "space": f'"{space}"'})
+    shape = lv.sub("BoxShape3D", {"size": v3(*size)})
+    lv.add("Shape", "CollisionShape3D", path, {"shape": f'SubResource("{shape}")'})
+    return path
+
+
 def sodium_lamp(lv: Level, x, z, height=6.0, facing_x=1.0, shadow=False, parent=".") -> None:
     """Street lamp post: pole, arm, lamp head, orange light (fades out with distance)."""
     lv.box((x, height / 2, z), (0.12, height, 0.12), "metal_rust")

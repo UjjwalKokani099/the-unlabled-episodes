@@ -8,7 +8,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from levelkit import (ROOT, Level, benchmark_points, night_environment, player_rig,  # noqa: E402
+from levelkit import (ROOT, Level, acoustic_zone, benchmark_points, night_environment, player_rig,  # noqa: E402
                       residential_wing, slab, sodium_lamp, v3, wall)
 from propkit import Props  # noqa: E402
 
@@ -291,6 +291,7 @@ def main() -> None:
     dress_cabin(lv)
     dress_grounds(lv)
     dress_stairwells(lv, wings)
+    place_acoustics(lv, wings)
     lv.scene("CabinTube", "res://scenes/props/tube_light.tscn", ".", {"position": v3(5.75, 2.6, 23.75)}, groups=["mains"])
     lv.add("CabinFan", "AudioStreamPlayer3D", ".", {"position": v3(5.75, 2.4, 23.75), "stream": sound(lv, "fan_hum"),
                                                      "volume_db": "-16.0", "unit_size": "3.0", "autoplay": "true",
@@ -377,7 +378,7 @@ def main() -> None:
         lv.add(name, "AudioStreamPlayer", amb, {"stream": f'ExtResource("{lv.ext(f"res://assets/audio/sfx/{snd}.wav", "AudioStream")}")',
                                                "volume_db": f"{vol}.0", "bus": '&"Ambience"'})
     lv.add("OneShots", "Node3D", amb)
-    for name, snd in (("Dog1", "dog_bark"), ("Dog2", "dog_bark"), ("Horn", "horn_far")):
+    for name, snd in (("Dog1", "dog_bark"), ("Dog2", "dog_bark"), ("Horn", "horn_far"), ("Train", "train_far")):
         lv.add(name, "AudioStreamPlayer3D", f"{amb}/OneShots", {"stream": f'ExtResource("{lv.ext(f"res://assets/audio/sfx/{snd}.wav", "AudioStream")}")',
                                                                 "unit_size": "25.0", "volume_db": "-6.0", "bus": '&"Ambience"'})
     # ---- chapter flow: objectives, checkpoints, end of the round
@@ -426,6 +427,20 @@ def main() -> None:
     with open(os.path.join(OUT_DIR, "objectives.tres"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines))
     print("wrote objectives.tres")
+
+
+def place_acoustics(lv: Level, wings: dict) -> None:
+    """Reverb zones: the courtyard's slap-back between the wings, concrete stairwells, the
+    cabin and meter room, and the empty flat 4B (scripts/audio/acoustic_zone.gd)."""
+    group = lv.add("Acoustics", "Node3D", ".")
+    acoustic_zone(lv, "Courtyard", (0, 4, 7), (64, 8, 42), "yard", parent=group)
+    acoustic_zone(lv, "Cabin", (5.75, 1.3, 23.75), (3.5, 2.6, 3.5), "hard_room", parent=group)
+    acoustic_zone(lv, "MeterRoom", (28, 1.45, -4), (4, 2.9, 4), "hard_room", parent=group)
+    acoustic_zone(lv, "Flat4B", (-6.5, 13.5, -19), (9, 3, 10), "empty_room", parent=group)
+    for letter, info in wings.items():
+        lx, _, lz = info["landings"][0]
+        ox, oz = lx - 1.5, lz - 9.2
+        acoustic_zone(lv, f"Stairs{letter}", (ox + 1.5, 9.0, oz + 7.1), (3.0, 18.0, 5.8), "stair", parent=group)
 
 
 def dress_stairwells(lv: Level, wings: dict) -> None:

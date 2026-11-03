@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/props/tube_light.gd" id="1_tube"]
 [ext_resource type="Material" path="res://assets/materials/metal_meter_white.tres" id="2_metal"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/tube_hum.wav" id="3_hum"]
 
 [sub_resource type="StandardMaterial3D" id="Material_tube"]
 albedo_color = Color(0.95, 0.97, 1, 1)
@@ -45,3 +46,10 @@ omni_attenuation = 1.2
 distance_fade_enabled = true
 distance_fade_begin = 30.0
 distance_fade_length = 10.0
+
+[node name="Hum" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_hum")
+volume_db = -26.0
+unit_size = 1.2
+max_distance = 9.0
+bus = &"SFX"
