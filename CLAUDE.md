@@ -226,6 +226,34 @@ Useful headless commands (run from project root):
 - Tests: frame rate is uncapped under `--script`; wait real seconds for timing checks, and
   free the level before quit() (sounds still playing at exit report leaks).
 
+## Grounded look, props, characters, sound (Nov 2026 pass)
+- Film look: `shaders/film_grade.gdshader` on a Graphics-owned canvas layer 1 (under the
+  camcorder OSD/VHS, HUD). `Settings.film_look` 0..1. `Graphics.set_dread(0..1)` darkens /
+  desaturates (the Stalker drives it from exposure).
+- Real models: `python tools/fetch_models.py` (Poly Haven CC0 glTF, small props 512 px;
+  credits in assets/models/CREDITS.md). Place with `tools/propkit.py` `Props(lv).model(name,
+  pos, yaw, ...)` (front = -Z after yaw, like every kit prop) under the level's `Props` node
+  (not batched). Root script `PropModel` (hide_parts, render_layers, visibility_end);
+  `WallClock` turns clock hands to tape time (camcorder OSD) or real time, `stopped_at`.
+- Render layer 19 "NotOnCCTV": seen by the player, culled by CCTV feeds
+  (`PropModel.CCTV_CULL_MASK`), e.g. CCTV camera bodies.
+- propkit also builds primitive clutter (Indian household, 1998 watchman, vehicles),
+  `soft()` squashed spheres, `cloth()` hanging fabric (`shaders/cloth.gdshader`: folds,
+  sway, stripes; QuadMesh hung from its top edge), `dust_sheet()`.
+- Characters (`tools/gen_characters.py`): skeleton pivots Body/Pelvis/HipL|R/KneeL|R,
+  Body/Chest/ShoulderL|R/ElbowL|R, Body/Head/EyelidL|R; child `Life` =
+  `CharacterLife` (breathing, blinking, walk cycle from the NPC's `walking`).
+- One-off moments that must survive leaving a tape: `Game.remember(key)` /
+  `remembers(key)` (save file). Chapter flags (`set_flag`) are wiped when the hub loads.
+- Demo end: playing a tape that isn't built shows `DemoEnd` (scripts/ui/demo_end.gd).
+- Acoustics: `AcousticZone` Area3D (no physics layer, watches the player) eases the "Space"
+  reverb on the SFX bus to its preset; smallest zone wins. Place with levelkit
+  `acoustic_zone()`. Tube lights hum while lit (`Hum` child).
+- Cloud screenshots: `apt-get install -y mesa-vulkan-drivers` gives lavapipe; then
+  `xvfb-run -a $GODOT --path . --rendering-method forward_plus --script <shot script>`
+  renders Forward+ (~30 s per shot); `gl_compatibility` works without it. Tests that need
+  a window also run under xvfb-run (touch/menu-click tests still fail there, as on main).
+
 ## Layout
 - `scenes/`   hub, menus, test scenes
 - `scripts/`  autoload (singletons), player, interaction, objectives, events, ui
