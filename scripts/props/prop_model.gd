@@ -3,6 +3,11 @@ extends Node3D
 ## Put on the root of an instanced 3D model (assets/models/*.gltf) by the level generators
 ## (tools/propkit.py `model()`): per-instance render options without editing the model.
 
+## Render layer 19: seen by the player, not by CCTV feeds (a camera's own body).
+const LAYER_NOT_ON_CCTV := 1 << 18
+## Cull mask for CCTV feed cameras: everything (incl. layer 20 CCTV-only) but layer 19.
+const CCTV_CULL_MASK := 0xFFFFF & ~LAYER_NOT_ON_CCTV
+
 ## Parts of the model to hide (node paths inside it), e.g. a laptop's stand.
 @export var hide_parts: PackedStringArray = []
 ## Render layers for every mesh (e.g. keep a CCTV camera's own body out of its feed).

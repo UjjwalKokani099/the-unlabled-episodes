@@ -36,7 +36,7 @@ func _ready() -> void:
 	add_child(_viewport)
 	_camera = Camera3D.new()
 	_camera.fov = 75.0
-	_camera.cull_mask = 0xFFFFF  # all 20 layers, including CCTV-only things
+	_camera.cull_mask = PropModel.CCTV_CULL_MASK  # CCTV-only things too, not camera bodies
 	_viewport.add_child(_camera)
 	_material = StandardMaterial3D.new()
 	_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
