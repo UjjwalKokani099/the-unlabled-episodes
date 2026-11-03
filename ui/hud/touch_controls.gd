@@ -1,7 +1,7 @@
 class_name TouchControls
 extends CanvasLayer
 ## On-screen controls for touch play (iPad / web). Part of the HUD; only visible while
-## `SettingsManager.touch_mode` is on and the game is in "playing" mode (no menu, note, dialogue).
+## `InputManager.touch_mode` is on and the game is in "playing" mode (no menu, note, dialogue).
 ## Left side: floating move stick. Right side: drag to look. Buttons send the same input
 ## actions as the keyboard, so gameplay code doesn't know the difference.
 ## RUN and DUCK are toggles (thumbs are busy); RUN switches off when the stick is let go.
@@ -50,7 +50,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	var want := SettingsManager.touch_mode and SettingsManager.mouse_captured() \
+	var want := InputManager.touch_mode and InputManager.mouse_captured() \
 			and get_tree().get_first_node_in_group("player") != null
 	if want != _shown:
 		_shown = want
@@ -63,7 +63,7 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch or event is InputEventScreenDrag:
-		SettingsManager.note_touch(event)  # we consume touches: Settings wouldn't see them otherwise
+		InputManager.note_touch(event)  # we consume touches: Settings wouldn't see them otherwise
 	if not _shown:
 		return
 	if event is InputEventScreenTouch:

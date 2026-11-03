@@ -27,6 +27,25 @@ def v3(x, y, z) -> str:
     return f"Vector3({r(x)}, {r(y)}, {r(z)})"
 
 
+# Features a level asks for but that only the Forward+ renderer has. They are written OFF
+# and recorded in metadata/authored_graphics; GraphicsManager switches them on where the
+# renderer and the quality preset allow (no warnings on the web's Compatibility renderer).
+FORWARD_ONLY = ("ssr_enabled", "volumetric_fog_enabled", "ssil_enabled")
+AUTHORED_KEYS = {"ssao_enabled": "ssao", "ssil_enabled": "ssil", "volumetric_fog_enabled": "volumetric_fog",
+                 "glow_enabled": "glow", "ssr_enabled": "ssr"}
+
+
+def authored_environment(props: dict) -> dict:
+    """Environment props -> the same with Forward+-only features off + the wish list."""
+    out = dict(props)
+    wants = {name: str(props.get(key, "false")).lower() == "true" for key, name in AUTHORED_KEYS.items()}
+    for key in FORWARD_ONLY:
+        if key in out:
+            out[key] = "false"
+    out["metadata/authored_graphics"] = "{" + ", ".join(f'"{k}": {"true" if v else "false"}' for k, v in wants.items()) + "}"
+    return out
+
+
 class Level:
     def __init__(self, root_name: str, root_script: str | None = None):
         self.ext_res = {}      # path -> (kind, id)
@@ -54,6 +73,8 @@ class Level:
         return f'ExtResource("{self.ext(f"res://assets/materials/{name}.tres", "Material")}")'
 
     def sub(self, kind: str, props: dict, key=None) -> str:
+        if kind == "Environment":
+            props = authored_environment(props)
         sid = f"{kind}_{len(self.subs)}"
         lines = [f'[sub_resource type="{kind}" id="{sid}"]'] + [f"{k} = {v}" for k, v in props.items()]
         self.subs.append("\n".join(lines) + "\n")

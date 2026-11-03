@@ -72,8 +72,8 @@ class Scene:
                 props["metallic"] = str(metal)
             if emission:
                 props.update({"emission_enabled": "true", "emission": col(emission), "emission_energy_multiplier": "6.0"})
-            if skin:  # soft light through skin (Forward+; ignored on the web)
-                props.update({"subsurf_scatter_enabled": "true", "subsurf_scatter_strength": "0.35"})
+            if skin:  # skin: a touch of rim light instead of subsurface scattering (web-safe)
+                props.update({"rim_enabled": "true", "rim": "0.15", "rim_tint": "0.6"})
             self.mats[key] = self.sub("StandardMaterial3D", props)
         return self.mats[key]
 

@@ -1,5 +1,5 @@
 extends Node
-## Global event bus, registered as the autoload "Events".
+## Global event bus, registered as the autoload "EventBus".
 ##
 ## React analogy: a tiny pub/sub store. Gameplay pieces announce what happened with a
 ## plain id, without knowing who listens:
@@ -9,7 +9,20 @@ extends Node
 ## objective completes, and descriptive names for everything else ("storage_opened").
 ## Counts are remembered until reset(), so late listeners can ask has_fired().
 
+## Story / gameplay happenings by id (data-driven: objectives, reactions, scripts).
 signal fired(id: StringName)
+
+# Typed system signals: systems announce lifecycle changes here instead of holding
+# references to each other.
+signal chapter_started(chapter: ChapterData)
+signal chapter_completed(chapter: ChapterData)
+signal checkpoint_saved(checkpoint_id: StringName)
+signal scene_transition_started(path: String)
+signal scene_transition_finished(path: String)
+signal setting_changed(key: StringName)
+signal input_device_changed(device: int)
+signal objective_changed(objective_id: StringName, completed: bool)
+signal game_paused(paused: bool)
 
 ## True while a checkpoint load rebuilds state (objectives re-completing etc.).
 ## Scares (EventReaction) ignore events fired while this is set.

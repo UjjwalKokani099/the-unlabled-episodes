@@ -36,9 +36,9 @@ Useful headless commands (run from project root):
   and uploads it to itch.io (secret `BUTLER_API_KEY`, variable `ITCH_GAME`); newest push wins.
   Web = Compatibility renderer (no VoxelGI/SSAO/SSIL/volumetric fog): check new levels with
   `--rendering-method gl_compatibility`. No threads on web (NavBaker bakes on the main thread).
-- Touch play: `SettingsManager.touch_mode` (first screen touch; a real mouse switches back) +
+- Touch play: `InputManager.touch_mode` (first screen touch; a real mouse switches back) +
   `ui/hud` TouchControls (stick left, drag right to look, buttons send input actions). Grab or
-  free the mouse only via `SettingsManager.capture_mouse(on)` and read `SettingsManager.mouse_captured()`,
+  free the mouse only via `InputManager.capture_mouse(on)` and read `InputManager.mouse_captured()`,
   never `Input.mouse_mode` directly. Touches also emit emulated mouse events
   (device `DEVICE_ID_EMULATION`): look code ignores those. Test: `tests/test_touch.gd`.
 - Work on a branch and push it (the owner merges after testing on the laptop). Keep commits
@@ -253,6 +253,28 @@ Useful headless commands (run from project root):
   `xvfb-run -a $GODOT --path . --rendering-method forward_plus --script <shot script>`
   renders Forward+ (~30 s per shot); `gl_compatibility` works without it. Tests that need
   a window also run under xvfb-run (touch/menu-click tests still fail there, as on main).
+
+## Core autoloads (studio layout, Nov 2026)
+Order: EventBus, SettingsManager, InputManager, AudioManager, GraphicsManager, SaveManager,
+SceneLoader, ObjectiveManager, GameManager (project.godot [autoload]).
+- `EventBus`: `fire(id)` story events + typed signals (chapter_started/completed,
+  checkpoint_saved, scene_transition_started/finished, setting_changed,
+  input_device_changed, objective_changed, game_paused). Systems talk through it.
+- `SaveManager`: user://saves/save_slot.json, `save_version` + `migrate()`, write = temp
+  file + rename, previous file kept as .bak (load falls back to it). `data` dict.
+  GameManager decides what to save; `GameManager.save_path` forwards to it (tests).
+- `SceneLoader.change_scene(path, header, lines, prepare)`: VCR card, threaded load
+  (direct load on web), swap, fade in. GameManager re-emits `transition_finished`.
+- `AudioManager`: buses Master/Music/SFX/Ambience/Voice/UI; `play_ui`, pooled `play_sfx`
+  / `play_at`, `play_music`/`stop_music` with fades, `set_muffled` (pause low-pass).
+- `InputManager`: device (keyboard+mouse / gamepad / touch), `capture_mouse()`,
+  `mouse_captured()`, `touch_mode`. Never read `Input.mouse_mode` elsewhere.
+- `GameManager.quit_game()` stops audio, frees the scene, then quits (window close too):
+  no leaks on exit. `chapter_play_time` / `last_chapter_time` for chapter screens.
+- Levels write Forward+-only features (SSR, SSIL, volumetric fog) OFF plus
+  `metadata/authored_graphics` (levelkit does it); GraphicsManager enables them only on
+  Forward+ and when the preset allows (no warnings on the web renderer).
+- Bug log: docs/bugs.md.
 
 ## Layout
 - `scenes/`   hub, menus, test scenes

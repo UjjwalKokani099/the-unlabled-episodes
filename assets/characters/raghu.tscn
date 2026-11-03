@@ -5,8 +5,9 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
 albedo_color = Color(0.38, 0.26, 0.18, 1)
 roughness = 0.55
-subsurf_scatter_enabled = true
-subsurf_scatter_strength = 0.35
+rim_enabled = true
+rim = 0.15
+rim_tint = 0.6
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3"]
 radius = 0.16
@@ -146,8 +147,9 @@ metallic = 0.8
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_76"]
 albedo_color = Color(0.3116, 0.2132, 0.1476, 1)
 roughness = 0.55
-subsurf_scatter_enabled = true
-subsurf_scatter_strength = 0.35
+rim_enabled = true
+rim = 0.15
+rim_tint = 0.6
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_78"]
 albedo_color = Color(0.86, 0.84, 0.8, 1)
@@ -167,8 +169,9 @@ roughness = 1.0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_86"]
 albedo_color = Color(0.3268, 0.2236, 0.1548, 1)
 roughness = 0.55
-subsurf_scatter_enabled = true
-subsurf_scatter_strength = 0.35
+rim_enabled = true
+rim = 0.15
+rim_tint = 0.6
 
 [sub_resource type="BoxMesh" id="BoxMesh_96"]
 size = Vector3(0.022, 0.05, 0.03)

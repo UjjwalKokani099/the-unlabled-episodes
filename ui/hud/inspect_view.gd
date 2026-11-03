@@ -52,7 +52,7 @@ func open(item: Inspectable) -> void:
 	_root.visible = true
 	is_open = true
 	_set_player_input(false)
-	SettingsManager.capture_mouse(false)
+	InputManager.capture_mouse(false)
 	_sound.play()
 
 
@@ -64,7 +64,7 @@ func close(take: bool = false) -> void:
 	is_open = false
 	_dragging = false
 	_set_player_input(true)
-	SettingsManager.capture_mouse(true)
+	InputManager.capture_mouse(true)
 	if take and is_instance_valid(_item):
 		_item.take()
 	_item = null

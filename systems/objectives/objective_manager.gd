@@ -82,6 +82,7 @@ func _complete(objective: ObjectiveData) -> void:
 	_active.erase(objective)
 	_done[objective.id] = true
 	completed.emit(objective)
+	EventBus.objective_changed.emit(objective.id, true)
 	EventBus.fire(objective.id)
 	_start_ready_objectives()
 	# (Completions can chain recursively; only announce the finish once.)
@@ -100,6 +101,7 @@ func _start_ready_objectives() -> void:
 			_progress[objective.id] = 0
 			newly_started.append(objective)
 			started.emit(objective)
+			EventBus.objective_changed.emit(objective.id, false)
 	# Events that already happened count (e.g. batteries grabbed before the objective).
 	for objective in newly_started:
 		var past := EventBus.count(objective.complete_on)

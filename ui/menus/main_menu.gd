@@ -37,7 +37,7 @@ var _starting: bool = false
 
 
 func _ready() -> void:
-	SettingsManager.capture_mouse(false)
+	InputManager.capture_mouse(false)
 	if GameManager.should_autoplay_intro():
 		GameManager.play_intro.call_deferred()
 		return
@@ -61,7 +61,7 @@ func _ready() -> void:
 		_show_only(null)
 		_backdrop.frame(MenuBackdrop.Framing.CLOSE)
 		_settings.open())
-	_quit.pressed.connect(func() -> void: get_tree().quit())
+	_quit.pressed.connect(GameManager.quit_game)
 	_confirm_no.pressed.connect(_back_to_main)
 	_confirm_yes.pressed.connect(func() -> void: _start(GameManager.new_game))
 	_settings.closed.connect(_back_to_main)

@@ -55,7 +55,7 @@ func stop() -> void:
 	_root.visible = false
 	_clear_choices()
 	_set_player_input(true)
-	SettingsManager.capture_mouse(true)
+	InputManager.capture_mouse(true)
 	finished.emit(_last_node)
 
 
@@ -137,7 +137,7 @@ func _finish_typing() -> void:
 		button.mouse_entered.connect(button.grab_focus)
 		_choices.add_child(button)
 	(_choices.get_child(0) as Button).grab_focus()
-	SettingsManager.capture_mouse(false)
+	InputManager.capture_mouse(false)
 
 
 func _clear_choices() -> void:

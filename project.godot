@@ -17,9 +17,13 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SettingsManager="*res://core/settings_manager.gd"
-GraphicsManager="*res://core/graphics_manager.gd"
 EventBus="*res://core/event_bus.gd"
+SettingsManager="*res://core/settings_manager.gd"
+InputManager="*res://core/input_manager.gd"
+AudioManager="*res://core/audio_manager.gd"
+GraphicsManager="*res://core/graphics_manager.gd"
+SaveManager="*res://core/save_manager.gd"
+SceneLoader="*res://core/scene_loader.gd"
 ObjectiveManager="*res://systems/objectives/objective_manager.gd"
 GameManager="*res://core/game_manager.gd"
 

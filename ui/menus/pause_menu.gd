@@ -54,7 +54,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func open() -> void:
 	is_open = true
 	get_tree().paused = true
-	SettingsManager.capture_mouse(false)
+	InputManager.capture_mouse(false)
+	AudioManager.set_muffled(true)
+	EventBus.game_paused.emit(true)
 	var chapter := GameManager.current_chapter
 	_where.text = "%s - %s" % [chapter.title, chapter.subtitle] if chapter else ""
 	_restart.visible = chapter != null and GameManager.has_checkpoint() and GameManager.checkpoint_chapter_id() == chapter.id
@@ -69,7 +71,9 @@ func close() -> void:
 	is_open = false
 	_root.visible = false
 	get_tree().paused = false
-	SettingsManager.capture_mouse(true)
+	InputManager.capture_mouse(true)
+	AudioManager.set_muffled(false)
+	EventBus.game_paused.emit(false)
 
 
 func _can_open() -> bool:
@@ -80,3 +84,5 @@ func _can_open() -> bool:
 func _leave() -> void:
 	is_open = false
 	_root.visible = false
+	AudioManager.set_muffled(false)
+	EventBus.game_paused.emit(false)

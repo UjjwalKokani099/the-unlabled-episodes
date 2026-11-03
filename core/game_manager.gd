@@ -1,5 +1,6 @@
 extends Node
-## Chapter flow and save data, registered as the autoload "Game".
+## Chapter flow, registered as the autoload "GameManager". Decides what goes into the save
+## (SaveManager stores it) and asks SceneLoader to change levels.
 ##
 ##   GameManager.start_chapter(&"tape_01_watchman")  # fresh start, with the tape card
 ##   GameManager.load_checkpoint()                    # continue from the last checkpoint
@@ -9,41 +10,41 @@ extends Node
 ## pickups are gone) and the camcorder clock. Objectives rebuild themselves from the
 ## Events counts when the level loads, so they don't need saving separately.
 
-signal chapter_started(chapter: ChapterData)
-signal chapter_completed(chapter: ChapterData)
-signal checkpoint_saved(id: StringName)
 ## Emitted when a level change has fully finished (screen visible, game unpaused).
+## (Forwarded from SceneLoader; chapter/checkpoint news goes out on the EventBus.)
 signal transition_finished
 
 const CHAPTER_LIST_PATH := "res://data/chapter_list.tres"
-const SAVE_VERSION := 1
 const MAIN_MENU_PATH := "res://ui/menus/main_menu.tscn"
 const INTRO_PATH := "res://chapters/intro/intro.tscn"
-const TITLE_CARD_SECONDS := 1.4
-## Hold time for a plain fade (no title text).
-const PLAIN_FADE_SECONDS := 0.25
 
-## Tests point this somewhere else so they never touch the real save.
-var save_path: String = "user://save.json"
+## Tests point this somewhere else so they never touch the real save (SaveManager's path).
+var save_path: String:
+	get:
+		return SaveManager.save_path
+	set(value):
+		SaveManager.save_path = value
 var chapter_list: ChapterList
 ## The tape being played, or null (hub, menus, scenes run on their own).
 var current_chapter: ChapterData
 ## Camcorder clock (seconds into the tape) when the current level loaded.
 var tape_time_at_load: float = 0.0
 
-var _save: Dictionary = {}
 var _flags: Dictionary = {}
 var _pending_checkpoint: StringName = &""
-var _transitioning: bool = false
-var _transition: TapeTransition
+## Seconds played in the current chapter (paused time doesn't count; kept in checkpoints).
+var chapter_play_time: float = 0.0
+## Play time of the chapter that was just completed (for the end-of-chapter screen).
+var last_chapter_time: float = 0.0
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	chapter_list = load(CHAPTER_LIST_PATH)
-	_transition = TapeTransition.new()
-	add_child(_transition)
-	load_save()
+	SceneLoader.transition_finished.connect(transition_finished.emit)
+	# Closing the window goes through quit_game(), so scripted sequences that are still
+	# waiting on timers are freed cleanly (no leaks or errors on exit).
+	get_tree().set_auto_accept_quit(false)
 	_adopt_current_scene.call_deferred()
 
 
@@ -57,7 +58,7 @@ func get_chapter(id: StringName) -> ChapterData:
 
 
 func is_completed(id: StringName) -> bool:
-	return (_save.completed as Array).has(String(id))
+	return (SaveManager.data.completed as Array).has(String(id))
 
 
 func is_unlocked(id: StringName) -> bool:
@@ -69,22 +70,23 @@ func is_unlocked(id: StringName) -> bool:
 
 
 func is_transitioning() -> bool:
-	return _transitioning
+	return SceneLoader.is_transitioning()
 
 
 ## Starts a chapter from the beginning. Returns false if it can't be started.
 func start_chapter(id: StringName) -> bool:
 	var chapter := get_chapter(id)
-	if chapter == null or not chapter.is_built() or _transitioning:
+	if chapter == null or not chapter.is_built() or SceneLoader.is_transitioning():
 		return false
 	current_chapter = chapter
 	EventBus.reset()
 	_flags = {}
 	tape_time_at_load = 0.0
+	chapter_play_time = 0.0
 	_pending_checkpoint = &""
-	_save.checkpoint = {}
-	_write_save()
-	chapter_started.emit(chapter)
+	SaveManager.data.checkpoint = {}
+	SaveManager.write()
+	EventBus.chapter_started.emit(chapter)
 	_change_level(chapter.scene_path, "PLAY ►", PackedStringArray([chapter.title, chapter.subtitle]))
 	return true
 
@@ -96,17 +98,17 @@ func restart_chapter() -> bool:
 # --- Checkpoints ------------------------------------------------------------
 
 func has_checkpoint() -> bool:
-	return not (_save.checkpoint as Dictionary).is_empty()
+	return not (SaveManager.data.checkpoint as Dictionary).is_empty()
 
 
 ## Chapter id of the saved checkpoint (for a "Continue" button), or &"".
 func checkpoint_chapter_id() -> StringName:
-	return StringName(_save.checkpoint.get("chapter", ""))
+	return StringName(SaveManager.data.checkpoint.get("chapter", ""))
 
 
 ## Id of the saved checkpoint, or &"".
 func saved_checkpoint_id() -> StringName:
-	return StringName(_save.checkpoint.get("checkpoint", ""))
+	return StringName(SaveManager.data.checkpoint.get("checkpoint", ""))
 
 
 func save_checkpoint(id: StringName) -> void:
@@ -114,22 +116,23 @@ func save_checkpoint(id: StringName) -> void:
 	# spawn checkpoint saves as the picture fades in, so "Continue" works right away.
 	if current_chapter == null or get_tree().paused:
 		return
-	_save.checkpoint = {
+	SaveManager.data.checkpoint = {
 		"chapter": String(current_chapter.id),
 		"checkpoint": String(id),
 		"events": EventBus.snapshot(),
 		"flags": _flags.duplicate(),
 		"tape_time": _current_tape_time(),
+		"play_time": chapter_play_time,
 	}
-	_write_save()
-	checkpoint_saved.emit(id)
+	SaveManager.write()
+	EventBus.checkpoint_saved.emit(id)
 
 
 ## Reloads the level at the last checkpoint. Returns false if there's nothing to load.
 func load_checkpoint() -> bool:
-	if not has_checkpoint() or _transitioning:
+	if not has_checkpoint() or SceneLoader.is_transitioning():
 		return false
-	var saved: Dictionary = _save.checkpoint
+	var saved: Dictionary = SaveManager.data.checkpoint
 	var chapter := get_chapter(StringName(saved.chapter))
 	if chapter == null or not chapter.is_built():
 		return false
@@ -137,6 +140,7 @@ func load_checkpoint() -> bool:
 	EventBus.restore(saved.get("events", {}))
 	_flags = (saved.get("flags", {}) as Dictionary).duplicate()
 	tape_time_at_load = float(saved.get("tape_time", 0.0))
+	chapter_play_time = float(saved.get("play_time", 0.0))
 	_pending_checkpoint = StringName(saved.get("checkpoint", ""))
 	_change_level(chapter.scene_path, "PLAY ►", PackedStringArray([chapter.title, chapter.subtitle]))
 	return true
@@ -145,21 +149,25 @@ func load_checkpoint() -> bool:
 # --- Completion ---------------------------------------------------------------
 
 func complete_chapter() -> void:
-	if current_chapter == null or _transitioning:
+	if current_chapter == null or SceneLoader.is_transitioning():
 		return
 	var finished := current_chapter
+	last_chapter_time = chapter_play_time
+	var times: Dictionary = SaveManager.data.get("chapter_times", {})
+	times[String(finished.id)] = chapter_play_time
+	SaveManager.data["chapter_times"] = times
 	if not is_completed(finished.id):
-		(_save.completed as Array).append(String(finished.id))
-	_save.checkpoint = {}
-	_write_save()
+		(SaveManager.data.completed as Array).append(String(finished.id))
+	SaveManager.data.checkpoint = {}
+	SaveManager.write()
 	_clear_chapter_state()
-	chapter_completed.emit(finished)
+	EventBus.chapter_completed.emit(finished)
 	_change_level(_hub_path(), "■ STOP", PackedStringArray([finished.title, "END OF TAPE"]))
 
 
 ## Leave the current tape without finishing it (keeps the checkpoint for Resume).
 func return_to_hub() -> void:
-	if _transitioning:
+	if SceneLoader.is_transitioning():
 		return
 	var leaving := current_chapter
 	_clear_chapter_state()
@@ -168,7 +176,7 @@ func return_to_hub() -> void:
 
 ## Menu -> hub (plain fade).
 func enter_hub() -> void:
-	if _transitioning:
+	if SceneLoader.is_transitioning():
 		return
 	_clear_chapter_state()
 	_change_level(_hub_path(), "", PackedStringArray())
@@ -176,7 +184,7 @@ func enter_hub() -> void:
 
 ## Anywhere -> main menu. A tape in progress keeps its checkpoint (Continue).
 func go_to_main_menu() -> void:
-	if _transitioning:
+	if SceneLoader.is_transitioning():
 		return
 	_clear_chapter_state()
 	_change_level(MAIN_MENU_PATH, "■ STOP", PackedStringArray())
@@ -184,7 +192,7 @@ func go_to_main_menu() -> void:
 
 ## Wipes the save file and starts again with the intro (or the hub if there is none).
 func new_game() -> void:
-	if _transitioning:
+	if SceneLoader.is_transitioning():
 		return
 	delete_save()
 	if ResourceLoader.exists(INTRO_PATH):
@@ -197,16 +205,16 @@ func new_game() -> void:
 
 ## True only on the very first launch (no save yet, intro never seen).
 func should_autoplay_intro() -> bool:
-	return not _save.get("intro_seen", false) and ResourceLoader.exists(INTRO_PATH)
+	return not SaveManager.data.get("intro_seen", false) and ResourceLoader.exists(INTRO_PATH)
 
 
 func mark_intro_seen() -> void:
-	_save["intro_seen"] = true
-	_write_save()
+	SaveManager.data["intro_seen"] = true
+	SaveManager.write()
 
 
 func play_intro() -> void:
-	if _transitioning:
+	if SceneLoader.is_transitioning():
 		return
 	_clear_chapter_state()
 	_change_level(INTRO_PATH, "PLAY ►", PackedStringArray())
@@ -220,7 +228,37 @@ func finish_intro() -> void:
 
 ## Anything worth continuing: a finished tape or a saved checkpoint.
 func has_progress() -> bool:
-	return not (_save.completed as Array).is_empty() or has_checkpoint()
+	return not (SaveManager.data.completed as Array).is_empty() or has_checkpoint()
+
+
+## Quit the game cleanly: save, free the running scene (and any coroutines waiting in it),
+## let a frame pass, then quit. The window's close button calls this too.
+func quit_game() -> void:
+	if SaveManager.data.get("play_time", 0.0) > 0.0:
+		SaveManager.write()
+	var tree := get_tree()
+	tree.paused = false
+	# Sounds still playing at exit hold their streams (reported as leaks): stop them all.
+	for type in ["AudioStreamPlayer", "AudioStreamPlayer2D", "AudioStreamPlayer3D"]:
+		for node in tree.root.find_children("*", type, true, false):
+			node.call(&"stop")
+	await tree.process_frame
+	if tree.current_scene:
+		tree.current_scene.queue_free()
+	await tree.process_frame
+	await tree.process_frame
+	tree.quit()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		quit_game()
+
+
+func _process(delta: float) -> void:
+	if current_chapter != null and not get_tree().paused:
+		chapter_play_time += delta
+		SaveManager.data["play_time"] = float(SaveManager.data.get("play_time", 0.0)) + delta
 
 
 func _clear_chapter_state() -> void:
@@ -244,23 +282,23 @@ func get_flag(key: String, default: Variant = null) -> Variant:
 
 ## Remembers a spotted appearance. Returns true the first time.
 func mark_spotted(spot_id: StringName) -> bool:
-	var list: Array = _save.get("spotted", [])
+	var list: Array = SaveManager.data.get("spotted", [])
 	if String(spot_id) in list:
 		return false
 	list.append(String(spot_id))
-	_save["spotted"] = list
-	_write_save()
+	SaveManager.data["spotted"] = list
+	SaveManager.write()
 	return true
 
 
 func is_spotted(spot_id: StringName) -> bool:
-	return String(spot_id) in (_save.get("spotted", []) as Array)
+	return String(spot_id) in (SaveManager.data.get("spotted", []) as Array)
 
 
 ## How many appearances were spotted (ids starting with `prefix`, e.g. "t1_").
 func spotted_count(prefix: String = "") -> int:
 	var n := 0
-	for id: String in _save.get("spotted", []):
+	for id: String in SaveManager.data.get("spotted", []):
 		if id.begins_with(prefix):
 			n += 1
 	return n
@@ -271,66 +309,33 @@ func spotted_count(prefix: String = "") -> int:
 ## Remembers `key` in the save file (unlike flags, it survives leaving a tape and New Game
 ## only clears it with the rest of the save). Returns true the first time.
 func remember(key: String) -> bool:
-	var list: Array = _save.get("memory", [])
+	var list: Array = SaveManager.data.get("memory", [])
 	if key in list:
 		return false
 	list.append(key)
-	_save["memory"] = list
-	_write_save()
+	SaveManager.data["memory"] = list
+	SaveManager.write()
 	return true
 
 
 func remembers(key: String) -> bool:
-	return key in (_save.get("memory", []) as Array)
+	return key in (SaveManager.data.get("memory", []) as Array)
 
 
-# --- Save file ----------------------------------------------------------------
+# --- Save file (stored by SaveManager) ------------------------------------------
 
 func load_save() -> void:
-	_save = {"version": SAVE_VERSION, "completed": [], "checkpoint": {}}
-	if not FileAccess.file_exists(save_path):
-		return
-	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(save_path))
-	if data is Dictionary:
-		_save.completed = data.get("completed", [])
-		_save.checkpoint = data.get("checkpoint", {})
-		_save.intro_seen = data.get("intro_seen", false)
-		_save.spotted = data.get("spotted", [])
-		_save.memory = data.get("memory", [])
-	else:
-		push_warning("Game: save file unreadable, starting fresh")
+	SaveManager.load_save()
 
 
 func delete_save() -> void:
-	if FileAccess.file_exists(save_path):
-		DirAccess.remove_absolute(ProjectSettings.globalize_path(save_path))
-	load_save()
-
-
-func _write_save() -> void:
-	var file := FileAccess.open(save_path, FileAccess.WRITE)
-	if file == null:
-		push_warning("Game: could not write %s (error %d)" % [save_path, FileAccess.get_open_error()])
-		return
-	file.store_string(JSON.stringify(_save, "\t"))
+	SaveManager.delete_save()
 
 
 # --- Internals ------------------------------------------------------------------
 
 func _change_level(path: String, header: String, lines: PackedStringArray) -> void:
-	_transitioning = true
-	var tree := get_tree()
-	tree.paused = true
-	await _transition.cover(header, lines)
-	tree.change_scene_to_file(path)
-	await tree.scene_changed
-	_place_player_at_checkpoint()
-	var hold := PLAIN_FADE_SECONDS if lines.is_empty() else TITLE_CARD_SECONDS
-	await tree.create_timer(hold, true).timeout
-	tree.paused = false
-	await _transition.reveal()
-	_transitioning = false
-	transition_finished.emit()
+	SceneLoader.change_scene(path, header, lines, _place_player_at_checkpoint)
 
 
 func _place_player_at_checkpoint() -> void:

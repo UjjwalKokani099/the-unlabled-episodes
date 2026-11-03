@@ -71,7 +71,8 @@ glow_enabled = true
 glow_intensity = 0.6
 glow_bloom = 0.03
 glow_hdr_threshold = 0.9
-volumetric_fog_enabled = true
+volumetric_fog_enabled = false
+metadata/authored_graphics = {"ssao": true, "ssil": true, "volumetric_fog": true, "glow": true, "ssr": false}
 volumetric_fog_density = 0.015
 volumetric_fog_length = 32.0
 

@@ -63,16 +63,16 @@ func _ready() -> void:
 	menu.name = "Menu"
 	menu.text = "MAIN MENU"
 	menu.pressed.connect(func() -> void:
-		SettingsManager.capture_mouse(false)
+		InputManager.capture_mouse(false)
 		GameManager.go_to_main_menu())
 	buttons.add_child(menu)
-	SettingsManager.capture_mouse(false)
+	InputManager.capture_mouse(false)
 	_panel.modulate.a = 0.0
 	create_tween().tween_property(_panel, "modulate:a", 1.0, 1.2)
 	_back.grab_focus.call_deferred()
 
 
 func close() -> void:
-	SettingsManager.capture_mouse(true)
+	InputManager.capture_mouse(true)
 	closed.emit()
 	queue_free()

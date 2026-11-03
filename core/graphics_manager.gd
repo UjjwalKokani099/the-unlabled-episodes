@@ -62,6 +62,11 @@ func _ready() -> void:
 	apply()
 
 
+## True on the Compatibility renderer (web / iPad build, or --rendering-method gl_compatibility).
+static func is_compatibility() -> bool:
+	return RenderingServer.get_current_rendering_method() == "gl_compatibility"
+
+
 ## The preset dictionary currently in use.
 func current() -> Dictionary:
 	return PRESETS[SettingsManager.graphics_quality]
@@ -86,7 +91,8 @@ func _apply_global() -> void:
 	# PS1 mode: the picture ends up pixelated to 480 lines anyway (assets/shaders/ps1_post), so
 	# render 3D at half resolution and skip anti-aliasing (crunchy edges are the look).
 	viewport.scaling_3d_scale = minf(p.render_scale, PS1_RENDER_SCALE) if ps1 else p.render_scale
-	viewport.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA if (p.fxaa and not ps1) else Viewport.SCREEN_SPACE_AA_DISABLED
+	var fxaa: bool = p.fxaa and not ps1 and not is_compatibility()  # FXAA: Forward+/Mobile only
+	viewport.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA if fxaa else Viewport.SCREEN_SPACE_AA_DISABLED
 	ps1_amount = 1.0 if ps1 else 0.0
 	RenderingServer.global_shader_parameter_set(&"ps1_amount", ps1_amount)
 	viewport.mesh_lod_threshold = p.lod_threshold
@@ -111,12 +117,15 @@ func _apply_environment(world: WorldEnvironment) -> void:
 		})
 	var authored: Dictionary = env.get_meta(AUTHORED_META)
 	var p := current()
-	env.ssao_enabled = authored.ssao and p.ssao
-	env.ssil_enabled = authored.ssil and p.ssil
-	env.volumetric_fog_enabled = authored.volumetric_fog and p.volumetric_fog
+	# The web build's Compatibility renderer has none of these: switch them off there
+	# instead of letting the engine warn about each one.
+	var full := not is_compatibility()
+	env.ssao_enabled = authored.ssao and p.ssao and full
+	env.ssil_enabled = authored.ssil and p.ssil and full
+	env.volumetric_fog_enabled = authored.volumetric_fog and p.volumetric_fog and full
 	env.glow_enabled = authored.glow and p.glow
 	# Screen-space reflections (polished tiles, wet ground, glass): High only.
-	env.ssr_enabled = authored.get("ssr", false) and p.ssr
+	env.ssr_enabled = authored.get("ssr", false) and p.ssr and full
 
 
 ## Baked bounce light: off on Low, low quality on Medium, full on High.

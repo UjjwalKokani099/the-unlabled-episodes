@@ -64,7 +64,7 @@ func show_message(text: String, duration: float = 2.5) -> void:
 ## Name of the key bound to "interact" on this keyboard layout (e.g. "E"); "USE" (the
 ## on-screen button) in touch mode.
 func _interact_key() -> String:
-	if SettingsManager.touch_mode:
+	if InputManager.touch_mode:
 		return "USE"
 	if _key_name.is_empty():
 		_key_name = SettingsManager.key_name(&"interact")

@@ -35,8 +35,8 @@ def main() -> None:
                                         "shader_parameter/horizon_color": "Color(0.62, 0.33, 0.15, 1)",
                                         "shader_parameter/glow_height": "0.3", "shader_parameter/star_density": "0.0"})
     sky = lv.sub("Sky", {"sky_material": f'SubResource("{sky_mat}")'})
-    env = lv.sub("Environment", {"background_mode": "2", "sky": f'SubResource("{sky}")', "ambient_light_source": "3",
-                                 "ambient_light_energy": "0.35", "tonemap_mode": "4", "tonemap_exposure": "1.1",
+    env = lv.sub("Environment", {"background_mode": "2", "sky": f'SubResource("{sky}")', "ambient_light_source": "2",
+                                 "ambient_light_color": "Color(0.6, 0.45, 0.4, 1)", "ambient_light_energy": "0.35", "tonemap_mode": "4", "tonemap_exposure": "1.1",
                                  "ssao_enabled": "true", "glow_enabled": "true", "glow_intensity": "0.6",
                                  "volumetric_fog_enabled": "true", "volumetric_fog_density": "0.02",
                                  "volumetric_fog_albedo": "Color(1, 0.85, 0.7, 1)"})

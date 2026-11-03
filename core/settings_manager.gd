@@ -16,6 +16,8 @@ const AUDIO_BUSES := {
 	&"music_volume": &"Music",
 	&"sfx_volume": &"SFX",
 	&"ambience_volume": &"Ambience",
+	&"voice_volume": &"Voice",
+	&"ui_volume": &"UI",
 }
 
 ## Every persisted key. Add new settings here AND as a var below.
@@ -23,7 +25,7 @@ const KEYS: Array[StringName] = [
 	&"mouse_sensitivity", &"invert_y", &"fov", &"crouch_toggle", &"head_bob", &"screen_effects",
 	&"brightness", &"fullscreen", &"graphics_quality", &"show_fps", &"ps1_mode", &"film_look",
 	&"subtitles", &"subtitle_size", &"key_bindings",
-	&"master_volume", &"music_volume", &"sfx_volume", &"ambience_volume",
+	&"master_volume", &"music_volume", &"sfx_volume", &"ambience_volume", &"voice_volume", &"ui_volume",
 ]
 
 # Declared first so it is already true while the vars below get their initial values:
@@ -144,73 +146,23 @@ var ambience_volume: float = 1.0:
 		ambience_volume = clampf(value, 0.0, 1.0)
 		_on_value_set(&"ambience_volume")
 
+var voice_volume: float = 1.0:
+	set(value):
+		voice_volume = clampf(value, 0.0, 1.0)
+		_on_value_set(&"voice_volume")
+
+var ui_volume: float = 0.8:
+	set(value):
+		ui_volume = clampf(value, 0.0, 1.0)
+		_on_value_set(&"ui_volume")
+
 
 var _brightness_rect: ColorRect
-
-## Touch play (iPad / web): true after the first screen touch, false again once a real mouse
-## moves. Not saved. In touch mode the mouse is never captured; `mouse_captured()` reports
-## what the game asked for instead, so gameplay code works the same with fingers.
-var touch_mode: bool = false
-var _want_capture: bool = false
-
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_make_brightness_layer()
 	load_settings()
-
-
-## Every "grab / free the mouse" goes through here (player, pause menu, dialogue, inspect...).
-func capture_mouse(on: bool) -> void:
-	_want_capture = on
-	if touch_mode:
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	else:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if on else Input.MOUSE_MODE_VISIBLE
-
-
-## True while the game is in "playing" mode (mouse grabbed, or wanted in touch mode).
-func mouse_captured() -> bool:
-	if touch_mode:
-		return _want_capture
-	return Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
-
-
-var _fingers: Dictionary = {}  # touch index -> true while that finger is down
-var _last_touch_ms: int = -100000
-var _mouse_travel: float = 0.0
-
-
-## Called for every screen touch / drag (here and by TouchControls, which consumes them).
-func note_touch(event: InputEvent) -> void:
-	_last_touch_ms = Time.get_ticks_msec()
-	_mouse_travel = 0.0
-	if event is InputEventScreenTouch:
-		if event.pressed:
-			_fingers[event.index] = true
-		else:
-			_fingers.erase(event.index)
-	if not touch_mode:
-		_want_capture = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or _want_capture
-		touch_mode = true
-		capture_mouse(_want_capture)
-		changed.emit(&"touch_mode")
-
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventScreenTouch or event is InputEventScreenDrag:
-		note_touch(event)
-	elif touch_mode and event is InputEventMouseMotion and event.device != InputEvent.DEVICE_ID_EMULATION:
-		# Browsers also report finger drags as mouse movement: only a mouse that moves a fair
-		# distance with no finger on the screen for a second means a real mouse took over.
-		if not _fingers.is_empty() or Time.get_ticks_msec() - _last_touch_ms < 1000:
-			return
-		_mouse_travel += (event as InputEventMouseMotion).relative.length()
-		if _mouse_travel > 80.0:
-			touch_mode = false
-			_mouse_travel = 0.0
-			capture_mouse(_want_capture)
-			changed.emit(&"touch_mode")
 
 
 func load_settings() -> void:
@@ -247,6 +199,7 @@ func _on_value_set(key: StringName) -> void:
 	elif key == &"fullscreen":
 		_apply_fullscreen()
 	changed.emit(key)
+	EventBus.setting_changed.emit(key)
 	if not _save_queued:
 		_save_queued = true
 		save_settings.call_deferred()

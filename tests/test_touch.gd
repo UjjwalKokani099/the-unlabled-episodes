@@ -53,7 +53,7 @@ func button_pos(name: StringName) -> Vector2:
 
 func _initialize() -> void:
 	await process_frame
-	settings = root.get_node("/root/SettingsManager")
+	settings = root.get_node("/root/InputManager")  # touch mode + capture live in InputManager
 	var room: Node = load("res://tests/scenes/test_room.tscn").instantiate()
 	root.add_child(room)
 	p = room.get_node("Player")

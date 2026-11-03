@@ -87,7 +87,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		# Touches also arrive as mouse motion (emulated, and from the browser): in touch mode
 		# the view only turns via TouchControls.
-		if event.device != InputEvent.DEVICE_ID_EMULATION and not SettingsManager.touch_mode:
+		if event.device != InputEvent.DEVICE_ID_EMULATION and not InputManager.touch_mode:
 			_look((event as InputEventMouseMotion).screen_relative)
 	elif event.is_action_pressed("flashlight"):
 		toggle_flashlight()
@@ -230,11 +230,11 @@ func _flashlight_target() -> Transform3D:
 
 
 func _is_mouse_captured() -> bool:
-	return SettingsManager.mouse_captured()
+	return InputManager.mouse_captured()
 
 
 func _set_mouse_captured(captured: bool) -> void:
-	SettingsManager.capture_mouse(captured)
+	InputManager.capture_mouse(captured)
 
 
 func _on_setting_changed(key: StringName) -> void:
