@@ -148,7 +148,7 @@ func use_vcr() -> void:
 	if held:
 		var chapter := held.chapter
 		if chapter == null or not chapter.is_built():
-			_message("The tape just hisses. (This tape isn't made yet.)")
+			_demo_end()
 			return
 		Events.fire(&"tape_inserted")
 		_play(func() -> bool: return Game.start_chapter(chapter.id))
@@ -176,6 +176,30 @@ func _play(start: Callable) -> void:
 			held.visible = true
 		if player:
 			player.input_enabled = true
+
+
+## The demo stops at the first tape that isn't built: the VCR takes it, the TV shows PLAY,
+## then static, then the end-of-demo card (scripts/ui/demo_end.gd).
+func _demo_end() -> void:
+	busy = true
+	var player := _player()
+	if player:
+		player.input_enabled = false
+	vcr.insert_sound.play()
+	tv.set_mode(HubTV.Mode.BLUE, "PLAY ►")
+	await get_tree().create_timer(PLAY_DELAY).timeout
+	tv.set_mode(HubTV.Mode.STATIC)
+	await get_tree().create_timer(1.4).timeout
+	if not is_inside_tree():
+		return
+	var card := DemoEnd.new()
+	card.name = "DemoEnd"
+	add_child(card)
+	await card.closed
+	if player:
+		player.input_enabled = true
+	busy = false
+	_think_once(&"demo_end", "Same as the first one. No label. Just... waiting.", 4.0, 1.0)
 
 
 func _fill_box() -> void:
@@ -307,11 +331,10 @@ func _arrival_thought() -> void:
 
 
 ## A thought (subtitle, speaker NIKHIL) that plays once per save, `delay` seconds from now.
+## Uses Game.remember (the save file): chapter flags are wiped whenever the hub loads.
 func _think_once(key: StringName, text: String, seconds: float, delay: float = 0.0) -> void:
-	var flag := "hub_thought_" + String(key)
-	if Game.get_flag(flag) != null:
+	if not Game.remember("hub_thought_" + String(key)):
 		return
-	Game.set_flag(flag, true)
 	if delay > 0.0:
 		await get_tree().create_timer(delay).timeout
 		if not is_inside_tree():

@@ -50,7 +50,10 @@ func _initialize() -> void:
 		hub = current_scene
 		await frames(5)
 	else:
-		check(message().contains("isn't made yet") and not hub.busy, "unbuilt tape just hisses")
+		await create_timer(3.0).timeout
+		check(hub.get_node_or_null("DemoEnd") != null, "unbuilt tape: end-of-demo card")
+		hub.get_node("DemoEnd").close()
+		await frames(2)
 		hub.use_box()
 		check(hub.held == null, "using the box again puts the tape back")
 

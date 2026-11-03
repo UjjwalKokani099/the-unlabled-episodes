@@ -266,6 +266,24 @@ func spotted_count(prefix: String = "") -> int:
 	return n
 
 
+# --- Memory (one-off moments that must never repeat, e.g. Nikhil's thoughts) ---
+
+## Remembers `key` in the save file (unlike flags, it survives leaving a tape and New Game
+## only clears it with the rest of the save). Returns true the first time.
+func remember(key: String) -> bool:
+	var list: Array = _save.get("memory", [])
+	if key in list:
+		return false
+	list.append(key)
+	_save["memory"] = list
+	_write_save()
+	return true
+
+
+func remembers(key: String) -> bool:
+	return key in (_save.get("memory", []) as Array)
+
+
 # --- Save file ----------------------------------------------------------------
 
 func load_save() -> void:
@@ -278,6 +296,7 @@ func load_save() -> void:
 		_save.checkpoint = data.get("checkpoint", {})
 		_save.intro_seen = data.get("intro_seen", false)
 		_save.spotted = data.get("spotted", [])
+		_save.memory = data.get("memory", [])
 	else:
 		push_warning("Game: save file unreadable, starting fresh")
 
