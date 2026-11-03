@@ -42,6 +42,8 @@ COLOURS = {
                   "emission_energy_multiplier": "0.6"},
     "bulb_warm": {"albedo_color": "Color(1, 0.9, 0.7, 1)", "emission_enabled": "true",
                   "emission": "Color(1, 0.75, 0.45, 1)", "emission_energy_multiplier": "6.0"},
+    "terracotta": {"albedo_color": "Color(0.55, 0.27, 0.16, 1)", "roughness": "0.95"},
+    "bamboo": {"albedo_color": "Color(0.42, 0.3, 0.16, 1)", "roughness": "0.8"},
     "led_red": {"albedo_color": "Color(0.9, 0.05, 0.03, 1)", "emission_enabled": "true",
                 "emission": "Color(1, 0.05, 0.02, 1)", "emission_energy_multiplier": "3.0"},
 }
@@ -266,3 +268,36 @@ class Props:
         self.part(o, yaw, "box", (0, 0, -0.03), (0.3, 0.03, 0.03), "wood_door_dark")
         self.part(o, yaw, "box", (-0.08, -0.25, -0.08), (0.3, 0.42, 0.12), "cloth_grey", rot=(-6, 0, 0))   # backpack
         self.part(o, yaw, "box", (0.1, -0.4, -0.05), (0.32, 0.75, 0.03), "cloth_khaki", rot=(-3, 0, 3))    # jacket
+
+    # ================================================================== 1990s / watchman
+    def matka(self, o):
+        """Clay water pot on a ring stand, steel plate lid and a tumbler on top."""
+        self.cyl((o[0], o[1] + 0.04, o[2]), 0.13, 0.15, 0.08, "metal_rust", seg=12)
+        self.cyl((o[0], o[1] + 0.2, o[2]), 0.2, 0.13, 0.26, "terracotta", seg=16)
+        self.cyl((o[0], o[1] + 0.4, o[2]), 0.11, 0.2, 0.14, "terracotta", seg=16)
+        self.cyl((o[0], o[1] + 0.48, o[2]), 0.13, 0.13, 0.01, "steel", seg=16)
+        self.tumbler((o[0] + 0.03, o[1] + 0.485, o[2]))
+
+    def tiffin(self, o):
+        """Stacked steel lunch box."""
+        for i in range(3):
+            self.cyl((o[0], o[1] + 0.045 + i * 0.085, o[2]), 0.075, 0.075, 0.08, "steel", seg=14)
+        self.box((o[0], o[1] + 0.3, o[2]), (0.02, 0.06, 0.16), "steel")
+
+    def radio(self, o, yaw=0.0):
+        """Transistor radio, speaker facing -Z."""
+        self.part(o, yaw, "box", (0, 0.06, 0), (0.2, 0.12, 0.07), "wood_door_dark")
+        self.part(o, yaw, "box", (-0.04, 0.06, -0.036), (0.09, 0.08, 0.004), "black", shadow=False)
+        self.part(o, yaw, "box", (0.06, 0.08, -0.036), (0.05, 0.015, 0.004), "brass", shadow=False)
+        self.part(o, yaw, "cyl", (0.08, 0.24, 0.02), (0.003, 0.003, 0.3, 4), "steel", rot=(0, 0, -20), shadow=False)
+
+    def lathi(self, o, lean_yaw=0.0):
+        """Watchman's bamboo stick leaning on a wall: o = foot on the floor."""
+        self.part(o, lean_yaw, "cyl", (0, 0.66, -0.12), (0.016, 0.018, 1.35, 8), "bamboo", rot=(-10, 0, 0))
+
+    def notices(self, o, yaw=0.0, n=3):
+        """Sheets of paper pasted on a wall (circulars, a duty roster)."""
+        for i in range(n):
+            self.part(o, yaw, "box", ((i - (n - 1) / 2) * 0.26, (i % 2) * 0.05, -0.004),
+                      (0.21, 0.29, 0.003), "paper" if i % 2 == 0 else "newsprint", rot=(0, 0, (i * 7 % 5) - 2), shadow=False)
+

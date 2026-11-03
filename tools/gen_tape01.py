@@ -9,6 +9,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from levelkit import (ROOT, Level, benchmark_points, night_environment, player_rig,  # noqa: E402
                       residential_wing, slab, sodium_lamp, v3, wall)
+from propkit import Props  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "chapters", "tape_01_watchman")
 SCRIPTS = "res://chapters/tape_01_watchman/scripts/"
@@ -273,6 +274,7 @@ def main() -> None:
     lv.scene("Battery", "res://scenes/props/battery.tscn", drawer, {"position": v3(0.12, -0.035, -0.06)})
     stool = lv.add("Stool", "Node3D", ".", {"position": v3(5.3, 0, 24.4)})  # moves by itself after the cut
     lv.box((0, 0.23, 0), (0.4, 0.46, 0.4), "metal_rust", collide=False, parent=stool)
+    dress_cabin(lv)
     lv.scene("CabinTube", "res://scenes/props/tube_light.tscn", ".", {"position": v3(5.75, 2.6, 23.75)}, groups=["mains"])
     lv.add("CabinFan", "AudioStreamPlayer3D", ".", {"position": v3(5.75, 2.4, 23.75), "stream": sound(lv, "fan_hum"),
                                                      "volume_db": "-16.0", "unit_size": "3.0", "autoplay": "true",
@@ -408,6 +410,29 @@ def main() -> None:
     with open(os.path.join(OUT_DIR, "objectives.tres"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines))
     print("wrote objectives.tres")
+
+
+def dress_cabin(lv: Level) -> None:
+    """A watchman's cabin someone has lived nights in (1998). Inner faces x 4.1 / 7.4,
+    z 22.1 / 25.4, floor y 0.05, table top y 0.76. Door hole in the x=4 wall, z 22.5..23.5."""
+    p = Props(lv)
+    f = 0.05
+    p.tiffin((5.98, 0.76, 25.1))
+    p.tumbler((5.98, 0.76, 24.78))
+    p.radio((6.66, 0.76, 25.18), yaw=180)
+    p.plastic_chair((6.55, f, 24.15), yaw=180)
+    p.matka((4.38, f, 25.1))
+    p.lathi((7.28, f, 22.3), lean_yaw=-90)
+    p.newspaper_stack((6.95, f, 24.95), yaw=-6, n=6)
+    p.mosquito_coil((4.7, f, 24.0))
+    p.chappals((4.4, f, 24.25), yaw=80)
+    p.wall_clock((5.75, 2.32, 22.1), yaw=180)
+    p.calendar((4.65, 1.6, 25.4))
+    p.notices((7.4, 1.5, 24.1), yaw=90)
+    p.hooks_with_bag((4.62, 1.8, 22.1), yaw=180)
+    p.switchboard((4.1, 1.3, 23.85), yaw=-90, n=2)
+    p.wire((4.11, 1.37, 23.85), (4.11, 2.58, 23.85))
+    p.wire((4.11, 2.585, 23.85), (5.2, 2.585, 23.75))
 
 
 if __name__ == "__main__":
