@@ -33,6 +33,7 @@ COLOURS = {
     "cloth_towel": {"albedo_color": "Color(0.75, 0.62, 0.42, 1)", "roughness": "1.0"},
     "cloth_grey": {"albedo_color": "Color(0.32, 0.32, 0.34, 1)", "roughness": "1.0"},
     "blanket": {"albedo_color": "Color(0.3, 0.09, 0.08, 1)", "roughness": "1.0"},
+    "dust_sheet": {"albedo_color": "Color(0.6, 0.58, 0.53, 1)", "roughness": "1.0"},
     "pillow": {"albedo_color": "Color(0.78, 0.76, 0.7, 1)", "roughness": "0.95"},
     "newsprint": {"albedo_color": "Color(0.72, 0.7, 0.62, 1)", "roughness": "0.95"},
     "calendar_red": {"albedo_color": "Color(0.7, 0.1, 0.08, 1)", "roughness": "0.8"},
@@ -329,6 +330,22 @@ class Props:
         return self.lv.add(name, "MeshInstance3D", self._models_parent(), {
             "position": v3(*top_centre), "rotation_degrees": v3(tilt, yaw + 180.0, 0),
             "mesh": f'SubResource("{mesh}")', "material_override": f'SubResource("{mat}")'})
+
+    def dust_sheet(self, centre, size, yaw=0.0, colour=(0.6, 0.58, 0.53)):
+        """Furniture under a dust sheet: a colliding core with a soft top, cloth skirts falling
+        to the floor on all four sides (with folds). `centre`/`size` = the furniture box."""
+        cx, cy, cz = centre
+        sx, sy, sz = size
+        top = cy + sy / 2
+        self.part((cx, cy, cz), yaw, "box", (0, 0, 0), (sx - 0.04, sy - 0.02, sz - 0.04), "dust_sheet")
+        self.lv.collider((cx, cy, cz), (sx, sy, sz) if round(yaw) % 180 == 0 else (sz, sy, sx), "soft")
+        self.soft(self.at((cx, top - 0.01, cz), yaw, (0, 0, 0)), (sx + 0.02, 0.06, sz + 0.02), "dust_sheet", rot=(0, yaw, 0))
+        h = sy + 0.02
+        for side, (lx, lz, w, face) in enumerate(((0, -sz / 2 - 0.012, sx + 0.06, 0), (0, sz / 2 + 0.012, sx + 0.06, 180),
+                                                    (-sx / 2 - 0.012, 0, sz + 0.06, 90), (sx / 2 + 0.012, 0, sz + 0.06, -90))):
+            pos = self.at((cx, top, cz), yaw, (lx, 0, lz))
+            self.cloth(pos, w, h, colour, yaw=yaw + face, folds=max(2.0, w * 4.0), fold_depth=0.02, gather=0.3,
+                       sway=0.0, name="DustSheet")
 
     def clothesline(self, a, b, items, sag=0.04):
         """Nylon line from a to b with clothes hanging: items = [(t 0..1, kind, mat)]."""

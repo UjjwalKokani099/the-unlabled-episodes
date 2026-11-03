@@ -90,9 +90,21 @@ def story_beats(lv) -> None:
     lv.add("Light", "OmniLight3D", bal, {"position": v3(0.3, 2.2, -0.9), "light_color": "Color(0.8, 0.85, 1, 1)",
                                          "light_energy": "2.4", "omni_range": "3.5"})
     # flat 4B: empty for eight months
+    p = Props(lv)
     for pos, size in (((-8.2, 12.42, -15.6), (2.0, 0.8, 0.9)), ((-5.0, 12.38, -17.6), (1.2, 0.75, 0.8)),
                       ((-3.2, 12.55, -15.0), (0.9, 1.1, 0.6)), ((-9.0, 12.5, -21.5), (1.9, 0.6, 1.4))):
-        lv.box(pos, size, "fabric_sheet")
+        p.dust_sheet(pos, size)  # furniture under dust sheets
+    # the clock on the living-room wall stopped at 3:12
+    p.model("wall_clock", (-7.2, 14.3, -14.12), node_name="StoppedClock", script="res://scripts/props/wall_clock.gd",
+            stopped_at=3 * 3600 + 12 * 60 + 7)
+    # curtains drawn across the living-room window (x -9.4..-8.2)
+    for x in (-9.12, -8.48):
+        p.cloth((x, 14.22, -14.17), 0.66, 1.42, (0.36, 0.4, 0.34), folds=5.0, fold_depth=0.03, gather=0.6, sway=0.0,
+                name="FlatCurtain")
+    p.cyl((-8.8, 14.24, -14.15), 0.01, 0.01, 1.5, "steel", rot=(0, 0, 90), seg=6)
+    for name, pos, rot in (("water_stain", (-7.0, 14.84, -17.0), (90, 0, 0)), ("water_stain", (-3.5, 14.84, -21.0), (90, 20, 0)),
+                           ("crack_a", (-10.88, 13.6, -17.6), (0, 90, 0)), ("crack_b", (-2.12, 12.5, -16.3), (0, -90, 0))):
+        lv.scene(name, f"res://scenes/decals/{name}.tscn", ".", {"position": v3(*pos), "rotation_degrees": v3(*rot)})
     papers = usable(lv, ".", "Newspapers", (-10.55, 12.05, -15.65), (0.42, 0.12, 0.5), "Look at the newspapers",
                     {"title": '"Newspapers"',
                      "description": '"Weeks of them, still folded, pushed under the door. The newest is from 23 July 1997."'},
@@ -278,6 +290,7 @@ def main() -> None:
     Props(lv).model("wooden_stool_01", (0, 0, 0), parent=stool, node_name="Model")
     dress_cabin(lv)
     dress_grounds(lv)
+    dress_stairwells(lv, wings)
     lv.scene("CabinTube", "res://scenes/props/tube_light.tscn", ".", {"position": v3(5.75, 2.6, 23.75)}, groups=["mains"])
     lv.add("CabinFan", "AudioStreamPlayer3D", ".", {"position": v3(5.75, 2.4, 23.75), "stream": sound(lv, "fan_hum"),
                                                      "volume_db": "-16.0", "unit_size": "3.0", "autoplay": "true",
@@ -413,6 +426,35 @@ def main() -> None:
     with open(os.path.join(OUT_DIR, "objectives.tres"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines))
     print("wrote objectives.tres")
+
+
+def dress_stairwells(lv: Level, wings: dict) -> None:
+    """Every flat's landing: doormat, shoes left outside, the odd clay pot, paan in the corner,
+    hand grime by the door. 4B (empty) gets old newspapers at its door instead of shoes.
+    Wing core: x 0..3 from the wing origin, landing z 8.4..10, flat door in the x=3 wall."""
+    p = Props(lv)
+    for wi, (letter, info) in enumerate(wings.items()):
+        for fl, (lx, y, lz) in info["landings"].items():
+            if fl == 0:
+                continue
+            ox, oz = lx - 1.5, lz - 9.2
+            flat = f"{fl}{letter}"
+            seed = wi * 7 + fl * 3
+            p.doormat((ox + 2.55, y, oz + 9.2), yaw=90)
+            if flat == "4B":
+                p.newspaper_stack((ox + 2.5, y, oz + 8.7), yaw=12, n=7)
+            else:
+                p.chappals((ox + 2.35, y, oz + 8.75 + (seed % 3) * 0.1), yaw=80 + seed * 23 % 40,
+                           mat=("rubber", "cloth_maroon", "plastic_blue")[seed % 3])
+                if seed % 2 == 0:
+                    p.chappals((ox + 2.45, y, oz + 9.75), yaw=100, mat="rubber")
+            if seed % 3 != 1:
+                p.model("planter_pot_clay", (ox + 0.32, y, oz + 9.75), yaw=seed * 47, visibility_end=20.0)
+            decals = [("paan_a" if seed % 2 else "paan_b", (ox + 0.12, y + 0.3, oz + 8.6), (0, 90, 0))]
+            decals.append(("hand_grime", (ox + 2.88, y + 1.15, oz + 8.5), (0, -90, 0)))
+            for i, (name, pos, rot) in enumerate(decals):
+                lv.scene(f"{name}_{flat}_{i}", f"res://scenes/decals/{name}.tscn", ".",
+                         {"position": v3(*pos), "rotation_degrees": v3(*rot)})
 
 
 def dress_grounds(lv: Level) -> None:
