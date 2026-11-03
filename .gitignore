@@ -33,3 +33,7 @@ tools/_build/
 
 # Web export output (built by GitHub Actions)
 /build/
+
+# Python bytecode from the tools/ generators
+__pycache__/
+*.pyc
