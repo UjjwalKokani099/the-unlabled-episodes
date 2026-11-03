@@ -3,8 +3,10 @@ extends Node3D
 
 @export var rpm: float = 180.0
 @export var on: bool = true
+## The spinning part (a primitive "Blades" node, or the blades mesh inside a model).
+@export var blades_path: NodePath = ^"Blades"
 
-@onready var _blades: Node3D = $Blades
+@onready var _blades: Node3D = get_node(blades_path)
 
 
 func _ready() -> void:

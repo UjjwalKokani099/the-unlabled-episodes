@@ -3,12 +3,14 @@ Shanti Vihar Housing Society, 14 March 1998, 10:40 PM) and its objectives.
 Compound x -32..32, z -28..28; gate at +z. Wings A-D in a row (fronts face the gate).
 Run: python tools/gen_tape01.py
 """
+import math
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from levelkit import (ROOT, Level, benchmark_points, night_environment, player_rig,  # noqa: E402
                       residential_wing, slab, sodium_lamp, v3, wall)
+from propkit import Props  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "chapters", "tape_01_watchman")
 SCRIPTS = "res://chapters/tape_01_watchman/scripts/"
@@ -168,7 +170,8 @@ def story_beats(lv) -> None:
     lv.add("Brain", "Node", stalker, {"script": script(lv, "res://scripts/characters/stalker.gd"),
                                       "patrol_points": "PackedVector3Array(14, 0, -2, 22, 0, 1, 20, 0, 9, 9, 0, 7, 8, 0, -4)"})
     # places to hide from his camera: crouch behind the cars, the covered car, the tank pillars
-    lv.box((11, 0.6, 2), (1.8, 1.2, 3.8), "fabric_sheet")  # a car under a dust cover
+    Props(lv).model("covered_car", (11, 0.3, 2), node_name="CoveredCar")  # a car under a dust cover
+    lv.collider((11, 0.65, 2), (1.8, 1.3, 4.3), "metal")
     hide = "res://scripts/story/hiding_spot.gd"
     for name, pos, size in (("HideBlueCar", (16, 0.9, 12), (3.2, 1.8, 4.8)), ("HideCoveredCar", (11, 0.9, 2), (3.4, 1.8, 5.2)),
                             ("HideTank", (28, 0.9, 4), (4.6, 1.8, 4.6)), ("HideWestCars", (-18.2, 0.9, 12.2), (6.6, 1.8, 4.9))):
@@ -272,7 +275,9 @@ def main() -> None:
                                       "text": '"SHANTI VIHAR CHS\nWATCHMAN\nKISHAN LAL\nNo. 07  1991"'})
     lv.scene("Battery", "res://scenes/props/battery.tscn", drawer, {"position": v3(0.12, -0.035, -0.06)})
     stool = lv.add("Stool", "Node3D", ".", {"position": v3(5.3, 0, 24.4)})  # moves by itself after the cut
-    lv.box((0, 0.23, 0), (0.4, 0.46, 0.4), "metal_rust", collide=False, parent=stool)
+    Props(lv).model("wooden_stool_01", (0, 0, 0), parent=stool, node_name="Model")
+    dress_cabin(lv)
+    dress_grounds(lv)
     lv.scene("CabinTube", "res://scenes/props/tube_light.tscn", ".", {"position": v3(5.75, 2.6, 23.75)}, groups=["mains"])
     lv.add("CabinFan", "AudioStreamPlayer3D", ".", {"position": v3(5.75, 2.4, 23.75), "stream": sound(lv, "fan_hum"),
                                                      "volume_db": "-16.0", "unit_size": "3.0", "autoplay": "true",
@@ -408,6 +413,74 @@ def main() -> None:
     with open(os.path.join(OUT_DIR, "objectives.tres"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines))
     print("wrote objectives.tres")
+
+
+def dress_grounds(lv: Level) -> None:
+    """Real-model clutter around the compound: parking junk, garbage by the gate, the meter
+    room's boxes, and CCTV camera bodies at the feeds (layer 19: not in their own picture)."""
+    p = Props(lv)
+    far = 45.0  # small clutter stops drawing beyond this
+    p.model("old_tyre", (-22.6, 0.3, 13.7), yaw=25, visibility_end=far)
+    p.model("old_tyre", (-22.3, 0.08, 14.6), pitch=90, yaw=10, visibility_end=far)
+    p.model("plastic_crate_01", (-21.6, 0, 14.4), yaw=5, visibility_end=far)
+    p.model("plastic_crate_01", (-21.62, 0.26, 14.42), yaw=-8, visibility_end=far)
+    for i, (x, z, yaw) in enumerate(((-3.6, 26.9, 0), (-3.0, 27.25, 40), (-4.1, 27.3, -30))):
+        p.model("trashbag", (x, 0, z), yaw=yaw, visibility_end=far)
+    for x, z, yaw in ((-2.4, 26.6, 0), (2.2, 18.4, 70), (-7.5, 9.2, 140), (12.4, 4.6, 20)):
+        p.model("can_rusted", (x, 0, z), pitch=90, yaw=yaw, visibility_end=25.0)
+    # meter room (inner faces x 26.1 / 29.9, z -5.9 / -2.1; door in the x=26 wall at z -4)
+    p.model("utility_box_01", (27.1, 0.05, -5.62), yaw=180, collide=(0.52, 1.12, 0.43), surface="metal")
+    p.model("power_box_01", (26.1, 1.6, -2.75), yaw=-90)
+    p.model("utility_box_02", (30.35, 0, -4.4), yaw=-90, collide=(0.92, 1.12, 0.43), surface="metal")
+    # CCTV camera bodies, a little behind each feed's lens (the gate one on its own pole)
+    lv.box((0, 1.55, 21.78), (0.08, 3.1, 0.08), "metal_gate_green", collide=False)
+    lv.box((0, 3.1, 21.83), (0.06, 0.06, 0.18), "metal_gate_green", collide=False)
+    for name, pos, rot in (("Gate", (0, 3.0, 22), (-12, 180)), ("StairsB", (-12.5, 2.6, -12.0), (-12, 0)),
+                           ("MeterRoom", (29.55, 2.6, -5.55), (-28, 137.7))):
+        pitch, yaw = rot
+        back = (math.sin(math.radians(yaw)) * math.cos(math.radians(pitch)), -math.sin(math.radians(pitch)),
+                math.cos(math.radians(yaw)) * math.cos(math.radians(pitch)))
+        at = tuple(pos[i] + back[i] * 0.12 for i in range(3))
+        p.model("security_camera_01", at, yaw=yaw, pitch=-pitch, node_name=f"CCTVCam{name}",
+                render_layers=1 << 18)
+
+
+def dress_cabin(lv: Level) -> None:
+    """A watchman's cabin someone has lived nights in (1998). Inner faces x 4.1 / 7.4,
+    z 22.1 / 25.4, floor y 0.05, table top y 0.76. Door hole in the x=4 wall, z 22.5..23.5."""
+    p = Props(lv)
+    f = 0.05
+    p.tiffin((5.98, 0.76, 25.1))
+    p.tumbler((6.62, 0.76, 24.72))
+    p.model("vintage_flashlight", (6.95, 0.76, 24.68), yaw=95)
+    p.model("cigarette_pack", (6.52, 0.76, 25.02), yaw=25)
+    # outside the cabin door: a bulkhead porch light (dies in the power cut), two money plants
+    p.model("security_light", (3.9, 2.35, 23.0), yaw=90, node_name="PorchLightBody")
+    lv.add("PorchLight", "OmniLight3D", ".", {"position": v3(3.62, 2.2, 23.0), "light_color": "Color(1, 0.86, 0.62, 1)",
+           "light_energy": "1.3", "omni_range": "9.0", "omni_attenuation": "1.3", "shadow_enabled": "true",
+           "light_volumetric_fog_energy": "1.5"}, groups=["mains"])
+    p.cyl((3.68, 2.2, 23.0), 0.035, 0.035, 0.07, "bulb_warm", seg=10, shadow=False)
+    for z in (22.15, 23.85):
+        p.model("planter_pot_clay", (3.65, 0, z), yaw=z * 40)
+    # wear
+    for name, pos, rot in (("hand_grime", (4.11, 1.2, 23.65), (0, 90, 0)), ("crack_a", (7.39, 2.1, 22.6), (0, -90, 0)),
+                           ("water_stain", (6.9, 2.595, 22.6), (90, 0, 0)), ("paan_b", (3.89, 0.3, 24.4), (0, -90, 0))):
+        lv.scene(name, f"res://scenes/decals/{name}.tscn", ".", {"position": v3(*pos), "rotation_degrees": v3(*rot)})
+    p.radio((6.66, 0.76, 25.18), yaw=180)
+    p.model("plastic_monobloc_chair_01", (6.55, f, 24.12), yaw=172, collide=(0.6, 0.5, 0.6), surface="soft")
+    p.matka((4.38, f, 25.1))
+    p.model("metal_jug", (4.7, f, 25.18), yaw=30)
+    p.lathi((7.28, f, 22.3), lean_yaw=-90)
+    p.newspaper_stack((6.95, f, 24.95), yaw=-6, n=6)
+    p.mosquito_coil((4.7, f, 24.0))
+    p.chappals((4.4, f, 24.25), yaw=80)
+    p.model("wall_clock", (5.75, 2.3, 22.1), yaw=180, script="res://scripts/props/wall_clock.gd")
+    lv.scene("CabinCalendar", "res://scenes/decals/ganesh.tscn", ".", {"position": v3(4.65, 1.55, 25.4), "rotation_degrees": v3(0, 180, 0)})
+    p.notices((7.4, 1.5, 24.1), yaw=90)
+    p.hooks_with_bag((4.62, 1.8, 22.1), yaw=180)
+    p.switchboard((4.1, 1.3, 23.85), yaw=-90, n=2)
+    p.wire((4.11, 1.37, 23.85), (4.11, 2.58, 23.85))
+    p.wire((4.11, 2.585, 23.85), (5.2, 2.585, 23.75))
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-"""Sets 3D-friendly import options on every texture under assets/materials and assets/decals.
+"""Sets 3D-friendly import options on every texture under assets/materials, decals and models.
 
 Godot imports new images as lossless 2D textures. For 3D surfaces we want VRAM compression
 (fast, low memory), mipmaps (no shimmering at a distance) and normal-map mode for *_normal.
@@ -13,7 +13,7 @@ import os
 import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FOLDERS = ["assets/materials", "assets/decals"]
+FOLDERS = ["assets/materials", "assets/decals", "assets/models"]
 
 
 def set_param(text: str, key: str, value: str) -> str:
@@ -35,7 +35,7 @@ def main() -> None:
             if 'importer="texture"' not in text:
                 continue
             new = text
-            is_normal = source.lower().endswith(("_normal.jpg", "_normal.png"))
+            is_normal = source.lower().endswith(("_normal.jpg", "_normal.png")) or "_nor_gl" in source.lower()
             is_decal = "assets/decals" in source.replace("\\", "/")
             new = set_param(new, "compress/mode", "2")  # VRAM compressed
             new = set_param(new, "mipmaps/generate", "true")

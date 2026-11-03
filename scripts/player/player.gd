@@ -31,6 +31,8 @@ signal flashlight_toggled(is_on: bool)
 ## Head-bob radians per metre walked (sets step rhythm).
 @export var bob_frequency: float = 4.5
 @export var bob_amount: float = 0.035
+## Extra field of view while sprinting (degrees), eased in and out.
+@export var sprint_fov_kick: float = 4.0
 
 @export_group("Flashlight")
 @export var flashlight_on_start: bool = true
@@ -48,6 +50,9 @@ var _pitch: float = 0.0
 var _height: float = 0.0
 var _bob_time: float = 0.0
 var _crouch_toggled: bool = false
+var _was_on_floor: bool = true
+var _fall_speed: float = 0.0
+var _land_dip: float = 0.0
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
@@ -108,6 +113,7 @@ func _physics_process(delta: float) -> void:
 
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+		_fall_speed = maxf(_fall_speed, -velocity.y)
 
 	var wish := transform.basis * Vector3(move_input.x, 0.0, move_input.y) * speed
 	var rate := air_accel
@@ -118,6 +124,13 @@ func _physics_process(delta: float) -> void:
 	velocity.z = lerpf(velocity.z, wish.z, blend)
 
 	move_and_slide()
+	# Landing: the knees take it (a short dip, deeper for longer falls).
+	if is_on_floor() and not _was_on_floor and _fall_speed > 1.5:
+		_land_dip = -clampf(_fall_speed * 0.018, 0.02, 0.14)
+		get_tree().call_group("camera_shake", "add_trauma", clampf(_fall_speed * 0.03, 0.0, 0.3))
+	if is_on_floor():
+		_fall_speed = 0.0
+	_was_on_floor = is_on_floor()
 	_update_head_bob(delta)
 
 
@@ -127,6 +140,9 @@ func _process(delta: float) -> void:
 	var blend := 1.0 - exp(-flashlight_follow * delta)
 	var rot := flashlight.global_basis.get_rotation_quaternion().slerp(target.basis.get_rotation_quaternion(), blend)
 	flashlight.global_transform = Transform3D(Basis(rot), target.origin)
+	# Sprint widens the view a little (eased; the base value is the player's setting).
+	var want_fov := Settings.fov + (sprint_fov_kick if is_sprinting and Settings.head_bob else 0.0)
+	camera.fov = lerpf(camera.fov, want_fov, 1.0 - exp(-6.0 * delta))
 
 
 ## Puts the player at a spot (feet) facing the -Z of `facing` basis; resets look and speed.
@@ -203,6 +219,8 @@ func _update_head_bob(delta: float) -> void:
 	if Settings.head_bob and is_on_floor() and ground_speed > 0.2:
 		_bob_time += delta * ground_speed * bob_frequency
 		target = Vector3(cos(_bob_time * 0.5) * bob_amount * 0.6, sin(_bob_time) * bob_amount, 0.0)
+	_land_dip = lerpf(_land_dip, 0.0, 1.0 - exp(-7.0 * delta))
+	target.y += _land_dip
 	camera.position = camera.position.lerp(target, 1.0 - exp(-10.0 * delta))
 
 

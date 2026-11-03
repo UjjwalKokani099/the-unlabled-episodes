@@ -13,6 +13,7 @@ const NAMES := ["LOW", "MEDIUM", "HIGH"]
 ## Tuned on the target laptop (RTX 3050 Ti) with tools/benchmark.gd.
 const PRESETS := {
 	Quality.LOW: {
+		"ssr": false,
 		"render_scale": 0.6, "fxaa": false, "lod_threshold": 4.0,
 		"shadow_atlas": 2048, "soft_shadows": RenderingServer.SHADOW_QUALITY_HARD,
 		"ssao": false, "ssao_quality": RenderingServer.ENV_SSAO_QUALITY_VERY_LOW, "ssao_half": true,
@@ -21,6 +22,7 @@ const PRESETS := {
 		"glow": true,
 	},
 	Quality.MEDIUM: {
+		"ssr": false,
 		"render_scale": 0.75, "fxaa": true, "lod_threshold": 2.0,
 		"shadow_atlas": 4096, "soft_shadows": RenderingServer.SHADOW_QUALITY_SOFT_LOW,
 		"ssao": true, "ssao_quality": RenderingServer.ENV_SSAO_QUALITY_LOW, "ssao_half": true,
@@ -29,6 +31,7 @@ const PRESETS := {
 		"glow": true,
 	},
 	Quality.HIGH: {
+		"ssr": true,
 		"render_scale": 0.9, "fxaa": true, "lod_threshold": 1.0,
 		"shadow_atlas": 4096, "soft_shadows": RenderingServer.SHADOW_QUALITY_SOFT_MEDIUM,
 		"ssao": true, "ssao_quality": RenderingServer.ENV_SSAO_QUALITY_MEDIUM, "ssao_half": false,
@@ -45,12 +48,15 @@ const PS1_RENDER_SCALE := 0.5
 ## Value of the global shader parameter `ps1_amount` (0 = off, 1 = PS1 mode).
 var ps1_amount: float = 0.0
 var _fps_label: Label
+## Full-screen film grade (shaders/film_grade.gdshader) on canvas layer 1.
+var _grade: ColorRect
 var _fps_timer: float = 0.0
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_make_fps_label()
+	_make_grade_layer()
 	Settings.changed.connect(_on_setting_changed)
 	get_tree().node_added.connect(_on_node_added)
 	apply()
@@ -69,6 +75,8 @@ func apply() -> void:
 	for node in get_tree().root.find_children("*", "VoxelGI", true, false):
 		_apply_voxel_gi(node as VoxelGI)
 	_fps_label.visible = Settings.show_fps
+	_grade.visible = Settings.film_look > 0.0
+	_grade.material.set_shader_parameter(&"amount", Settings.film_look)
 
 
 func _apply_global() -> void:
@@ -99,6 +107,7 @@ func _apply_environment(world: WorldEnvironment) -> void:
 		env.set_meta(AUTHORED_META, {
 			"ssao": env.ssao_enabled, "ssil": env.ssil_enabled,
 			"volumetric_fog": env.volumetric_fog_enabled, "glow": env.glow_enabled,
+			"ssr": env.ssr_enabled,
 		})
 	var authored: Dictionary = env.get_meta(AUTHORED_META)
 	var p := current()
@@ -106,6 +115,8 @@ func _apply_environment(world: WorldEnvironment) -> void:
 	env.ssil_enabled = authored.ssil and p.ssil
 	env.volumetric_fog_enabled = authored.volumetric_fog and p.volumetric_fog
 	env.glow_enabled = authored.glow and p.glow
+	# Screen-space reflections (polished tiles, wet ground, glass): High only.
+	env.ssr_enabled = authored.get("ssr", false) and p.ssr
 
 
 ## Baked bounce light: off on Low, low quality on Medium, full on High.
@@ -122,7 +133,7 @@ func _on_node_added(node: Node) -> void:
 
 
 func _on_setting_changed(key: StringName) -> void:
-	if key == &"graphics_quality" or key == &"show_fps" or key == &"ps1_mode":
+	if key == &"graphics_quality" or key == &"show_fps" or key == &"ps1_mode" or key == &"film_look":
 		apply()
 
 
@@ -135,6 +146,27 @@ func _process(delta: float) -> void:
 	_fps_timer = 0.25
 	var fps := Engine.get_frames_per_second()
 	_fps_label.text = "%d FPS  %.1f ms" % [fps, 1000.0 / maxf(fps, 1.0)]
+
+
+## Fear level 0..1 for the film grade (darker edges, less colour, more grain). The Stalker's
+## exposure and scripted scares can drive it.
+func set_dread(value: float) -> void:
+	_grade.material.set_shader_parameter(&"dread", clampf(value, 0.0, 1.0))
+
+
+## Layer 1, added before any level: drawn under the camcorder's PS1/tape-cut rects
+## (also layer 1, later in the tree), the OSD (2), the VHS effect (3) and the HUD (10).
+func _make_grade_layer() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 1
+	add_child(layer)
+	_grade = ColorRect.new()
+	_grade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_grade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var mat := ShaderMaterial.new()
+	mat.shader = preload("res://shaders/film_grade.gdshader")
+	_grade.material = mat
+	layer.add_child(_grade)
 
 
 func _make_fps_label() -> void:

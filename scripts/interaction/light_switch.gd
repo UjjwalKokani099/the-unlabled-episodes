@@ -28,7 +28,12 @@ func set_on(on: bool) -> void:
 func _apply() -> void:
 	for path in light_paths:
 		var target := get_node_or_null(path) as Node3D
-		if target:
+		if target == null:
+			continue
+		# Fixtures with an `on` switch (TubeLight) keep their body visible and just go dark.
+		if &"on" in target:
+			target.set(&"on", is_on)
+		else:
 			target.visible = is_on
 	lever.rotation.x = deg_to_rad(-20.0 if is_on else 20.0)
 	interactable.prompt = "Turn off light" if is_on else "Turn on light"

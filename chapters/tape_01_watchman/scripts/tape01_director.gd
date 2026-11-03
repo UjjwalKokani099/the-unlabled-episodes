@@ -329,7 +329,7 @@ func _show_cctv_frame() -> void:
 	add_child(viewport)
 	var camera := Camera3D.new()
 	camera.fov = float(spot.get_meta(&"fov", 70.0))
-	camera.cull_mask = 0xFFFFF
+	camera.cull_mask = PropModel.CCTV_CULL_MASK
 	viewport.add_child(camera)
 	camera.global_transform = spot.global_transform
 	camera.current = true

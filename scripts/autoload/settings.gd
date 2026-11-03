@@ -21,7 +21,7 @@ const AUDIO_BUSES := {
 ## Every persisted key. Add new settings here AND as a var below.
 const KEYS: Array[StringName] = [
 	&"mouse_sensitivity", &"invert_y", &"fov", &"crouch_toggle", &"head_bob", &"screen_effects",
-	&"brightness", &"fullscreen", &"graphics_quality", &"show_fps", &"ps1_mode",
+	&"brightness", &"fullscreen", &"graphics_quality", &"show_fps", &"ps1_mode", &"film_look",
 	&"subtitles", &"subtitle_size", &"key_bindings",
 	&"master_volume", &"music_volume", &"sfx_volume", &"ambience_volume",
 ]
@@ -94,6 +94,12 @@ var ps1_mode: bool = false:
 	set(value):
 		ps1_mode = value
 		_on_value_set(&"ps1_mode")
+
+## Grounded "real lens" grade over the 3D view (shaders/film_grade): 0 = off, 1 = full.
+var film_look: float = 1.0:
+	set(value):
+		film_look = clampf(value, 0.0, 1.0)
+		_on_value_set(&"film_look")
 
 var subtitles: bool = true:
 	set(value):
