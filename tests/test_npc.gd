@@ -65,7 +65,7 @@ func _initialize() -> void:
 	check(not D.check("event:parcel_2c") and D.check("!event:parcel_2c"), "event conditions + negation")
 	D.set_flag("x_test", true)
 	check(D.check("flag:x_test") and D.check(["flag:x_test", "!flag:nope"]), "flag conditions, lists must all hold")
-	check(iyer_d.choices("ask_choices").size() == 2, "without the parcel: 'find it' + 'Kishan?' (no 'here it is')")
+	check(iyer_d.choices("ask_choices").size() == 3, "without the parcel: 'find it' + 'Kishan?' + 'up late' (no 'here it is')")
 	for f in ["res://dialogue/tape01/deshmukh.json", "res://dialogue/tape01/secretary.json"]:
 		var d = D.load_file(f)
 		var broken := []

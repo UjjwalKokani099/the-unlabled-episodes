@@ -1,28 +1,130 @@
 {
 	"start": "fork",
 	"nodes": {
-		"fork": {"branch": [
-			{"if": "event:parcel_given", "next": "after"},
-			{"if": "flag:iyer_greeted", "next": "ask"},
-			{"next": "hello"}
-		]},
-		"hello": {"speaker": "MRS. IYER", "text": "Arre, the new watchman? Good, good. Iyer, 2C. A courier came for me in the evening, no?", "set": {"iyer_greeted": true}, "next": "ask_choices"},
-		"ask": {"speaker": "MRS. IYER", "text": "So? My parcel?", "next": "ask_choices"},
-		"ask_choices": {"speaker": "RAGHU", "text": "...", "choices": [
-			{"text": "Here it is, madam.", "if": "event:parcel_2c", "next": "thanks", "event": "parcel_given"},
-			{"text": "Let me find it.", "if": "!event:parcel_2c", "next": "find"},
-			{"text": "Did you know Kishan? The old watchman.", "if": "!flag:heard_kishan", "next": "kishan", "set": {"heard_kishan": true}}
-		]},
-		"find": {"speaker": "MRS. IYER", "text": "It'll be in the cabin. Kishan always kept them on the floor by the window."},
-		"kishan": {"speaker": "MRS. IYER", "text": "Nice man. Last week he started sitting with that CCTV all night. Said someone on the D wing terrace was filming him.", "set": {"heard_terrace": true}, "next": "kishan2"},
-		"kishan2": {"speaker": "MRS. IYER", "text": "Then one morning his chair was empty. Anyway.", "next": "ask_choices"},
-		"thanks": {"speaker": "MRS. IYER", "text": "Thank you, beta.", "next": "redlight"},
-		"redlight": {"speaker": "MRS. IYER", "text": "And tell the man on the D wing terrace to switch off his little red light. It blinks right into my bedroom.", "set": {"heard_terrace": true}, "choices": [
-			{"text": "Nobody is allowed on the terraces at night.", "next": "nobody"},
-			{"text": "I'll check, madam.", "next": "check", "set": {"promised_iyer": true}}
-		]},
-		"nobody": {"speaker": "MRS. IYER", "text": "Then who keeps waving at me?"},
-		"check": {"speaker": "MRS. IYER", "text": "Good. Goodnight, beta."},
-		"after": {"speaker": "MRS. IYER", "text": "Go, go. Do your rounds. And that red light, okay?"}
+		"fork": {
+			"branch": [
+				{
+					"if": "event:parcel_given",
+					"next": "after"
+				},
+				{
+					"if": "flag:iyer_greeted",
+					"next": "ask"
+				},
+				{
+					"next": "hello"
+				}
+			]
+		},
+		"hello": {
+			"speaker": "MRS. IYER",
+			"text": "Arre, the new watchman? Good, good. Iyer, 2C. A courier came for me in the evening, no?",
+			"set": {
+				"iyer_greeted": true
+			},
+			"next": "ask_choices"
+		},
+		"ask": {
+			"speaker": "MRS. IYER",
+			"text": "So? My parcel?",
+			"next": "ask_choices"
+		},
+		"ask_choices": {
+			"speaker": "RAGHU",
+			"text": "...",
+			"choices": [
+				{
+					"text": "Here it is, madam.",
+					"if": "event:parcel_2c",
+					"next": "thanks",
+					"event": "parcel_given"
+				},
+				{
+					"text": "Let me find it.",
+					"if": "!event:parcel_2c",
+					"next": "find"
+				},
+				{
+					"text": "Did you know Kishan? The old watchman.",
+					"if": "!flag:heard_kishan",
+					"next": "kishan",
+					"set": {
+						"heard_kishan": true
+					}
+				},
+				{
+					"text": "You're up late, madam.",
+					"if": "!flag:iyer_late",
+					"next": "late",
+					"set": {
+						"iyer_late": true
+					}
+				}
+			]
+		},
+		"find": {
+			"speaker": "MRS. IYER",
+			"text": "It'll be in the cabin. Kishan always kept them on the floor by the window."
+		},
+		"kishan": {
+			"speaker": "MRS. IYER",
+			"text": "Nice man. Last week he started sitting with that CCTV all night. Said someone on the D wing terrace was filming him.",
+			"set": {
+				"heard_terrace": true
+			},
+			"next": "kishan2"
+		},
+		"kishan2": {
+			"speaker": "MRS. IYER",
+			"text": "Then one morning his chair was empty. Anyway.",
+			"next": "ask_choices"
+		},
+		"thanks": {
+			"speaker": "MRS. IYER",
+			"text": "Thank you, beta.",
+			"next": "redlight"
+		},
+		"redlight": {
+			"speaker": "MRS. IYER",
+			"text": "And tell the man on the D wing terrace to switch off his little red light. It blinks right into my bedroom.",
+			"set": {
+				"heard_terrace": true
+			},
+			"choices": [
+				{
+					"text": "Nobody is allowed on the terraces at night.",
+					"next": "nobody"
+				},
+				{
+					"text": "I'll check, madam.",
+					"next": "check",
+					"set": {
+						"promised_iyer": true
+					}
+				}
+			]
+		},
+		"nobody": {
+			"speaker": "MRS. IYER",
+			"text": "Then who keeps waving at me?"
+		},
+		"check": {
+			"speaker": "MRS. IYER",
+			"text": "Good. Goodnight, beta."
+		},
+		"after": {
+			"speaker": "MRS. IYER",
+			"text": "Go, go. Do your rounds. And that red light, okay?"
+		},
+		"late": {
+			"speaker": "MRS. IYER",
+			"text": "Who sleeps at my age? Since my husband passed, I keep the TV on for the noise.",
+			"next": "late2"
+		},
+		"late2": {
+			"speaker": "MRS. IYER",
+			"text": "Sun TV, all night. Even the static is company. Anyway.",
+			"next": "ask_choices"
+		}
 	}
 }

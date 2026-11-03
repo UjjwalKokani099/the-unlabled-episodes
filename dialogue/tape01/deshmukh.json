@@ -1,21 +1,122 @@
 {
 	"start": "hello",
 	"nodes": {
-		"hello": {"speaker": "MR. DESHMUKH", "text": "You must be Raghu.", "set": {"met_deshmukh": true}, "next": "who"},
-		"who": {"speaker": "RAGHU", "text": "...", "choices": [
-			{"text": "Yes, sahab. And you are...?", "next": "intro"},
-			{"text": "How do you know my name?", "next": "name", "set": {"deshmukh_knew_name": true}}
-		]},
-		"name": {"speaker": "MR. DESHMUKH", "text": "It's written on your face, beta. Like it was on Kishan's.", "next": "intro"},
-		"intro": {"speaker": "MR. DESHMUKH", "text": "Deshmukh. 4B. I have been here longer than these walls.", "next": "ask"},
-		"ask": {"speaker": "MR. DESHMUKH", "text": "I take a small walk at three. Kishan kept the little gate open for me. You will also, no?", "choices": [
-			{"text": "Of course, sahab.", "next": "promise", "set": {"promised_gate": true}},
-			{"text": "Sorry, sahab. The gates stay locked after midnight.", "next": "refuse", "set": {"refused_gate": true}},
-			{"text": "Where do you go at three?", "if": "!flag:asked_where", "next": "where", "set": {"asked_where": true}}
-		]},
-		"where": {"speaker": "MR. DESHMUKH", "text": "Out. I always come back.", "next": "ask"},
-		"promise": {"speaker": "MR. DESHMUKH", "text": "Good boy. Three-twelve. Don't be late."},
-		"refuse": {"speaker": "MR. DESHMUKH", "text": "Locks. Kishan also had locks.", "next": "refuse2"},
-		"refuse2": {"speaker": "MR. DESHMUKH", "text": "Goodnight, Raghu."}
+		"hello": {
+			"speaker": "MR. DESHMUKH",
+			"text": "You must be Raghu.",
+			"set": {
+				"met_deshmukh": true
+			},
+			"next": "who"
+		},
+		"who": {
+			"speaker": "RAGHU",
+			"text": "...",
+			"choices": [
+				{
+					"text": "Yes, sahab. And you are...?",
+					"next": "intro"
+				},
+				{
+					"text": "How do you know my name?",
+					"next": "name",
+					"set": {
+						"deshmukh_knew_name": true
+					}
+				}
+			]
+		},
+		"name": {
+			"speaker": "MR. DESHMUKH",
+			"text": "It's written on your face, beta. Like it was on Kishan's.",
+			"next": "intro"
+		},
+		"intro": {
+			"speaker": "MR. DESHMUKH",
+			"text": "Deshmukh. 4B. I have been here longer than these walls.",
+			"next": "ask"
+		},
+		"ask": {
+			"speaker": "MR. DESHMUKH",
+			"text": "I take a small walk at three. Kishan kept the little gate open for me. You will also, no?",
+			"choices": [
+				{
+					"text": "Of course, sahab.",
+					"next": "promise",
+					"set": {
+						"promised_gate": true
+					}
+				},
+				{
+					"text": "Sorry, sahab. The gates stay locked after midnight.",
+					"next": "refuse",
+					"set": {
+						"refused_gate": true
+					}
+				},
+				{
+					"text": "How long have you lived here, sahab?",
+					"if": "!flag:asked_years",
+					"next": "years",
+					"set": {
+						"asked_years": true
+					}
+				},
+				{
+					"text": "Did Kishan say why he stopped coming?",
+					"if": "!flag:asked_kishan",
+					"next": "kishan",
+					"set": {
+						"asked_kishan": true
+					}
+				},
+				{
+					"text": "Where do you go at three?",
+					"if": "!flag:asked_where",
+					"next": "where",
+					"set": {
+						"asked_where": true
+					}
+				}
+			]
+		},
+		"where": {
+			"speaker": "MR. DESHMUKH",
+			"text": "Out. I always come back.",
+			"next": "ask"
+		},
+		"promise": {
+			"speaker": "MR. DESHMUKH",
+			"text": "Good boy. Three-twelve. Don't be late."
+		},
+		"refuse": {
+			"speaker": "MR. DESHMUKH",
+			"text": "Locks. Kishan also had locks.",
+			"next": "refuse2"
+		},
+		"refuse2": {
+			"speaker": "MR. DESHMUKH",
+			"text": "Goodnight, Raghu."
+		},
+		"years": {
+			"speaker": "MR. DESHMUKH",
+			"text": "Since the foundation stone. My wife chose 4B for the morning light.",
+			"next": "years2"
+		},
+		"years2": {
+			"speaker": "MR. DESHMUKH",
+			"text": "She is gone now. The light still comes. Every morning, for nobody.",
+			"next": "ask"
+		},
+		"kishan": {
+			"speaker": "MR. DESHMUKH",
+			"text": "Kishan stopped asking questions. That was good of him.",
+			"next": "kishan2"
+		},
+		"kishan2": {
+			"speaker": "MR. DESHMUKH",
+			"text": "You ask a lot of questions, Raghu.",
+			"next": "ask"
+		}
 	}
 }

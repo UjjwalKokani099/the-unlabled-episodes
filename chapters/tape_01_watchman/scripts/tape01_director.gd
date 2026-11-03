@@ -103,9 +103,27 @@ func _restore() -> void:
 		_iyer_waits()
 
 
+## Raghu's narration, calm and in the past tense (story bible: the narrator is already
+## dead). Each line plays once per playthrough: a Game flag survives checkpoint reloads.
+const VO_BEATS := {
+	&"register_signed": [6.0, "I wrote my name in the register. Raghu, ten-forty PM. Neat letters. My father taught me that.", 5.0],
+	&"kishan_card": [0.8, "Someone had cut his face out of it. I told myself it was the society children.", 4.5],
+	&"talked_deshmukh": [1.5, "He knew my name before I said it. Old men in old buildings know everything. That's what I told myself.", 5.5],
+	&"lock_terraces": [1.0, "Four terraces, four padlocks. I counted the keys twice. I don't know why.", 4.5],
+	&"balcony_checked": [5.0, "I stood under that balcony a long time. Long enough to feel foolish. Not long enough to leave.", 5.0],
+	&"4b_checked": [10.0, "Eight months of dust. And a clock on the wall, stopped at twelve minutes past three.", 5.0],
+	&"register_read_late": [4.5, "Every place I had been that night, someone had written it down. To the minute.", 4.5],
+	&"meter_room_reached": [1.0, "I didn't look behind me. I have thought about that a lot, since.", 4.5],
+}
+
+
 func _on_event(id: StringName) -> void:
 	if Events.replaying or ending_started:
 		return
+	if VO_BEATS.has(id) and Game.get_flag("t1_vo_" + String(id)) == null:
+		Game.set_flag("t1_vo_" + String(id), true)
+		var beat: Array = VO_BEATS[id]
+		_after(beat[0], _say.bind(VO, beat[1], beat[2]))
 	match id:
 		&"back_at_cabin":
 			deshmukh_npc.active = false

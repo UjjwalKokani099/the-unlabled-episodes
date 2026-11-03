@@ -14,6 +14,16 @@ extends Node3D
 const PLAY_DELAY := 1.1
 const TAPE_SCENE := preload("res://scenes/hub/hub_tape.tscn")
 const DOORBELL := preload("res://assets/audio/sfx/doorbell.wav")
+## Nikhil's thoughts on coming back to the room after each tape (stage = tapes watched).
+## Present tense, quiet: he's alive, for now. Each plays once (Game flag).
+const ARRIVAL_THOUGHTS := {
+	0: ["Four tapes, a hundred and fifty rupees. The man didn't even look up when I paid.", 5.0],
+	1: ["A watchman. Some housing society in '98. Whoever filmed that never stopped the camera.", 5.0],
+	2: ["The van in that tape was white too. Same as... no. Lots of white vans.", 5.0],
+	3: ["Room 108. Why do I know that number?", 4.0],
+	4: ["Every address on that wall was crossed out. Except the last one.", 5.0],
+}
+const SPEAKER := "NIKHIL"
 
 ## -1 = from the save file. 0..4 = force a stage (testing / previews).
 @export var debug_stage: int = -1
@@ -46,6 +56,7 @@ func _ready() -> void:
 	apply_stage()
 	_make_hand.call_deferred()
 	_start_chores.call_deferred()
+	_arrival_thought()
 
 
 ## Number of tapes watched, counting in order.
@@ -205,6 +216,7 @@ func read_diary() -> void:
 	get_tree().call_group("hud", "show_note", text, true)
 	if stage >= 1:
 		Events.fire(&"read_strange_entry")
+		_think_once(&"diary_entry", "...That's not my handwriting.", 3.5, 1.0)
 
 
 func eat_dinner() -> void:
@@ -215,6 +227,7 @@ func eat_dinner() -> void:
 	(plate.get_node("Food") as Node3D).visible = false
 	(plate.get_node("Interactable") as Interactable).prompt = "Empty plate"
 	_message("Dal-chawal. Already cold.")
+	_think_once(&"dinner", "Maa would say I eat like a hostel boy. She'd be right.", 4.0, 2.8)
 	Events.fire(&"ate_dinner")
 
 
@@ -230,6 +243,8 @@ func charge_phone() -> void:
 	(phone.get_node("Interactable") as Interactable).enabled = false
 	(room.get_node("Charger/Interactable") as Interactable).enabled = false
 	_message("Phone charging. 12%.")
+	if stage >= 1:
+		_think_once(&"charging_late", "Twelve percent. I charged it this morning. Did I fall asleep with the tape running?", 5.0, 2.8)
 	Events.fire(&"phone_charging")
 
 
@@ -270,6 +285,7 @@ func _ring_doorbell() -> void:
 	bell.position = Vector3(0.5, 1.8, 0.5)
 	bell.play()
 	_message("The doorbell.")
+	_think_once(&"doorbell", "It's almost one. I didn't order anything.", 3.5, 2.6)
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -282,6 +298,26 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 
 # --- Helpers ---------------------------------------------------------------------
+
+func _arrival_thought() -> void:
+	if not ARRIVAL_THOUGHTS.has(stage) or (stage == 0 and Game.has_checkpoint()):
+		return
+	var line: Array = ARRIVAL_THOUGHTS[stage]
+	_think_once(StringName("arrival_%d" % stage), line[0], line[1], 3.0)
+
+
+## A thought (subtitle, speaker NIKHIL) that plays once per save, `delay` seconds from now.
+func _think_once(key: StringName, text: String, seconds: float, delay: float = 0.0) -> void:
+	var flag := "hub_thought_" + String(key)
+	if Game.get_flag(flag) != null:
+		return
+	Game.set_flag(flag, true)
+	if delay > 0.0:
+		await get_tree().create_timer(delay).timeout
+		if not is_inside_tree():
+			return
+	get_tree().call_group("subtitles", "say", SPEAKER, text, seconds)
+
 
 func _connect(area: Interactable, method: Callable) -> void:
 	area.interacted.connect(func(_by: Node3D) -> void: method.call())
