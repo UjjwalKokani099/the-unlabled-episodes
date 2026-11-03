@@ -12,6 +12,7 @@ const TABS := ["GRAPHICS", "AUDIO", "CONTROLS", "SUBTITLES"]
 const ROWS: Array[Dictionary] = [
 	{"tab": 0, "key": &"graphics_quality", "label": "Quality preset", "min": 0.0, "max": 2.0, "step": 1.0, "names": ["LOW", "MEDIUM", "HIGH"]},
 	{"tab": 0, "key": &"brightness", "label": "Brightness", "min": 0.6, "max": 1.6, "step": 0.05, "fmt": "%.2f"},
+	{"tab": 0, "key": &"film_look", "label": "Film look", "min": 0.0, "max": 1.0, "step": 0.05, "percent": true},
 	{"tab": 0, "key": &"screen_effects", "label": "VHS effect", "min": 0.0, "max": 1.0, "step": 0.05, "percent": true},
 	{"tab": 0, "key": &"ps1_mode", "label": "PS1 mode"},
 	{"tab": 0, "key": &"fov", "label": "Field of view", "min": 60.0, "max": 100.0, "step": 1.0, "fmt": "%d"},

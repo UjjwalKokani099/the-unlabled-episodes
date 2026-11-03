@@ -45,12 +45,15 @@ const PS1_RENDER_SCALE := 0.5
 ## Value of the global shader parameter `ps1_amount` (0 = off, 1 = PS1 mode).
 var ps1_amount: float = 0.0
 var _fps_label: Label
+## Full-screen film grade (shaders/film_grade.gdshader) on canvas layer 1.
+var _grade: ColorRect
 var _fps_timer: float = 0.0
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_make_fps_label()
+	_make_grade_layer()
 	Settings.changed.connect(_on_setting_changed)
 	get_tree().node_added.connect(_on_node_added)
 	apply()
@@ -69,6 +72,8 @@ func apply() -> void:
 	for node in get_tree().root.find_children("*", "VoxelGI", true, false):
 		_apply_voxel_gi(node as VoxelGI)
 	_fps_label.visible = Settings.show_fps
+	_grade.visible = Settings.film_look > 0.0
+	_grade.material.set_shader_parameter(&"amount", Settings.film_look)
 
 
 func _apply_global() -> void:
@@ -122,7 +127,7 @@ func _on_node_added(node: Node) -> void:
 
 
 func _on_setting_changed(key: StringName) -> void:
-	if key == &"graphics_quality" or key == &"show_fps" or key == &"ps1_mode":
+	if key == &"graphics_quality" or key == &"show_fps" or key == &"ps1_mode" or key == &"film_look":
 		apply()
 
 
@@ -135,6 +140,27 @@ func _process(delta: float) -> void:
 	_fps_timer = 0.25
 	var fps := Engine.get_frames_per_second()
 	_fps_label.text = "%d FPS  %.1f ms" % [fps, 1000.0 / maxf(fps, 1.0)]
+
+
+## Fear level 0..1 for the film grade (darker edges, less colour, more grain). The Stalker's
+## exposure and scripted scares can drive it.
+func set_dread(value: float) -> void:
+	_grade.material.set_shader_parameter(&"dread", clampf(value, 0.0, 1.0))
+
+
+## Layer 1, added before any level: drawn under the camcorder's PS1/tape-cut rects
+## (also layer 1, later in the tree), the OSD (2), the VHS effect (3) and the HUD (10).
+func _make_grade_layer() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 1
+	add_child(layer)
+	_grade = ColorRect.new()
+	_grade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_grade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var mat := ShaderMaterial.new()
+	mat.shader = preload("res://shaders/film_grade.gdshader")
+	_grade.material = mat
+	layer.add_child(_grade)
 
 
 func _make_fps_label() -> void:
