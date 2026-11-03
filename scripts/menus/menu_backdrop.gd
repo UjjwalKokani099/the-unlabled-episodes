@@ -10,12 +10,13 @@ enum Framing { IDLE, CLOSE, DIVE }
 ## Must match `curvature` in shaders/crt_screen.gdshader.
 const CURVATURE := 0.12
 const CRT_SHADER := preload("res://shaders/crt_screen.gdshader")
-const SCREEN_TARGET := Vector3(3.15, 0.8, 3.565)
+## Centre of the CRT glass (tools/gen_hub.py TV Screen, on the television_02 model).
+const SCREEN_TARGET := Vector3(3.15, 0.9, 3.6)
 ## Camera spots per framing: [position, look-at].
 const SPOTS := {
-	Framing.IDLE: [Vector3(2.97, 0.93, 2.9), Vector3(3.11, 0.77, 3.56)],
-	Framing.CLOSE: [Vector3(3.15, 0.81, 3.08), SCREEN_TARGET],
-	Framing.DIVE: [Vector3(3.15, 0.8, 3.42), SCREEN_TARGET],
+	Framing.IDLE: [Vector3(2.97, 1.03, 2.93), Vector3(3.11, 0.87, 3.6)],
+	Framing.CLOSE: [Vector3(3.15, 0.91, 3.11), SCREEN_TARGET],
+	Framing.DIVE: [Vector3(3.15, 0.9, 3.45), SCREEN_TARGET],
 }
 
 var framing: Framing = Framing.IDLE

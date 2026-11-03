@@ -55,6 +55,7 @@ class Props:
     def __init__(self, lv: Level, parent: str = "Static"):
         self.lv = lv
         self.parent = parent
+        self._models_node = None
         self._mats = {}
         self._meshes = {}
         self._n = 0
@@ -113,6 +114,39 @@ class Props:
             return self.box(pos, dims, mat, r, shadow=shadow)
         return self.cyl(pos, *dims[:3], mat, r, seg=dims[3] if len(dims) > 3 else 12, shadow=shadow)
 
+    # ------------------------------------------------------------------ real models
+    def model(self, name, pos, yaw=0.0, pitch=0.0, roll=0.0, scale=1.0, parent=None, collide=None,
+              surface="concrete", node_name=None, script="res://scripts/props/prop_model.gd", **opts):
+        """Instance assets/models/<name>/<name>.gltf (CC0, tools/fetch_models.py).
+        Same facing convention as the primitives: the model's front ends up along -Z
+        after `yaw` (glTF fronts are +Z, so the instance is turned 180 degrees).
+        collide = (size_x, size_y, size_z) box centred size_y/2 above `pos` (axis-aligned
+        before yaw; only 0/90/180/270 yaws keep it exact). Extra keyword options are
+        PropModel exports (hide_parts, render_layers, visibility_end, cast_shadows...)."""
+        if parent is None:
+            if self._models_node is None:
+                self._models_node = self.lv.add("Props", "Node3D", ".")
+            parent = self._models_node
+        props = {"script": f'ExtResource("{self.lv.ext(script, "Script")}")',
+                 "position": v3(*pos), "rotation_degrees": v3(pitch, yaw + 180.0, roll)}
+        if scale != 1.0:
+            props["scale"] = v3(scale, scale, scale)
+        for k, val in opts.items():
+            if isinstance(val, bool):
+                props[k] = "true" if val else "false"
+            elif isinstance(val, (list, tuple)):
+                props[k] = "PackedStringArray(" + ", ".join(f'"{x}"' for x in val) + ")"
+            else:
+                props[k] = str(val)
+        path = self.lv.scene(node_name or "".join(w.title() for w in name.split("_")), f"res://assets/models/{name}/{name}.gltf",
+                             parent, props)
+        if collide:
+            sx, sy, sz = collide
+            if round(yaw) % 180 != 0:
+                sx, sz = sz, sx
+            self.lv.collider((pos[0], pos[1] + sy / 2, pos[2]), (sx, sy, sz), surface)
+        return path
+
     # ================================================================== furniture
     def plastic_chair(self, o, yaw=0.0, mat="plastic_white", collide=True):
         """Monobloc chair: seat 0.45 m high, faces -Z."""
@@ -126,7 +160,7 @@ class Props:
         if collide:
             self.lv.collider(self.at(o, yaw, (0, 0.23, 0)), (0.46, 0.46, 0.44), "soft")
 
-    def steel_almirah(self, o, yaw=0.0, w=0.9, h=1.8, d=0.5):
+    def steel_almirah(self, o, yaw=0.0, w=0.9, h=1.8, d=0.5, top=True):
         """Godrej-style steel cupboard, doors face -Z."""
         P = lambda *a, **k: self.part(o, yaw, *a, **k)  # noqa: E731
         P("box", (0, h / 2 + 0.06, 0), (w, h, d), "almirah")
@@ -135,8 +169,9 @@ class Props:
         P("box", (0.08, h * 0.62, -d / 2 - 0.01), (0.03, 0.03, 0.02), "brass")            # lock
         for sx in (-1, 1):
             P("box", (sx * (w / 2 - 0.05), 0.03, 0), (0.06, 0.06, d - 0.05), "rubber")
-        P("box", (0, h + 0.18, 0.02), (w * 0.7, 0.22, d * 0.8), "cardboard")              # box on top
-        P("box", (0.15, h + 0.33, 0.05), (0.4, 0.08, 0.3), "metal_trunk_blue")            # old suitcase
+        if top:
+            P("box", (0, h + 0.18, 0.02), (w * 0.7, 0.22, d * 0.8), "cardboard")          # box on top
+            P("box", (0.15, h + 0.33, 0.05), (0.4, 0.08, 0.3), "metal_trunk_blue")        # old suitcase
         self.lv.collider(self.at(o, yaw, (0, h / 2 + 0.06, 0)), (w, h, d) if yaw % 180 == 0 else (d, h, w), "metal")
 
     def bucket_and_mug(self, o, mat="plastic_red"):
