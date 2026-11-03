@@ -431,6 +431,7 @@ def dress_grounds(lv: Level) -> None:
     # meter room (inner faces x 26.1 / 29.9, z -5.9 / -2.1; door in the x=26 wall at z -4)
     p.model("utility_box_01", (27.1, 0.05, -5.62), yaw=180, collide=(0.52, 1.12, 0.43), surface="metal")
     p.model("power_box_01", (26.1, 1.6, -2.75), yaw=-90)
+    p.model("utility_box_02", (30.35, 0, -4.4), yaw=-90, collide=(0.92, 1.12, 0.43), surface="metal")
     # CCTV camera bodies, a little behind each feed's lens (the gate one on its own pole)
     lv.box((0, 1.55, 21.78), (0.08, 3.1, 0.08), "metal_gate_green", collide=False)
     lv.box((0, 3.1, 21.83), (0.06, 0.06, 0.18), "metal_gate_green", collide=False)
@@ -452,6 +453,19 @@ def dress_cabin(lv: Level) -> None:
     p.tiffin((5.98, 0.76, 25.1))
     p.tumbler((6.62, 0.76, 24.72))
     p.model("vintage_flashlight", (6.95, 0.76, 24.68), yaw=95)
+    p.model("cigarette_pack", (6.52, 0.76, 25.02), yaw=25)
+    # outside the cabin door: a bulkhead porch light (dies in the power cut), two money plants
+    p.model("security_light", (3.9, 2.35, 23.0), yaw=90, node_name="PorchLightBody")
+    lv.add("PorchLight", "OmniLight3D", ".", {"position": v3(3.62, 2.2, 23.0), "light_color": "Color(1, 0.86, 0.62, 1)",
+           "light_energy": "1.3", "omni_range": "9.0", "omni_attenuation": "1.3", "shadow_enabled": "true",
+           "light_volumetric_fog_energy": "1.5"}, groups=["mains"])
+    p.cyl((3.68, 2.2, 23.0), 0.035, 0.035, 0.07, "bulb_warm", seg=10, shadow=False)
+    for z in (22.15, 23.85):
+        p.model("planter_pot_clay", (3.65, 0, z), yaw=z * 40)
+    # wear
+    for name, pos, rot in (("hand_grime", (4.11, 1.2, 23.65), (0, 90, 0)), ("crack_a", (7.39, 2.1, 22.6), (0, -90, 0)),
+                           ("water_stain", (6.9, 2.595, 22.6), (90, 0, 0)), ("paan_b", (3.89, 0.3, 24.4), (0, -90, 0))):
+        lv.scene(name, f"res://scenes/decals/{name}.tscn", ".", {"position": v3(*pos), "rotation_degrees": v3(*rot)})
     p.radio((6.66, 0.76, 25.18), yaw=180)
     p.model("plastic_monobloc_chair_01", (6.55, f, 24.12), yaw=172, collide=(0.6, 0.5, 0.6), surface="soft")
     p.matka((4.38, f, 25.1))
@@ -461,7 +475,7 @@ def dress_cabin(lv: Level) -> None:
     p.mosquito_coil((4.7, f, 24.0))
     p.chappals((4.4, f, 24.25), yaw=80)
     p.model("wall_clock", (5.75, 2.3, 22.1), yaw=180, script="res://scripts/props/wall_clock.gd")
-    p.calendar((4.65, 1.6, 25.4))
+    lv.scene("CabinCalendar", "res://scenes/decals/ganesh.tscn", ".", {"position": v3(4.65, 1.55, 25.4), "rotation_degrees": v3(0, 180, 0)})
     p.notices((7.4, 1.5, 24.1), yaw=90)
     p.hooks_with_bag((4.62, 1.8, 22.1), yaw=180)
     p.switchboard((4.1, 1.3, 23.85), yaw=-90, n=2)
