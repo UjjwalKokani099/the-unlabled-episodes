@@ -13,6 +13,7 @@ const NAMES := ["LOW", "MEDIUM", "HIGH"]
 ## Tuned on the target laptop (RTX 3050 Ti) with tools/benchmark.gd.
 const PRESETS := {
 	Quality.LOW: {
+		"ssr": false,
 		"render_scale": 0.6, "fxaa": false, "lod_threshold": 4.0,
 		"shadow_atlas": 2048, "soft_shadows": RenderingServer.SHADOW_QUALITY_HARD,
 		"ssao": false, "ssao_quality": RenderingServer.ENV_SSAO_QUALITY_VERY_LOW, "ssao_half": true,
@@ -21,6 +22,7 @@ const PRESETS := {
 		"glow": true,
 	},
 	Quality.MEDIUM: {
+		"ssr": false,
 		"render_scale": 0.75, "fxaa": true, "lod_threshold": 2.0,
 		"shadow_atlas": 4096, "soft_shadows": RenderingServer.SHADOW_QUALITY_SOFT_LOW,
 		"ssao": true, "ssao_quality": RenderingServer.ENV_SSAO_QUALITY_LOW, "ssao_half": true,
@@ -29,6 +31,7 @@ const PRESETS := {
 		"glow": true,
 	},
 	Quality.HIGH: {
+		"ssr": true,
 		"render_scale": 0.9, "fxaa": true, "lod_threshold": 1.0,
 		"shadow_atlas": 4096, "soft_shadows": RenderingServer.SHADOW_QUALITY_SOFT_MEDIUM,
 		"ssao": true, "ssao_quality": RenderingServer.ENV_SSAO_QUALITY_MEDIUM, "ssao_half": false,
@@ -104,6 +107,7 @@ func _apply_environment(world: WorldEnvironment) -> void:
 		env.set_meta(AUTHORED_META, {
 			"ssao": env.ssao_enabled, "ssil": env.ssil_enabled,
 			"volumetric_fog": env.volumetric_fog_enabled, "glow": env.glow_enabled,
+			"ssr": env.ssr_enabled,
 		})
 	var authored: Dictionary = env.get_meta(AUTHORED_META)
 	var p := current()
@@ -111,6 +115,8 @@ func _apply_environment(world: WorldEnvironment) -> void:
 	env.ssil_enabled = authored.ssil and p.ssil
 	env.volumetric_fog_enabled = authored.volumetric_fog and p.volumetric_fog
 	env.glow_enabled = authored.glow and p.glow
+	# Screen-space reflections (polished tiles, wet ground, glass): High only.
+	env.ssr_enabled = authored.get("ssr", false) and p.ssr
 
 
 ## Baked bounce light: off on Low, low quality on Medium, full on High.

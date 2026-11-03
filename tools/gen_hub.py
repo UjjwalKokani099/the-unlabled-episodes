@@ -35,7 +35,8 @@ def main() -> None:
         "background_mode": "2", "sky": f'SubResource("{sky}")', "ambient_light_source": "2",
         "ambient_light_color": "Color(0.32, 0.36, 0.5, 1)", "ambient_light_energy": "0.035",
         "tonemap_mode": "4", "tonemap_exposure": "1.15", "ssao_enabled": "true", "ssao_radius": "0.8",
-        "ssao_intensity": "2.0", "glow_enabled": "true", "glow_intensity": "0.6", "glow_bloom": "0.04",
+        "ssao_intensity": "2.0", "ssr_enabled": "true", "ssr_max_steps": "48", "ssr_fade_out": "2.5",
+        "ssr_depth_tolerance": "0.3", "glow_enabled": "true", "glow_intensity": "0.6", "glow_bloom": "0.04",
         "glow_hdr_threshold": "0.9", "volumetric_fog_enabled": "true", "volumetric_fog_density": "0.035", "volumetric_fog_albedo": "Color(0.85, 0.8, 0.72, 1)",
         "volumetric_fog_length": "24.0"})
     lv.add("WorldEnvironment", "WorldEnvironment", ".", {"environment": f'SubResource("{env}")'})

@@ -449,6 +449,7 @@ def night_environment(lv: Level, fog_density=0.012, moon=True) -> None:
         "ambient_light_energy": "0.08", "tonemap_mode": "4", "tonemap_exposure": "1.15",
         "ssao_enabled": "true", "ssao_radius": "1.2", "ssao_intensity": "2.0",
         "ssil_enabled": "true", "ssil_radius": "3.0", "ssil_intensity": "0.7",
+        "ssr_enabled": "true", "ssr_max_steps": "48", "ssr_fade_out": "3.0", "ssr_depth_tolerance": "0.4",
         "glow_enabled": "true", "glow_intensity": "0.7", "glow_bloom": "0.04", "glow_hdr_threshold": "0.9",
         "fog_enabled": "true", "fog_light_color": "Color(0.06, 0.045, 0.035, 1)", "fog_density": "0.006",
         "volumetric_fog_enabled": "true", "volumetric_fog_density": str(fog_density),
