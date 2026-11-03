@@ -53,8 +53,6 @@ MODELS = {
     "plastic_crate_01": (512, "parking clutter"),
     "trashbag": (512, "garbage by the compound wall"),
     "can_rusted": (512, "litter"),
-    # The Cameraman
-    "vintage_video_camera": (1024, "the Cameraman's shoulder camcorder"),
 }
 
 

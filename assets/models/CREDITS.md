@@ -30,4 +30,3 @@ All models from [Poly Haven](https://polyhaven.com) (CC0).
 | plastic_crate_01 | Plastic Crate 01 | PierreB3D | 0.30 / 0.41 / 0.26 | parking clutter |
 | trashbag | Trashbag | Benny Weimer | 0.53 / 0.46 / 0.57 | garbage by the compound wall |
 | can_rusted | Can Rusted | Rahul Chaudhary | 0.12 / 0.12 / 0.15 | litter |
-| vintage_video_camera | Vintage Video Camera | James Ray Cock, Jenelle van Heerden | 0.07 / 0.13 / 0.14 | the Cameraman's shoulder camcorder |
