@@ -46,6 +46,9 @@ COLOURS = {
                   "emission": "Color(1, 0.75, 0.45, 1)", "emission_energy_multiplier": "6.0"},
     "terracotta": {"albedo_color": "Color(0.55, 0.27, 0.16, 1)", "roughness": "0.95"},
     "bamboo": {"albedo_color": "Color(0.42, 0.3, 0.16, 1)", "roughness": "0.8"},
+    "tail_red": {"albedo_color": "Color(0.45, 0.03, 0.02, 1)", "roughness": "0.2", "metallic_specular": "0.8"},
+    "chrome": {"albedo_color": "Color(0.75, 0.75, 0.75, 1)", "metallic": "1.0", "roughness": "0.18"},
+    "plate": {"albedo_color": "Color(0.85, 0.84, 0.78, 1)", "roughness": "0.6"},
     "led_red": {"albedo_color": "Color(0.9, 0.05, 0.03, 1)", "emission_enabled": "true",
                 "emission": "Color(1, 0.05, 0.02, 1)", "emission_energy_multiplier": "3.0"},
 }
@@ -134,6 +137,8 @@ class Props:
         r = (rot[0], rot[1] + yaw, rot[2])
         if kind == "box":
             return self.box(pos, dims, mat, r, shadow=shadow)
+        if kind == "soft":
+            return self.soft(pos, dims, mat, r, shadow=shadow)
         return self.cyl(pos, *dims[:3], mat, r, seg=dims[3] if len(dims) > 3 else 12, shadow=shadow)
 
     # ------------------------------------------------------------------ real models
@@ -399,4 +404,62 @@ class Props:
         for i in range(n):
             self.part(o, yaw, "box", ((i - (n - 1) / 2) * 0.26, (i % 2) * 0.05, -0.004),
                       (0.21, 0.29, 0.003), "paper" if i % 2 == 0 else "newsprint", rot=(0, 0, (i * 7 % 5) - 2), shadow=False)
+
+    # ================================================================== vehicles (1990s)
+    def scooter(self, o, yaw=0.0, paint="paint_car_blue", collide=True):
+        """A 90s Indian geared scooter on its stand: rounded rear cowl, leg shield, round
+        headlamp on the handlebar, spare wheel at the back. Front = -Z after yaw."""
+        P = lambda *a, **k: self.part(o, yaw, *a, **k)  # noqa: E731
+        for z in (-0.6, 0.55):
+            P("cyl", (0, 0.2, z), (0.2, 0.2, 0.09, 16), "rubber", rot=(0, 0, 90))
+            P("cyl", (0, 0.2, z), (0.11, 0.11, 0.1, 12), "chrome", rot=(0, 0, 90))
+        P("box", (0, 0.29, -0.05), (0.3, 0.05, 0.6), "rubber")                    # floorboard
+        P("soft", (0, 0.5, 0.36), (0.52, 0.44, 0.8), paint)                      # rear cowl
+        P("box", (0, 0.62, -0.38), (0.42, 0.62, 0.05), paint, rot=(-12, 0, 0))    # leg shield
+        P("soft", (0, 0.36, -0.6), (0.2, 0.14, 0.38), paint)                     # front mudguard
+        P("cyl", (0, 0.82, -0.45), (0.035, 0.035, 0.52, 8), paint, rot=(-14, 0, 0))
+        P("box", (0, 1.08, -0.5), (0.62, 0.06, 0.07), "black")                   # handlebar
+        P("cyl", (0, 1.03, -0.57), (0.075, 0.075, 0.07, 14), "chrome", rot=(90, 0, 0))
+        P("cyl", (0, 1.03, -0.61), (0.064, 0.064, 0.01, 14), "glass_dark", rot=(90, 0, 0))
+        for x in (-1, 1):
+            P("cyl", (x * 0.34, 1.08, -0.5), (0.022, 0.022, 0.1, 8), "rubber", rot=(0, 0, 90))
+            P("cyl", (x * 0.24, 1.17, -0.5), (0.008, 0.008, 0.18, 6), "chrome")
+            P("box", (x * 0.26, 1.27, -0.5), (0.08, 0.05, 0.015), "mirror")
+        P("soft", (0, 0.76, 0.3), (0.3, 0.1, 0.62), "black")                     # seat
+        P("cyl", (0, 0.55, 0.8), (0.17, 0.17, 0.08, 14), "rubber", rot=(90, 0, 0))  # spare wheel
+        P("cyl", (0, 0.55, 0.85), (0.09, 0.09, 0.02, 10), "chrome", rot=(90, 0, 0))
+        P("box", (0, 0.62, 0.75), (0.1, 0.05, 0.03), "tail_red")
+        P("box", (0, 0.36, 0.79), (0.18, 0.1, 0.01), "plate")
+        P("box", (0, 0.5, -0.415), (0.16, 0.08, 0.01), "plate")
+        if collide:
+            self.lv.collider(self.at(o, yaw, (0, 0.5, 0)), (0.45, 1.0, 1.5) if round(yaw) % 180 == 0 else (1.5, 1.0, 0.45))
+
+    def hatchback(self, o, yaw=0.0, paint="paint_car_white", collide=True):
+        """A small 90s hatchback: sloped windscreen, glass band, chrome bumpers, round lamps,
+        hubcaps, plates. Front = -Z after yaw. 1.45 x 1.35 x 3.4 m."""
+        P = lambda *a, **k: self.part(o, yaw, *a, **k)  # noqa: E731
+        P("box", (0, 0.56, 0.05), (1.42, 0.52, 3.15), paint)                     # lower body
+        P("soft", (0, 0.56, -1.5), (1.4, 0.5, 0.42), paint)                      # rounded nose
+        P("box", (0, 1.04, 0.3), (1.3, 0.46, 1.62), paint)                       # cabin
+        P("box", (0, 1.08, 0.3), (1.315, 0.33, 1.48), "glass_dark")              # side glass band
+        P("box", (0, 1.27, 0.32), (1.26, 0.04, 1.5), paint)                      # roof
+        P("box", (0, 1.04, -0.62), (1.24, 0.5, 0.03), "glass_dark", rot=(-38, 0, 0))   # windscreen
+        P("box", (0, 1.04, 1.13), (1.22, 0.44, 0.03), "glass_dark", rot=(22, 0, 0))    # hatch glass
+        P("box", (0, 0.86, -0.74), (0.5, 0.012, 0.012), "black", rot=(0, 0, 8))  # wiper
+        for x in (-1, 1):
+            for z in (-1.05, 1.05):
+                P("cyl", (x * 0.66, 0.28, z), (0.28, 0.28, 0.18, 18), "rubber", rot=(0, 0, 90))
+                P("cyl", (x * 0.67, 0.28, z), (0.16, 0.16, 0.18, 12), "chrome", rot=(0, 0, 90))
+            P("cyl", (x * 0.48, 0.62, -1.68), (0.085, 0.085, 0.03, 14), "chrome", rot=(90, 0, 0))
+            P("cyl", (x * 0.48, 0.62, -1.7), (0.07, 0.07, 0.01, 14), "glass_dark", rot=(90, 0, 0))
+            P("box", (x * 0.52, 0.66, 1.64), (0.2, 0.13, 0.03), "tail_red")
+            P("box", (x * 0.73, 1.0, -0.5), (0.04, 0.08, 0.12), "black")           # mirrors
+            P("box", (x * 0.712, 0.95, 0.35), (0.008, 0.012, 0.25), "chrome")      # door handle line
+        P("box", (0, 0.7, -0.05), (1.428, 0.42, 0.008), "black")                  # door shut line
+        P("box", (0, 0.6, -1.72), (0.5, 0.12, 0.02), "black")                    # grille
+        for z in (-1.74, 1.68):
+            P("box", (0, 0.38, z), (1.46, 0.12, 0.1), "chrome")
+            P("box", (0, 0.47, z + (-0.04 if z < 0 else 0.04)), (0.36, 0.1, 0.01), "plate")
+        if collide:
+            self.lv.collider(self.at(o, yaw, (0, 0.65, 0)), (1.45, 1.3, 3.45) if round(yaw) % 180 == 0 else (3.45, 1.3, 1.45), "metal")
 

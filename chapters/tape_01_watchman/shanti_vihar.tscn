@@ -1343,231 +1343,1905 @@ size = Vector3(4.2, 2.5, 4.2)
 [sub_resource type="BoxMesh" id="BoxMesh_376"]
 size = Vector3(0.05, 0.04, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_377"]
-size = Vector3(0.32, 0.35, 1.25)
+[sub_resource type="CylinderMesh" id="CylinderMesh_377"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.09
+radial_segments = 16
+rings = 1
 
-[sub_resource type="BoxMesh" id="BoxMesh_378"]
-size = Vector3(0.3, 0.1, 0.55)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_378"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
 
-[sub_resource type="BoxMesh" id="BoxMesh_379"]
-size = Vector3(0.6, 0.04, 0.04)
+[sub_resource type="CylinderMesh" id="CylinderMesh_379"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.1
+radial_segments = 12
+rings = 1
 
-[sub_resource type="BoxMesh" id="BoxMesh_380"]
-size = Vector3(0.1, 0.4, 0.4)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_380"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_381"]
-size = Vector3(0.4, 1.0, 1.4)
+[sub_resource type="BoxMesh" id="BoxMesh_381"]
+size = Vector3(0.3, 0.05, 0.6)
 
-[sub_resource type="BoxMesh" id="BoxMesh_382"]
-size = Vector3(1.4, 0.6, 3.3)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_383"]
-size = Vector3(1.4, 0.6, 3.3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_384"]
-size = Vector3(1.3, 0.45, 1.8)
-
-[sub_resource type="BoxMesh" id="BoxMesh_385"]
-size = Vector3(1.32, 0.38, 1.6)
-
-[sub_resource type="BoxMesh" id="BoxMesh_386"]
-size = Vector3(0.2, 0.5, 0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_387"]
-size = Vector3(0.35, 3.2, 0.35)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_388"]
-size = Vector3(0.35, 3.2, 0.35)
-
-[sub_resource type="BoxMesh" id="BoxMesh_389"]
-size = Vector3(3.0, 1.8, 3.0)
-
-[sub_resource type="BoxMesh" id="BoxMesh_390"]
-size = Vector3(2.0, 1.2, 2.0)
-
-[sub_resource type="BoxMesh" id="BoxMesh_391"]
-size = Vector3(2.2, 1.32, 2.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_392"]
-size = Vector3(3, 3, 3)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_393"]
-size = Vector3(3, 3, 3)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_394"]
-size = Vector3(3, 3, 3)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_395"]
-size = Vector3(3, 3, 3)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_396"]
-size = Vector3(3.2, 2.4, 3.2)
-
-[sub_resource type="BoxMesh" id="BoxMesh_397"]
-size = Vector3(1.96, 0.78, 0.86)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_398"]
-albedo_color = Color(0.6, 0.58, 0.53, 1)
-roughness = 1.0
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_399"]
-size = Vector3(2.0, 0.8, 0.9)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_400"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_382"]
 radius = 0.5
 height = 1.0
 radial_segments = 20
 rings = 10
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_401"]
-shader = ExtResource("93_r")
-shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
-shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
-shader_parameter/stripes = Vector2(0.0, 0.0)
-shader_parameter/size = Vector2(2.06, 0.8200000000000001)
-shader_parameter/folds = 8.24
-shader_parameter/fold_depth = 0.02
-shader_parameter/gather = 0.3
-shader_parameter/sway = 0.0
+[sub_resource type="BoxMesh" id="BoxMesh_383"]
+size = Vector3(0.42, 0.62, 0.05)
 
-[sub_resource type="QuadMesh" id="QuadMesh_402"]
-size = Vector2(2.06, 0.8200000000000001)
-subdivide_width = 49
-subdivide_depth = 13
-center_offset = Vector3(0, -0.41000000000000003, 0)
+[sub_resource type="CylinderMesh" id="CylinderMesh_384"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.52
+radial_segments = 8
+rings = 1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_403"]
-shader = ExtResource("93_r")
-shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
-shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
-shader_parameter/stripes = Vector2(0.0, 0.0)
-shader_parameter/size = Vector2(2.06, 0.8200000000000001)
-shader_parameter/folds = 8.24
-shader_parameter/fold_depth = 0.02
-shader_parameter/gather = 0.3
-shader_parameter/sway = 0.0
+[sub_resource type="BoxMesh" id="BoxMesh_385"]
+size = Vector3(0.62, 0.06, 0.07)
 
-[sub_resource type="QuadMesh" id="QuadMesh_404"]
-size = Vector2(2.06, 0.8200000000000001)
-subdivide_width = 49
-subdivide_depth = 13
-center_offset = Vector3(0, -0.41000000000000003, 0)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_386"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_405"]
-shader = ExtResource("93_r")
-shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
-shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
-shader_parameter/stripes = Vector2(0.0, 0.0)
-shader_parameter/size = Vector2(0.96, 0.8200000000000001)
-shader_parameter/folds = 3.84
-shader_parameter/fold_depth = 0.02
-shader_parameter/gather = 0.3
-shader_parameter/sway = 0.0
+[sub_resource type="CylinderMesh" id="CylinderMesh_387"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.07
+radial_segments = 14
+rings = 1
 
-[sub_resource type="QuadMesh" id="QuadMesh_406"]
-size = Vector2(0.96, 0.8200000000000001)
-subdivide_width = 23
-subdivide_depth = 13
-center_offset = Vector3(0, -0.41000000000000003, 0)
+[sub_resource type="CylinderMesh" id="CylinderMesh_388"]
+top_radius = 0.064
+bottom_radius = 0.064
+height = 0.01
+radial_segments = 14
+rings = 1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_407"]
-shader = ExtResource("93_r")
-shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
-shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
-shader_parameter/stripes = Vector2(0.0, 0.0)
-shader_parameter/size = Vector2(0.96, 0.8200000000000001)
-shader_parameter/folds = 3.84
-shader_parameter/fold_depth = 0.02
-shader_parameter/gather = 0.3
-shader_parameter/sway = 0.0
+[sub_resource type="CylinderMesh" id="CylinderMesh_389"]
+top_radius = 0.022
+bottom_radius = 0.022
+height = 0.1
+radial_segments = 8
+rings = 1
 
-[sub_resource type="QuadMesh" id="QuadMesh_408"]
-size = Vector2(0.96, 0.8200000000000001)
-subdivide_width = 23
-subdivide_depth = 13
-center_offset = Vector3(0, -0.41000000000000003, 0)
+[sub_resource type="CylinderMesh" id="CylinderMesh_390"]
+top_radius = 0.008
+bottom_radius = 0.008
+height = 0.18
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_391"]
+size = Vector3(0.08, 0.05, 0.015)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_392"]
+albedo_color = Color(0.42, 0.46, 0.5, 1)
+metallic = 0.5
+roughness = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_393"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.08
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_394"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_395"]
+size = Vector3(0.1, 0.05, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_396"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_397"]
+size = Vector3(0.18, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_398"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_399"]
+size = Vector3(0.16, 0.08, 0.01)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_400"]
+size = Vector3(0.45, 1.0, 1.5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_401"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.09
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_402"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_403"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_404"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="BoxMesh" id="BoxMesh_405"]
+size = Vector3(0.3, 0.05, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_406"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_407"]
+size = Vector3(0.42, 0.62, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_408"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.52
+radial_segments = 8
+rings = 1
 
 [sub_resource type="BoxMesh" id="BoxMesh_409"]
-size = Vector3(1.16, 0.73, 0.76)
+size = Vector3(0.62, 0.06, 0.07)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_410"]
-size = Vector3(1.2, 0.75, 0.8)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_410"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_411"]
-shader = ExtResource("93_r")
-shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
-shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
-shader_parameter/stripes = Vector2(0.0, 0.0)
-shader_parameter/size = Vector2(1.26, 0.77)
-shader_parameter/folds = 5.04
-shader_parameter/fold_depth = 0.02
-shader_parameter/gather = 0.3
-shader_parameter/sway = 0.0
+[sub_resource type="CylinderMesh" id="CylinderMesh_411"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.07
+radial_segments = 14
+rings = 1
 
-[sub_resource type="QuadMesh" id="QuadMesh_412"]
-size = Vector2(1.26, 0.77)
-subdivide_width = 30
-subdivide_depth = 12
-center_offset = Vector3(0, -0.385, 0)
+[sub_resource type="CylinderMesh" id="CylinderMesh_412"]
+top_radius = 0.064
+bottom_radius = 0.064
+height = 0.01
+radial_segments = 14
+rings = 1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_413"]
-shader = ExtResource("93_r")
-shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
-shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
-shader_parameter/stripes = Vector2(0.0, 0.0)
-shader_parameter/size = Vector2(1.26, 0.77)
-shader_parameter/folds = 5.04
-shader_parameter/fold_depth = 0.02
-shader_parameter/gather = 0.3
-shader_parameter/sway = 0.0
+[sub_resource type="CylinderMesh" id="CylinderMesh_413"]
+top_radius = 0.022
+bottom_radius = 0.022
+height = 0.1
+radial_segments = 8
+rings = 1
 
-[sub_resource type="QuadMesh" id="QuadMesh_414"]
-size = Vector2(1.26, 0.77)
-subdivide_width = 30
-subdivide_depth = 12
-center_offset = Vector3(0, -0.385, 0)
+[sub_resource type="CylinderMesh" id="CylinderMesh_414"]
+top_radius = 0.008
+bottom_radius = 0.008
+height = 0.18
+radial_segments = 6
+rings = 1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_415"]
-shader = ExtResource("93_r")
-shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
-shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
-shader_parameter/stripes = Vector2(0.0, 0.0)
-shader_parameter/size = Vector2(0.8600000000000001, 0.77)
-shader_parameter/folds = 3.4400000000000004
-shader_parameter/fold_depth = 0.02
-shader_parameter/gather = 0.3
-shader_parameter/sway = 0.0
+[sub_resource type="BoxMesh" id="BoxMesh_415"]
+size = Vector3(0.08, 0.05, 0.015)
 
-[sub_resource type="QuadMesh" id="QuadMesh_416"]
-size = Vector2(0.8600000000000001, 0.77)
-subdivide_width = 20
-subdivide_depth = 12
-center_offset = Vector3(0, -0.385, 0)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_416"]
+albedo_color = Color(0.42, 0.46, 0.5, 1)
+metallic = 0.5
+roughness = 0.12
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_417"]
-shader = ExtResource("93_r")
-shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
-shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
-shader_parameter/stripes = Vector2(0.0, 0.0)
-shader_parameter/size = Vector2(0.8600000000000001, 0.77)
-shader_parameter/folds = 3.4400000000000004
-shader_parameter/fold_depth = 0.02
-shader_parameter/gather = 0.3
-shader_parameter/sway = 0.0
+[sub_resource type="CylinderMesh" id="CylinderMesh_417"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.08
+radial_segments = 14
+rings = 1
 
-[sub_resource type="QuadMesh" id="QuadMesh_418"]
-size = Vector2(0.8600000000000001, 0.77)
-subdivide_width = 20
-subdivide_depth = 12
-center_offset = Vector3(0, -0.385, 0)
+[sub_resource type="CylinderMesh" id="CylinderMesh_418"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.02
+radial_segments = 10
+rings = 1
 
 [sub_resource type="BoxMesh" id="BoxMesh_419"]
+size = Vector3(0.1, 0.05, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_420"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_421"]
+size = Vector3(0.18, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_422"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_423"]
+size = Vector3(0.16, 0.08, 0.01)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_424"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.09
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_425"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_426"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_427"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="BoxMesh" id="BoxMesh_428"]
+size = Vector3(0.3, 0.05, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_429"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_430"]
+size = Vector3(0.42, 0.62, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_431"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.52
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_432"]
+size = Vector3(0.62, 0.06, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_433"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_434"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.07
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_435"]
+top_radius = 0.064
+bottom_radius = 0.064
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_436"]
+top_radius = 0.022
+bottom_radius = 0.022
+height = 0.1
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_437"]
+top_radius = 0.008
+bottom_radius = 0.008
+height = 0.18
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_438"]
+size = Vector3(0.08, 0.05, 0.015)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_439"]
+albedo_color = Color(0.42, 0.46, 0.5, 1)
+metallic = 0.5
+roughness = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_440"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.08
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_441"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_442"]
+size = Vector3(0.1, 0.05, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_443"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_444"]
+size = Vector3(0.18, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_445"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_446"]
+size = Vector3(0.16, 0.08, 0.01)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_447"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.09
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_448"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_449"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_450"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="BoxMesh" id="BoxMesh_451"]
+size = Vector3(0.3, 0.05, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_452"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_453"]
+size = Vector3(0.42, 0.62, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_454"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.52
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_455"]
+size = Vector3(0.62, 0.06, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_456"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_457"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.07
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_458"]
+top_radius = 0.064
+bottom_radius = 0.064
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_459"]
+top_radius = 0.022
+bottom_radius = 0.022
+height = 0.1
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_460"]
+top_radius = 0.008
+bottom_radius = 0.008
+height = 0.18
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_461"]
+size = Vector3(0.08, 0.05, 0.015)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_462"]
+albedo_color = Color(0.42, 0.46, 0.5, 1)
+metallic = 0.5
+roughness = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_463"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.08
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_464"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_465"]
+size = Vector3(0.1, 0.05, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_466"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_467"]
+size = Vector3(0.18, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_468"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_469"]
+size = Vector3(0.16, 0.08, 0.01)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_470"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.09
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_471"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_472"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_473"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="BoxMesh" id="BoxMesh_474"]
+size = Vector3(0.3, 0.05, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_475"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_476"]
+size = Vector3(0.42, 0.62, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_477"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.52
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_478"]
+size = Vector3(0.62, 0.06, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_479"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_480"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.07
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_481"]
+top_radius = 0.064
+bottom_radius = 0.064
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_482"]
+top_radius = 0.022
+bottom_radius = 0.022
+height = 0.1
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_483"]
+top_radius = 0.008
+bottom_radius = 0.008
+height = 0.18
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_484"]
+size = Vector3(0.08, 0.05, 0.015)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_485"]
+albedo_color = Color(0.42, 0.46, 0.5, 1)
+metallic = 0.5
+roughness = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_486"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.08
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_487"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_488"]
+size = Vector3(0.1, 0.05, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_489"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_490"]
+size = Vector3(0.18, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_491"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_492"]
+size = Vector3(0.16, 0.08, 0.01)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_493"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.09
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_494"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_495"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_496"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="BoxMesh" id="BoxMesh_497"]
+size = Vector3(0.3, 0.05, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_498"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_499"]
+size = Vector3(0.42, 0.62, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_500"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.52
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_501"]
+size = Vector3(0.62, 0.06, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_502"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_503"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.07
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_504"]
+top_radius = 0.064
+bottom_radius = 0.064
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_505"]
+top_radius = 0.022
+bottom_radius = 0.022
+height = 0.1
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_506"]
+top_radius = 0.008
+bottom_radius = 0.008
+height = 0.18
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_507"]
+size = Vector3(0.08, 0.05, 0.015)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_508"]
+albedo_color = Color(0.42, 0.46, 0.5, 1)
+metallic = 0.5
+roughness = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_509"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.08
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_510"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_511"]
+size = Vector3(0.1, 0.05, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_512"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_513"]
+size = Vector3(0.18, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_514"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_515"]
+size = Vector3(0.16, 0.08, 0.01)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_516"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.09
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_517"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_518"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_519"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="BoxMesh" id="BoxMesh_520"]
+size = Vector3(0.3, 0.05, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_521"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_522"]
+size = Vector3(0.42, 0.62, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_523"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.52
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_524"]
+size = Vector3(0.62, 0.06, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_525"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_526"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.07
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_527"]
+top_radius = 0.064
+bottom_radius = 0.064
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_528"]
+top_radius = 0.022
+bottom_radius = 0.022
+height = 0.1
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_529"]
+top_radius = 0.008
+bottom_radius = 0.008
+height = 0.18
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_530"]
+size = Vector3(0.08, 0.05, 0.015)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_531"]
+albedo_color = Color(0.42, 0.46, 0.5, 1)
+metallic = 0.5
+roughness = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_532"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.08
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_533"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_534"]
+size = Vector3(0.1, 0.05, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_535"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_536"]
+size = Vector3(0.18, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_537"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_538"]
+size = Vector3(0.16, 0.08, 0.01)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_539"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.09
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_540"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_541"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_542"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="BoxMesh" id="BoxMesh_543"]
+size = Vector3(0.3, 0.05, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_544"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_545"]
+size = Vector3(0.42, 0.62, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_546"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.52
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_547"]
+size = Vector3(0.62, 0.06, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_548"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_549"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.07
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_550"]
+top_radius = 0.064
+bottom_radius = 0.064
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_551"]
+top_radius = 0.022
+bottom_radius = 0.022
+height = 0.1
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_552"]
+top_radius = 0.008
+bottom_radius = 0.008
+height = 0.18
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_553"]
+size = Vector3(0.08, 0.05, 0.015)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_554"]
+albedo_color = Color(0.42, 0.46, 0.5, 1)
+metallic = 0.5
+roughness = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_555"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.08
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_556"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_557"]
+size = Vector3(0.1, 0.05, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_558"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_559"]
+size = Vector3(0.18, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_560"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_561"]
+size = Vector3(0.16, 0.08, 0.01)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_562"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.09
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_563"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_564"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_565"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="BoxMesh" id="BoxMesh_566"]
+size = Vector3(0.3, 0.05, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_567"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_568"]
+size = Vector3(0.42, 0.62, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_569"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.52
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_570"]
+size = Vector3(0.62, 0.06, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_571"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_572"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.07
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_573"]
+top_radius = 0.064
+bottom_radius = 0.064
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_574"]
+top_radius = 0.022
+bottom_radius = 0.022
+height = 0.1
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_575"]
+top_radius = 0.008
+bottom_radius = 0.008
+height = 0.18
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_576"]
+size = Vector3(0.08, 0.05, 0.015)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_577"]
+albedo_color = Color(0.42, 0.46, 0.5, 1)
+metallic = 0.5
+roughness = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_578"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.08
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_579"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_580"]
+size = Vector3(0.1, 0.05, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_581"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_582"]
+size = Vector3(0.18, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_583"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_584"]
+size = Vector3(0.16, 0.08, 0.01)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_585"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.09
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_586"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_587"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_588"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="BoxMesh" id="BoxMesh_589"]
+size = Vector3(0.3, 0.05, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_590"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_591"]
+size = Vector3(0.42, 0.62, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_592"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.52
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_593"]
+size = Vector3(0.62, 0.06, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_594"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_595"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.07
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_596"]
+top_radius = 0.064
+bottom_radius = 0.064
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_597"]
+top_radius = 0.022
+bottom_radius = 0.022
+height = 0.1
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_598"]
+top_radius = 0.008
+bottom_radius = 0.008
+height = 0.18
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_599"]
+size = Vector3(0.08, 0.05, 0.015)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_600"]
+albedo_color = Color(0.42, 0.46, 0.5, 1)
+metallic = 0.5
+roughness = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_601"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.08
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_602"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_603"]
+size = Vector3(0.1, 0.05, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_604"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_605"]
+size = Vector3(0.18, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_606"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_607"]
+size = Vector3(0.16, 0.08, 0.01)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_608"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.09
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_609"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_610"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_611"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="BoxMesh" id="BoxMesh_612"]
+size = Vector3(0.3, 0.05, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_613"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_614"]
+size = Vector3(0.42, 0.62, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_615"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.52
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_616"]
+size = Vector3(0.62, 0.06, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_617"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_618"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.07
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_619"]
+top_radius = 0.064
+bottom_radius = 0.064
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_620"]
+top_radius = 0.022
+bottom_radius = 0.022
+height = 0.1
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_621"]
+top_radius = 0.008
+bottom_radius = 0.008
+height = 0.18
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_622"]
+size = Vector3(0.08, 0.05, 0.015)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_623"]
+albedo_color = Color(0.42, 0.46, 0.5, 1)
+metallic = 0.5
+roughness = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_624"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.08
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_625"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_626"]
+size = Vector3(0.1, 0.05, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_627"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_628"]
+size = Vector3(0.18, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_629"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_630"]
+size = Vector3(0.16, 0.08, 0.01)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_631"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.09
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_632"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_633"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_634"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="BoxMesh" id="BoxMesh_635"]
+size = Vector3(0.3, 0.05, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_636"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_637"]
+size = Vector3(0.42, 0.62, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_638"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.52
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_639"]
+size = Vector3(0.62, 0.06, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_640"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_641"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.07
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_642"]
+top_radius = 0.064
+bottom_radius = 0.064
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_643"]
+top_radius = 0.022
+bottom_radius = 0.022
+height = 0.1
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_644"]
+top_radius = 0.008
+bottom_radius = 0.008
+height = 0.18
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_645"]
+size = Vector3(0.08, 0.05, 0.015)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_646"]
+albedo_color = Color(0.42, 0.46, 0.5, 1)
+metallic = 0.5
+roughness = 0.12
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_647"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.08
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_648"]
+top_radius = 0.09
+bottom_radius = 0.09
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_649"]
+size = Vector3(0.1, 0.05, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_650"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_651"]
+size = Vector3(0.18, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_652"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_653"]
+size = Vector3(0.16, 0.08, 0.01)
+
+[sub_resource type="BoxMesh" id="BoxMesh_654"]
+size = Vector3(1.42, 0.52, 3.15)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_655"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_656"]
+size = Vector3(1.3, 0.46, 1.62)
+
+[sub_resource type="BoxMesh" id="BoxMesh_657"]
+size = Vector3(1.315, 0.33, 1.48)
+
+[sub_resource type="BoxMesh" id="BoxMesh_658"]
+size = Vector3(1.26, 0.04, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_659"]
+size = Vector3(1.24, 0.5, 0.03)
+
+[sub_resource type="BoxMesh" id="BoxMesh_660"]
+size = Vector3(1.22, 0.44, 0.03)
+
+[sub_resource type="BoxMesh" id="BoxMesh_661"]
+size = Vector3(0.5, 0.012, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_662"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_663"]
+top_radius = 0.28
+bottom_radius = 0.28
+height = 0.18
+radial_segments = 18
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_664"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_665"]
+top_radius = 0.16
+bottom_radius = 0.16
+height = 0.18
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_666"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_667"]
+top_radius = 0.085
+bottom_radius = 0.085
+height = 0.03
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_668"]
+top_radius = 0.07
+bottom_radius = 0.07
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_669"]
+size = Vector3(0.2, 0.13, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_670"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_671"]
+size = Vector3(0.04, 0.08, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_672"]
+size = Vector3(0.008, 0.012, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_673"]
+size = Vector3(1.428, 0.42, 0.008)
+
+[sub_resource type="BoxMesh" id="BoxMesh_674"]
+size = Vector3(0.5, 0.12, 0.02)
+
+[sub_resource type="BoxMesh" id="BoxMesh_675"]
+size = Vector3(1.46, 0.12, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_676"]
+size = Vector3(0.36, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_677"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_678"]
+size = Vector3(1.45, 1.3, 3.45)
+
+[sub_resource type="BoxMesh" id="BoxMesh_679"]
+size = Vector3(1.42, 0.52, 3.15)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_680"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_681"]
+size = Vector3(1.3, 0.46, 1.62)
+
+[sub_resource type="BoxMesh" id="BoxMesh_682"]
+size = Vector3(1.315, 0.33, 1.48)
+
+[sub_resource type="BoxMesh" id="BoxMesh_683"]
+size = Vector3(1.26, 0.04, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_684"]
+size = Vector3(1.24, 0.5, 0.03)
+
+[sub_resource type="BoxMesh" id="BoxMesh_685"]
+size = Vector3(1.22, 0.44, 0.03)
+
+[sub_resource type="BoxMesh" id="BoxMesh_686"]
+size = Vector3(0.5, 0.012, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_687"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_688"]
+top_radius = 0.28
+bottom_radius = 0.28
+height = 0.18
+radial_segments = 18
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_689"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_690"]
+top_radius = 0.16
+bottom_radius = 0.16
+height = 0.18
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_691"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_692"]
+top_radius = 0.085
+bottom_radius = 0.085
+height = 0.03
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_693"]
+top_radius = 0.07
+bottom_radius = 0.07
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_694"]
+size = Vector3(0.2, 0.13, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_695"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_696"]
+size = Vector3(0.04, 0.08, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_697"]
+size = Vector3(0.008, 0.012, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_698"]
+size = Vector3(1.428, 0.42, 0.008)
+
+[sub_resource type="BoxMesh" id="BoxMesh_699"]
+size = Vector3(0.5, 0.12, 0.02)
+
+[sub_resource type="BoxMesh" id="BoxMesh_700"]
+size = Vector3(1.46, 0.12, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_701"]
+size = Vector3(0.36, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_702"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_703"]
+size = Vector3(1.42, 0.52, 3.15)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_704"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_705"]
+size = Vector3(1.3, 0.46, 1.62)
+
+[sub_resource type="BoxMesh" id="BoxMesh_706"]
+size = Vector3(1.315, 0.33, 1.48)
+
+[sub_resource type="BoxMesh" id="BoxMesh_707"]
+size = Vector3(1.26, 0.04, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_708"]
+size = Vector3(1.24, 0.5, 0.03)
+
+[sub_resource type="BoxMesh" id="BoxMesh_709"]
+size = Vector3(1.22, 0.44, 0.03)
+
+[sub_resource type="BoxMesh" id="BoxMesh_710"]
+size = Vector3(0.5, 0.012, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_711"]
+albedo_color = Color(0.04, 0.04, 0.045, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_712"]
+top_radius = 0.28
+bottom_radius = 0.28
+height = 0.18
+radial_segments = 18
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_713"]
+albedo_color = Color(0.09, 0.08, 0.07, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_714"]
+top_radius = 0.16
+bottom_radius = 0.16
+height = 0.18
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_715"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 1.0
+roughness = 0.18
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_716"]
+top_radius = 0.085
+bottom_radius = 0.085
+height = 0.03
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_717"]
+top_radius = 0.07
+bottom_radius = 0.07
+height = 0.01
+radial_segments = 14
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_718"]
+size = Vector3(0.2, 0.13, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_719"]
+albedo_color = Color(0.45, 0.03, 0.02, 1)
+roughness = 0.2
+metallic_specular = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_720"]
+size = Vector3(0.04, 0.08, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_721"]
+size = Vector3(0.008, 0.012, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_722"]
+size = Vector3(1.428, 0.42, 0.008)
+
+[sub_resource type="BoxMesh" id="BoxMesh_723"]
+size = Vector3(0.5, 0.12, 0.02)
+
+[sub_resource type="BoxMesh" id="BoxMesh_724"]
+size = Vector3(1.46, 0.12, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_725"]
+size = Vector3(0.36, 0.1, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_726"]
+albedo_color = Color(0.85, 0.84, 0.78, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_727"]
+size = Vector3(0.35, 3.2, 0.35)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_728"]
+size = Vector3(0.35, 3.2, 0.35)
+
+[sub_resource type="BoxMesh" id="BoxMesh_729"]
+size = Vector3(3.0, 1.8, 3.0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_730"]
+size = Vector3(2.0, 1.2, 2.0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_731"]
+size = Vector3(2.2, 1.32, 2.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_732"]
+size = Vector3(3, 3, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_733"]
+size = Vector3(3, 3, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_734"]
+size = Vector3(3, 3, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_735"]
+size = Vector3(3, 3, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_736"]
+size = Vector3(3.2, 2.4, 3.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_737"]
+size = Vector3(1.96, 0.78, 0.86)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_738"]
+albedo_color = Color(0.6, 0.58, 0.53, 1)
+roughness = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_739"]
+size = Vector3(2.0, 0.8, 0.9)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_740"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_741"]
+shader = ExtResource("93_r")
+shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
+shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
+shader_parameter/stripes = Vector2(0.0, 0.0)
+shader_parameter/size = Vector2(2.06, 0.8200000000000001)
+shader_parameter/folds = 8.24
+shader_parameter/fold_depth = 0.02
+shader_parameter/gather = 0.3
+shader_parameter/sway = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_742"]
+size = Vector2(2.06, 0.8200000000000001)
+subdivide_width = 49
+subdivide_depth = 13
+center_offset = Vector3(0, -0.41000000000000003, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_743"]
+shader = ExtResource("93_r")
+shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
+shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
+shader_parameter/stripes = Vector2(0.0, 0.0)
+shader_parameter/size = Vector2(2.06, 0.8200000000000001)
+shader_parameter/folds = 8.24
+shader_parameter/fold_depth = 0.02
+shader_parameter/gather = 0.3
+shader_parameter/sway = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_744"]
+size = Vector2(2.06, 0.8200000000000001)
+subdivide_width = 49
+subdivide_depth = 13
+center_offset = Vector3(0, -0.41000000000000003, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_745"]
+shader = ExtResource("93_r")
+shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
+shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
+shader_parameter/stripes = Vector2(0.0, 0.0)
+shader_parameter/size = Vector2(0.96, 0.8200000000000001)
+shader_parameter/folds = 3.84
+shader_parameter/fold_depth = 0.02
+shader_parameter/gather = 0.3
+shader_parameter/sway = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_746"]
+size = Vector2(0.96, 0.8200000000000001)
+subdivide_width = 23
+subdivide_depth = 13
+center_offset = Vector3(0, -0.41000000000000003, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_747"]
+shader = ExtResource("93_r")
+shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
+shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
+shader_parameter/stripes = Vector2(0.0, 0.0)
+shader_parameter/size = Vector2(0.96, 0.8200000000000001)
+shader_parameter/folds = 3.84
+shader_parameter/fold_depth = 0.02
+shader_parameter/gather = 0.3
+shader_parameter/sway = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_748"]
+size = Vector2(0.96, 0.8200000000000001)
+subdivide_width = 23
+subdivide_depth = 13
+center_offset = Vector3(0, -0.41000000000000003, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_749"]
+size = Vector3(1.16, 0.73, 0.76)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_750"]
+size = Vector3(1.2, 0.75, 0.8)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_751"]
+shader = ExtResource("93_r")
+shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
+shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
+shader_parameter/stripes = Vector2(0.0, 0.0)
+shader_parameter/size = Vector2(1.26, 0.77)
+shader_parameter/folds = 5.04
+shader_parameter/fold_depth = 0.02
+shader_parameter/gather = 0.3
+shader_parameter/sway = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_752"]
+size = Vector2(1.26, 0.77)
+subdivide_width = 30
+subdivide_depth = 12
+center_offset = Vector3(0, -0.385, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_753"]
+shader = ExtResource("93_r")
+shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
+shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
+shader_parameter/stripes = Vector2(0.0, 0.0)
+shader_parameter/size = Vector2(1.26, 0.77)
+shader_parameter/folds = 5.04
+shader_parameter/fold_depth = 0.02
+shader_parameter/gather = 0.3
+shader_parameter/sway = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_754"]
+size = Vector2(1.26, 0.77)
+subdivide_width = 30
+subdivide_depth = 12
+center_offset = Vector3(0, -0.385, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_755"]
+shader = ExtResource("93_r")
+shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
+shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
+shader_parameter/stripes = Vector2(0.0, 0.0)
+shader_parameter/size = Vector2(0.8600000000000001, 0.77)
+shader_parameter/folds = 3.4400000000000004
+shader_parameter/fold_depth = 0.02
+shader_parameter/gather = 0.3
+shader_parameter/sway = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_756"]
+size = Vector2(0.8600000000000001, 0.77)
+subdivide_width = 20
+subdivide_depth = 12
+center_offset = Vector3(0, -0.385, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_757"]
+shader = ExtResource("93_r")
+shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
+shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
+shader_parameter/stripes = Vector2(0.0, 0.0)
+shader_parameter/size = Vector2(0.8600000000000001, 0.77)
+shader_parameter/folds = 3.4400000000000004
+shader_parameter/fold_depth = 0.02
+shader_parameter/gather = 0.3
+shader_parameter/sway = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_758"]
+size = Vector2(0.8600000000000001, 0.77)
+subdivide_width = 20
+subdivide_depth = 12
+center_offset = Vector3(0, -0.385, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_759"]
 size = Vector3(0.86, 1.08, 0.56)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_420"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_760"]
 size = Vector3(0.9, 1.1, 0.6)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_421"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_761"]
 shader = ExtResource("93_r")
 shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
 shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
@@ -1578,13 +3252,13 @@ shader_parameter/fold_depth = 0.02
 shader_parameter/gather = 0.3
 shader_parameter/sway = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_422"]
+[sub_resource type="QuadMesh" id="QuadMesh_762"]
 size = Vector2(0.96, 1.12)
 subdivide_width = 23
 subdivide_depth = 17
 center_offset = Vector3(0, -0.56, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_423"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_763"]
 shader = ExtResource("93_r")
 shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
 shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
@@ -1595,13 +3269,13 @@ shader_parameter/fold_depth = 0.02
 shader_parameter/gather = 0.3
 shader_parameter/sway = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_424"]
+[sub_resource type="QuadMesh" id="QuadMesh_764"]
 size = Vector2(0.96, 1.12)
 subdivide_width = 23
 subdivide_depth = 17
 center_offset = Vector3(0, -0.56, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_425"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_765"]
 shader = ExtResource("93_r")
 shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
 shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
@@ -1612,13 +3286,13 @@ shader_parameter/fold_depth = 0.02
 shader_parameter/gather = 0.3
 shader_parameter/sway = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_426"]
+[sub_resource type="QuadMesh" id="QuadMesh_766"]
 size = Vector2(0.6599999999999999, 1.12)
 subdivide_width = 15
 subdivide_depth = 17
 center_offset = Vector3(0, -0.56, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_427"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_767"]
 shader = ExtResource("93_r")
 shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
 shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
@@ -1629,19 +3303,19 @@ shader_parameter/fold_depth = 0.02
 shader_parameter/gather = 0.3
 shader_parameter/sway = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_428"]
+[sub_resource type="QuadMesh" id="QuadMesh_768"]
 size = Vector2(0.6599999999999999, 1.12)
 subdivide_width = 15
 subdivide_depth = 17
 center_offset = Vector3(0, -0.56, 0)
 
-[sub_resource type="BoxMesh" id="BoxMesh_429"]
+[sub_resource type="BoxMesh" id="BoxMesh_769"]
 size = Vector3(1.86, 0.58, 1.36)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_430"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_770"]
 size = Vector3(1.9, 0.6, 1.4)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_431"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_771"]
 shader = ExtResource("93_r")
 shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
 shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
@@ -1652,13 +3326,13 @@ shader_parameter/fold_depth = 0.02
 shader_parameter/gather = 0.3
 shader_parameter/sway = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_432"]
+[sub_resource type="QuadMesh" id="QuadMesh_772"]
 size = Vector2(1.96, 0.62)
 subdivide_width = 47
 subdivide_depth = 9
 center_offset = Vector3(0, -0.31, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_433"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_773"]
 shader = ExtResource("93_r")
 shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
 shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
@@ -1669,13 +3343,13 @@ shader_parameter/fold_depth = 0.02
 shader_parameter/gather = 0.3
 shader_parameter/sway = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_434"]
+[sub_resource type="QuadMesh" id="QuadMesh_774"]
 size = Vector2(1.96, 0.62)
 subdivide_width = 47
 subdivide_depth = 9
 center_offset = Vector3(0, -0.31, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_435"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_775"]
 shader = ExtResource("93_r")
 shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
 shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
@@ -1686,13 +3360,13 @@ shader_parameter/fold_depth = 0.02
 shader_parameter/gather = 0.3
 shader_parameter/sway = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_436"]
+[sub_resource type="QuadMesh" id="QuadMesh_776"]
 size = Vector2(1.46, 0.62)
 subdivide_width = 35
 subdivide_depth = 9
 center_offset = Vector3(0, -0.31, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_437"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_777"]
 shader = ExtResource("93_r")
 shader_parameter/albedo = Color(0.6, 0.58, 0.53, 1)
 shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
@@ -1703,13 +3377,13 @@ shader_parameter/fold_depth = 0.02
 shader_parameter/gather = 0.3
 shader_parameter/sway = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_438"]
+[sub_resource type="QuadMesh" id="QuadMesh_778"]
 size = Vector2(1.46, 0.62)
 subdivide_width = 35
 subdivide_depth = 9
 center_offset = Vector3(0, -0.31, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_439"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_779"]
 shader = ExtResource("93_r")
 shader_parameter/albedo = Color(0.36, 0.4, 0.34, 1)
 shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
@@ -1720,13 +3394,13 @@ shader_parameter/fold_depth = 0.03
 shader_parameter/gather = 0.6
 shader_parameter/sway = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_440"]
+[sub_resource type="QuadMesh" id="QuadMesh_780"]
 size = Vector2(0.66, 1.42)
 subdivide_width = 15
 subdivide_depth = 22
 center_offset = Vector3(0, -0.71, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_441"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_781"]
 shader = ExtResource("93_r")
 shader_parameter/albedo = Color(0.36, 0.4, 0.34, 1)
 shader_parameter/stripe_color = Color(0.8, 0.78, 0.7, 1)
@@ -1737,52 +3411,52 @@ shader_parameter/fold_depth = 0.03
 shader_parameter/gather = 0.6
 shader_parameter/sway = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_442"]
+[sub_resource type="QuadMesh" id="QuadMesh_782"]
 size = Vector2(0.66, 1.42)
 subdivide_width = 15
 subdivide_depth = 22
 center_offset = Vector3(0, -0.71, 0)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_443"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_783"]
 top_radius = 0.01
 bottom_radius = 0.01
 height = 1.5
 radial_segments = 6
 rings = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_444"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_784"]
 albedo_color = Color(0.72, 0.72, 0.7, 1)
 metallic = 0.9
 roughness = 0.28
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_445"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_785"]
 size = Vector3(0.42, 0.12, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_446"]
+[sub_resource type="BoxMesh" id="BoxMesh_786"]
 size = Vector3(0.32, 0.012, 0.42)
 
-[sub_resource type="BoxMesh" id="BoxMesh_447"]
+[sub_resource type="BoxMesh" id="BoxMesh_787"]
 size = Vector3(0.02, 0.6, 0.42)
 
-[sub_resource type="BoxMesh" id="BoxMesh_448"]
+[sub_resource type="BoxMesh" id="BoxMesh_788"]
 size = Vector3(0.05, 0.22, 0.13)
 
-[sub_resource type="BoxMesh" id="BoxMesh_449"]
+[sub_resource type="BoxMesh" id="BoxMesh_789"]
 size = Vector3(0.05, 0.22, 0.06)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_450"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_790"]
 size = Vector3(9, 2.4, 7)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_451"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_791"]
 size = Vector3(5, 2.4, 4)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_452"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_792"]
 size = Vector3(3.2, 2.4, 3.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_453"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_793"]
 size = Vector3(3.6, 2.4, 3.6)
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_454"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_794"]
 geometry_parsed_geometry_type = 1
 geometry_collision_mask = 1
 geometry_source_geometry_mode = 1
@@ -1795,28 +3469,28 @@ agent_max_climb = 0.25
 agent_max_slope = 40.0
 filter_baking_aabb = AABB(-40, -1, -34, 80, 4, 80)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_455"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_795"]
 size = Vector3(0.42, 0.3, 0.36)
 
-[sub_resource type="BoxMesh" id="BoxMesh_456"]
+[sub_resource type="BoxMesh" id="BoxMesh_796"]
 size = Vector3(0.36, 0.22, 0.28)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_457"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_797"]
 size = Vector3(1.8, 1.3, 4.3)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_458"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_798"]
 size = Vector3(3.2, 1.8, 4.8)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_459"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_799"]
 size = Vector3(3.4, 1.8, 5.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_460"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_800"]
 size = Vector3(4.6, 1.8, 4.6)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_461"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_801"]
 size = Vector3(6.6, 1.8, 4.9)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_462"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_802"]
 size = Vector3(3.0, 12.0, 5.8)
 
 [node name="ShantiVihar" type="Node3D"]
@@ -41501,547 +43175,2383 @@ position = Vector3(25.8, 6.38, 4.0)
 mesh = SubResource("BoxMesh_376")
 material_override = ExtResource("17_r")
 
-[node name="M6375" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.45, 6.0)
-mesh = SubResource("BoxMesh_377")
+[node name="P116" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 5.4)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_377")
+material_override = SubResource("StandardMaterial3D_378")
+
+[node name="P211" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 5.4)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_379")
+material_override = SubResource("StandardMaterial3D_380")
+
+[node name="P311" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 6.55)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_377")
+material_override = SubResource("StandardMaterial3D_378")
+
+[node name="P410" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 6.55)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_379")
+material_override = SubResource("StandardMaterial3D_380")
+
+[node name="P510" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.29, 5.95)
+mesh = SubResource("BoxMesh_381")
+material_override = SubResource("StandardMaterial3D_378")
+
+[node name="P610" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.5, 6.36)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.52, 0.44, 0.8)
+mesh = SubResource("CylinderMesh_382")
 material_override = ExtResource("74_r")
 
-[node name="M6376" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.68, 5.9)
-mesh = SubResource("BoxMesh_378")
+[node name="P710" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.62, 5.62)
+rotation_degrees = Vector3(-12, 0, 0)
+mesh = SubResource("BoxMesh_383")
+material_override = ExtResource("74_r")
+
+[node name="P810" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.36, 5.4)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.2, 0.14, 0.38)
+mesh = SubResource("CylinderMesh_382")
+material_override = ExtResource("74_r")
+
+[node name="P910" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.82, 5.55)
+rotation_degrees = Vector3(-14, 0, 0)
+mesh = SubResource("CylinderMesh_384")
+material_override = ExtResource("74_r")
+
+[node name="P1010" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.08, 5.5)
+mesh = SubResource("BoxMesh_385")
+material_override = SubResource("StandardMaterial3D_386")
+
+[node name="P117" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.03, 5.43)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_387")
+material_override = SubResource("StandardMaterial3D_380")
+
+[node name="P123" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.03, 5.39)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_388")
 material_override = ExtResource("19_r")
 
-[node name="M6377" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.85, 6.55)
-mesh = SubResource("BoxMesh_379")
-material_override = ExtResource("17_r")
+[node name="P133" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.54, 1.08, 5.5)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_389")
+material_override = SubResource("StandardMaterial3D_378")
 
-[node name="M6378" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.2, 5.5)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P143" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.44, 1.17, 5.5)
+mesh = SubResource("CylinderMesh_390")
+material_override = SubResource("StandardMaterial3D_380")
 
-[node name="M6379" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.2, 6.5)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P153" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.46, 1.27, 5.5)
+mesh = SubResource("BoxMesh_391")
+material_override = SubResource("StandardMaterial3D_392")
+
+[node name="P163" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.86, 1.08, 5.5)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_389")
+material_override = SubResource("StandardMaterial3D_378")
+
+[node name="P173" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.96, 1.17, 5.5)
+mesh = SubResource("CylinderMesh_390")
+material_override = SubResource("StandardMaterial3D_380")
+
+[node name="P183" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.94, 1.27, 5.5)
+mesh = SubResource("BoxMesh_391")
+material_override = SubResource("StandardMaterial3D_392")
+
+[node name="P193" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.76, 6.3)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.3, 0.1, 0.62)
+mesh = SubResource("CylinderMesh_382")
+material_override = SubResource("StandardMaterial3D_386")
+
+[node name="P203" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.55, 6.8)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_393")
+material_override = SubResource("StandardMaterial3D_378")
+
+[node name="P213" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.55, 6.85)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_394")
+material_override = SubResource("StandardMaterial3D_380")
+
+[node name="P223" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.62, 6.75)
+mesh = SubResource("BoxMesh_395")
+material_override = SubResource("StandardMaterial3D_396")
+
+[node name="P233" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.36, 6.79)
+mesh = SubResource("BoxMesh_397")
+material_override = SubResource("StandardMaterial3D_398")
+
+[node name="P243" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.5, 5.585)
+mesh = SubResource("BoxMesh_399")
+material_override = SubResource("StandardMaterial3D_398")
 
 [node name="S1116" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-5.2, 0.5, 6.0)
-shape = SubResource("BoxShape3D_381")
+shape = SubResource("BoxShape3D_400")
 metadata/surface = "concrete"
 
-[node name="M6380" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.45, 4.0)
-mesh = SubResource("BoxMesh_377")
+[node name="P118" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 4.6)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_401")
+material_override = SubResource("StandardMaterial3D_402")
+
+[node name="P214" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 4.6)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_403")
+material_override = SubResource("StandardMaterial3D_404")
+
+[node name="P313" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 3.45)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_401")
+material_override = SubResource("StandardMaterial3D_402")
+
+[node name="P411" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 3.45)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_403")
+material_override = SubResource("StandardMaterial3D_404")
+
+[node name="P511" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.29, 4.05)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_405")
+material_override = SubResource("StandardMaterial3D_402")
+
+[node name="P611" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.5, 3.64)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.52, 0.44, 0.8)
+mesh = SubResource("CylinderMesh_406")
 material_override = ExtResource("76_r")
 
-[node name="M6381" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.68, 4.1)
-mesh = SubResource("BoxMesh_378")
+[node name="P711" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.62, 4.38)
+rotation_degrees = Vector3(-12, 180, 0)
+mesh = SubResource("BoxMesh_407")
+material_override = ExtResource("76_r")
+
+[node name="P811" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.36, 4.6)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.2, 0.14, 0.38)
+mesh = SubResource("CylinderMesh_406")
+material_override = ExtResource("76_r")
+
+[node name="P911" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.82, 4.45)
+rotation_degrees = Vector3(-14, 180, 0)
+mesh = SubResource("CylinderMesh_408")
+material_override = ExtResource("76_r")
+
+[node name="P1011" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.08, 4.5)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_409")
+material_override = SubResource("StandardMaterial3D_410")
+
+[node name="P119" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.03, 4.57)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_411")
+material_override = SubResource("StandardMaterial3D_404")
+
+[node name="P124" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.03, 4.61)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_412")
 material_override = ExtResource("19_r")
 
-[node name="M6382" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.85, 3.45)
-mesh = SubResource("BoxMesh_379")
-material_override = ExtResource("17_r")
+[node name="P134" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.54, 1.08, 4.5)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_413")
+material_override = SubResource("StandardMaterial3D_402")
 
-[node name="M6383" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.2, 3.5)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P144" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.44, 1.17, 4.5)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("CylinderMesh_414")
+material_override = SubResource("StandardMaterial3D_404")
 
-[node name="M6384" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.2, 4.5)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P154" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.46, 1.27, 4.5)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_415")
+material_override = SubResource("StandardMaterial3D_416")
+
+[node name="P164" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.86, 1.08, 4.5)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_413")
+material_override = SubResource("StandardMaterial3D_402")
+
+[node name="P174" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.96, 1.17, 4.5)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("CylinderMesh_414")
+material_override = SubResource("StandardMaterial3D_404")
+
+[node name="P184" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.94, 1.27, 4.5)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_415")
+material_override = SubResource("StandardMaterial3D_416")
+
+[node name="P194" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.76, 3.7)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.3, 0.1, 0.62)
+mesh = SubResource("CylinderMesh_406")
+material_override = SubResource("StandardMaterial3D_410")
+
+[node name="P204" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.55, 3.2)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_417")
+material_override = SubResource("StandardMaterial3D_402")
+
+[node name="P215" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.55, 3.15)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_418")
+material_override = SubResource("StandardMaterial3D_404")
+
+[node name="P224" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.62, 3.25)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_419")
+material_override = SubResource("StandardMaterial3D_420")
+
+[node name="P234" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.36, 3.21)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_421")
+material_override = SubResource("StandardMaterial3D_422")
+
+[node name="P244" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.5, 4.415)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_423")
+material_override = SubResource("StandardMaterial3D_422")
 
 [node name="S1117" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.2, 0.5, 4.0)
-shape = SubResource("BoxShape3D_381")
+shape = SubResource("BoxShape3D_400")
 metadata/surface = "concrete"
 
-[node name="M6385" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.45, 7.1)
-mesh = SubResource("BoxMesh_377")
+[node name="P120" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 6.5)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_424")
+material_override = SubResource("StandardMaterial3D_425")
+
+[node name="P216" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 6.5)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_426")
+material_override = SubResource("StandardMaterial3D_427")
+
+[node name="P314" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 7.65)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_424")
+material_override = SubResource("StandardMaterial3D_425")
+
+[node name="P412" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 7.65)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_426")
+material_override = SubResource("StandardMaterial3D_427")
+
+[node name="P512" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.29, 7.05)
+mesh = SubResource("BoxMesh_428")
+material_override = SubResource("StandardMaterial3D_425")
+
+[node name="P612" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.5, 7.46)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.52, 0.44, 0.8)
+mesh = SubResource("CylinderMesh_429")
 material_override = ExtResource("77_r")
 
-[node name="M6386" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.68, 7.0)
-mesh = SubResource("BoxMesh_378")
+[node name="P712" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.62, 6.72)
+rotation_degrees = Vector3(-12, 0, 0)
+mesh = SubResource("BoxMesh_430")
+material_override = ExtResource("77_r")
+
+[node name="P812" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.36, 6.5)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.2, 0.14, 0.38)
+mesh = SubResource("CylinderMesh_429")
+material_override = ExtResource("77_r")
+
+[node name="P912" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.82, 6.65)
+rotation_degrees = Vector3(-14, 0, 0)
+mesh = SubResource("CylinderMesh_431")
+material_override = ExtResource("77_r")
+
+[node name="P1012" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.08, 6.6)
+mesh = SubResource("BoxMesh_432")
+material_override = SubResource("StandardMaterial3D_433")
+
+[node name="P1110" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.03, 6.53)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_434")
+material_override = SubResource("StandardMaterial3D_427")
+
+[node name="P125" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.03, 6.49)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_435")
 material_override = ExtResource("19_r")
 
-[node name="M6387" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.85, 7.65)
-mesh = SubResource("BoxMesh_379")
-material_override = ExtResource("17_r")
+[node name="P135" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.54, 1.08, 6.6)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_436")
+material_override = SubResource("StandardMaterial3D_425")
 
-[node name="M6388" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.2, 6.6)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P145" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.44, 1.17, 6.6)
+mesh = SubResource("CylinderMesh_437")
+material_override = SubResource("StandardMaterial3D_427")
 
-[node name="M6389" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.2, 7.6)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P155" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.46, 1.27, 6.6)
+mesh = SubResource("BoxMesh_438")
+material_override = SubResource("StandardMaterial3D_439")
+
+[node name="P165" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.86, 1.08, 6.6)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_436")
+material_override = SubResource("StandardMaterial3D_425")
+
+[node name="P175" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.96, 1.17, 6.6)
+mesh = SubResource("CylinderMesh_437")
+material_override = SubResource("StandardMaterial3D_427")
+
+[node name="P185" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.94, 1.27, 6.6)
+mesh = SubResource("BoxMesh_438")
+material_override = SubResource("StandardMaterial3D_439")
+
+[node name="P195" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.76, 7.4)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.3, 0.1, 0.62)
+mesh = SubResource("CylinderMesh_429")
+material_override = SubResource("StandardMaterial3D_433")
+
+[node name="P205" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.55, 7.9)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_440")
+material_override = SubResource("StandardMaterial3D_425")
+
+[node name="P217" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.55, 7.95)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_441")
+material_override = SubResource("StandardMaterial3D_427")
+
+[node name="P225" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.62, 7.85)
+mesh = SubResource("BoxMesh_442")
+material_override = SubResource("StandardMaterial3D_443")
+
+[node name="P235" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.36, 7.89)
+mesh = SubResource("BoxMesh_444")
+material_override = SubResource("StandardMaterial3D_445")
+
+[node name="P245" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.5, 6.685)
+mesh = SubResource("BoxMesh_446")
+material_override = SubResource("StandardMaterial3D_445")
 
 [node name="S1118" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-5.2, 0.5, 7.1)
-shape = SubResource("BoxShape3D_381")
+shape = SubResource("BoxShape3D_400")
 metadata/surface = "concrete"
 
-[node name="M6390" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.45, 5.1)
-mesh = SubResource("BoxMesh_377")
+[node name="P121" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 5.7)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_447")
+material_override = SubResource("StandardMaterial3D_448")
+
+[node name="P218" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 5.7)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_449")
+material_override = SubResource("StandardMaterial3D_450")
+
+[node name="P315" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 4.55)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_447")
+material_override = SubResource("StandardMaterial3D_448")
+
+[node name="P413" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 4.55)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_449")
+material_override = SubResource("StandardMaterial3D_450")
+
+[node name="P513" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.29, 5.15)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_451")
+material_override = SubResource("StandardMaterial3D_448")
+
+[node name="P613" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.5, 4.74)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.52, 0.44, 0.8)
+mesh = SubResource("CylinderMesh_452")
 material_override = ExtResource("9_r")
 
-[node name="M6391" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.68, 5.2)
-mesh = SubResource("BoxMesh_378")
+[node name="P713" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.62, 5.48)
+rotation_degrees = Vector3(-12, 180, 0)
+mesh = SubResource("BoxMesh_453")
+material_override = ExtResource("9_r")
+
+[node name="P813" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.36, 5.7)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.2, 0.14, 0.38)
+mesh = SubResource("CylinderMesh_452")
+material_override = ExtResource("9_r")
+
+[node name="P913" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.82, 5.55)
+rotation_degrees = Vector3(-14, 180, 0)
+mesh = SubResource("CylinderMesh_454")
+material_override = ExtResource("9_r")
+
+[node name="P1013" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.08, 5.6)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_455")
+material_override = SubResource("StandardMaterial3D_456")
+
+[node name="P1111" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.03, 5.67)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_457")
+material_override = SubResource("StandardMaterial3D_450")
+
+[node name="P126" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.03, 5.71)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_458")
 material_override = ExtResource("19_r")
 
-[node name="M6392" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.85, 4.55)
-mesh = SubResource("BoxMesh_379")
-material_override = ExtResource("17_r")
+[node name="P136" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.54, 1.08, 5.6)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_459")
+material_override = SubResource("StandardMaterial3D_448")
 
-[node name="M6393" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.2, 4.6)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P146" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.44, 1.17, 5.6)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("CylinderMesh_460")
+material_override = SubResource("StandardMaterial3D_450")
 
-[node name="M6394" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.2, 5.6)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P156" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.46, 1.27, 5.6)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_461")
+material_override = SubResource("StandardMaterial3D_462")
+
+[node name="P166" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.86, 1.08, 5.6)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_459")
+material_override = SubResource("StandardMaterial3D_448")
+
+[node name="P176" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.96, 1.17, 5.6)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("CylinderMesh_460")
+material_override = SubResource("StandardMaterial3D_450")
+
+[node name="P186" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.94, 1.27, 5.6)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_461")
+material_override = SubResource("StandardMaterial3D_462")
+
+[node name="P196" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.76, 4.8)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.3, 0.1, 0.62)
+mesh = SubResource("CylinderMesh_452")
+material_override = SubResource("StandardMaterial3D_456")
+
+[node name="P206" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.55, 4.3)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_463")
+material_override = SubResource("StandardMaterial3D_448")
+
+[node name="P219" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.55, 4.25)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_464")
+material_override = SubResource("StandardMaterial3D_450")
+
+[node name="P226" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.62, 4.35)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_465")
+material_override = SubResource("StandardMaterial3D_466")
+
+[node name="P236" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.36, 4.31)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_467")
+material_override = SubResource("StandardMaterial3D_468")
+
+[node name="P246" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.5, 5.515)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_469")
+material_override = SubResource("StandardMaterial3D_468")
 
 [node name="S1119" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.2, 0.5, 5.1)
-shape = SubResource("BoxShape3D_381")
+shape = SubResource("BoxShape3D_400")
 metadata/surface = "concrete"
 
-[node name="M6395" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.45, 8.2)
-mesh = SubResource("BoxMesh_377")
+[node name="P127" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 7.6)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_470")
+material_override = SubResource("StandardMaterial3D_471")
+
+[node name="P220" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 7.6)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_472")
+material_override = SubResource("StandardMaterial3D_473")
+
+[node name="P316" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 8.75)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_470")
+material_override = SubResource("StandardMaterial3D_471")
+
+[node name="P414" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 8.75)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_472")
+material_override = SubResource("StandardMaterial3D_473")
+
+[node name="P514" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.29, 8.15)
+mesh = SubResource("BoxMesh_474")
+material_override = SubResource("StandardMaterial3D_471")
+
+[node name="P614" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.5, 8.56)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.52, 0.44, 0.8)
+mesh = SubResource("CylinderMesh_475")
 material_override = ExtResource("76_r")
 
-[node name="M6396" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.68, 8.1)
-mesh = SubResource("BoxMesh_378")
+[node name="P714" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.62, 7.82)
+rotation_degrees = Vector3(-12, 0, 0)
+mesh = SubResource("BoxMesh_476")
+material_override = ExtResource("76_r")
+
+[node name="P814" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.36, 7.6)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.2, 0.14, 0.38)
+mesh = SubResource("CylinderMesh_475")
+material_override = ExtResource("76_r")
+
+[node name="P914" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.82, 7.75)
+rotation_degrees = Vector3(-14, 0, 0)
+mesh = SubResource("CylinderMesh_477")
+material_override = ExtResource("76_r")
+
+[node name="P1014" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.08, 7.7)
+mesh = SubResource("BoxMesh_478")
+material_override = SubResource("StandardMaterial3D_479")
+
+[node name="P1112" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.03, 7.63)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_480")
+material_override = SubResource("StandardMaterial3D_473")
+
+[node name="P128" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.03, 7.59)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_481")
 material_override = ExtResource("19_r")
 
-[node name="M6397" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.85, 8.75)
-mesh = SubResource("BoxMesh_379")
-material_override = ExtResource("17_r")
+[node name="P137" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.54, 1.08, 7.7)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_482")
+material_override = SubResource("StandardMaterial3D_471")
 
-[node name="M6398" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.2, 7.7)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P147" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.44, 1.17, 7.7)
+mesh = SubResource("CylinderMesh_483")
+material_override = SubResource("StandardMaterial3D_473")
 
-[node name="M6399" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.2, 8.7)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P157" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.46, 1.27, 7.7)
+mesh = SubResource("BoxMesh_484")
+material_override = SubResource("StandardMaterial3D_485")
+
+[node name="P167" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.86, 1.08, 7.7)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_482")
+material_override = SubResource("StandardMaterial3D_471")
+
+[node name="P177" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.96, 1.17, 7.7)
+mesh = SubResource("CylinderMesh_483")
+material_override = SubResource("StandardMaterial3D_473")
+
+[node name="P187" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.94, 1.27, 7.7)
+mesh = SubResource("BoxMesh_484")
+material_override = SubResource("StandardMaterial3D_485")
+
+[node name="P197" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.76, 8.5)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.3, 0.1, 0.62)
+mesh = SubResource("CylinderMesh_475")
+material_override = SubResource("StandardMaterial3D_479")
+
+[node name="P207" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.55, 9.0)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_486")
+material_override = SubResource("StandardMaterial3D_471")
+
+[node name="P2110" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.55, 9.05)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_487")
+material_override = SubResource("StandardMaterial3D_473")
+
+[node name="P227" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.62, 8.95)
+mesh = SubResource("BoxMesh_488")
+material_override = SubResource("StandardMaterial3D_489")
+
+[node name="P237" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.36, 8.99)
+mesh = SubResource("BoxMesh_490")
+material_override = SubResource("StandardMaterial3D_491")
+
+[node name="P247" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.5, 7.785)
+mesh = SubResource("BoxMesh_492")
+material_override = SubResource("StandardMaterial3D_491")
 
 [node name="S1120" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-5.2, 0.5, 8.2)
-shape = SubResource("BoxShape3D_381")
+shape = SubResource("BoxShape3D_400")
 metadata/surface = "concrete"
 
-[node name="M6400" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.45, 6.2)
-mesh = SubResource("BoxMesh_377")
+[node name="P129" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 6.8)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_493")
+material_override = SubResource("StandardMaterial3D_494")
+
+[node name="P221" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 6.8)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_495")
+material_override = SubResource("StandardMaterial3D_496")
+
+[node name="P317" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 5.65)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_493")
+material_override = SubResource("StandardMaterial3D_494")
+
+[node name="P415" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 5.65)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_495")
+material_override = SubResource("StandardMaterial3D_496")
+
+[node name="P515" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.29, 6.25)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_497")
+material_override = SubResource("StandardMaterial3D_494")
+
+[node name="P615" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.5, 5.84)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.52, 0.44, 0.8)
+mesh = SubResource("CylinderMesh_498")
 material_override = ExtResource("74_r")
 
-[node name="M6401" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.68, 6.3)
-mesh = SubResource("BoxMesh_378")
+[node name="P715" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.62, 6.58)
+rotation_degrees = Vector3(-12, 180, 0)
+mesh = SubResource("BoxMesh_499")
+material_override = ExtResource("74_r")
+
+[node name="P815" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.36, 6.8)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.2, 0.14, 0.38)
+mesh = SubResource("CylinderMesh_498")
+material_override = ExtResource("74_r")
+
+[node name="P915" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.82, 6.65)
+rotation_degrees = Vector3(-14, 180, 0)
+mesh = SubResource("CylinderMesh_500")
+material_override = ExtResource("74_r")
+
+[node name="P1015" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.08, 6.7)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_501")
+material_override = SubResource("StandardMaterial3D_502")
+
+[node name="P1113" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.03, 6.77)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_503")
+material_override = SubResource("StandardMaterial3D_496")
+
+[node name="P1210" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.03, 6.81)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_504")
 material_override = ExtResource("19_r")
 
-[node name="M6402" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.85, 5.65)
-mesh = SubResource("BoxMesh_379")
-material_override = ExtResource("17_r")
+[node name="P138" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.54, 1.08, 6.7)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_505")
+material_override = SubResource("StandardMaterial3D_494")
 
-[node name="M6403" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.2, 5.7)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P148" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.44, 1.17, 6.7)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("CylinderMesh_506")
+material_override = SubResource("StandardMaterial3D_496")
 
-[node name="M6404" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.2, 6.7)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P158" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.46, 1.27, 6.7)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_507")
+material_override = SubResource("StandardMaterial3D_508")
+
+[node name="P168" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.86, 1.08, 6.7)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_505")
+material_override = SubResource("StandardMaterial3D_494")
+
+[node name="P178" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.96, 1.17, 6.7)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("CylinderMesh_506")
+material_override = SubResource("StandardMaterial3D_496")
+
+[node name="P188" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.94, 1.27, 6.7)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_507")
+material_override = SubResource("StandardMaterial3D_508")
+
+[node name="P198" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.76, 5.9)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.3, 0.1, 0.62)
+mesh = SubResource("CylinderMesh_498")
+material_override = SubResource("StandardMaterial3D_502")
+
+[node name="P208" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.55, 5.4)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_509")
+material_override = SubResource("StandardMaterial3D_494")
+
+[node name="P2111" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.55, 5.35)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_510")
+material_override = SubResource("StandardMaterial3D_496")
+
+[node name="P228" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.62, 5.45)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_511")
+material_override = SubResource("StandardMaterial3D_512")
+
+[node name="P238" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.36, 5.41)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_513")
+material_override = SubResource("StandardMaterial3D_514")
+
+[node name="P248" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.5, 6.615)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_515")
+material_override = SubResource("StandardMaterial3D_514")
 
 [node name="S1121" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.2, 0.5, 6.2)
-shape = SubResource("BoxShape3D_381")
+shape = SubResource("BoxShape3D_400")
 metadata/surface = "concrete"
 
-[node name="M6405" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.45, 9.3)
-mesh = SubResource("BoxMesh_377")
+[node name="P130" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 8.7)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_516")
+material_override = SubResource("StandardMaterial3D_517")
+
+[node name="P229" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 8.7)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_518")
+material_override = SubResource("StandardMaterial3D_519")
+
+[node name="P318" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 9.85)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_516")
+material_override = SubResource("StandardMaterial3D_517")
+
+[node name="P416" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 9.85)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_518")
+material_override = SubResource("StandardMaterial3D_519")
+
+[node name="P516" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.29, 9.25)
+mesh = SubResource("BoxMesh_520")
+material_override = SubResource("StandardMaterial3D_517")
+
+[node name="P616" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.5, 9.66)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.52, 0.44, 0.8)
+mesh = SubResource("CylinderMesh_521")
 material_override = ExtResource("9_r")
 
-[node name="M6406" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.68, 9.2)
-mesh = SubResource("BoxMesh_378")
+[node name="P716" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.62, 8.92)
+rotation_degrees = Vector3(-12, 0, 0)
+mesh = SubResource("BoxMesh_522")
+material_override = ExtResource("9_r")
+
+[node name="P816" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.36, 8.7)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.2, 0.14, 0.38)
+mesh = SubResource("CylinderMesh_521")
+material_override = ExtResource("9_r")
+
+[node name="P916" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.82, 8.85)
+rotation_degrees = Vector3(-14, 0, 0)
+mesh = SubResource("CylinderMesh_523")
+material_override = ExtResource("9_r")
+
+[node name="P1016" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.08, 8.8)
+mesh = SubResource("BoxMesh_524")
+material_override = SubResource("StandardMaterial3D_525")
+
+[node name="P1114" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.03, 8.73)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_526")
+material_override = SubResource("StandardMaterial3D_519")
+
+[node name="P1211" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.03, 8.69)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_527")
 material_override = ExtResource("19_r")
 
-[node name="M6407" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.85, 9.85)
-mesh = SubResource("BoxMesh_379")
-material_override = ExtResource("17_r")
+[node name="P139" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.54, 1.08, 8.8)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_528")
+material_override = SubResource("StandardMaterial3D_517")
 
-[node name="M6408" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.2, 8.8)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P149" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.44, 1.17, 8.8)
+mesh = SubResource("CylinderMesh_529")
+material_override = SubResource("StandardMaterial3D_519")
 
-[node name="M6409" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.2, 9.8)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P159" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.46, 1.27, 8.8)
+mesh = SubResource("BoxMesh_530")
+material_override = SubResource("StandardMaterial3D_531")
+
+[node name="P169" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.86, 1.08, 8.8)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_528")
+material_override = SubResource("StandardMaterial3D_517")
+
+[node name="P179" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.96, 1.17, 8.8)
+mesh = SubResource("CylinderMesh_529")
+material_override = SubResource("StandardMaterial3D_519")
+
+[node name="P189" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.94, 1.27, 8.8)
+mesh = SubResource("BoxMesh_530")
+material_override = SubResource("StandardMaterial3D_531")
+
+[node name="P199" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.76, 9.6)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.3, 0.1, 0.62)
+mesh = SubResource("CylinderMesh_521")
+material_override = SubResource("StandardMaterial3D_525")
+
+[node name="P209" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.55, 10.1)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_532")
+material_override = SubResource("StandardMaterial3D_517")
+
+[node name="P2112" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.55, 10.15)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_533")
+material_override = SubResource("StandardMaterial3D_519")
+
+[node name="P2210" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.62, 10.05)
+mesh = SubResource("BoxMesh_534")
+material_override = SubResource("StandardMaterial3D_535")
+
+[node name="P239" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.36, 10.09)
+mesh = SubResource("BoxMesh_536")
+material_override = SubResource("StandardMaterial3D_537")
+
+[node name="P249" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.5, 8.885)
+mesh = SubResource("BoxMesh_538")
+material_override = SubResource("StandardMaterial3D_537")
 
 [node name="S1122" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-5.2, 0.5, 9.3)
-shape = SubResource("BoxShape3D_381")
+shape = SubResource("BoxShape3D_400")
 metadata/surface = "concrete"
 
-[node name="M6410" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.45, 7.3)
-mesh = SubResource("BoxMesh_377")
+[node name="P131" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 7.9)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_539")
+material_override = SubResource("StandardMaterial3D_540")
+
+[node name="P230" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 7.9)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_541")
+material_override = SubResource("StandardMaterial3D_542")
+
+[node name="P319" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 6.75)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_539")
+material_override = SubResource("StandardMaterial3D_540")
+
+[node name="P417" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 6.75)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_541")
+material_override = SubResource("StandardMaterial3D_542")
+
+[node name="P517" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.29, 7.35)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_543")
+material_override = SubResource("StandardMaterial3D_540")
+
+[node name="P617" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.5, 6.94)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.52, 0.44, 0.8)
+mesh = SubResource("CylinderMesh_544")
 material_override = ExtResource("77_r")
 
-[node name="M6411" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.68, 7.4)
-mesh = SubResource("BoxMesh_378")
+[node name="P717" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.62, 7.68)
+rotation_degrees = Vector3(-12, 180, 0)
+mesh = SubResource("BoxMesh_545")
+material_override = ExtResource("77_r")
+
+[node name="P817" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.36, 7.9)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.2, 0.14, 0.38)
+mesh = SubResource("CylinderMesh_544")
+material_override = ExtResource("77_r")
+
+[node name="P917" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.82, 7.75)
+rotation_degrees = Vector3(-14, 180, 0)
+mesh = SubResource("CylinderMesh_546")
+material_override = ExtResource("77_r")
+
+[node name="P1017" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.08, 7.8)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_547")
+material_override = SubResource("StandardMaterial3D_548")
+
+[node name="P1115" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.03, 7.87)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_549")
+material_override = SubResource("StandardMaterial3D_542")
+
+[node name="P1212" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.03, 7.91)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_550")
 material_override = ExtResource("19_r")
 
-[node name="M6412" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.85, 6.75)
-mesh = SubResource("BoxMesh_379")
-material_override = ExtResource("17_r")
+[node name="P1310" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.54, 1.08, 7.8)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_551")
+material_override = SubResource("StandardMaterial3D_540")
 
-[node name="M6413" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.2, 6.8)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P1410" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.44, 1.17, 7.8)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("CylinderMesh_552")
+material_override = SubResource("StandardMaterial3D_542")
 
-[node name="M6414" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.2, 7.8)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P1510" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.46, 1.27, 7.8)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_553")
+material_override = SubResource("StandardMaterial3D_554")
+
+[node name="P1610" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.86, 1.08, 7.8)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_551")
+material_override = SubResource("StandardMaterial3D_540")
+
+[node name="P1710" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.96, 1.17, 7.8)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("CylinderMesh_552")
+material_override = SubResource("StandardMaterial3D_542")
+
+[node name="P1810" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.94, 1.27, 7.8)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_553")
+material_override = SubResource("StandardMaterial3D_554")
+
+[node name="P1910" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.76, 7.0)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.3, 0.1, 0.62)
+mesh = SubResource("CylinderMesh_544")
+material_override = SubResource("StandardMaterial3D_548")
+
+[node name="P2010" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.55, 6.5)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_555")
+material_override = SubResource("StandardMaterial3D_540")
+
+[node name="P2113" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.55, 6.45)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_556")
+material_override = SubResource("StandardMaterial3D_542")
+
+[node name="P2211" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.62, 6.55)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_557")
+material_override = SubResource("StandardMaterial3D_558")
+
+[node name="P2310" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.36, 6.51)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_559")
+material_override = SubResource("StandardMaterial3D_560")
+
+[node name="P2410" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.5, 7.715)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_561")
+material_override = SubResource("StandardMaterial3D_560")
 
 [node name="S1123" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.2, 0.5, 7.3)
-shape = SubResource("BoxShape3D_381")
+shape = SubResource("BoxShape3D_400")
 metadata/surface = "concrete"
 
-[node name="M6415" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.45, 10.4)
-mesh = SubResource("BoxMesh_377")
+[node name="P140" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 9.8)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_562")
+material_override = SubResource("StandardMaterial3D_563")
+
+[node name="P231" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 9.8)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_564")
+material_override = SubResource("StandardMaterial3D_565")
+
+[node name="P320" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 10.95)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_562")
+material_override = SubResource("StandardMaterial3D_563")
+
+[node name="P418" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 10.95)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_564")
+material_override = SubResource("StandardMaterial3D_565")
+
+[node name="P518" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.29, 10.35)
+mesh = SubResource("BoxMesh_566")
+material_override = SubResource("StandardMaterial3D_563")
+
+[node name="P618" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.5, 10.76)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.52, 0.44, 0.8)
+mesh = SubResource("CylinderMesh_567")
 material_override = ExtResource("74_r")
 
-[node name="M6416" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.68, 10.3)
-mesh = SubResource("BoxMesh_378")
+[node name="P718" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.62, 10.02)
+rotation_degrees = Vector3(-12, 0, 0)
+mesh = SubResource("BoxMesh_568")
+material_override = ExtResource("74_r")
+
+[node name="P818" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.36, 9.8)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.2, 0.14, 0.38)
+mesh = SubResource("CylinderMesh_567")
+material_override = ExtResource("74_r")
+
+[node name="P918" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.82, 9.95)
+rotation_degrees = Vector3(-14, 0, 0)
+mesh = SubResource("CylinderMesh_569")
+material_override = ExtResource("74_r")
+
+[node name="P1018" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.08, 9.9)
+mesh = SubResource("BoxMesh_570")
+material_override = SubResource("StandardMaterial3D_571")
+
+[node name="P1116" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.03, 9.83)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_572")
+material_override = SubResource("StandardMaterial3D_565")
+
+[node name="P1213" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.03, 9.79)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_573")
 material_override = ExtResource("19_r")
 
-[node name="M6417" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.85, 10.95)
-mesh = SubResource("BoxMesh_379")
-material_override = ExtResource("17_r")
+[node name="P1311" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.54, 1.08, 9.9)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_574")
+material_override = SubResource("StandardMaterial3D_563")
 
-[node name="M6418" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.2, 9.9)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P1411" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.44, 1.17, 9.9)
+mesh = SubResource("CylinderMesh_575")
+material_override = SubResource("StandardMaterial3D_565")
 
-[node name="M6419" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.2, 10.9)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P1511" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.46, 1.27, 9.9)
+mesh = SubResource("BoxMesh_576")
+material_override = SubResource("StandardMaterial3D_577")
+
+[node name="P1611" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.86, 1.08, 9.9)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_574")
+material_override = SubResource("StandardMaterial3D_563")
+
+[node name="P1711" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.96, 1.17, 9.9)
+mesh = SubResource("CylinderMesh_575")
+material_override = SubResource("StandardMaterial3D_565")
+
+[node name="P1811" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.94, 1.27, 9.9)
+mesh = SubResource("BoxMesh_576")
+material_override = SubResource("StandardMaterial3D_577")
+
+[node name="P1911" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.76, 10.7)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.3, 0.1, 0.62)
+mesh = SubResource("CylinderMesh_567")
+material_override = SubResource("StandardMaterial3D_571")
+
+[node name="P2011" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.55, 11.2)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_578")
+material_override = SubResource("StandardMaterial3D_563")
+
+[node name="P2114" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.55, 11.25)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_579")
+material_override = SubResource("StandardMaterial3D_565")
+
+[node name="P2212" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.62, 11.15)
+mesh = SubResource("BoxMesh_580")
+material_override = SubResource("StandardMaterial3D_581")
+
+[node name="P2311" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.36, 11.19)
+mesh = SubResource("BoxMesh_582")
+material_override = SubResource("StandardMaterial3D_583")
+
+[node name="P2411" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.5, 9.985)
+mesh = SubResource("BoxMesh_584")
+material_override = SubResource("StandardMaterial3D_583")
 
 [node name="S1124" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-5.2, 0.5, 10.4)
-shape = SubResource("BoxShape3D_381")
+shape = SubResource("BoxShape3D_400")
 metadata/surface = "concrete"
 
-[node name="M6420" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.45, 8.4)
-mesh = SubResource("BoxMesh_377")
+[node name="P141" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 9.0)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_585")
+material_override = SubResource("StandardMaterial3D_586")
+
+[node name="P240" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 9.0)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_587")
+material_override = SubResource("StandardMaterial3D_588")
+
+[node name="P321" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 7.85)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_585")
+material_override = SubResource("StandardMaterial3D_586")
+
+[node name="P419" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 7.85)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_587")
+material_override = SubResource("StandardMaterial3D_588")
+
+[node name="P519" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.29, 8.45)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_589")
+material_override = SubResource("StandardMaterial3D_586")
+
+[node name="P619" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.5, 8.04)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.52, 0.44, 0.8)
+mesh = SubResource("CylinderMesh_590")
 material_override = ExtResource("76_r")
 
-[node name="M6421" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.68, 8.5)
-mesh = SubResource("BoxMesh_378")
+[node name="P719" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.62, 8.78)
+rotation_degrees = Vector3(-12, 180, 0)
+mesh = SubResource("BoxMesh_591")
+material_override = ExtResource("76_r")
+
+[node name="P819" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.36, 9.0)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.2, 0.14, 0.38)
+mesh = SubResource("CylinderMesh_590")
+material_override = ExtResource("76_r")
+
+[node name="P919" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.82, 8.85)
+rotation_degrees = Vector3(-14, 180, 0)
+mesh = SubResource("CylinderMesh_592")
+material_override = ExtResource("76_r")
+
+[node name="P1019" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.08, 8.9)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_593")
+material_override = SubResource("StandardMaterial3D_594")
+
+[node name="P1117" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.03, 8.97)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_595")
+material_override = SubResource("StandardMaterial3D_588")
+
+[node name="P1214" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.03, 9.01)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_596")
 material_override = ExtResource("19_r")
 
-[node name="M6422" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.85, 7.85)
-mesh = SubResource("BoxMesh_379")
-material_override = ExtResource("17_r")
+[node name="P1312" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.54, 1.08, 8.9)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_597")
+material_override = SubResource("StandardMaterial3D_586")
 
-[node name="M6423" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.2, 7.9)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P1412" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.44, 1.17, 8.9)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("CylinderMesh_598")
+material_override = SubResource("StandardMaterial3D_588")
 
-[node name="M6424" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.2, 8.9)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P1512" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.46, 1.27, 8.9)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_599")
+material_override = SubResource("StandardMaterial3D_600")
+
+[node name="P1612" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.86, 1.08, 8.9)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_597")
+material_override = SubResource("StandardMaterial3D_586")
+
+[node name="P1712" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.96, 1.17, 8.9)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("CylinderMesh_598")
+material_override = SubResource("StandardMaterial3D_588")
+
+[node name="P1812" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.94, 1.27, 8.9)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_599")
+material_override = SubResource("StandardMaterial3D_600")
+
+[node name="P1912" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.76, 8.1)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.3, 0.1, 0.62)
+mesh = SubResource("CylinderMesh_590")
+material_override = SubResource("StandardMaterial3D_594")
+
+[node name="P2012" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.55, 7.6)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_601")
+material_override = SubResource("StandardMaterial3D_586")
+
+[node name="P2115" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.55, 7.55)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_602")
+material_override = SubResource("StandardMaterial3D_588")
+
+[node name="P2213" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.62, 7.65)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_603")
+material_override = SubResource("StandardMaterial3D_604")
+
+[node name="P2312" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.36, 7.61)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_605")
+material_override = SubResource("StandardMaterial3D_606")
+
+[node name="P2412" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.5, 8.815)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_607")
+material_override = SubResource("StandardMaterial3D_606")
 
 [node name="S1125" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.2, 0.5, 8.4)
-shape = SubResource("BoxShape3D_381")
+shape = SubResource("BoxShape3D_400")
 metadata/surface = "concrete"
 
-[node name="M6425" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.45, 11.5)
-mesh = SubResource("BoxMesh_377")
+[node name="P150" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 10.9)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_608")
+material_override = SubResource("StandardMaterial3D_609")
+
+[node name="P241" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 10.9)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_610")
+material_override = SubResource("StandardMaterial3D_611")
+
+[node name="P323" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 12.05)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_608")
+material_override = SubResource("StandardMaterial3D_609")
+
+[node name="P420" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.2, 12.05)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_610")
+material_override = SubResource("StandardMaterial3D_611")
+
+[node name="P520" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.29, 11.45)
+mesh = SubResource("BoxMesh_612")
+material_override = SubResource("StandardMaterial3D_609")
+
+[node name="P620" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.5, 11.86)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.52, 0.44, 0.8)
+mesh = SubResource("CylinderMesh_613")
 material_override = ExtResource("77_r")
 
-[node name="M6426" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.68, 11.4)
-mesh = SubResource("BoxMesh_378")
+[node name="P720" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.62, 11.12)
+rotation_degrees = Vector3(-12, 0, 0)
+mesh = SubResource("BoxMesh_614")
+material_override = ExtResource("77_r")
+
+[node name="P820" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.36, 10.9)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.2, 0.14, 0.38)
+mesh = SubResource("CylinderMesh_613")
+material_override = ExtResource("77_r")
+
+[node name="P920" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.82, 11.05)
+rotation_degrees = Vector3(-14, 0, 0)
+mesh = SubResource("CylinderMesh_615")
+material_override = ExtResource("77_r")
+
+[node name="P1020" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.08, 11.0)
+mesh = SubResource("BoxMesh_616")
+material_override = SubResource("StandardMaterial3D_617")
+
+[node name="P1118" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.03, 10.93)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_618")
+material_override = SubResource("StandardMaterial3D_611")
+
+[node name="P1215" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 1.03, 10.89)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_619")
 material_override = ExtResource("19_r")
 
-[node name="M6427" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.85, 12.05)
-mesh = SubResource("BoxMesh_379")
-material_override = ExtResource("17_r")
+[node name="P1313" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.54, 1.08, 11.0)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_620")
+material_override = SubResource("StandardMaterial3D_609")
 
-[node name="M6428" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.2, 11.0)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P1413" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.44, 1.17, 11.0)
+mesh = SubResource("CylinderMesh_621")
+material_override = SubResource("StandardMaterial3D_611")
 
-[node name="M6429" type="MeshInstance3D" parent="Static"]
-position = Vector3(-5.2, 0.2, 12.0)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P1513" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.46, 1.27, 11.0)
+mesh = SubResource("BoxMesh_622")
+material_override = SubResource("StandardMaterial3D_623")
+
+[node name="P1613" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.86, 1.08, 11.0)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_620")
+material_override = SubResource("StandardMaterial3D_609")
+
+[node name="P1713" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.96, 1.17, 11.0)
+mesh = SubResource("CylinderMesh_621")
+material_override = SubResource("StandardMaterial3D_611")
+
+[node name="P1813" type="MeshInstance3D" parent="Static"]
+position = Vector3(-4.94, 1.27, 11.0)
+mesh = SubResource("BoxMesh_622")
+material_override = SubResource("StandardMaterial3D_623")
+
+[node name="P1913" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.76, 11.8)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.3, 0.1, 0.62)
+mesh = SubResource("CylinderMesh_613")
+material_override = SubResource("StandardMaterial3D_617")
+
+[node name="P2013" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.55, 12.3)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_624")
+material_override = SubResource("StandardMaterial3D_609")
+
+[node name="P2116" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.55, 12.35)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CylinderMesh_625")
+material_override = SubResource("StandardMaterial3D_611")
+
+[node name="P2214" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.62, 12.25)
+mesh = SubResource("BoxMesh_626")
+material_override = SubResource("StandardMaterial3D_627")
+
+[node name="P2313" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.36, 12.29)
+mesh = SubResource("BoxMesh_628")
+material_override = SubResource("StandardMaterial3D_629")
+
+[node name="P2413" type="MeshInstance3D" parent="Static"]
+position = Vector3(-5.2, 0.5, 11.085)
+mesh = SubResource("BoxMesh_630")
+material_override = SubResource("StandardMaterial3D_629")
 
 [node name="S1126" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-5.2, 0.5, 11.5)
-shape = SubResource("BoxShape3D_381")
+shape = SubResource("BoxShape3D_400")
 metadata/surface = "concrete"
 
-[node name="M6430" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.45, 9.5)
-mesh = SubResource("BoxMesh_377")
+[node name="P151" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 10.1)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_631")
+material_override = SubResource("StandardMaterial3D_632")
+
+[node name="P250" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 10.1)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_633")
+material_override = SubResource("StandardMaterial3D_634")
+
+[node name="P324" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 8.95)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_631")
+material_override = SubResource("StandardMaterial3D_632")
+
+[node name="P421" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.2, 8.95)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_633")
+material_override = SubResource("StandardMaterial3D_634")
+
+[node name="P521" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.29, 9.55)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_635")
+material_override = SubResource("StandardMaterial3D_632")
+
+[node name="P621" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.5, 9.14)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.52, 0.44, 0.8)
+mesh = SubResource("CylinderMesh_636")
 material_override = ExtResource("9_r")
 
-[node name="M6431" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.68, 9.6)
-mesh = SubResource("BoxMesh_378")
+[node name="P721" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.62, 9.88)
+rotation_degrees = Vector3(-12, 180, 0)
+mesh = SubResource("BoxMesh_637")
+material_override = ExtResource("9_r")
+
+[node name="P821" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.36, 10.1)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.2, 0.14, 0.38)
+mesh = SubResource("CylinderMesh_636")
+material_override = ExtResource("9_r")
+
+[node name="P921" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.82, 9.95)
+rotation_degrees = Vector3(-14, 180, 0)
+mesh = SubResource("CylinderMesh_638")
+material_override = ExtResource("9_r")
+
+[node name="P1021" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.08, 10.0)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_639")
+material_override = SubResource("StandardMaterial3D_640")
+
+[node name="P1119" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.03, 10.07)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_641")
+material_override = SubResource("StandardMaterial3D_634")
+
+[node name="P1216" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 1.03, 10.11)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_642")
 material_override = ExtResource("19_r")
 
-[node name="M6432" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.85, 8.95)
-mesh = SubResource("BoxMesh_379")
-material_override = ExtResource("17_r")
+[node name="P1314" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.54, 1.08, 10.0)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_643")
+material_override = SubResource("StandardMaterial3D_632")
 
-[node name="M6433" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.2, 9.0)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P1414" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.44, 1.17, 10.0)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("CylinderMesh_644")
+material_override = SubResource("StandardMaterial3D_634")
 
-[node name="M6434" type="MeshInstance3D" parent="Static"]
-position = Vector3(5.2, 0.2, 10.0)
-mesh = SubResource("BoxMesh_380")
-material_override = ExtResource("19_r")
+[node name="P1514" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.46, 1.27, 10.0)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_645")
+material_override = SubResource("StandardMaterial3D_646")
+
+[node name="P1614" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.86, 1.08, 10.0)
+rotation_degrees = Vector3(0, 180, 90)
+mesh = SubResource("CylinderMesh_643")
+material_override = SubResource("StandardMaterial3D_632")
+
+[node name="P1714" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.96, 1.17, 10.0)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("CylinderMesh_644")
+material_override = SubResource("StandardMaterial3D_634")
+
+[node name="P1814" type="MeshInstance3D" parent="Static"]
+position = Vector3(4.94, 1.27, 10.0)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_645")
+material_override = SubResource("StandardMaterial3D_646")
+
+[node name="P1914" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.76, 9.2)
+rotation_degrees = Vector3(0, 180, 0)
+scale = Vector3(0.3, 0.1, 0.62)
+mesh = SubResource("CylinderMesh_636")
+material_override = SubResource("StandardMaterial3D_640")
+
+[node name="P2014" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.55, 8.7)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_647")
+material_override = SubResource("StandardMaterial3D_632")
+
+[node name="P2117" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.55, 8.65)
+rotation_degrees = Vector3(90, 180, 0)
+mesh = SubResource("CylinderMesh_648")
+material_override = SubResource("StandardMaterial3D_634")
+
+[node name="P2215" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.62, 8.75)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_649")
+material_override = SubResource("StandardMaterial3D_650")
+
+[node name="P2314" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.36, 8.71)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_651")
+material_override = SubResource("StandardMaterial3D_652")
+
+[node name="P2414" type="MeshInstance3D" parent="Static"]
+position = Vector3(5.2, 0.5, 9.915)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("BoxMesh_653")
+material_override = SubResource("StandardMaterial3D_652")
 
 [node name="S1127" type="CollisionShape3D" parent="Collision"]
 position = Vector3(5.2, 0.5, 9.5)
-shape = SubResource("BoxShape3D_381")
+shape = SubResource("BoxShape3D_400")
 metadata/surface = "concrete"
 
-[node name="M6435" type="MeshInstance3D" parent="Static"]
-position = Vector3(-20, 0.55, 12)
-mesh = SubResource("BoxMesh_382")
+[node name="P160" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 0.56, 12.05)
+mesh = SubResource("BoxMesh_654")
 material_override = ExtResource("76_r")
+
+[node name="P251" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 0.56, 10.5)
+rotation_degrees = Vector3(0, 0.0, 0)
+scale = Vector3(1.4, 0.5, 0.42)
+mesh = SubResource("CylinderMesh_655")
+material_override = ExtResource("76_r")
+
+[node name="P325" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 1.04, 12.3)
+mesh = SubResource("BoxMesh_656")
+material_override = ExtResource("76_r")
+
+[node name="P423" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 1.08, 12.3)
+mesh = SubResource("BoxMesh_657")
+material_override = ExtResource("19_r")
+
+[node name="P523" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 1.27, 12.32)
+mesh = SubResource("BoxMesh_658")
+material_override = ExtResource("76_r")
+
+[node name="P623" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 1.04, 11.38)
+rotation_degrees = Vector3(-38, 0.0, 0)
+mesh = SubResource("BoxMesh_659")
+material_override = ExtResource("19_r")
+
+[node name="P723" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 1.04, 13.13)
+rotation_degrees = Vector3(22, 0.0, 0)
+mesh = SubResource("BoxMesh_660")
+material_override = ExtResource("19_r")
+
+[node name="P823" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 0.86, 11.26)
+rotation_degrees = Vector3(0, 0.0, 8)
+mesh = SubResource("BoxMesh_661")
+material_override = SubResource("StandardMaterial3D_662")
+
+[node name="P923" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.66, 0.28, 10.95)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_663")
+material_override = SubResource("StandardMaterial3D_664")
+
+[node name="P1023" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.67, 0.28, 10.95)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_665")
+material_override = SubResource("StandardMaterial3D_666")
+
+[node name="P1120" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.66, 0.28, 13.05)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_663")
+material_override = SubResource("StandardMaterial3D_664")
+
+[node name="P1217" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.67, 0.28, 13.05)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_665")
+material_override = SubResource("StandardMaterial3D_666")
+
+[node name="P1315" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.48, 0.62, 10.32)
+rotation_degrees = Vector3(90, 0.0, 0)
+mesh = SubResource("CylinderMesh_667")
+material_override = SubResource("StandardMaterial3D_666")
+
+[node name="P1415" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.48, 0.62, 10.3)
+rotation_degrees = Vector3(90, 0.0, 0)
+mesh = SubResource("CylinderMesh_668")
+material_override = ExtResource("19_r")
+
+[node name="P1515" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.52, 0.66, 13.64)
+mesh = SubResource("BoxMesh_669")
+material_override = SubResource("StandardMaterial3D_670")
+
+[node name="P1615" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.73, 1.0, 11.5)
+mesh = SubResource("BoxMesh_671")
+material_override = SubResource("StandardMaterial3D_662")
+
+[node name="P1715" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.712, 0.95, 12.35)
+mesh = SubResource("BoxMesh_672")
+material_override = SubResource("StandardMaterial3D_666")
+
+[node name="P1815" type="MeshInstance3D" parent="Static"]
+position = Vector3(-19.34, 0.28, 10.95)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_663")
+material_override = SubResource("StandardMaterial3D_664")
+
+[node name="P1915" type="MeshInstance3D" parent="Static"]
+position = Vector3(-19.33, 0.28, 10.95)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_665")
+material_override = SubResource("StandardMaterial3D_666")
+
+[node name="P2015" type="MeshInstance3D" parent="Static"]
+position = Vector3(-19.34, 0.28, 13.05)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_663")
+material_override = SubResource("StandardMaterial3D_664")
+
+[node name="P2118" type="MeshInstance3D" parent="Static"]
+position = Vector3(-19.33, 0.28, 13.05)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_665")
+material_override = SubResource("StandardMaterial3D_666")
+
+[node name="P2216" type="MeshInstance3D" parent="Static"]
+position = Vector3(-19.52, 0.62, 10.32)
+rotation_degrees = Vector3(90, 0.0, 0)
+mesh = SubResource("CylinderMesh_667")
+material_override = SubResource("StandardMaterial3D_666")
+
+[node name="P2315" type="MeshInstance3D" parent="Static"]
+position = Vector3(-19.52, 0.62, 10.3)
+rotation_degrees = Vector3(90, 0.0, 0)
+mesh = SubResource("CylinderMesh_668")
+material_override = ExtResource("19_r")
+
+[node name="P2415" type="MeshInstance3D" parent="Static"]
+position = Vector3(-19.48, 0.66, 13.64)
+mesh = SubResource("BoxMesh_669")
+material_override = SubResource("StandardMaterial3D_670")
+
+[node name="P253" type="MeshInstance3D" parent="Static"]
+position = Vector3(-19.27, 1.0, 11.5)
+mesh = SubResource("BoxMesh_671")
+material_override = SubResource("StandardMaterial3D_662")
+
+[node name="P263" type="MeshInstance3D" parent="Static"]
+position = Vector3(-19.288, 0.95, 12.35)
+mesh = SubResource("BoxMesh_672")
+material_override = SubResource("StandardMaterial3D_666")
+
+[node name="P273" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 0.7, 11.95)
+mesh = SubResource("BoxMesh_673")
+material_override = SubResource("StandardMaterial3D_662")
+
+[node name="P283" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 0.6, 10.28)
+mesh = SubResource("BoxMesh_674")
+material_override = SubResource("StandardMaterial3D_662")
+
+[node name="P293" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 0.38, 10.26)
+mesh = SubResource("BoxMesh_675")
+material_override = SubResource("StandardMaterial3D_666")
+
+[node name="P303" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 0.47, 10.22)
+mesh = SubResource("BoxMesh_676")
+material_override = SubResource("StandardMaterial3D_677")
+
+[node name="P3110" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 0.38, 13.68)
+mesh = SubResource("BoxMesh_675")
+material_override = SubResource("StandardMaterial3D_666")
+
+[node name="P326" type="MeshInstance3D" parent="Static"]
+position = Vector3(-20.0, 0.47, 13.72)
+mesh = SubResource("BoxMesh_676")
+material_override = SubResource("StandardMaterial3D_677")
 
 [node name="S1128" type="CollisionShape3D" parent="Collision"]
-position = Vector3(-20, 0.55, 12)
-shape = SubResource("BoxShape3D_383")
+position = Vector3(-20.0, 0.65, 12.0)
+shape = SubResource("BoxShape3D_678")
 metadata/surface = "metal"
 
-[node name="M6436" type="MeshInstance3D" parent="Static"]
-position = Vector3(-20, 1.05, 11.85)
-mesh = SubResource("BoxMesh_384")
-material_override = ExtResource("76_r")
-
-[node name="M6437" type="MeshInstance3D" parent="Static"]
-position = Vector3(-20, 1.05, 11.85)
-mesh = SubResource("BoxMesh_385")
-material_override = ExtResource("19_r")
-
-[node name="M6438" type="MeshInstance3D" parent="Static"]
-position = Vector3(-20.62, 0.25, 10.95)
-mesh = SubResource("BoxMesh_386")
-material_override = ExtResource("19_r")
-
-[node name="M6439" type="MeshInstance3D" parent="Static"]
-position = Vector3(-20.62, 0.25, 13.05)
-mesh = SubResource("BoxMesh_386")
-material_override = ExtResource("19_r")
-
-[node name="M6440" type="MeshInstance3D" parent="Static"]
-position = Vector3(-19.38, 0.25, 10.95)
-mesh = SubResource("BoxMesh_386")
-material_override = ExtResource("19_r")
-
-[node name="M6441" type="MeshInstance3D" parent="Static"]
-position = Vector3(-19.38, 0.25, 13.05)
-mesh = SubResource("BoxMesh_386")
-material_override = ExtResource("19_r")
-
-[node name="M6442" type="MeshInstance3D" parent="Static"]
-position = Vector3(-16.5, 0.55, 12.4)
-mesh = SubResource("BoxMesh_382")
+[node name="P161" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 0.56, 12.45)
+mesh = SubResource("BoxMesh_679")
 material_override = ExtResource("74_r")
+
+[node name="P254" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 0.56, 10.9)
+rotation_degrees = Vector3(0, 0.0, 0)
+scale = Vector3(1.4, 0.5, 0.42)
+mesh = SubResource("CylinderMesh_680")
+material_override = ExtResource("74_r")
+
+[node name="P327" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 1.04, 12.7)
+mesh = SubResource("BoxMesh_681")
+material_override = ExtResource("74_r")
+
+[node name="P424" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 1.08, 12.7)
+mesh = SubResource("BoxMesh_682")
+material_override = ExtResource("19_r")
+
+[node name="P524" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 1.27, 12.72)
+mesh = SubResource("BoxMesh_683")
+material_override = ExtResource("74_r")
+
+[node name="P624" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 1.04, 11.78)
+rotation_degrees = Vector3(-38, 0.0, 0)
+mesh = SubResource("BoxMesh_684")
+material_override = ExtResource("19_r")
+
+[node name="P724" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 1.04, 13.53)
+rotation_degrees = Vector3(22, 0.0, 0)
+mesh = SubResource("BoxMesh_685")
+material_override = ExtResource("19_r")
+
+[node name="P824" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 0.86, 11.66)
+rotation_degrees = Vector3(0, 0.0, 8)
+mesh = SubResource("BoxMesh_686")
+material_override = SubResource("StandardMaterial3D_687")
+
+[node name="P924" type="MeshInstance3D" parent="Static"]
+position = Vector3(-17.16, 0.28, 11.35)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_688")
+material_override = SubResource("StandardMaterial3D_689")
+
+[node name="P1024" type="MeshInstance3D" parent="Static"]
+position = Vector3(-17.17, 0.28, 11.35)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_690")
+material_override = SubResource("StandardMaterial3D_691")
+
+[node name="P1121" type="MeshInstance3D" parent="Static"]
+position = Vector3(-17.16, 0.28, 13.45)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_688")
+material_override = SubResource("StandardMaterial3D_689")
+
+[node name="P1218" type="MeshInstance3D" parent="Static"]
+position = Vector3(-17.17, 0.28, 13.45)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_690")
+material_override = SubResource("StandardMaterial3D_691")
+
+[node name="P1316" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.98, 0.62, 10.72)
+rotation_degrees = Vector3(90, 0.0, 0)
+mesh = SubResource("CylinderMesh_692")
+material_override = SubResource("StandardMaterial3D_691")
+
+[node name="P1416" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.98, 0.62, 10.7)
+rotation_degrees = Vector3(90, 0.0, 0)
+mesh = SubResource("CylinderMesh_693")
+material_override = ExtResource("19_r")
+
+[node name="P1516" type="MeshInstance3D" parent="Static"]
+position = Vector3(-17.02, 0.66, 14.04)
+mesh = SubResource("BoxMesh_694")
+material_override = SubResource("StandardMaterial3D_695")
+
+[node name="P1616" type="MeshInstance3D" parent="Static"]
+position = Vector3(-17.23, 1.0, 11.9)
+mesh = SubResource("BoxMesh_696")
+material_override = SubResource("StandardMaterial3D_687")
+
+[node name="P1716" type="MeshInstance3D" parent="Static"]
+position = Vector3(-17.212, 0.95, 12.75)
+mesh = SubResource("BoxMesh_697")
+material_override = SubResource("StandardMaterial3D_691")
+
+[node name="P1816" type="MeshInstance3D" parent="Static"]
+position = Vector3(-15.84, 0.28, 11.35)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_688")
+material_override = SubResource("StandardMaterial3D_689")
+
+[node name="P1916" type="MeshInstance3D" parent="Static"]
+position = Vector3(-15.83, 0.28, 11.35)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_690")
+material_override = SubResource("StandardMaterial3D_691")
+
+[node name="P2016" type="MeshInstance3D" parent="Static"]
+position = Vector3(-15.84, 0.28, 13.45)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_688")
+material_override = SubResource("StandardMaterial3D_689")
+
+[node name="P2119" type="MeshInstance3D" parent="Static"]
+position = Vector3(-15.83, 0.28, 13.45)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_690")
+material_override = SubResource("StandardMaterial3D_691")
+
+[node name="P2217" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.02, 0.62, 10.72)
+rotation_degrees = Vector3(90, 0.0, 0)
+mesh = SubResource("CylinderMesh_692")
+material_override = SubResource("StandardMaterial3D_691")
+
+[node name="P2316" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.02, 0.62, 10.7)
+rotation_degrees = Vector3(90, 0.0, 0)
+mesh = SubResource("CylinderMesh_693")
+material_override = ExtResource("19_r")
+
+[node name="P2416" type="MeshInstance3D" parent="Static"]
+position = Vector3(-15.98, 0.66, 14.04)
+mesh = SubResource("BoxMesh_694")
+material_override = SubResource("StandardMaterial3D_695")
+
+[node name="P255" type="MeshInstance3D" parent="Static"]
+position = Vector3(-15.77, 1.0, 11.9)
+mesh = SubResource("BoxMesh_696")
+material_override = SubResource("StandardMaterial3D_687")
+
+[node name="P264" type="MeshInstance3D" parent="Static"]
+position = Vector3(-15.788, 0.95, 12.75)
+mesh = SubResource("BoxMesh_697")
+material_override = SubResource("StandardMaterial3D_691")
+
+[node name="P274" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 0.7, 12.35)
+mesh = SubResource("BoxMesh_698")
+material_override = SubResource("StandardMaterial3D_687")
+
+[node name="P284" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 0.6, 10.68)
+mesh = SubResource("BoxMesh_699")
+material_override = SubResource("StandardMaterial3D_687")
+
+[node name="P294" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 0.38, 10.66)
+mesh = SubResource("BoxMesh_700")
+material_override = SubResource("StandardMaterial3D_691")
+
+[node name="P304" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 0.47, 10.62)
+mesh = SubResource("BoxMesh_701")
+material_override = SubResource("StandardMaterial3D_702")
+
+[node name="P3111" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 0.38, 14.08)
+mesh = SubResource("BoxMesh_700")
+material_override = SubResource("StandardMaterial3D_691")
+
+[node name="P328" type="MeshInstance3D" parent="Static"]
+position = Vector3(-16.5, 0.47, 14.12)
+mesh = SubResource("BoxMesh_701")
+material_override = SubResource("StandardMaterial3D_702")
 
 [node name="S1129" type="CollisionShape3D" parent="Collision"]
-position = Vector3(-16.5, 0.55, 12.4)
-shape = SubResource("BoxShape3D_383")
+position = Vector3(-16.5, 0.65, 12.4)
+shape = SubResource("BoxShape3D_678")
 metadata/surface = "metal"
 
-[node name="M6443" type="MeshInstance3D" parent="Static"]
-position = Vector3(-16.5, 1.05, 12.25)
-mesh = SubResource("BoxMesh_384")
-material_override = ExtResource("74_r")
-
-[node name="M6444" type="MeshInstance3D" parent="Static"]
-position = Vector3(-16.5, 1.05, 12.25)
-mesh = SubResource("BoxMesh_385")
-material_override = ExtResource("19_r")
-
-[node name="M6445" type="MeshInstance3D" parent="Static"]
-position = Vector3(-17.12, 0.25, 11.35)
-mesh = SubResource("BoxMesh_386")
-material_override = ExtResource("19_r")
-
-[node name="M6446" type="MeshInstance3D" parent="Static"]
-position = Vector3(-17.12, 0.25, 13.45)
-mesh = SubResource("BoxMesh_386")
-material_override = ExtResource("19_r")
-
-[node name="M6447" type="MeshInstance3D" parent="Static"]
-position = Vector3(-15.88, 0.25, 11.35)
-mesh = SubResource("BoxMesh_386")
-material_override = ExtResource("19_r")
-
-[node name="M6448" type="MeshInstance3D" parent="Static"]
-position = Vector3(-15.88, 0.25, 13.45)
-mesh = SubResource("BoxMesh_386")
-material_override = ExtResource("19_r")
-
-[node name="M6449" type="MeshInstance3D" parent="Static"]
-position = Vector3(16, 0.55, 12)
-mesh = SubResource("BoxMesh_382")
+[node name="P170" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 0.56, 12.05)
+mesh = SubResource("BoxMesh_703")
 material_override = ExtResource("77_r")
+
+[node name="P256" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 0.56, 10.5)
+rotation_degrees = Vector3(0, 0.0, 0)
+scale = Vector3(1.4, 0.5, 0.42)
+mesh = SubResource("CylinderMesh_704")
+material_override = ExtResource("77_r")
+
+[node name="P329" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 1.04, 12.3)
+mesh = SubResource("BoxMesh_705")
+material_override = ExtResource("77_r")
+
+[node name="P425" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 1.08, 12.3)
+mesh = SubResource("BoxMesh_706")
+material_override = ExtResource("19_r")
+
+[node name="P525" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 1.27, 12.32)
+mesh = SubResource("BoxMesh_707")
+material_override = ExtResource("77_r")
+
+[node name="P625" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 1.04, 11.38)
+rotation_degrees = Vector3(-38, 0.0, 0)
+mesh = SubResource("BoxMesh_708")
+material_override = ExtResource("19_r")
+
+[node name="P725" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 1.04, 13.13)
+rotation_degrees = Vector3(22, 0.0, 0)
+mesh = SubResource("BoxMesh_709")
+material_override = ExtResource("19_r")
+
+[node name="P825" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 0.86, 11.26)
+rotation_degrees = Vector3(0, 0.0, 8)
+mesh = SubResource("BoxMesh_710")
+material_override = SubResource("StandardMaterial3D_711")
+
+[node name="P925" type="MeshInstance3D" parent="Static"]
+position = Vector3(15.34, 0.28, 10.95)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_712")
+material_override = SubResource("StandardMaterial3D_713")
+
+[node name="P1025" type="MeshInstance3D" parent="Static"]
+position = Vector3(15.33, 0.28, 10.95)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_714")
+material_override = SubResource("StandardMaterial3D_715")
+
+[node name="P1123" type="MeshInstance3D" parent="Static"]
+position = Vector3(15.34, 0.28, 13.05)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_712")
+material_override = SubResource("StandardMaterial3D_713")
+
+[node name="P1219" type="MeshInstance3D" parent="Static"]
+position = Vector3(15.33, 0.28, 13.05)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_714")
+material_override = SubResource("StandardMaterial3D_715")
+
+[node name="P1317" type="MeshInstance3D" parent="Static"]
+position = Vector3(15.52, 0.62, 10.32)
+rotation_degrees = Vector3(90, 0.0, 0)
+mesh = SubResource("CylinderMesh_716")
+material_override = SubResource("StandardMaterial3D_715")
+
+[node name="P1417" type="MeshInstance3D" parent="Static"]
+position = Vector3(15.52, 0.62, 10.3)
+rotation_degrees = Vector3(90, 0.0, 0)
+mesh = SubResource("CylinderMesh_717")
+material_override = ExtResource("19_r")
+
+[node name="P1517" type="MeshInstance3D" parent="Static"]
+position = Vector3(15.48, 0.66, 13.64)
+mesh = SubResource("BoxMesh_718")
+material_override = SubResource("StandardMaterial3D_719")
+
+[node name="P1617" type="MeshInstance3D" parent="Static"]
+position = Vector3(15.27, 1.0, 11.5)
+mesh = SubResource("BoxMesh_720")
+material_override = SubResource("StandardMaterial3D_711")
+
+[node name="P1717" type="MeshInstance3D" parent="Static"]
+position = Vector3(15.288, 0.95, 12.35)
+mesh = SubResource("BoxMesh_721")
+material_override = SubResource("StandardMaterial3D_715")
+
+[node name="P1817" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.66, 0.28, 10.95)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_712")
+material_override = SubResource("StandardMaterial3D_713")
+
+[node name="P1917" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.67, 0.28, 10.95)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_714")
+material_override = SubResource("StandardMaterial3D_715")
+
+[node name="P2017" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.66, 0.28, 13.05)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_712")
+material_override = SubResource("StandardMaterial3D_713")
+
+[node name="P2120" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.67, 0.28, 13.05)
+rotation_degrees = Vector3(0, 0.0, 90)
+mesh = SubResource("CylinderMesh_714")
+material_override = SubResource("StandardMaterial3D_715")
+
+[node name="P2218" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.48, 0.62, 10.32)
+rotation_degrees = Vector3(90, 0.0, 0)
+mesh = SubResource("CylinderMesh_716")
+material_override = SubResource("StandardMaterial3D_715")
+
+[node name="P2317" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.48, 0.62, 10.3)
+rotation_degrees = Vector3(90, 0.0, 0)
+mesh = SubResource("CylinderMesh_717")
+material_override = ExtResource("19_r")
+
+[node name="P2417" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.52, 0.66, 13.64)
+mesh = SubResource("BoxMesh_718")
+material_override = SubResource("StandardMaterial3D_719")
+
+[node name="P257" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.73, 1.0, 11.5)
+mesh = SubResource("BoxMesh_720")
+material_override = SubResource("StandardMaterial3D_711")
+
+[node name="P265" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.712, 0.95, 12.35)
+mesh = SubResource("BoxMesh_721")
+material_override = SubResource("StandardMaterial3D_715")
+
+[node name="P275" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 0.7, 11.95)
+mesh = SubResource("BoxMesh_722")
+material_override = SubResource("StandardMaterial3D_711")
+
+[node name="P285" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 0.6, 10.28)
+mesh = SubResource("BoxMesh_723")
+material_override = SubResource("StandardMaterial3D_711")
+
+[node name="P295" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 0.38, 10.26)
+mesh = SubResource("BoxMesh_724")
+material_override = SubResource("StandardMaterial3D_715")
+
+[node name="P305" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 0.47, 10.22)
+mesh = SubResource("BoxMesh_725")
+material_override = SubResource("StandardMaterial3D_726")
+
+[node name="P3112" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 0.38, 13.68)
+mesh = SubResource("BoxMesh_724")
+material_override = SubResource("StandardMaterial3D_715")
+
+[node name="P3210" type="MeshInstance3D" parent="Static"]
+position = Vector3(16.0, 0.47, 13.72)
+mesh = SubResource("BoxMesh_725")
+material_override = SubResource("StandardMaterial3D_726")
 
 [node name="S1130" type="CollisionShape3D" parent="Collision"]
-position = Vector3(16, 0.55, 12)
-shape = SubResource("BoxShape3D_383")
+position = Vector3(16.0, 0.65, 12.0)
+shape = SubResource("BoxShape3D_678")
 metadata/surface = "metal"
 
-[node name="M6450" type="MeshInstance3D" parent="Static"]
-position = Vector3(16, 1.05, 11.85)
-mesh = SubResource("BoxMesh_384")
-material_override = ExtResource("77_r")
-
-[node name="M6451" type="MeshInstance3D" parent="Static"]
-position = Vector3(16, 1.05, 11.85)
-mesh = SubResource("BoxMesh_385")
-material_override = ExtResource("19_r")
-
-[node name="M6452" type="MeshInstance3D" parent="Static"]
-position = Vector3(15.38, 0.25, 10.95)
-mesh = SubResource("BoxMesh_386")
-material_override = ExtResource("19_r")
-
-[node name="M6453" type="MeshInstance3D" parent="Static"]
-position = Vector3(15.38, 0.25, 13.05)
-mesh = SubResource("BoxMesh_386")
-material_override = ExtResource("19_r")
-
-[node name="M6454" type="MeshInstance3D" parent="Static"]
-position = Vector3(16.62, 0.25, 10.95)
-mesh = SubResource("BoxMesh_386")
-material_override = ExtResource("19_r")
-
-[node name="M6455" type="MeshInstance3D" parent="Static"]
-position = Vector3(16.62, 0.25, 13.05)
-mesh = SubResource("BoxMesh_386")
-material_override = ExtResource("19_r")
-
-[node name="M6456" type="MeshInstance3D" parent="Static"]
+[node name="M6375" type="MeshInstance3D" parent="Static"]
 position = Vector3(-26, 1.6, 20)
-mesh = SubResource("BoxMesh_387")
+mesh = SubResource("BoxMesh_727")
 material_override = ExtResource("33_r")
 
 [node name="S1131" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-26, 1.6, 20)
-shape = SubResource("BoxShape3D_388")
+shape = SubResource("BoxShape3D_728")
 metadata/surface = "wood"
 
-[node name="M6457" type="MeshInstance3D" parent="Static"]
+[node name="M6376" type="MeshInstance3D" parent="Static"]
 position = Vector3(-26, 3.6, 20)
-mesh = SubResource("BoxMesh_389")
+mesh = SubResource("BoxMesh_729")
 material_override = ExtResource("78_r")
 
-[node name="M6458" type="MeshInstance3D" parent="Static"]
+[node name="M6377" type="MeshInstance3D" parent="Static"]
 position = Vector3(-25.2, 3.2, 20.5)
-mesh = SubResource("BoxMesh_390")
+mesh = SubResource("BoxMesh_730")
 material_override = ExtResource("78_r")
 
-[node name="M6459" type="MeshInstance3D" parent="Static"]
+[node name="M6378" type="MeshInstance3D" parent="Static"]
 position = Vector3(-26.7, 3.3, 19.4)
-mesh = SubResource("BoxMesh_391")
+mesh = SubResource("BoxMesh_731")
 material_override = ExtResource("78_r")
 
-[node name="M6460" type="MeshInstance3D" parent="Static"]
+[node name="M6379" type="MeshInstance3D" parent="Static"]
 position = Vector3(-25.8, 4.4, 20.1)
-mesh = SubResource("BoxMesh_390")
+mesh = SubResource("BoxMesh_730")
 material_override = ExtResource("78_r")
 
-[node name="M6461" type="MeshInstance3D" parent="Static"]
+[node name="M6380" type="MeshInstance3D" parent="Static"]
 position = Vector3(24, 1.6, 18)
-mesh = SubResource("BoxMesh_387")
+mesh = SubResource("BoxMesh_727")
 material_override = ExtResource("33_r")
 
 [node name="S1132" type="CollisionShape3D" parent="Collision"]
 position = Vector3(24, 1.6, 18)
-shape = SubResource("BoxShape3D_388")
+shape = SubResource("BoxShape3D_728")
 metadata/surface = "wood"
 
-[node name="M6462" type="MeshInstance3D" parent="Static"]
+[node name="M6381" type="MeshInstance3D" parent="Static"]
 position = Vector3(24, 3.6, 18)
-mesh = SubResource("BoxMesh_389")
+mesh = SubResource("BoxMesh_729")
 material_override = ExtResource("78_r")
 
-[node name="M6463" type="MeshInstance3D" parent="Static"]
+[node name="M6382" type="MeshInstance3D" parent="Static"]
 position = Vector3(24.8, 3.2, 18.5)
-mesh = SubResource("BoxMesh_390")
+mesh = SubResource("BoxMesh_730")
 material_override = ExtResource("78_r")
 
-[node name="M6464" type="MeshInstance3D" parent="Static"]
+[node name="M6383" type="MeshInstance3D" parent="Static"]
 position = Vector3(23.3, 3.3, 17.4)
-mesh = SubResource("BoxMesh_391")
+mesh = SubResource("BoxMesh_731")
 material_override = ExtResource("78_r")
 
-[node name="M6465" type="MeshInstance3D" parent="Static"]
+[node name="M6384" type="MeshInstance3D" parent="Static"]
 position = Vector3(24.2, 4.4, 18.1)
-mesh = SubResource("BoxMesh_390")
+mesh = SubResource("BoxMesh_730")
 material_override = ExtResource("78_r")
 
-[node name="M6466" type="MeshInstance3D" parent="Static"]
+[node name="M6385" type="MeshInstance3D" parent="Static"]
 position = Vector3(-4, 3.0, 22)
 mesh = SubResource("BoxMesh_234")
 material_override = ExtResource("17_r")
@@ -42051,17 +45561,17 @@ position = Vector3(-4, 3.0, 22)
 shape = SubResource("BoxShape3D_235")
 metadata/surface = "metal"
 
-[node name="M6467" type="MeshInstance3D" parent="Static"]
+[node name="M6386" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.4, 5.95, 22)
 mesh = SubResource("BoxMesh_236")
 material_override = ExtResource("17_r")
 
-[node name="M6468" type="MeshInstance3D" parent="Static"]
+[node name="M6387" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.85, 5.85, 22)
 mesh = SubResource("BoxMesh_237")
 material_override = ExtResource("30_r")
 
-[node name="M6469" type="MeshInstance3D" parent="Static"]
+[node name="M6388" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.85, 5.77, 22)
 mesh = SubResource("BoxMesh_238")
 material_override = ExtResource("31_r")
@@ -42080,7 +45590,7 @@ distance_fade_enabled = true
 distance_fade_begin = 55.0
 distance_fade_length = 15.0
 
-[node name="M6470" type="MeshInstance3D" parent="Static"]
+[node name="M6389" type="MeshInstance3D" parent="Static"]
 position = Vector3(4, 3.0, 10)
 mesh = SubResource("BoxMesh_234")
 material_override = ExtResource("17_r")
@@ -42090,17 +45600,17 @@ position = Vector3(4, 3.0, 10)
 shape = SubResource("BoxShape3D_235")
 metadata/surface = "metal"
 
-[node name="M6471" type="MeshInstance3D" parent="Static"]
+[node name="M6390" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.4, 5.95, 10)
 mesh = SubResource("BoxMesh_236")
 material_override = ExtResource("17_r")
 
-[node name="M6472" type="MeshInstance3D" parent="Static"]
+[node name="M6391" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.85, 5.85, 10)
 mesh = SubResource("BoxMesh_237")
 material_override = ExtResource("30_r")
 
-[node name="M6473" type="MeshInstance3D" parent="Static"]
+[node name="M6392" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.85, 5.77, 10)
 mesh = SubResource("BoxMesh_238")
 material_override = ExtResource("31_r")
@@ -42119,7 +45629,7 @@ distance_fade_enabled = true
 distance_fade_begin = 55.0
 distance_fade_length = 15.0
 
-[node name="M6474" type="MeshInstance3D" parent="Static"]
+[node name="M6393" type="MeshInstance3D" parent="Static"]
 position = Vector3(-4, 3.0, -2)
 mesh = SubResource("BoxMesh_234")
 material_override = ExtResource("17_r")
@@ -42129,17 +45639,17 @@ position = Vector3(-4, 3.0, -2)
 shape = SubResource("BoxShape3D_235")
 metadata/surface = "metal"
 
-[node name="M6475" type="MeshInstance3D" parent="Static"]
+[node name="M6394" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.4, 5.95, -2)
 mesh = SubResource("BoxMesh_236")
 material_override = ExtResource("17_r")
 
-[node name="M6476" type="MeshInstance3D" parent="Static"]
+[node name="M6395" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.85, 5.85, -2)
 mesh = SubResource("BoxMesh_237")
 material_override = ExtResource("30_r")
 
-[node name="M6477" type="MeshInstance3D" parent="Static"]
+[node name="M6396" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.85, 5.77, -2)
 mesh = SubResource("BoxMesh_238")
 material_override = ExtResource("31_r")
@@ -42158,7 +45668,7 @@ distance_fade_enabled = true
 distance_fade_begin = 55.0
 distance_fade_length = 15.0
 
-[node name="M6478" type="MeshInstance3D" parent="Static"]
+[node name="M6397" type="MeshInstance3D" parent="Static"]
 position = Vector3(4, 3.0, -10)
 mesh = SubResource("BoxMesh_234")
 material_override = ExtResource("17_r")
@@ -42168,17 +45678,17 @@ position = Vector3(4, 3.0, -10)
 shape = SubResource("BoxShape3D_235")
 metadata/surface = "metal"
 
-[node name="M6479" type="MeshInstance3D" parent="Static"]
+[node name="M6398" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.4, 5.95, -10)
 mesh = SubResource("BoxMesh_236")
 material_override = ExtResource("17_r")
 
-[node name="M6480" type="MeshInstance3D" parent="Static"]
+[node name="M6399" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.85, 5.85, -10)
 mesh = SubResource("BoxMesh_237")
 material_override = ExtResource("30_r")
 
-[node name="M6481" type="MeshInstance3D" parent="Static"]
+[node name="M6400" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.85, 5.77, -10)
 mesh = SubResource("BoxMesh_238")
 material_override = ExtResource("31_r")
@@ -42197,7 +45707,7 @@ distance_fade_enabled = true
 distance_fade_begin = 55.0
 distance_fade_length = 15.0
 
-[node name="M6482" type="MeshInstance3D" parent="Static"]
+[node name="M6401" type="MeshInstance3D" parent="Static"]
 position = Vector3(-22, 3.0, 6)
 mesh = SubResource("BoxMesh_234")
 material_override = ExtResource("17_r")
@@ -42207,17 +45717,17 @@ position = Vector3(-22, 3.0, 6)
 shape = SubResource("BoxShape3D_235")
 metadata/surface = "metal"
 
-[node name="M6483" type="MeshInstance3D" parent="Static"]
+[node name="M6402" type="MeshInstance3D" parent="Static"]
 position = Vector3(-21.4, 5.95, 6)
 mesh = SubResource("BoxMesh_236")
 material_override = ExtResource("17_r")
 
-[node name="M6484" type="MeshInstance3D" parent="Static"]
+[node name="M6403" type="MeshInstance3D" parent="Static"]
 position = Vector3(-20.85, 5.85, 6)
 mesh = SubResource("BoxMesh_237")
 material_override = ExtResource("30_r")
 
-[node name="M6485" type="MeshInstance3D" parent="Static"]
+[node name="M6404" type="MeshInstance3D" parent="Static"]
 position = Vector3(-20.85, 5.77, 6)
 mesh = SubResource("BoxMesh_238")
 material_override = ExtResource("31_r")
@@ -42236,7 +45746,7 @@ distance_fade_enabled = true
 distance_fade_begin = 55.0
 distance_fade_length = 15.0
 
-[node name="M6486" type="MeshInstance3D" parent="Static"]
+[node name="M6405" type="MeshInstance3D" parent="Static"]
 position = Vector3(22, 3.0, 6)
 mesh = SubResource("BoxMesh_234")
 material_override = ExtResource("17_r")
@@ -42246,17 +45756,17 @@ position = Vector3(22, 3.0, 6)
 shape = SubResource("BoxShape3D_235")
 metadata/surface = "metal"
 
-[node name="M6487" type="MeshInstance3D" parent="Static"]
+[node name="M6406" type="MeshInstance3D" parent="Static"]
 position = Vector3(21.4, 5.95, 6)
 mesh = SubResource("BoxMesh_236")
 material_override = ExtResource("17_r")
 
-[node name="M6488" type="MeshInstance3D" parent="Static"]
+[node name="M6407" type="MeshInstance3D" parent="Static"]
 position = Vector3(20.85, 5.85, 6)
 mesh = SubResource("BoxMesh_237")
 material_override = ExtResource("30_r")
 
-[node name="M6489" type="MeshInstance3D" parent="Static"]
+[node name="M6408" type="MeshInstance3D" parent="Static"]
 position = Vector3(20.85, 5.77, 6)
 mesh = SubResource("BoxMesh_238")
 material_override = ExtResource("31_r")
@@ -42326,7 +45836,7 @@ script = ExtResource("87_r")
 checkpoint_id = &"start"
 
 [node name="Shape" type="CollisionShape3D" parent="Checkpoints/start"]
-shape = SubResource("BoxShape3D_392")
+shape = SubResource("BoxShape3D_732")
 
 [node name="courtyard" type="Area3D" parent="Checkpoints"]
 position = Vector3(0, 0, 2)
@@ -42334,7 +45844,7 @@ script = ExtResource("87_r")
 checkpoint_id = &"courtyard"
 
 [node name="Shape" type="CollisionShape3D" parent="Checkpoints/courtyard"]
-shape = SubResource("BoxShape3D_393")
+shape = SubResource("BoxShape3D_733")
 
 [node name="terraces" type="Area3D" parent="Checkpoints"]
 position = Vector3(-12.5, 15, -15.5)
@@ -42342,7 +45852,7 @@ script = ExtResource("87_r")
 checkpoint_id = &"terraces"
 
 [node name="Shape" type="CollisionShape3D" parent="Checkpoints/terraces"]
-shape = SubResource("BoxShape3D_394")
+shape = SubResource("BoxShape3D_734")
 
 [node name="wing_b4" type="Area3D" parent="Checkpoints"]
 position = Vector3(-12.5, 12, -15.0)
@@ -42350,7 +45860,7 @@ script = ExtResource("87_r")
 checkpoint_id = &"wing_b4"
 
 [node name="Shape" type="CollisionShape3D" parent="Checkpoints/wing_b4"]
-shape = SubResource("BoxShape3D_395")
+shape = SubResource("BoxShape3D_735")
 
 [node name="CabinZone" type="Area3D" parent="."]
 position = Vector3(5.75, 1.2, 23.75)
@@ -42359,7 +45869,7 @@ event_id = &"back_at_cabin"
 armed_by = &"lock_terraces"
 
 [node name="Shape" type="CollisionShape3D" parent="CabinZone"]
-shape = SubResource("BoxShape3D_396")
+shape = SubResource("BoxShape3D_736")
 
 [node name="Deshmukh" type="Node3D" parent="."]
 script = ExtResource("89_r")
@@ -42390,169 +45900,169 @@ light_color = Color(0.8, 0.85, 1, 1)
 light_energy = 2.4
 omni_range = 3.5
 
-[node name="P116" type="MeshInstance3D" parent="Static"]
+[node name="P171" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.2, 12.42, -15.6)
-mesh = SubResource("BoxMesh_397")
-material_override = SubResource("StandardMaterial3D_398")
+mesh = SubResource("BoxMesh_737")
+material_override = SubResource("StandardMaterial3D_738")
 
 [node name="S1139" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-8.2, 12.42, -15.6)
-shape = SubResource("BoxShape3D_399")
+shape = SubResource("BoxShape3D_739")
 metadata/surface = "soft"
 
-[node name="P211" type="MeshInstance3D" parent="Static"]
+[node name="P258" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.2, 12.81, -15.6)
 rotation_degrees = Vector3(0, 0.0, 0)
 scale = Vector3(2.02, 0.06, 0.92)
-mesh = SubResource("CylinderMesh_400")
-material_override = SubResource("StandardMaterial3D_398")
+mesh = SubResource("CylinderMesh_740")
+material_override = SubResource("StandardMaterial3D_738")
 
 [node name="DustSheet" type="MeshInstance3D" parent="Props"]
 position = Vector3(-8.2, 12.82, -16.062)
 rotation_degrees = Vector3(0.0, 180.0, 0)
-mesh = SubResource("QuadMesh_402")
-material_override = SubResource("ShaderMaterial_401")
+mesh = SubResource("QuadMesh_742")
+material_override = SubResource("ShaderMaterial_741")
 
 [node name="DustSheet2" type="MeshInstance3D" parent="Props"]
 position = Vector3(-8.2, 12.82, -15.138)
 rotation_degrees = Vector3(0.0, 360.0, 0)
-mesh = SubResource("QuadMesh_404")
-material_override = SubResource("ShaderMaterial_403")
+mesh = SubResource("QuadMesh_744")
+material_override = SubResource("ShaderMaterial_743")
 
 [node name="DustSheet3" type="MeshInstance3D" parent="Props"]
 position = Vector3(-9.212, 12.82, -15.6)
 rotation_degrees = Vector3(0.0, 270.0, 0)
-mesh = SubResource("QuadMesh_406")
-material_override = SubResource("ShaderMaterial_405")
+mesh = SubResource("QuadMesh_746")
+material_override = SubResource("ShaderMaterial_745")
 
 [node name="DustSheet4" type="MeshInstance3D" parent="Props"]
 position = Vector3(-7.188, 12.82, -15.6)
 rotation_degrees = Vector3(0.0, 90.0, 0)
-mesh = SubResource("QuadMesh_408")
-material_override = SubResource("ShaderMaterial_407")
+mesh = SubResource("QuadMesh_748")
+material_override = SubResource("ShaderMaterial_747")
 
-[node name="P311" type="MeshInstance3D" parent="Static"]
+[node name="P330" type="MeshInstance3D" parent="Static"]
 position = Vector3(-5.0, 12.38, -17.6)
-mesh = SubResource("BoxMesh_409")
-material_override = SubResource("StandardMaterial3D_398")
+mesh = SubResource("BoxMesh_749")
+material_override = SubResource("StandardMaterial3D_738")
 
 [node name="S1140" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-5.0, 12.38, -17.6)
-shape = SubResource("BoxShape3D_410")
+shape = SubResource("BoxShape3D_750")
 metadata/surface = "soft"
 
-[node name="P410" type="MeshInstance3D" parent="Static"]
+[node name="P426" type="MeshInstance3D" parent="Static"]
 position = Vector3(-5.0, 12.745, -17.6)
 rotation_degrees = Vector3(0, 0.0, 0)
 scale = Vector3(1.22, 0.06, 0.82)
-mesh = SubResource("CylinderMesh_400")
-material_override = SubResource("StandardMaterial3D_398")
+mesh = SubResource("CylinderMesh_740")
+material_override = SubResource("StandardMaterial3D_738")
 
 [node name="DustSheet5" type="MeshInstance3D" parent="Props"]
 position = Vector3(-5.0, 12.755, -18.012)
 rotation_degrees = Vector3(0.0, 180.0, 0)
-mesh = SubResource("QuadMesh_412")
-material_override = SubResource("ShaderMaterial_411")
+mesh = SubResource("QuadMesh_752")
+material_override = SubResource("ShaderMaterial_751")
 
 [node name="DustSheet6" type="MeshInstance3D" parent="Props"]
 position = Vector3(-5.0, 12.755, -17.188)
 rotation_degrees = Vector3(0.0, 360.0, 0)
-mesh = SubResource("QuadMesh_414")
-material_override = SubResource("ShaderMaterial_413")
+mesh = SubResource("QuadMesh_754")
+material_override = SubResource("ShaderMaterial_753")
 
 [node name="DustSheet7" type="MeshInstance3D" parent="Props"]
 position = Vector3(-5.612, 12.755, -17.6)
 rotation_degrees = Vector3(0.0, 270.0, 0)
-mesh = SubResource("QuadMesh_416")
-material_override = SubResource("ShaderMaterial_415")
+mesh = SubResource("QuadMesh_756")
+material_override = SubResource("ShaderMaterial_755")
 
 [node name="DustSheet8" type="MeshInstance3D" parent="Props"]
 position = Vector3(-4.388, 12.755, -17.6)
 rotation_degrees = Vector3(0.0, 90.0, 0)
-mesh = SubResource("QuadMesh_418")
-material_override = SubResource("ShaderMaterial_417")
+mesh = SubResource("QuadMesh_758")
+material_override = SubResource("ShaderMaterial_757")
 
-[node name="P510" type="MeshInstance3D" parent="Static"]
+[node name="P526" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.2, 12.55, -15.0)
-mesh = SubResource("BoxMesh_419")
-material_override = SubResource("StandardMaterial3D_398")
+mesh = SubResource("BoxMesh_759")
+material_override = SubResource("StandardMaterial3D_738")
 
 [node name="S1141" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-3.2, 12.55, -15.0)
-shape = SubResource("BoxShape3D_420")
+shape = SubResource("BoxShape3D_760")
 metadata/surface = "soft"
 
-[node name="P610" type="MeshInstance3D" parent="Static"]
+[node name="P626" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.2, 13.09, -15.0)
 rotation_degrees = Vector3(0, 0.0, 0)
 scale = Vector3(0.92, 0.06, 0.62)
-mesh = SubResource("CylinderMesh_400")
-material_override = SubResource("StandardMaterial3D_398")
+mesh = SubResource("CylinderMesh_740")
+material_override = SubResource("StandardMaterial3D_738")
 
 [node name="DustSheet9" type="MeshInstance3D" parent="Props"]
 position = Vector3(-3.2, 13.1, -15.312)
 rotation_degrees = Vector3(0.0, 180.0, 0)
-mesh = SubResource("QuadMesh_422")
-material_override = SubResource("ShaderMaterial_421")
+mesh = SubResource("QuadMesh_762")
+material_override = SubResource("ShaderMaterial_761")
 
 [node name="DustSheet10" type="MeshInstance3D" parent="Props"]
 position = Vector3(-3.2, 13.1, -14.688)
 rotation_degrees = Vector3(0.0, 360.0, 0)
-mesh = SubResource("QuadMesh_424")
-material_override = SubResource("ShaderMaterial_423")
+mesh = SubResource("QuadMesh_764")
+material_override = SubResource("ShaderMaterial_763")
 
 [node name="DustSheet11" type="MeshInstance3D" parent="Props"]
 position = Vector3(-3.662, 13.1, -15.0)
 rotation_degrees = Vector3(0.0, 270.0, 0)
-mesh = SubResource("QuadMesh_426")
-material_override = SubResource("ShaderMaterial_425")
+mesh = SubResource("QuadMesh_766")
+material_override = SubResource("ShaderMaterial_765")
 
 [node name="DustSheet12" type="MeshInstance3D" parent="Props"]
 position = Vector3(-2.738, 13.1, -15.0)
 rotation_degrees = Vector3(0.0, 90.0, 0)
-mesh = SubResource("QuadMesh_428")
-material_override = SubResource("ShaderMaterial_427")
+mesh = SubResource("QuadMesh_768")
+material_override = SubResource("ShaderMaterial_767")
 
-[node name="P710" type="MeshInstance3D" parent="Static"]
+[node name="P726" type="MeshInstance3D" parent="Static"]
 position = Vector3(-9.0, 12.5, -21.5)
-mesh = SubResource("BoxMesh_429")
-material_override = SubResource("StandardMaterial3D_398")
+mesh = SubResource("BoxMesh_769")
+material_override = SubResource("StandardMaterial3D_738")
 
 [node name="S1142" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-9.0, 12.5, -21.5)
-shape = SubResource("BoxShape3D_430")
+shape = SubResource("BoxShape3D_770")
 metadata/surface = "soft"
 
-[node name="P810" type="MeshInstance3D" parent="Static"]
+[node name="P826" type="MeshInstance3D" parent="Static"]
 position = Vector3(-9.0, 12.79, -21.5)
 rotation_degrees = Vector3(0, 0.0, 0)
 scale = Vector3(1.92, 0.06, 1.42)
-mesh = SubResource("CylinderMesh_400")
-material_override = SubResource("StandardMaterial3D_398")
+mesh = SubResource("CylinderMesh_740")
+material_override = SubResource("StandardMaterial3D_738")
 
 [node name="DustSheet13" type="MeshInstance3D" parent="Props"]
 position = Vector3(-9.0, 12.8, -22.212)
 rotation_degrees = Vector3(0.0, 180.0, 0)
-mesh = SubResource("QuadMesh_432")
-material_override = SubResource("ShaderMaterial_431")
+mesh = SubResource("QuadMesh_772")
+material_override = SubResource("ShaderMaterial_771")
 
 [node name="DustSheet14" type="MeshInstance3D" parent="Props"]
 position = Vector3(-9.0, 12.8, -20.788)
 rotation_degrees = Vector3(0.0, 360.0, 0)
-mesh = SubResource("QuadMesh_434")
-material_override = SubResource("ShaderMaterial_433")
+mesh = SubResource("QuadMesh_774")
+material_override = SubResource("ShaderMaterial_773")
 
 [node name="DustSheet15" type="MeshInstance3D" parent="Props"]
 position = Vector3(-9.962, 12.8, -21.5)
 rotation_degrees = Vector3(0.0, 270.0, 0)
-mesh = SubResource("QuadMesh_436")
-material_override = SubResource("ShaderMaterial_435")
+mesh = SubResource("QuadMesh_776")
+material_override = SubResource("ShaderMaterial_775")
 
 [node name="DustSheet16" type="MeshInstance3D" parent="Props"]
 position = Vector3(-8.038, 12.8, -21.5)
 rotation_degrees = Vector3(0.0, 90.0, 0)
-mesh = SubResource("QuadMesh_438")
-material_override = SubResource("ShaderMaterial_437")
+mesh = SubResource("QuadMesh_778")
+material_override = SubResource("ShaderMaterial_777")
 
 [node name="StoppedClock" parent="Props" instance=ExtResource("51_r")]
 script = ExtResource("50_r")
@@ -42563,20 +46073,20 @@ stopped_at = 11527
 [node name="FlatCurtain" type="MeshInstance3D" parent="Props"]
 position = Vector3(-9.12, 14.22, -14.17)
 rotation_degrees = Vector3(0.0, 180.0, 0)
-mesh = SubResource("QuadMesh_440")
-material_override = SubResource("ShaderMaterial_439")
+mesh = SubResource("QuadMesh_780")
+material_override = SubResource("ShaderMaterial_779")
 
 [node name="FlatCurtain2" type="MeshInstance3D" parent="Props"]
 position = Vector3(-8.48, 14.22, -14.17)
 rotation_degrees = Vector3(0.0, 180.0, 0)
-mesh = SubResource("QuadMesh_442")
-material_override = SubResource("ShaderMaterial_441")
+mesh = SubResource("QuadMesh_782")
+material_override = SubResource("ShaderMaterial_781")
 
-[node name="P910" type="MeshInstance3D" parent="Static"]
+[node name="P926" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.8, 14.24, -14.15)
 rotation_degrees = Vector3(0, 0, 90)
-mesh = SubResource("CylinderMesh_443")
-material_override = SubResource("StandardMaterial3D_444")
+mesh = SubResource("CylinderMesh_783")
+material_override = SubResource("StandardMaterial3D_784")
 
 [node name="water_stain3" parent="." instance=ExtResource("46_r")]
 position = Vector3(-7.0, 14.84, -17.0)
@@ -42606,38 +46116,38 @@ script = ExtResource("24_r")
 prompt = "Look at the newspapers"
 
 [node name="Shape" type="CollisionShape3D" parent="Newspapers/Interactable"]
-shape = SubResource("BoxShape3D_445")
+shape = SubResource("BoxShape3D_785")
 
 [node name="Model" type="Node3D" parent="Newspapers"]
 
-[node name="M6490" type="MeshInstance3D" parent="Newspapers/Model"]
+[node name="M6409" type="MeshInstance3D" parent="Newspapers/Model"]
 position = Vector3(-0.05, -0.02, 0.05)
-mesh = SubResource("BoxMesh_446")
+mesh = SubResource("BoxMesh_786")
 material_override = ExtResource("36_r")
 
-[node name="M6491" type="MeshInstance3D" parent="Newspapers/Model"]
+[node name="M6410" type="MeshInstance3D" parent="Newspapers/Model"]
 position = Vector3(0.01, -0.008, 0.0)
-mesh = SubResource("BoxMesh_446")
+mesh = SubResource("BoxMesh_786")
 material_override = ExtResource("36_r")
 
-[node name="M6492" type="MeshInstance3D" parent="Newspapers/Model"]
+[node name="M6411" type="MeshInstance3D" parent="Newspapers/Model"]
 position = Vector3(-0.05, 0.004, -0.05)
-mesh = SubResource("BoxMesh_446")
+mesh = SubResource("BoxMesh_786")
 material_override = ExtResource("36_r")
 
-[node name="M6493" type="MeshInstance3D" parent="Newspapers/Model"]
+[node name="M6412" type="MeshInstance3D" parent="Newspapers/Model"]
 position = Vector3(0.01, 0.016, 0.05)
-mesh = SubResource("BoxMesh_446")
+mesh = SubResource("BoxMesh_786")
 material_override = ExtResource("36_r")
 
-[node name="M6494" type="MeshInstance3D" parent="Newspapers/Model"]
+[node name="M6413" type="MeshInstance3D" parent="Newspapers/Model"]
 position = Vector3(-0.05, 0.028, 0.0)
-mesh = SubResource("BoxMesh_446")
+mesh = SubResource("BoxMesh_786")
 material_override = ExtResource("36_r")
 
-[node name="M6495" type="MeshInstance3D" parent="Newspapers/Model"]
+[node name="M6414" type="MeshInstance3D" parent="Newspapers/Model"]
 position = Vector3(0.01, 0.04, -0.05)
-mesh = SubResource("BoxMesh_446")
+mesh = SubResource("BoxMesh_786")
 material_override = ExtResource("36_r")
 
 [node name="Headline" type="Label3D" parent="Newspapers/Model"]
@@ -42661,19 +46171,19 @@ font_size = 48
 modulate = Color(0.25, 0.1, 0.1, 1)
 text = "JULY 1997\nजुलाई 1997"
 
-[node name="M6496" type="MeshInstance3D" parent="Static"]
+[node name="M6415" type="MeshInstance3D" parent="Static"]
 position = Vector3(-2.2, 13.55, -16.0)
-mesh = SubResource("BoxMesh_447")
+mesh = SubResource("BoxMesh_787")
 material_override = ExtResource("36_r")
 
-[node name="M6497" type="MeshInstance3D" parent="Static"]
+[node name="M6416" type="MeshInstance3D" parent="Static"]
 position = Vector3(-10.85, 13.4, -16.4)
-mesh = SubResource("BoxMesh_448")
+mesh = SubResource("BoxMesh_788")
 material_override = ExtResource("30_r")
 
-[node name="M6498" type="MeshInstance3D" parent="Static"]
+[node name="M6417" type="MeshInstance3D" parent="Static"]
 position = Vector3(-10.83, 12.78, -16.38)
-mesh = SubResource("BoxMesh_449")
+mesh = SubResource("BoxMesh_789")
 material_override = ExtResource("19_r")
 
 [node name="FlatBreath" type="AudioStreamPlayer3D" parent="."]
@@ -42734,7 +46244,7 @@ event_id = &"balcony_checked"
 armed_by = &"cctv_deshmukh"
 
 [node name="Shape" type="CollisionShape3D" parent="BalconyZone"]
-shape = SubResource("BoxShape3D_450")
+shape = SubResource("BoxShape3D_790")
 
 [node name="FlatZone" type="Area3D" parent="."]
 position = Vector3(-7, 13.2, -16.5)
@@ -42743,7 +46253,7 @@ event_id = &"4b_checked"
 armed_by = &"take_key"
 
 [node name="Shape" type="CollisionShape3D" parent="FlatZone"]
-shape = SubResource("BoxShape3D_451")
+shape = SubResource("BoxShape3D_791")
 
 [node name="CabinZone2" type="Area3D" parent="."]
 position = Vector3(5.75, 1.2, 23.75)
@@ -42752,7 +46262,7 @@ event_id = &"cabin_return2"
 armed_by = &"check_4b"
 
 [node name="Shape" type="CollisionShape3D" parent="CabinZone2"]
-shape = SubResource("BoxShape3D_452")
+shape = SubResource("BoxShape3D_792")
 
 [node name="MeterZone" type="Area3D" parent="."]
 position = Vector3(28, 1.2, -4)
@@ -42761,11 +46271,11 @@ event_id = &"meter_room_reached"
 armed_by = &"power_cut"
 
 [node name="Shape" type="CollisionShape3D" parent="MeterZone"]
-shape = SubResource("BoxShape3D_453")
+shape = SubResource("BoxShape3D_793")
 
 [node name="Navigation" type="NavigationRegion3D" parent="."]
 script = ExtResource("97_r")
-navigation_mesh = SubResource("NavigationMesh_454")
+navigation_mesh = SubResource("NavigationMesh_794")
 
 [node name="DeshmukhNPC" parent="." instance=ExtResource("98_r")]
 position = Vector3(-10.4, 0, -11.5)
@@ -42805,11 +46315,11 @@ script = ExtResource("24_r")
 prompt = "Pick up the parcel for 2C"
 
 [node name="Shape" type="CollisionShape3D" parent="Parcel/Interactable"]
-shape = SubResource("BoxShape3D_455")
+shape = SubResource("BoxShape3D_795")
 
-[node name="M6499" type="MeshInstance3D" parent="Parcel"]
+[node name="M6418" type="MeshInstance3D" parent="Parcel"]
 position = Vector3(0, 0, 0)
-mesh = SubResource("BoxMesh_456")
+mesh = SubResource("BoxMesh_796")
 material_override = ExtResource("101_r")
 
 [node name="Label" type="Label3D" parent="Parcel"]
@@ -42843,7 +46353,7 @@ rotation_degrees = Vector3(0.0, 180.0, 0.0)
 
 [node name="S1143" type="CollisionShape3D" parent="Collision"]
 position = Vector3(11, 0.65, 2)
-shape = SubResource("BoxShape3D_457")
+shape = SubResource("BoxShape3D_797")
 metadata/surface = "metal"
 
 [node name="HideBlueCar" type="Area3D" parent="."]
@@ -42851,28 +46361,28 @@ position = Vector3(16, 0.9, 12)
 script = ExtResource("104_r")
 
 [node name="Shape" type="CollisionShape3D" parent="HideBlueCar"]
-shape = SubResource("BoxShape3D_458")
+shape = SubResource("BoxShape3D_798")
 
 [node name="HideCoveredCar" type="Area3D" parent="."]
 position = Vector3(11, 0.9, 2)
 script = ExtResource("104_r")
 
 [node name="Shape" type="CollisionShape3D" parent="HideCoveredCar"]
-shape = SubResource("BoxShape3D_459")
+shape = SubResource("BoxShape3D_799")
 
 [node name="HideTank" type="Area3D" parent="."]
 position = Vector3(28, 0.9, 4)
 script = ExtResource("104_r")
 
 [node name="Shape" type="CollisionShape3D" parent="HideTank"]
-shape = SubResource("BoxShape3D_460")
+shape = SubResource("BoxShape3D_800")
 
 [node name="HideWestCars" type="Area3D" parent="."]
 position = Vector3(-18.2, 0.9, 12.2)
 script = ExtResource("104_r")
 
 [node name="Shape" type="CollisionShape3D" parent="HideWestCars"]
-shape = SubResource("BoxShape3D_461")
+shape = SubResource("BoxShape3D_801")
 
 [node name="StepsAboveB" type="Area3D" parent="."]
 position = Vector3(-12.5, 6, -16.9)
@@ -42880,7 +46390,7 @@ script = ExtResource("105_r")
 armed_by = &"intercom_answered"
 
 [node name="Shape" type="CollisionShape3D" parent="StepsAboveB"]
-shape = SubResource("BoxShape3D_462")
+shape = SubResource("BoxShape3D_802")
 
 [node name="Power" type="Node" parent="."]
 script = ExtResource("106_r")

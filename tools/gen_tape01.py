@@ -48,21 +48,13 @@ def character(lv, name, kind, parent, pos, yaw, props=None):
 
 
 def scooter(lv, x, z, paint, facing=1):
-    lv.box((x, 0.45, z), (0.32, 0.35, 1.25), paint, collide=False)
-    lv.box((x, 0.68, z - 0.1 * facing), (0.3, 0.1, 0.55), "glass_dark", collide=False)
-    lv.box((x, 0.85, z + 0.55 * facing), (0.6, 0.04, 0.04), "metal_rust", collide=False)
-    for dz in (-0.5, 0.5):
-        lv.box((x, 0.2, z + dz), (0.1, 0.4, 0.4), "glass_dark", collide=False)
-    lv.collider((x, 0.5, z), (0.4, 1.0, 1.4))
+    """Parked scooter (propkit), front towards -Z (facing 1) or +Z (facing -1)."""
+    Props(lv).scooter((x, 0, z), yaw=0 if facing == 1 else 180, paint=paint)
 
 
 def car(lv, x, z, paint):
-    lv.box((x, 0.55, z), (1.4, 0.6, 3.3), paint)
-    lv.box((x, 1.05, z - 0.15), (1.3, 0.45, 1.8), paint, collide=False)
-    lv.box((x, 1.05, z - 0.15), (1.32, 0.38, 1.6), "glass_dark", collide=False)
-    for dx in (-0.62, 0.62):
-        for dz in (-1.05, 1.05):
-            lv.box((x + dx, 0.25, z + dz), (0.2, 0.5, 0.5), "glass_dark", collide=False)
+    """Parked 90s hatchback (propkit), front towards -Z."""
+    Props(lv).hatchback((x, 0, z), paint=paint)
 
 
 def tree(lv, x, z):

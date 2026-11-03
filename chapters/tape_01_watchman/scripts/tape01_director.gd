@@ -325,6 +325,7 @@ func _ending() -> void:
 	var player := get_tree().get_first_node_in_group("player") as Player
 	if player:
 		player.input_enabled = false
+	_say(VO, "The lights came back. All of them, all at once.", 3.0)
 	await _wait(1.6)
 	# The last frame of CAM 4: Raghu at the board, and behind him, a red dot.
 	var at := player.global_position if player else Vector3(28.6, 0, -3.0)
@@ -334,9 +335,15 @@ func _ending() -> void:
 	stalker.stop()
 	_show_cctv_frame()
 	get_tree().call_group("camcorder", "glitch", 0.6, 1.0)
-	await _wait(4.0)
+	_say(VO, "The CCTV kept recording. The last frame from CAM 4 shows me at the board.", 3.4)
+	await _wait(3.6)
+	_say(VO, "And behind me, a small red light.", 2.6)
+	await _wait(2.8)
 	get_tree().call_group("camcorder", "show_static")
-	await _wait(2.5)
+	await _wait(1.0)
+	# The narrator is already gone (story bible): the register outlived him.
+	_say(VO, "The register says I signed out at six. I never signed out.", 4.0)
+	await _wait(4.3)
 	Game.complete_chapter()
 
 
