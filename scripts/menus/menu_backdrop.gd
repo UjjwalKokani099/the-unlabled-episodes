@@ -37,6 +37,7 @@ var _screen_size: Vector2 = Vector2(0.44, 0.33)
 func _ready() -> void:
 	var room := $Room
 	(room.get_node("TubeLight") as TubeLight).on = false
+	(room.get_node("DeskLamp") as Light3D).visible = false  # late night: only the TV is on
 	(room.get_node("Van") as Node3D).visible = false
 	(room.get_node("DeliveryBag") as Node3D).visible = false
 	# The lane's street lamp leaves a hot specular spot on the wall behind the TV when

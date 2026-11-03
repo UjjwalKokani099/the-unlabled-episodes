@@ -9,6 +9,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from levelkit import ROOT, Level, slab, sodium_lamp, v3, wall  # noqa: E402
+from propkit import Props  # noqa: E402
 
 GI_DATA = "res://scenes/hub/nikhil_room_gi.res"
 H = 2.9
@@ -29,10 +30,10 @@ def main() -> None:
     sky = lv.sub("Sky", {"sky_material": f'SubResource("{sky_mat}")'})
     env = lv.sub("Environment", {
         "background_mode": "2", "sky": f'SubResource("{sky}")', "ambient_light_source": "2",
-        "ambient_light_color": "Color(0.4, 0.42, 0.55, 1)", "ambient_light_energy": "0.06",
+        "ambient_light_color": "Color(0.32, 0.36, 0.5, 1)", "ambient_light_energy": "0.035",
         "tonemap_mode": "4", "tonemap_exposure": "1.15", "ssao_enabled": "true", "ssao_radius": "0.8",
         "ssao_intensity": "2.0", "glow_enabled": "true", "glow_intensity": "0.6", "glow_bloom": "0.04",
-        "glow_hdr_threshold": "0.9", "volumetric_fog_enabled": "true", "volumetric_fog_density": "0.02",
+        "glow_hdr_threshold": "0.9", "volumetric_fog_enabled": "true", "volumetric_fog_density": "0.035", "volumetric_fog_albedo": "Color(0.85, 0.8, 0.72, 1)",
         "volumetric_fog_length": "24.0"})
     lv.add("WorldEnvironment", "WorldEnvironment", ".", {"environment": f'SubResource("{env}")'})
 
@@ -68,8 +69,6 @@ def main() -> None:
     lv.box((3.2, 0.73, 1.8), (0.65, 0.04, 1.3), "wood_planks")                        # desk top
     for dz in (1.2, 2.4):
         lv.box((3.2, 0.36, dz), (0.6, 0.72, 0.04), "wood_planks", collide=False)
-    lv.box((2.55, 0.23, 1.8), (0.42, 0.04, 0.42), "metal_rust", collide=False)        # stool
-    lv.box((2.55, 0.11, 1.8), (0.06, 0.22, 0.06), "metal_rust")
     lv.box((3.15, 0.765, 1.75), (0.34, 0.02, 0.24), "glass_dark", collide=False)      # laptop base
     lv.box((3.32, 0.88, 1.75), (0.02, 0.22, 0.34), "glass_lit_tv", collide=False, shadow=False)  # screen
     lv.add("LaptopGlow", "OmniLight3D", ".", {"position": v3(3.0, 0.95, 1.75), "light_color": "Color(0.55, 0.65, 1, 1)",
@@ -82,7 +81,10 @@ def main() -> None:
     lv.box((2.85, 0.27, 3.75), (1.3, 0.54, 0.6), "metal_trunk_blue")
     lv.box((3.15, 0.78, 3.8), (0.56, 0.46, 0.46), "glass_dark")                       # CRT body (dark plastic)
     # ceiling tube light on the left wall
-    lv.scene("TubeLight", "res://scenes/props/tube_light.tscn", ".", {"position": v3(1.6, H - 0.05, 0.9)})
+    lv.scene("TubeLight", "res://scenes/props/tube_light.tscn", ".", {"position": v3(1.6, H - 0.05, 0.9), "on": "false"})
+    lv.scene("LightSwitch", "res://scenes/props/light_switch.tscn", ".", {
+        "position": v3(1.55, 1.3, 4.072), "rotation_degrees": v3(0, 180, 0),
+        "light_paths": 'Array[NodePath]([NodePath("../TubeLight")])', "is_on": "false"})
     # ceiling fan
     fan = lv.add("CeilingFan", "Node3D", ".", {"position": v3(1.8, H - 0.02, 2.1),
                                               "script": f'ExtResource("{lv.ext("res://scripts/props/ceiling_fan.gd", "Script")}")'})
@@ -91,11 +93,11 @@ def main() -> None:
     blades = lv.add("Blades", "Node3D", fan, {"position": v3(0, -0.36, 0)})
     hub_mesh = lv.sub("CylinderMesh", {"top_radius": "0.1", "bottom_radius": "0.12", "height": "0.08", "radial_segments": "12"})
     lv.add("Hub", "MeshInstance3D", blades, {"mesh": f'SubResource("{hub_mesh}")', "material_override": lv.mat("metal_meter_white")})
-    blade = lv.sub("BoxMesh", {"size": v3(0.55, 0.01, 0.1)})
+    blade = lv.sub("BoxMesh", {"size": v3(0.56, 0.008, 0.11)})
     for i in range(3):
-        lv.add(f"Blade{i}", "MeshInstance3D", blades, {"position": v3(0, 0, 0), "rotation_degrees": v3(0, i * 120, 0),
-                                                       "mesh": f'SubResource("{blade}")', "material_override": lv.mat("metal_meter_white")})
-        # offset the blade outward along its own X by nesting
+        pivot = lv.add(f"Arm{i}", "Node3D", blades, {"rotation_degrees": v3(0, i * 120, 0)})
+        lv.add("Blade", "MeshInstance3D", pivot, {"position": v3(0.38, 0, 0), "rotation_degrees": v3(6, 0, 0),
+                                                  "mesh": f'SubResource("{blade}")', "material_override": lv.mat("metal_meter_white")})
     hum_stream = lv.ext("res://assets/audio/sfx/fan_hum.wav", "AudioStream")
     lv.add("Hum", "AudioStreamPlayer3D", fan, {"stream": f'ExtResource("{hum_stream}")', "volume_db": "-20.0",
                                               "unit_size": "2.0", "bus": '&"Ambience"'})
@@ -154,6 +156,8 @@ def main() -> None:
     interactable(lv, charger, "Interactable", (-0.1, 0, 0), (0.25, 0.3, 0.3), "Charge your phone")
     lv.add("ChargingSpot", "Marker3D", ".", {"position": v3(3.35, 0.76, 2.65)})
 
+    dress_room(lv)
+
     # ---- outside: lane below, building opposite, street lamp, the van spot
     lv.box((1.8, -6.1, -6.0), (40, 0.2, 14), "ground_asphalt")
     opp = []
@@ -194,6 +198,55 @@ def main() -> None:
         gi["data"] = f'ExtResource("{lv.ext(GI_DATA, "VoxelGIData")}")'
     lv.add("VoxelGI", "VoxelGI", ".", gi)
     lv.write(os.path.join(ROOT, "scenes", "hub", "nikhil_room.tscn"))
+
+
+def dress_room(lv: Level) -> None:
+    """Lived-in clutter + the practical lights the room is really lit by at night.
+    Inner wall faces: x 0.115 / 3.485, z 0.115 / 4.085. Desk top y 0.75, mattress top 0.49."""
+    p = Props(lv)
+    # desk: lamp (the main light), water, tumbler, pens, extension board under the desk
+    lamp = p.desk_lamp((3.36, 0.75, 2.06))
+    lv.add("DeskLamp", "OmniLight3D", ".", {"position": v3(lamp[0] - 0.05, lamp[1] + 0.02, lamp[2]),
+        "light_color": "Color(1, 0.72, 0.42, 1)", "light_energy": "1.6", "light_size": "0.08",
+        "shadow_enabled": "true", "omni_range": "5.0", "omni_attenuation": "1.6",
+        "light_volumetric_fog_energy": "1.5"})
+    p.tumbler((2.98, 0.75, 1.42))
+    p.bottle((3.4, 0.75, 1.24))
+    p.pen_stand((3.02, 0.75, 2.36))
+    p.books((3.4, 0.75, 2.36), yaw=8, n=3)
+    p.plastic_chair((2.45, 0, 1.85), yaw=-90)
+    p.extension_board((3.3, 0, 1.45), yaw=90)
+    p.wire((3.3, 0.02, 1.6), (3.47, 0.02, 2.6))
+    p.wire((3.475, 0.02, 2.6), (3.475, 0.9, 2.6))
+    p.newspaper_stack((3.15, 0, 2.15), yaw=4)
+    # bed: folded blanket at the foot, a second pillow, phone charger cable
+    lv.box((0.55, 0.545, 2.08), (0.78, 0.11, 0.38), "fabric_curtain", collide=False)
+    p.box((0.55, 0.6, 2.08), (0.78, 0.01, 0.38), "blanket", shadow=False)
+    p.box((0.62, 0.56, 0.75), (0.5, 0.09, 0.3), "cloth_check", rot=(0, 12, 0))
+    p.mosquito_coil((1.2, 0, 0.9))
+    # corners: steel almirah (front right), water can, broom, slippers
+    p.steel_almirah((3.02, 0, 0.38), yaw=180, w=0.82, h=1.75, d=0.5)
+    p.water_can((3.3, 0, 0.82))
+    p.broom((0.2, 0, 2.75), lean_yaw=90)
+    p.doormat((0.75, 0, 3.85))
+    p.chappals((1.0, 0, 3.9), yaw=170)
+    # clothesline across the corner over the bed's head end
+    p.clothesline((0.12, 2.12, 1.75), (1.05, 2.12, 0.12), [
+        (0.2, "shirt", "cloth_check"), (0.45, "towel", "cloth_towel"), (0.75, "trousers", "cloth_grey")])
+    # walls: clock over the window, calendar between desk and TV, mirror + hooks by the door
+    p.wall_clock((1.8, 2.55, 0.115), yaw=180)
+    p.calendar((3.485, 1.65, 3.05), yaw=90)
+    p.mirror((0.115, 1.55, 3.35), yaw=-90)
+    p.hooks_with_bag((2.0, 1.8, 4.085))
+    p.switchboard((1.78, 1.3, 4.085), n=3)
+    p.wire((1.55, 1.37, 4.075), (1.55, 2.86, 4.075))
+    p.wire((1.55, 2.875, 4.075), (1.6, 2.875, 0.95))
+    # curtain rod over the window
+    p.cyl((1.8, 2.22, 0.15), 0.012, 0.012, 1.7, "steel", rot=(0, 0, 90), seg=6)
+    # corridor: shared-bathroom bucket, shoes outside the door
+    p.bucket_and_mug((3.3, 0, 5.6))
+    p.chappals((1.6, 0, 4.55), yaw=10, mat="cloth_maroon")
+    p.newspaper_stack((3.35, 0, 4.6), n=4)
 
 
 if __name__ == "__main__":
