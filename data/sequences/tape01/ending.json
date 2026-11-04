@@ -1,0 +1,22 @@
+{
+	"id": "t1_ending",
+	"trigger": {"event": "main_switch"},
+	"once": true,
+	"cutscene": true,
+	"steps": [
+		{"do": "call", "node": "Story", "method": "begin_ending"},
+		{"do": "say", "speaker": "RAGHU (V.O.)", "text": "The lights came back. All of them, all at once.", "seconds": 3.0, "voice": "t1/vo_ending_1"},
+		{"do": "wait", "seconds": 1.6},
+		{"do": "call", "node": "Story", "method": "show_last_frame"},
+		{"do": "glitch", "amount": 0.6, "seconds": 1.0},
+		{"do": "say", "speaker": "RAGHU (V.O.)", "text": "The CCTV kept recording. The last frame from CAM 4 shows me at the board.", "seconds": 3.4, "voice": "t1/vo_ending_2"},
+		{"do": "wait", "seconds": 3.6},
+		{"do": "say", "speaker": "RAGHU (V.O.)", "text": "And behind me, a small red light.", "seconds": 2.6, "voice": "t1/vo_ending_3"},
+		{"do": "wait", "seconds": 2.8},
+		{"do": "call", "node": "Camcorder", "method": "show_static"},
+		{"do": "wait", "seconds": 1.0},
+		{"do": "say", "speaker": "RAGHU (V.O.)", "text": "The register says I signed out at six. I never signed out.", "seconds": 4.0, "voice": "t1/vo_ending_4"},
+		{"do": "wait", "seconds": 4.3},
+		{"do": "call", "node": "Story", "method": "finish"}
+	]
+}

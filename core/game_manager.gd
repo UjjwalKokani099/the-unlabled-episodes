@@ -39,6 +39,9 @@ var tape_time_at_load: float = 0.0
 
 var _flags: Dictionary = {}
 var _pending_checkpoint: StringName = &""
+## Seconds the Chapter Complete card waits for a key before going on by itself (tests: small).
+var chapter_complete_wait: float = 20.0
+var _completing: bool = false
 ## Items picked up in this chapter: [{id, name}] (saved with the checkpoint).
 var inventory: Array[Dictionary] = []
 var _save_blocks: Dictionary = {}       # source key -> expiry (msec), 0 = until unblocked
@@ -254,7 +257,7 @@ func load_checkpoint() -> bool:
 # --- Completion ---------------------------------------------------------------
 
 func complete_chapter() -> void:
-	if current_chapter == null or SceneLoader.is_transitioning():
+	if current_chapter == null or SceneLoader.is_transitioning() or _completing:
 		return
 	var finished := current_chapter
 	last_chapter_time = chapter_play_time
@@ -267,7 +270,19 @@ func complete_chapter() -> void:
 	SaveManager.write()
 	_clear_chapter_state()
 	EventBus.chapter_completed.emit(finished)
-	_change_level(_hub_path(), "■ STOP", PackedStringArray([finished.title, "END OF TAPE"]))
+	# Dark fade + the tape running out, then the Chapter Complete card, then the room.
+	var screen := ChapterComplete.new()
+	screen.chapter = finished
+	screen.runtime = last_chapter_time
+	screen.auto_continue = chapter_complete_wait
+	_completing = true
+	get_tree().root.add_child(screen)
+	await screen.closed
+	_change_level(_hub_path(), "", PackedStringArray())
+	# the loader's own black card is up after its fade (0.45 s): then ours can go
+	await get_tree().create_timer(0.6, true).timeout
+	screen.queue_free()
+	_completing = false
 
 
 ## Leave the current tape without finishing it (keeps the checkpoint for Resume).

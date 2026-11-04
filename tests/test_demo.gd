@@ -48,6 +48,7 @@ func heard(text: String, timeout: float = 8.0) -> bool:
 func _initialize() -> void:
 	await process_frame
 	game = root.get_node("GameManager")
+	game.chapter_complete_wait = 0.3  # the END OF TAPE card closes itself once black
 	var settings = root.get_node("SettingsManager")
 	var saved_subs: bool = settings.subtitles
 	settings.subtitles = true

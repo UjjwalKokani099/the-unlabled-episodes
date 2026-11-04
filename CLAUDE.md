@@ -157,6 +157,20 @@ Useful headless commands (run from project root):
 - Pause menu lives inside `ui/hud/hud.tscn` (Esc). Theme: `ui/themes/vcr_theme.tres`.
 - Tests that open the main menu must call `GameManager.mark_intro_seen()` first.
 
+## Scripted sequences + cutscenes (step 7)
+- `SequencePlayer` (systems/sequence): a level lists JSON files (`data/sequences/<tape>/*.json`,
+  format in data/sequences/README.md and the script header). Trigger event/zone/interact/time/
+  objective; steps say/think/message/wait/sound/light/flicker/door/show/hide/walk/set/call/fire/
+  dialogue/glitch/shake/tension/silence/look/camera/letterbox/if/parallel... `once` = EventBus
+  `seq_<id>`; running = holds saving. `"cutscene": true`: input off, hold E 1.5 s to skip
+  (skipping still applies every effect), cinematic camera blends back. `look` turns the
+  player's own view (first-person moments). `validate(id)` -> test_sequences.gd.
+- Tape 1: the director makes `Story/Sequences` (intercom call, 3:12 look, ending cutscene
+  calling `begin_ending` / `show_last_frame` / `finish`).
+- `GameManager.complete_chapter()` -> `ChapterComplete` (ui/menus): fade to black + tape
+  runout, card (title, END OF TAPE, runtime, sightings), any key -> hub. Tests set
+  `GameManager.chapter_complete_wait = 0.3` (closes itself once black).
+
 ## Graphics / performance (target: 60 FPS at 1080p on the RTX 3050 Ti laptop)
 - Graphics settings: `SettingsManager.graphics_quality` LOW/MEDIUM/HIGH fills the detail keys
   (`GRAPHICS_PRESETS`: render_scale, anti_aliasing, shadow/texture/fog/effects_quality); changing a

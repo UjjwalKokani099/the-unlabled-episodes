@@ -21,6 +21,7 @@ func message() -> String:
 func _initialize() -> void:
 	await process_frame
 	game = root.get_node("GameManager")
+	game.chapter_complete_wait = 0.3  # the END OF TAPE card closes itself once black
 	var objectives: Node = root.get_node("ObjectiveManager")
 	game.save_path = "user://test_save.json"
 	game.delete_save()

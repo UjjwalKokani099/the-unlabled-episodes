@@ -130,3 +130,4 @@ Then add a row here: file, source URL, author, licence, date.
 | `sfx/objective_update.wav` | Synthesised (tools/gen_placeholder_sfx.py `objective_tick`) | Original (project) | Objective update: pencil tick + soft two-note chime |
 | `sfx/phone_buzz.wav` | Synthesised (tools/gen_placeholder_sfx.py `phone_buzz`) | Original (project) | Phone vibrating (texts, calls) |
 | `sfx/mobile_ring.wav` | Synthesised (tools/gen_placeholder_sfx.py `mobile_ring`) | Original (project) | Nikhil's mobile ringtone (loops while a call rings) |
+| `sfx/tape_runout.wav` | Synthesised (tools/gen_placeholder_sfx.py `tape_runout`) | Original (project) | End of a tape: hiss thinning out, the deck's stop clunk (Chapter Complete) |

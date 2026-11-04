@@ -183,6 +183,93 @@ def mobile_ring(rng):
     return out
 
 
+def tape_runout(rng):
+    """End of a tape: the hiss of blank tape thinning out over 4 s, a low hum under it, then
+    the deck's mechanical stop clunk."""
+    n = int(RATE * 5.2)
+    out = []
+    y = 0.0
+    for i in range(n):
+        t = i / RATE
+        y = y * 0.6 + rng.uniform(-1, 1) * 0.4
+        fade = max(0.0, 1.0 - t / 4.2) ** 1.6
+        hum = math.sin(2 * math.pi * 50 * t) * 0.08 * fade
+        clunk = 0.0
+        if t > 4.6:
+            k = t - 4.6
+            clunk = (math.sin(2 * math.pi * 70 * k) * 0.8 + rng.uniform(-1, 1) * 0.4) * math.exp(-k * 25)
+        out.append(y * 0.35 * fade + hum + clunk)
+    return out
+
+
+def light_flicker(rng):
+    """A tube light dropping out for a moment: the starter's dry tick and a short choke buzz."""
+    n = int(RATE * 0.16)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        tick = rng.uniform(-1, 1) * math.exp(-t * 160) * 0.8
+        buzz = (math.sin(2 * math.pi * 100 * t) + 0.5 * math.sin(2 * math.pi * 200 * t)
+                + 0.25 * math.copysign(1, math.sin(2 * math.pi * 300 * t))) * 0.22 * math.exp(-t * 22)
+        out.append(tick + buzz + rng.uniform(-1, 1) * 0.04 * math.exp(-t * 30))
+    return out
+
+
+def pipe_creak(rng):
+    """An old water pipe ticking and groaning as it cools: three ticks and a low bend."""
+    n = int(RATE * 1.8)
+    out = [0.0] * n
+    for at in (0.0, 0.31, 0.55 + rng.uniform(0, 0.1)):
+        k0 = int(at * RATE)
+        for i in range(int(RATE * 0.05)):
+            if k0 + i < n:
+                t = i / RATE
+                out[k0 + i] += (math.sin(2 * math.pi * 2300 * t) * 0.4 + rng.uniform(-1, 1) * 0.3) * math.exp(-t * 120)
+    phase = 0.0
+    for i in range(int(RATE * 0.8), n):
+        t = (i - RATE * 0.8) / RATE
+        f = 95 + 30 * math.sin(t * 3.1) + rng.uniform(-3, 3)
+        phase += 2 * math.pi * f / RATE
+        env = math.sin(math.pi * min(t / 1.0, 1.0)) * 0.35
+        out[i] += (math.sin(phase) + 0.4 * math.sin(phase * 2.01)) * env
+    return lowpass(out, 0.3)
+
+
+def lathi_tap(rng):
+    """Far away, another building's watchman doing his round: his stick tapped on the road
+    three times, then two blasts on his whistle."""
+    n = int(RATE * 3.2)
+    out = [0.0] * n
+    for at in (0.0, 0.62, 1.2):
+        k0 = int(at * RATE)
+        for i in range(int(RATE * 0.12)):
+            t = i / RATE
+            out[k0 + i] += (rng.uniform(-1, 1) * 0.6 + math.sin(2 * math.pi * 420 * t) * 0.4) * math.exp(-t * 55)
+    for at, length in ((1.8, 0.35), (2.3, 0.6)):
+        k0 = int(at * RATE)
+        for i in range(int(RATE * length)):
+            t = i / RATE
+            trill = 1.0 + 0.04 * math.sin(2 * math.pi * 32 * t)
+            env = min(t / 0.03, 1.0) * min((length - t) / 0.08, 1.0)
+            out[k0 + i] += math.sin(2 * math.pi * 2650 * trill * t) * 0.35 * env + rng.uniform(-1, 1) * 0.05 * env
+    return lowpass(out, 0.25)
+
+
+def cooker_whistle(rng):
+    """A pressure cooker whistling in a flat across the lane: the hiss rising into a shriek."""
+    n = int(RATE * 2.6)
+    out = []
+    y = 0.0
+    for i in range(n):
+        t = i / RATE
+        rise = min(t / 0.7, 1.0)
+        env = rise * min((2.6 - t) / 0.5, 1.0)
+        y = y * 0.5 + rng.uniform(-1, 1) * 0.5
+        tone = math.sin(2 * math.pi * (1700 + 500 * rise) * t) * 0.3 * rise
+        out.append((y * 0.25 + tone) * env)
+    return lowpass(out, 0.35)
+
+
 def vcr_click(rng):
     n = int(RATE * 0.09)
     noise = [rng.uniform(-1, 1) for _ in range(n)]
@@ -764,6 +851,11 @@ def main():
     write("objective_update.wav", objective_tick(random.Random(55)))
     write("phone_buzz.wav", phone_buzz(random.Random(56)))
     write("mobile_ring.wav", mobile_ring(random.Random(57)))
+    write("tape_runout.wav", tape_runout(random.Random(58)))
+    write("light_flicker.wav", light_flicker(random.Random(59)))
+    write("pipe_creak.wav", pipe_creak(random.Random(60)))
+    write("lathi_tap.wav", lathi_tap(random.Random(61)))
+    write("cooker_whistle.wav", cooker_whistle(random.Random(62)))
     write("room_hum.wav", room_hum(rng))
     write("crickets_loop.wav", crickets(rng))
     write("dog_bark.wav", dog_bark(rng))

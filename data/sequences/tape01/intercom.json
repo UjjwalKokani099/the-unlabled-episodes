@@ -1,0 +1,19 @@
+{
+	"id": "t1_intercom",
+	"trigger": {"event": "intercom_answered"},
+	"once": true,
+	"steps": [
+		{"do": "sound", "node": "Intercom/Breath"},
+		{"do": "say", "speaker": "RAGHU", "text": "Hello? Hello, 4B?", "seconds": 3.0},
+		{"do": "wait", "seconds": 3.4},
+		{"do": "say", "speaker": "", "text": "[i](slow breathing)[/i]", "seconds": 3.0},
+		{"do": "wait", "seconds": 3.4},
+		{"do": "say", "speaker": "RAGHU", "text": "Deshmukh-ji? Is that you? Sahab?", "seconds": 3.0},
+		{"do": "wait", "seconds": 3.4},
+		{"do": "sound", "node": "Intercom/Breath", "stop": true},
+		{"do": "message", "text": "The line goes dead.", "seconds": 3.0},
+		{"do": "set", "node": "Cam4B", "property": "active", "value": true},
+		{"do": "wait", "seconds": 3.0},
+		{"do": "say", "speaker": "RAGHU (V.O.)", "text": "Somebody had to go up and look. That was my job.", "seconds": 4.0, "voice": "t1/vo_intercom_after"}
+	]
+}

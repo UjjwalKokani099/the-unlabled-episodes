@@ -16,6 +16,10 @@ extends Node
 ##
 ## Everything it sets up is derived from Events counts in _restore(), so checkpoints work.
 ## Node names are the ones tools/gen_tape01.py writes.
+##
+## Scripted sequences live as data in data/sequences/tape01/ (the intercom call, the 3:12
+## look, the ending cutscene) and run on a SequencePlayer this director creates; the ending
+## calls begin_ending(), show_last_frame() and finish() here.
 
 const VO := "RAGHU (V.O.)"
 const RAGHU := "RAGHU"
@@ -28,6 +32,8 @@ const OPENING := [
 ]
 const SFX := "res://assets/audio/sfx/"
 const SECRETARY_DIALOGUE := "res://data/dialogue/tape01/secretary.json"
+const SEQUENCES: Array[String] = ["res://data/sequences/tape01/intercom.json",
+	"res://data/sequences/tape01/deshmukh_312.json", "res://data/sequences/tape01/ending.json"]
 ## Mrs. Iyer: C wing entrance <-> outside the cabin door.
 const IYER_HOME := Vector3(3.5, 0, -13.2)
 const IYER_WAIT := Vector3(3.3, 0, 23.4)
@@ -40,6 +46,8 @@ var ending_started: bool = false
 var _calling: bool = false
 var _sfx: AudioStreamPlayer
 var _deshmukh_called: bool = false
+## Runs data/sequences/tape01/*.json (made in _ready).
+var sequences: SequencePlayer
 
 @onready var level: Node = get_parent()
 @onready var cctv: CCTVMonitor = level.get_node("CCTV")
@@ -70,6 +78,11 @@ func _ready() -> void:
 	fan.finished.connect(func() -> void:
 		if power.powered:
 			fan.play())
+	sequences = SequencePlayer.new()
+	sequences.name = "Sequences"
+	sequences.sequences = SEQUENCES
+	sequences.root = NodePath("../..")
+	add_child(sequences)
 	EventBus.fired.connect(_on_event)
 	_restore()
 	if GameManager.get_flag("t1_opening") == null and not EventBus.has_fired(&"register_signed"):
@@ -175,8 +188,7 @@ func _on_event(id: StringName) -> void:
 			_message("Nobody. The balcony door is shut. No light inside.", 4.0)
 			_after(4.0, func() -> void: EventBus.fire(&"intercom_ring"))
 		&"intercom_answered":
-			_note_time(id)
-			_intercom_call()
+			_note_time(id)  # the call itself: data/sequences/tape01/intercom.json
 		&"4b_checked":
 			_note_time(id)
 			cam_stairs.active = false
@@ -204,8 +216,7 @@ func _on_event(id: StringName) -> void:
 		&"meter_room_reached":
 			stalker.stop()
 			_message("The main switch has tripped.", 3.0)
-		&"main_switch":
-			_ending()
+		# &"main_switch": the ending cutscene, data/sequences/tape01/ending.json
 
 
 # --- Beats ----------------------------------------------------------------------------
@@ -239,21 +250,6 @@ func _wicket(open: bool) -> void:
 	_play_at("gate_creak" if open else "gate_clang", at, -4.0)
 
 
-func _intercom_call() -> void:
-	intercom_breath.play()
-	_say(RAGHU, "Hello? Hello, 4B?", 3.0)
-	await _wait(3.4)
-	_say("", "[i](slow breathing)[/i]", 3.0)
-	await _wait(3.4)
-	_say(RAGHU, "Deshmukh-ji? Is that you? Sahab?", 3.0)
-	await _wait(3.4)
-	intercom_breath.stop()
-	_message("The line goes dead.", 3.0)
-	cam_4b.active = true
-	await _wait(3.0)
-	_say(VO, "Somebody had to go up and look. That was my job.", 4.0)
-
-
 func _secretary_call() -> void:
 	_calling = true
 	_play("phone_ring", -10.0)
@@ -276,6 +272,7 @@ func _secretary_call() -> void:
 # --- The first round's people ------------------------------------------------------------
 
 func _process(_delta: float) -> void:
+	sequences.time_scale = time_scale
 	# Deshmukh calls out once when Raghu comes near B wing.
 	if _deshmukh_called or not deshmukh_npc.active or ending_started:
 		return
@@ -322,7 +319,8 @@ func _iyer_goes_home() -> void:
 	GameManager.set_flag("t1_iyer_home", true)
 
 
-func _ending() -> void:
+## Ending cutscene, step 1: the switch clacks, the lights come back, Raghu stops moving.
+func begin_ending() -> void:
 	ending_started = true
 	main_switch.enabled = false
 	_play("switch_clack", 0.0)
@@ -330,25 +328,21 @@ func _ending() -> void:
 	var player := get_tree().get_first_node_in_group("player") as Player
 	if player:
 		player.input_enabled = false
-	_say(VO, "The lights came back. All of them, all at once.", 3.0)
-	await _wait(1.6)
-	# The last frame of CAM 4: Raghu at the board, and behind him, a red dot.
+
+
+## Ending, step 2: the last frame of CAM 4: Raghu at the board, and behind him, a red dot.
+func show_last_frame() -> void:
+	var player := get_tree().get_first_node_in_group("player") as Player
 	var at := player.global_position if player else Vector3(28.6, 0, -3.0)
 	raghu.global_position = Vector3(clampf(at.x, 27.3, 29.3), 0.0, clampf(at.z, -5.3, -2.8))
 	raghu.visible = true
 	cam_ending.active = true
 	stalker.stop()
 	_show_cctv_frame()
-	get_tree().call_group("camcorder", "glitch", 0.6, 1.0)
-	_say(VO, "The CCTV kept recording. The last frame from CAM 4 shows me at the board.", 3.4)
-	await _wait(3.6)
-	_say(VO, "And behind me, a small red light.", 2.6)
-	await _wait(2.8)
-	get_tree().call_group("camcorder", "show_static")
-	await _wait(1.0)
-	# The narrator is already gone (story bible): the register outlived him.
-	_say(VO, "The register says I signed out at six. I never signed out.", 4.0)
-	await _wait(4.3)
+
+
+## Ending, last step (the narrator is already gone, story bible: the register outlived him).
+func finish() -> void:
 	GameManager.complete_chapter()
 
 

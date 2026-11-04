@@ -1,0 +1,10 @@
+{
+	"id": "t1_deshmukh_312",
+	"trigger": {"event": "deshmukh_walk"},
+	"once": true,
+	"steps": [
+		{"do": "wait", "seconds": 0.4},
+		{"do": "look", "at": "Deshmukh", "height": 1.5, "seconds": 0.6, "hold": 1.6},
+		{"do": "think", "text": "3:12. Exactly when he said.", "seconds": 3.0}
+	]
+}

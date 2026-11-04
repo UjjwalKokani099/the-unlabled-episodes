@@ -71,6 +71,7 @@ func spot_at(target: Vector3) -> StringName:
 func _initialize() -> void:
 	await process_frame
 	game = root.get_node("GameManager")
+	game.chapter_complete_wait = 0.3  # the END OF TAPE card closes itself once black
 	obj = root.get_node("ObjectiveManager")
 	events = root.get_node("EventBus")
 	game.save_path = "user://test_save.json"
