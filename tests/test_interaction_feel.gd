@@ -85,7 +85,8 @@ func _initialize() -> void:
 			first_alpha = prompt.modulate.a
 			break
 	await create_timer(0.25).timeout
-	check(prompt.visible and first_alpha >= 0.0 and first_alpha < 0.5 and prompt.modulate.a > 0.95,
+	# Not a pop: the first visible frame is part-way (slow software-GL frames can be ~0.1 s).
+	check(prompt.visible and first_alpha >= 0.0 and first_alpha < 0.85 and prompt.modulate.a > 0.95,
 		"prompt fades in (alpha %.2f -> %.2f)" % [first_alpha, prompt.modulate.a])
 
 	# --- door: creak on open, crosshair pulse

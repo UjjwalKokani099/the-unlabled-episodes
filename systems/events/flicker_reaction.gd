@@ -53,6 +53,8 @@ func _set_lit(node: Node, original_value: Variant, lit: bool) -> void:
 	if not is_instance_valid(node):
 		return
 	if node is Light3D:
-		(node as Light3D).light_energy = original_value * (1.0 if lit else dim_factor)
+		# Reduce flashing: shallower dips.
+		var dim := lerpf(1.0, dim_factor, SettingsManager.flash_scale())
+		(node as Light3D).light_energy = original_value * (1.0 if lit else dim)
 	else:
 		(node as Node3D).visible = original_value and lit

@@ -67,7 +67,7 @@ func open() -> void:
 
 
 func close() -> void:
-	_settings.close()
+	_settings.close(true)
 	is_open = false
 	_root.visible = false
 	get_tree().paused = false

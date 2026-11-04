@@ -108,16 +108,26 @@ Useful headless commands (run from project root):
   CONTINUE / NEW GAME (replays intro) / TAPES (locked = blank cassette) / SETTINGS / QUIT.
 - First launch autoplays `chapters/intro/intro.tscn` (built by `tools/gen_intro.py`, driven by
   `chapters/intro/scripts/intro_director.gd`; hold Space to skip; `intro_seen` in the save).
-- Settings screen: tabs from `ROWS` in settings_menu.gd; rebind rows from
-  `SettingsManager.REBINDABLE` (saved as `key_bindings`). Subtitles: `call_group("subtitles", "say",
+- Settings screen: six tabs (GRAPHICS, DISPLAY, AUDIO, CONTROLS, GAMEPLAY, ACCESSIBILITY) from
+  `ROWS` in settings_menu.gd (`tab_index("NAME")` in tests; "desktop" rows hidden on web), button
+  rows (CALIBRATE = BrightnessCalibration overlay, RESET keys), rebind rows from
+  `SettingsManager.REBINDABLE` (saved as `key_bindings`; `rebind()` swaps on a conflict,
+  `reset_bindings()`). Gamepad map is added at runtime by `InputManager.add_gamepad_map()`
+  (look_* actions = right stick, `controller_sensitivity`). `SettingsManager.flash_scale()` (reduce
+  flashing) scales VHS glitches, flicker dips, static. `show_objectives` off = Tab only.
+  Test: test_settings.gd. Subtitles: `call_group("subtitles", "say",
   speaker, text, seconds)` (Subtitles node is in the HUD and the intro).
 - Pause menu lives inside `ui/hud/hud.tscn` (Esc). Theme: `ui/themes/vcr_theme.tres`.
 - Tests that open the main menu must call `GameManager.mark_intro_seen()` first.
 
 ## Graphics / performance (target: 60 FPS at 1080p on the RTX 3050 Ti laptop)
-- `GraphicsManager` autoload applies Low/Medium/High (`PRESETS`): render scale, FXAA, LOD threshold,
-  shadows, SSAO/SSIL/volumetric fog quality, VoxelGI (off on Low). Presets only switch level
-  features off, never add them. FPS counter = SettingsManager.show_fps.
+- Graphics settings: `SettingsManager.graphics_quality` LOW/MEDIUM/HIGH fills the detail keys
+  (`GRAPHICS_PRESETS`: render_scale, anti_aliasing, shadow/texture/fog/effects_quality); changing a
+  detail flips it to CUSTOM (3). First launch picks a preset from the GPU (`detect_quality()`).
+  `GraphicsManager.current()` merges its detail tables (SHADOWS/TEXTURES/FOG/EFFECTS/AA) and
+  applies them; it only switches level features off, never adds them. Post switches film_grain /
+  chromatic_aberration / vignette / tape_blur drive film_grade + vhs shader uniforms.
+  FPS counter = SettingsManager.show_fps.
 - Benchmark: `<console exe> --path . --script res://tools/benchmark.gd -- <scene> [sec]`
   (fullscreen, VSync off, Marker3Ds in group `benchmark_points`). Tape 1 map: Medium ~248 FPS.
 - GI = VoxelGI baked by script (`tools/bake_voxelgi.gd`) for interiors; night exteriors use

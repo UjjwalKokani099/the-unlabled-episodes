@@ -23,8 +23,11 @@ const AUDIO_BUSES := {
 ## Every persisted key. Add new settings here AND as a var below.
 const KEYS: Array[StringName] = [
 	&"mouse_sensitivity", &"invert_y", &"fov", &"crouch_toggle", &"sprint_toggle", &"head_bob_intensity", &"camera_sway",
-	&"reduce_camera_motion", &"screen_effects",
-	&"brightness", &"fullscreen", &"graphics_quality", &"show_fps", &"ps1_mode", &"film_look",
+	&"reduce_camera_motion", &"screen_effects", &"controller_sensitivity", &"show_objectives", &"reduce_flashing",
+	&"window_mode", &"resolution", &"vsync", &"fps_cap", &"mono_audio",
+	&"render_scale", &"anti_aliasing", &"shadow_quality", &"texture_quality", &"fog_quality", &"effects_quality",
+	&"film_grain", &"chromatic_aberration", &"vignette", &"tape_blur",
+	&"brightness", &"graphics_quality", &"show_fps", &"ps1_mode", &"film_look",
 	&"subtitles", &"subtitle_size", &"subtitle_bg_opacity", &"key_bindings",
 	&"master_volume", &"music_volume", &"sfx_volume", &"ambience_volume", &"voice_volume", &"ui_volume",
 ]
@@ -33,6 +36,9 @@ const KEYS: Array[StringName] = [
 # setters then do nothing until load_settings() has run.
 var _loading := true
 var _save_queued := false
+var _applying_preset := false
+var _mono_effect: AudioEffectStereoEnhance
+var _applied_vsync: bool = true
 
 ## Degrees the camera turns per pixel of mouse movement.
 var mouse_sensitivity: float = 0.12:
@@ -48,7 +54,7 @@ var invert_y: bool = false:
 ## Vertical field of view in degrees.
 var fov: float = 75.0:
 	set(value):
-		fov = clampf(value, 60.0, 100.0)
+		fov = clampf(value, 60.0, 90.0)
 		_on_value_set(&"fov")
 
 ## false = hold to crouch, true = press once to crouch, again to stand.
@@ -93,16 +99,119 @@ var brightness: float = 1.0:
 		brightness = clampf(value, 0.6, 1.6)
 		_on_value_set(&"brightness")
 
-var fullscreen: bool = false:
-	set(value):
-		fullscreen = value
-		_on_value_set(&"fullscreen")
+## Graphics presets: picking one writes these detail settings; changing any detail setting
+## afterwards turns the preset into CUSTOM (3). GraphicsManager applies the details.
+const GRAPHICS_PRESETS := [
+	{"render_scale": 0.6, "anti_aliasing": 0, "shadow_quality": 0, "texture_quality": 0, "fog_quality": 0, "effects_quality": 0},
+	{"render_scale": 0.75, "anti_aliasing": 1, "shadow_quality": 1, "texture_quality": 1, "fog_quality": 1, "effects_quality": 1},
+	{"render_scale": 0.9, "anti_aliasing": 1, "shadow_quality": 2, "texture_quality": 2, "fog_quality": 2, "effects_quality": 2},
+]
+const QUALITY_CUSTOM := 3
+const RESOLUTIONS: Array[Vector2i] = [Vector2i(1280, 720), Vector2i(1366, 768), Vector2i(1600, 900),
+	Vector2i(1920, 1080), Vector2i(2560, 1440), Vector2i(3840, 2160)]
+const FPS_CAPS: Array[int] = [30, 60, 120, 144, 0]
+enum WindowMode { WINDOWED, BORDERLESS, FULLSCREEN }
 
-## 0 = Low, 1 = Medium, 2 = High. Applied by the GraphicsManager autoload.
+## 0 = Low, 1 = Medium, 2 = High, 3 = Custom. Auto-detected on first launch.
 var graphics_quality: int = 1:
 	set(value):
-		graphics_quality = clampi(value, 0, 2)
+		graphics_quality = clampi(value, 0, QUALITY_CUSTOM)
+		if graphics_quality < QUALITY_CUSTOM and not _loading:
+			_apply_preset(graphics_quality)
 		_on_value_set(&"graphics_quality")
+
+## Graphics details (part of the preset; editing one makes the preset CUSTOM).
+var render_scale: float = 0.75:
+	set(value):
+		render_scale = clampf(value, 0.5, 1.0)
+		_detail_changed(&"render_scale")
+## 0 off, 1 FXAA, 2 MSAA 2x, 3 MSAA 4x.
+var anti_aliasing: int = 1:
+	set(value):
+		anti_aliasing = clampi(value, 0, 3)
+		_detail_changed(&"anti_aliasing")
+## 0..2 = low / medium / high for each.
+var shadow_quality: int = 1:
+	set(value):
+		shadow_quality = clampi(value, 0, 2)
+		_detail_changed(&"shadow_quality")
+var texture_quality: int = 1:
+	set(value):
+		texture_quality = clampi(value, 0, 2)
+		_detail_changed(&"texture_quality")
+## 0 = no volumetric fog.
+var fog_quality: int = 1:
+	set(value):
+		fog_quality = clampi(value, 0, 2)
+		_detail_changed(&"fog_quality")
+## Ambient occlusion / indirect light / reflections / baked GI: 0 off, 1 some, 2 all.
+var effects_quality: int = 1:
+	set(value):
+		effects_quality = clampi(value, 0, 2)
+		_detail_changed(&"effects_quality")
+
+## Post-processing switches (film look + tape look).
+var film_grain: bool = true:
+	set(value):
+		film_grain = value
+		_on_value_set(&"film_grain")
+var chromatic_aberration: bool = true:
+	set(value):
+		chromatic_aberration = value
+		_on_value_set(&"chromatic_aberration")
+var vignette: bool = true:
+	set(value):
+		vignette = value
+		_on_value_set(&"vignette")
+## The camcorder tape's horizontal smear.
+var tape_blur: bool = true:
+	set(value):
+		tape_blur = value
+		_on_value_set(&"tape_blur")
+
+## Display.
+var window_mode: int = WindowMode.WINDOWED:
+	set(value):
+		window_mode = clampi(value, 0, 2)
+		_on_value_set(&"window_mode")
+## Index into RESOLUTIONS (window size in windowed mode).
+var resolution: int = 0:
+	set(value):
+		resolution = clampi(value, 0, RESOLUTIONS.size() - 1)
+		_on_value_set(&"resolution")
+var vsync: bool = true:
+	set(value):
+		vsync = value
+		_on_value_set(&"vsync")
+## Index into FPS_CAPS (last = unlimited).
+var fps_cap: int = 4:
+	set(value):
+		fps_cap = clampi(value, 0, FPS_CAPS.size() - 1)
+		_on_value_set(&"fps_cap")
+
+## Audio: everything in the middle (one-ear listening).
+var mono_audio: bool = false:
+	set(value):
+		mono_audio = value
+		_on_value_set(&"mono_audio")
+
+## Controls: right-stick look speed (x 120 degrees per second).
+var controller_sensitivity: float = 1.0:
+	set(value):
+		controller_sensitivity = clampf(value, 0.2, 3.0)
+		_on_value_set(&"controller_sensitivity")
+
+## Gameplay: the objective list in the corner.
+var show_objectives: bool = true:
+	set(value):
+		show_objectives = value
+		_on_value_set(&"show_objectives")
+
+## Accessibility: gentler light flicker, tape glitches and static flashes.
+var reduce_flashing: bool = false:
+	set(value):
+		reduce_flashing = value
+		_on_value_set(&"reduce_flashing")
 
 var show_fps: bool = false:
 	set(value):
@@ -190,6 +299,57 @@ func _ready() -> void:
 	load_settings()
 
 
+## Multiplier for flashes, flicker depth and glitches (reduce flashing -> 0.35).
+func flash_scale() -> float:
+	return 0.35 if reduce_flashing else 1.0
+
+
+## The window size for windowed mode.
+func window_size() -> Vector2i:
+	return RESOLUTIONS[resolution]
+
+
+## Best preset for this machine (first launch): web and integrated graphics -> Low,
+## RTX / recent Radeon RX -> High, anything else -> Medium.
+static func detect_quality() -> int:
+	if OS.has_feature("web"):
+		return 0
+	var gpu := RenderingServer.get_video_adapter_name().to_lower()
+	for weak in ["intel", "uhd", "iris", "llvmpipe", "swiftshader", "radeon(tm) graphics", "vega", "mali", "adreno"]:
+		if weak in gpu:
+			return 0
+	for strong in ["rtx", "rx 6", "rx 7", "rx 9", "arc a7"]:
+		if strong in gpu:
+			return 2
+	return 1
+
+
+func _apply_preset(level: int) -> void:
+	var preset: Dictionary = GRAPHICS_PRESETS[level]
+	_applying_preset = true
+	for key: String in preset:
+		set(key, preset[key])
+	_applying_preset = false
+
+
+## A detail setting changed: the preset becomes the one it now matches, or CUSTOM.
+func _detail_changed(key: StringName) -> void:
+	if not _loading and not _applying_preset:
+		var match_level := QUALITY_CUSTOM
+		for i in GRAPHICS_PRESETS.size():
+			var same := true
+			for k: String in GRAPHICS_PRESETS[i]:
+				if not is_equal_approx(float(get(k)), float(GRAPHICS_PRESETS[i][k])):
+					same = false
+					break
+			if same:
+				match_level = i
+				break
+		if match_level != graphics_quality:
+			graphics_quality = match_level  # emits its own change; no preset re-apply for CUSTOM
+	_on_value_set(key)
+
+
 ## Multiplier for head bob and other camera motion (0..1).
 func motion_scale() -> float:
 	return head_bob_intensity * (0.35 if reduce_camera_motion else 1.0)
@@ -203,15 +363,26 @@ func sway_allowed() -> bool:
 func load_settings() -> void:
 	_loading = true
 	var cfg := ConfigFile.new()
-	if cfg.load(SAVE_PATH) == OK:
+	var first_launch := cfg.load(SAVE_PATH) != OK
+	if not first_launch:
 		for key in KEYS:
 			if cfg.has_section_key(SECTION, key):
 				set(key, cfg.get_value(SECTION, key))
+		# Older settings files: fullscreen on/off -> window mode; presets had no details.
+		if cfg.has_section_key(SECTION, "fullscreen") and not cfg.has_section_key(SECTION, "window_mode"):
+			window_mode = WindowMode.BORDERLESS if cfg.get_value(SECTION, "fullscreen") else WindowMode.WINDOWED
+		if not cfg.has_section_key(SECTION, "render_scale") and graphics_quality < QUALITY_CUSTOM:
+			_apply_preset(graphics_quality)
+	else:
+		graphics_quality = detect_quality()
+		_apply_preset(graphics_quality)
+		resolution = _native_resolution_index()
 	_loading = false
 	for key: StringName in AUDIO_BUSES:
 		_apply_volume(key)
 	_apply_brightness()
-	_apply_fullscreen()
+	_apply_display()
+	_apply_mono()
 
 
 func save_settings() -> void:
@@ -231,8 +402,10 @@ func _on_value_set(key: StringName) -> void:
 		_apply_volume(key)
 	elif key == &"brightness":
 		_apply_brightness()
-	elif key == &"fullscreen":
-		_apply_fullscreen()
+	elif key in [&"window_mode", &"resolution", &"vsync", &"fps_cap"]:
+		_apply_display()
+	elif key == &"mono_audio":
+		_apply_mono()
 	changed.emit(key)
 	EventBus.setting_changed.emit(key)
 	if not _save_queued:
@@ -267,21 +440,82 @@ func _apply_brightness() -> void:
 	_brightness_rect.visible = not is_equal_approx(brightness, 1.0)
 
 
-func _apply_fullscreen() -> void:
-	var current := DisplayServer.window_get_mode()
-	var is_full := current == DisplayServer.WINDOW_MODE_FULLSCREEN \
-		or current == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
-	if fullscreen and not is_full:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	elif not fullscreen and is_full:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+func _apply_display() -> void:
+	Engine.max_fps = FPS_CAPS[fps_cap]
+	if DisplayServer.get_name() == "headless":
+		return
+	# Only when it differs from what the window already got from project.godot (VSync on):
+	# some drivers refuse any change and warn.
+	if vsync != _applied_vsync:
+		_applied_vsync = vsync
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if vsync else DisplayServer.VSYNC_DISABLED)
+	if OS.has_feature("web"):
+		return  # the browser owns the window (fullscreen = the page's own button)
+	var want: DisplayServer.WindowMode = [DisplayServer.WINDOW_MODE_WINDOWED, DisplayServer.WINDOW_MODE_FULLSCREEN,
+		DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN][window_mode]
+	if DisplayServer.window_get_mode() != want:
+		DisplayServer.window_set_mode(want)
+	if window_mode == WindowMode.WINDOWED:
+		var screen := DisplayServer.screen_get_size()
+		var size := Vector2i(mini(window_size().x, screen.x), mini(window_size().y, screen.y))
+		if DisplayServer.window_get_size() != size:
+			DisplayServer.window_set_size(size)
+			DisplayServer.window_set_position((screen - size) / 2 + DisplayServer.screen_get_position())
+
+
+## Mono audio = a stereo "enhancer" on Master with zero side signal.
+func _apply_mono() -> void:
+	if _mono_effect == null:
+		_mono_effect = AudioEffectStereoEnhance.new()
+		_mono_effect.pan_pullout = 0.0
+		AudioServer.add_bus_effect(0, _mono_effect)
+	for i in AudioServer.get_bus_effect_count(0):
+		if AudioServer.get_bus_effect(0, i) == _mono_effect:
+			AudioServer.set_bus_effect_enabled(0, i, mono_audio)
+
+
+## The largest listed resolution that fits this screen (first launch).
+func _native_resolution_index() -> int:
+	if DisplayServer.get_name() == "headless":
+		return 0
+	var screen := DisplayServer.screen_get_size()
+	var best := 0
+	for i in RESOLUTIONS.size():
+		if RESOLUTIONS[i].x < screen.x and RESOLUTIONS[i].y < screen.y:
+			best = i
+	return best
 
 
 ## Bind `action` to one keyboard key (replacing its keyboard keys; other devices kept).
-func rebind(action: StringName, physical_keycode: Key) -> void:
+## If another action already uses that key, the two swap keys (no silent double binding).
+## Returns the action that gave up the key, or &"" when there was no conflict.
+func rebind(action: StringName, physical_keycode: Key) -> StringName:
 	var copy := key_bindings.duplicate()
+	var old_key := physical_key_of(action)
+	var swapped: StringName = &""
+	for other in REBINDABLE:
+		if other != action and physical_key_of(other) == physical_keycode:
+			swapped = other
+			copy[String(other)] = int(old_key)
 	copy[String(action)] = int(physical_keycode)
 	key_bindings = copy
+	return swapped
+
+
+## Back to the keys in project.godot.
+func reset_bindings() -> void:
+	key_bindings = {}
+	InputMap.load_from_project_settings()
+	InputManager.add_gamepad_map()
+
+
+## The physical key bound to an action (KEY_NONE when it has none).
+func physical_key_of(action: StringName) -> Key:
+	for event in InputMap.action_get_events(action):
+		var key := event as InputEventKey
+		if key:
+			return key.physical_keycode
+	return KEY_NONE
 
 
 ## The first keyboard key bound to an action, as text for the UI.

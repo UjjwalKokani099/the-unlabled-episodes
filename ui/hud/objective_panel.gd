@@ -1,7 +1,8 @@
 class_name ObjectivePanel
 extends VBoxContainer
 ## Top-right list of current objectives. Appears for a few seconds whenever objectives
-## change, and while the "objectives" key (Tab) is held. Completed lines linger briefly.
+## change (unless Settings > Gameplay > Show objectives is off), and while the "objectives"
+## key (Tab) is held. Completed lines linger briefly.
 
 const SHOW_SECONDS := 5.0
 const DONE_LINGER_SECONDS := 2.5
@@ -33,7 +34,8 @@ func _process(delta: float) -> void:
 	if expired:
 		_rebuild()
 
-	var want_visible := _show_left > 0.0 or Input.is_action_pressed(&"objectives")
+	var auto_show := _show_left > 0.0 and SettingsManager.show_objectives
+	var want_visible := auto_show or Input.is_action_pressed(&"objectives")
 	var target_alpha := 1.0 if want_visible and get_child_count() > 0 else 0.0
 	modulate.a = move_toward(modulate.a, target_alpha, delta * 3.0)
 

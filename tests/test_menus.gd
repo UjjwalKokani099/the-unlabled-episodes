@@ -95,7 +95,7 @@ func _initialize() -> void:
 	menu.get_node(list + "Settings").pressed.emit()
 	var sm = menu.get_node("Screen/UI/Settings")
 	check(sm.visible, "settings open")
-	sm.show_tab(2)
+	sm.show_tab(sm.tab_index("CONTROLS"))
 	check(sm.controls[&"mouse_sensitivity"].visible and not sm.controls[&"brightness"].visible, "controls tab shows only its rows")
 	sm.controls[&"mouse_sensitivity"].value = 0.3
 	check(is_equal_approx(settings.mouse_sensitivity, 0.3), "slider sets sensitivity")
@@ -106,11 +106,10 @@ func _initialize() -> void:
 	Input.parse_input_event(key)
 	await frames(2)
 	check(settings.key_name(&"flashlight") == "G" and settings.key_bindings.get("flashlight") == KEY_G, "flashlight rebound to G")
-	settings.key_bindings = {}
-	InputMap.load_from_project_settings()
-	sm.show_tab(3)
-	check(sm.controls[&"subtitles"].visible, "subtitles tab")
-	sm.show_tab(0)
+	settings.reset_bindings()
+	sm.show_tab(sm.tab_index("ACCESSIBILITY"))
+	check(sm.controls[&"subtitles"].visible, "subtitles in the accessibility tab")
+	sm.show_tab(sm.tab_index("DISPLAY"))
 	sm.controls[&"brightness"].value = 1.3
 	check(settings._brightness_rect.visible, "brightness overlay on above 1.0")
 	sm.controls[&"brightness"].value = 1.0

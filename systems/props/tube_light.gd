@@ -63,6 +63,7 @@ func _stutter() -> void:
 
 
 func _apply(level: float) -> void:
+	level = 1.0 - (1.0 - level) * SettingsManager.flash_scale()  # Reduce flashing: shallow stutter
 	if not on:
 		level = 0.0
 	_light.light_energy = _energy * level

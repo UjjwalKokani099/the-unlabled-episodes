@@ -1,45 +1,44 @@
 extends Node
-## Applies the graphics preset (SettingsManager.graphics_quality) and draws the FPS counter.
+## Applies the graphics settings (preset or custom details from SettingsManager), the
+## post-processing switches, and draws the FPS counter.
 ## Registered as the autoload "GraphicsManager".
 ##
 ## Levels author their WorldEnvironment with the features they WANT (SSAO, volumetric fog,
 ## glow, SSIL). The preset can only switch those off or lower their quality, never add a
 ## feature a level didn't ask for. So each Environment remembers its authored flags.
 
-enum Quality { LOW, MEDIUM, HIGH }
+enum Quality { LOW, MEDIUM, HIGH, CUSTOM }
 
-const NAMES := ["LOW", "MEDIUM", "HIGH"]
+const NAMES := ["LOW", "MEDIUM", "HIGH", "CUSTOM"]
 
-## Tuned on the target laptop (RTX 3050 Ti) with tools/benchmark.gd.
-const PRESETS := {
-	Quality.LOW: {
-		"ssr": false,
-		"render_scale": 0.6, "fxaa": false, "lod_threshold": 4.0,
-		"shadow_atlas": 2048, "soft_shadows": RenderingServer.SHADOW_QUALITY_HARD,
-		"ssao": false, "ssao_quality": RenderingServer.ENV_SSAO_QUALITY_VERY_LOW, "ssao_half": true,
-		"ssil": false, "ssil_quality": RenderingServer.ENV_SSIL_QUALITY_VERY_LOW,
-		"volumetric_fog": false, "fog_size": 64, "fog_depth": 48, "fog_filter": false,
-		"glow": true,
-	},
-	Quality.MEDIUM: {
-		"ssr": false,
-		"render_scale": 0.75, "fxaa": true, "lod_threshold": 2.0,
-		"shadow_atlas": 4096, "soft_shadows": RenderingServer.SHADOW_QUALITY_SOFT_LOW,
-		"ssao": true, "ssao_quality": RenderingServer.ENV_SSAO_QUALITY_LOW, "ssao_half": true,
-		"ssil": false, "ssil_quality": RenderingServer.ENV_SSIL_QUALITY_LOW,
-		"volumetric_fog": true, "fog_size": 64, "fog_depth": 64, "fog_filter": false,
-		"glow": true,
-	},
-	Quality.HIGH: {
-		"ssr": true,
-		"render_scale": 0.9, "fxaa": true, "lod_threshold": 1.0,
-		"shadow_atlas": 4096, "soft_shadows": RenderingServer.SHADOW_QUALITY_SOFT_MEDIUM,
-		"ssao": true, "ssao_quality": RenderingServer.ENV_SSAO_QUALITY_MEDIUM, "ssao_half": false,
-		"ssil": true, "ssil_quality": RenderingServer.ENV_SSIL_QUALITY_LOW,
-		"volumetric_fog": true, "fog_size": 96, "fog_depth": 96, "fog_filter": true,
-		"glow": true,
-	},
-}
+## Detail tables (SettingsManager.*_quality picks a row; presets live in
+## SettingsManager.GRAPHICS_PRESETS). Tuned on the target laptop (RTX 3050 Ti).
+const SHADOWS := [
+	{"shadow_atlas": 2048, "soft_shadows": RenderingServer.SHADOW_QUALITY_HARD},
+	{"shadow_atlas": 4096, "soft_shadows": RenderingServer.SHADOW_QUALITY_SOFT_LOW},
+	{"shadow_atlas": 4096, "soft_shadows": RenderingServer.SHADOW_QUALITY_SOFT_MEDIUM},
+]
+const TEXTURES := [
+	{"lod_threshold": 4.0, "mipmap_bias": 0.5, "anisotropic": Viewport.ANISOTROPY_2X},
+	{"lod_threshold": 2.0, "mipmap_bias": 0.0, "anisotropic": Viewport.ANISOTROPY_4X},
+	{"lod_threshold": 1.0, "mipmap_bias": 0.0, "anisotropic": Viewport.ANISOTROPY_16X},
+]
+const FOG := [
+	{"volumetric_fog": false, "fog_size": 64, "fog_depth": 48, "fog_filter": false},
+	{"volumetric_fog": true, "fog_size": 64, "fog_depth": 64, "fog_filter": false},
+	{"volumetric_fog": true, "fog_size": 96, "fog_depth": 96, "fog_filter": true},
+]
+const EFFECTS := [
+	{"ssao": false, "ssao_quality": RenderingServer.ENV_SSAO_QUALITY_VERY_LOW, "ssao_half": true,
+		"ssil": false, "ssil_quality": RenderingServer.ENV_SSIL_QUALITY_VERY_LOW, "ssr": false, "voxel_gi": 0},
+	{"ssao": true, "ssao_quality": RenderingServer.ENV_SSAO_QUALITY_LOW, "ssao_half": true,
+		"ssil": false, "ssil_quality": RenderingServer.ENV_SSIL_QUALITY_LOW, "ssr": false, "voxel_gi": 1},
+	{"ssao": true, "ssao_quality": RenderingServer.ENV_SSAO_QUALITY_MEDIUM, "ssao_half": false,
+		"ssil": true, "ssil_quality": RenderingServer.ENV_SSIL_QUALITY_LOW, "ssr": true, "voxel_gi": 2},
+]
+## Anti-aliasing setting -> (FXAA, MSAA).
+const AA := [[false, Viewport.MSAA_DISABLED], [true, Viewport.MSAA_DISABLED],
+	[false, Viewport.MSAA_2X], [false, Viewport.MSAA_4X]]
 
 const AUTHORED_META := &"authored_graphics"
 ## 3D render scale in PS1 mode (1080p -> 540 lines, then pixelated to 480).
@@ -67,9 +66,14 @@ static func is_compatibility() -> bool:
 	return RenderingServer.get_current_rendering_method() == "gl_compatibility"
 
 
-## The preset dictionary currently in use.
+## Everything the current graphics settings ask for, merged into one dictionary.
 func current() -> Dictionary:
-	return PRESETS[SettingsManager.graphics_quality]
+	var out := {"render_scale": SettingsManager.render_scale, "glow": true,
+		"fxaa": AA[SettingsManager.anti_aliasing][0], "msaa": AA[SettingsManager.anti_aliasing][1]}
+	for table: Array in [[SHADOWS, SettingsManager.shadow_quality], [TEXTURES, SettingsManager.texture_quality],
+			[FOG, SettingsManager.fog_quality], [EFFECTS, SettingsManager.effects_quality]]:
+		out.merge(table[0][table[1]])
+	return out
 
 
 ## Re-apply everything (global settings + every WorldEnvironment in the tree).
@@ -81,7 +85,12 @@ func apply() -> void:
 		_apply_voxel_gi(node as VoxelGI)
 	_fps_label.visible = SettingsManager.show_fps
 	_grade.visible = SettingsManager.film_look > 0.0
-	_grade.material.set_shader_parameter(&"amount", SettingsManager.film_look)
+	var grade := _grade.material as ShaderMaterial
+	grade.set_shader_parameter(&"amount", SettingsManager.film_look)
+	# Post-processing switches (Settings > Graphics).
+	grade.set_shader_parameter(&"grain", 0.045 if SettingsManager.film_grain else 0.0)
+	grade.set_shader_parameter(&"fringe_px", 1.4 if SettingsManager.chromatic_aberration else 0.0)
+	grade.set_shader_parameter(&"vignette", 0.5 if SettingsManager.vignette else 0.0)
 
 
 func _apply_global() -> void:
@@ -95,7 +104,10 @@ func _apply_global() -> void:
 	viewport.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA if fxaa else Viewport.SCREEN_SPACE_AA_DISABLED
 	ps1_amount = 1.0 if ps1 else 0.0
 	RenderingServer.global_shader_parameter_set(&"ps1_amount", ps1_amount)
+	viewport.msaa_3d = Viewport.MSAA_DISABLED if ps1 else p.msaa
 	viewport.mesh_lod_threshold = p.lod_threshold
+	viewport.texture_mipmap_bias = p.mipmap_bias
+	viewport.anisotropic_filtering_level = p.anisotropic
 	viewport.positional_shadow_atlas_size = p.shadow_atlas
 	RenderingServer.positional_soft_shadow_filter_set_quality(p.soft_shadows)
 	RenderingServer.directional_soft_shadow_filter_set_quality(p.soft_shadows)
@@ -128,10 +140,11 @@ func _apply_environment(world: WorldEnvironment) -> void:
 	env.ssr_enabled = authored.get("ssr", false) and p.ssr and full
 
 
-## Baked bounce light: off on Low, low quality on Medium, full on High.
+## Baked bounce light (effects quality): off / low quality / full.
 func _apply_voxel_gi(gi: VoxelGI) -> void:
-	gi.visible = SettingsManager.graphics_quality > Quality.LOW
-	RenderingServer.voxel_gi_set_quality(RenderingServer.VOXEL_GI_QUALITY_HIGH if SettingsManager.graphics_quality == Quality.HIGH else RenderingServer.VOXEL_GI_QUALITY_LOW)
+	var level: int = current().voxel_gi
+	gi.visible = level > 0
+	RenderingServer.voxel_gi_set_quality(RenderingServer.VOXEL_GI_QUALITY_HIGH if level == 2 else RenderingServer.VOXEL_GI_QUALITY_LOW)
 
 
 func _on_node_added(node: Node) -> void:
@@ -141,8 +154,14 @@ func _on_node_added(node: Node) -> void:
 		_apply_voxel_gi(node)
 
 
+## Settings that change what GraphicsManager applies.
+const WATCHED: Array[StringName] = [&"graphics_quality", &"show_fps", &"ps1_mode", &"film_look", &"render_scale",
+	&"anti_aliasing", &"shadow_quality", &"texture_quality", &"fog_quality", &"effects_quality", &"film_grain",
+	&"chromatic_aberration", &"vignette"]
+
+
 func _on_setting_changed(key: StringName) -> void:
-	if key == &"graphics_quality" or key == &"show_fps" or key == &"ps1_mode" or key == &"film_look":
+	if key in WATCHED:
 		apply()
 
 

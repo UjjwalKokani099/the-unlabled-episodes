@@ -77,7 +77,7 @@ func tape_cut(to_time: String, black_seconds: float = 1.2) -> void:
 	is_cutting = true
 	_play(STATIC_SOUND, -6.0)
 	vhs.glitch(1.0, 0.6)
-	_static.visible = true
+	_show_static_rect()
 	await get_tree().create_timer(0.45).timeout
 	_static.visible = false
 	_black.visible = true
@@ -93,9 +93,16 @@ func tape_cut(to_time: String, black_seconds: float = 1.2) -> void:
 
 ## Full-screen static (end of a tape). Stays until hide_static().
 func show_static(with_sound: bool = true) -> void:
-	_static.visible = true
+	_show_static_rect()
 	if with_sound:
 		_play(STATIC_SOUND, -4.0)
+
+
+## Static is dimmed with Reduce flashing on (accessibility).
+func _show_static_rect() -> void:
+	var tone := 0.45 if SettingsManager.reduce_flashing else 1.0
+	_static.modulate = Color(tone, tone, tone)
+	_static.visible = true
 
 
 func hide_static() -> void:

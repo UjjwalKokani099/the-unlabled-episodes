@@ -149,6 +149,11 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
+	# Gamepad right stick (eased curve: fine aim near the centre).
+	if can_act():
+		var stick := InputManager.pad_look()
+		if stick != Vector2.ZERO:
+			_turn(stick * stick.length() * InputManager.PAD_LOOK_SPEED * SettingsManager.controller_sensitivity * delta)
 	# Flashlight trails the camera slightly.
 	var target := _flashlight_target()
 	var blend := 1.0 - exp(-flashlight_follow * delta)
@@ -191,10 +196,14 @@ func look(relative: Vector2) -> void:
 
 
 func _look(relative: Vector2) -> void:
-	var sens := SettingsManager.mouse_sensitivity
-	rotate_y(deg_to_rad(-relative.x * sens))
-	var dy := relative.y * (-1.0 if SettingsManager.invert_y else 1.0)
-	_pitch = clampf(_pitch - dy * sens, -max_pitch, max_pitch)
+	_turn(relative * SettingsManager.mouse_sensitivity)
+
+
+## Turns the view by `degrees` (x = yaw to the right, y = pitch down), honouring invert Y.
+func _turn(degrees: Vector2) -> void:
+	rotate_y(deg_to_rad(-degrees.x))
+	var dy := degrees.y * (-1.0 if SettingsManager.invert_y else 1.0)
+	_pitch = clampf(_pitch - dy, -max_pitch, max_pitch)
 	head.rotation.x = deg_to_rad(_pitch)
 
 

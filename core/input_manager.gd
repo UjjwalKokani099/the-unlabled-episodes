@@ -15,6 +15,23 @@ enum Device { KEYBOARD_MOUSE, GAMEPAD, TOUCH }
 
 ## Stick movement below this is noise, not a device switch.
 const STICK_DEADZONE := 0.35
+## Gamepad layout (Xbox names; Godot maps PlayStation/Switch pads onto the same indices).
+## Added at startup next to the keyboard keys, so rebinding a key never loses the pad.
+const PAD_BUTTONS := {
+	&"interact": JOY_BUTTON_A, &"crouch": JOY_BUTTON_B, &"flashlight": JOY_BUTTON_X,
+	&"night_vision": JOY_BUTTON_Y, &"spot": JOY_BUTTON_LEFT_SHOULDER, &"objectives": JOY_BUTTON_BACK,
+	&"sprint": JOY_BUTTON_LEFT_STICK, &"pause": JOY_BUTTON_START,
+}
+## action -> [axis, direction]. look_* are created here (no keyboard keys).
+const PAD_AXES := {
+	&"move_left": [JOY_AXIS_LEFT_X, -1.0], &"move_right": [JOY_AXIS_LEFT_X, 1.0],
+	&"move_forward": [JOY_AXIS_LEFT_Y, -1.0], &"move_back": [JOY_AXIS_LEFT_Y, 1.0],
+	&"look_left": [JOY_AXIS_RIGHT_X, -1.0], &"look_right": [JOY_AXIS_RIGHT_X, 1.0],
+	&"look_up": [JOY_AXIS_RIGHT_Y, -1.0], &"look_down": [JOY_AXIS_RIGHT_Y, 1.0],
+	&"interact": [JOY_AXIS_TRIGGER_RIGHT, 1.0],
+}
+## Right stick fully over = this many degrees per second (x controller_sensitivity).
+const PAD_LOOK_SPEED := 150.0
 
 var device: Device = Device.KEYBOARD_MOUSE
 ## True after the first screen touch, false again once a real mouse moves. Not saved.
@@ -30,6 +47,29 @@ var _mouse_travel: float = 0.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	add_gamepad_map()
+
+
+## Right stick as a look vector (x right, y down), dead zone applied.
+func pad_look() -> Vector2:
+	return Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down", 0.15)
+
+
+## Adds the pad buttons/sticks to the input map (again after InputMap reloads).
+func add_gamepad_map() -> void:
+	for action: StringName in PAD_BUTTONS:
+		if not InputMap.has_action(action):
+			continue
+		var button := InputEventJoypadButton.new()
+		button.button_index = PAD_BUTTONS[action]
+		InputMap.action_add_event(action, button)
+	for action: StringName in PAD_AXES:
+		if not InputMap.has_action(action):
+			InputMap.add_action(action, 0.2)
+		var motion := InputEventJoypadMotion.new()
+		motion.axis = PAD_AXES[action][0]
+		motion.axis_value = PAD_AXES[action][1]
+		InputMap.action_add_event(action, motion)
 
 
 ## Grab (true) or free the mouse: the player, pause menu, dialogue, inspect view...
