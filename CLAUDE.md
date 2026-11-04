@@ -279,6 +279,21 @@ SceneLoader, ObjectiveManager, GameManager (project.godot [autoload]).
   Typed vars/params/returns everywhere in game code; tests/ and tools/ are exempt (tests
   reach autoloads untyped). project.godot warns on untyped declarations in the editor.
 
+## Game feel (studio spec step 2)
+- Player: walk 2.2 / crouch 1.2 / run 3.8 m/s, `accel_time` 0.2 s / `decel_time` 0.15 s
+  (eased), `ChapterData.allow_running`. Head bob follows `Footsteps.phase()` (dip on each
+  footfall), scaled by `SettingsManager.motion_scale()` (head_bob_intensity x reduce motion);
+  strafe tilt 1.5 deg; dips on landing and stepping down. `sway_allowed()` gates sway/FOV kick.
+- Sounds with variants = `SoundSet` resources (data/sounds/*.tres, made by
+  gen_placeholder_sfx.py; clips in assets/audio/sfx/variants/): `pick()` never repeats,
+  +-5% pitch. Play with `AudioManager.play_set_at()`. Footstep surfaces: wood, carpet, tile,
+  concrete, gravel, grass, metal (old dirt/soft map to gravel/carpet).
+- Every use makes a sound: `Interactable.use_sounds` or a soft tick (`default_tick`; owners
+  with their own sounds turn it off: Door, Drawer, LightSwitch, Pickup). Door: creak /
+  creak + latch / locked rattle + camera nudge. Reach 2.0 m; prompt fades 0.15 s;
+  `Interactor.used` -> crosshair pulse. Inspect view blurs the world (ui_blur.gdshader).
+- Tests: test_game_feel.gd, test_interaction_feel.gd.
+
 ## Layout
 - `scenes/`   hub, menus, test scenes
 - `scripts/`  autoload (singletons), player, interaction, objectives, events, ui

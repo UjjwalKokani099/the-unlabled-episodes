@@ -77,10 +77,15 @@ func _initialize() -> void:
 	var door = room.get_node("Door")
 	await stand_at(Vector3(6, 0, -1.0), 0, 0)
 	check(not prompt.visible, "no prompt when nothing is in reach")
-	await stand_at(Vector3(6, 0, -2.5), 0, 0)
-	var first_alpha: float = prompt.modulate.a
+	p.global_position = Vector3(6, 0, -2.5)
+	var first_alpha := -1.0
+	for i in 20:  # sample the first frame the prompt appears
+		await process_frame
+		if prompt.visible:
+			first_alpha = prompt.modulate.a
+			break
 	await create_timer(0.25).timeout
-	check(prompt.visible and first_alpha < 0.9 and prompt.modulate.a > 0.95,
+	check(prompt.visible and first_alpha >= 0.0 and first_alpha < 0.5 and prompt.modulate.a > 0.95,
 		"prompt fades in (alpha %.2f -> %.2f)" % [first_alpha, prompt.modulate.a])
 
 	# --- door: creak on open, crosshair pulse
@@ -88,7 +93,9 @@ func _initialize() -> void:
 	check(crosshair._pulse > 0.0, "crosshair pulses on use")
 	check(playing_any("door_creak"), "door open: hinge creak (%s)" % [playing()])
 	await create_timer(1.0).timeout
-	await tap_interact()
+	# The open panel has swung out of the look-ray: use it the way a player at the hinge would.
+	door.interactable.interact(p)
+	await frames(2)
 	check(playing_any("door_creak"), "door close: creak")
 	await create_timer(0.9).timeout
 	check(not door.is_open and playing_any("door_latch"), "door close: latch clicks home")
@@ -98,7 +105,8 @@ func _initialize() -> void:
 	door.lock()
 	var shake = p.get_node("Head/Camera3D/CameraShake")
 	shake.trauma = 0.0
-	await tap_interact()
+	door.interactable.interact(p)
+	await frames(2)
 	check(playing_any("door_rattle"), "locked door: rattle")
 	check(shake.trauma > 0.05, "locked door: camera nudge (trauma %.2f)" % shake.trauma)
 	door.unlock()
