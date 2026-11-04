@@ -43,6 +43,8 @@ signal flashlight_toggled(is_on: bool)
 
 ## Set false during cutscenes / menus to freeze movement and look.
 var input_enabled: bool = true
+## The phone in Nikhil's hand (PlayerPhone.attach), or null: tapes before 2009 have none.
+var phone: PlayerPhone = null
 var is_crouching: bool = false
 var is_sprinting: bool = false
 
@@ -110,7 +112,8 @@ func _physics_process(delta: float) -> void:
 	var speed := walk_speed
 	# Run only while moving forward, standing, and where the chapter allows it.
 	var want_run := _sprint_toggled if SettingsManager.sprint_toggle else Input.is_action_pressed("sprint")
-	is_sprinting = active and running_allowed() and not is_crouching and move_input.y < -0.1 and want_run
+	is_sprinting = active and running_allowed() and not is_crouching and move_input.y < -0.1 and want_run \
+		and not is_using_phone()
 	if SettingsManager.sprint_toggle and move_input.y >= -0.1:
 		_sprint_toggled = false  # stopping ends a toggled run
 	if is_crouching:
@@ -172,6 +175,11 @@ func teleport(spot: Transform3D) -> void:
 	_pitch = 0.0
 	head.rotation.x = 0.0
 	velocity = Vector3.ZERO
+
+
+## True while the phone is up (no running, no using the world).
+func is_using_phone() -> bool:
+	return phone != null and phone.is_raised()
 
 
 ## True when the player is allowed to move, look and interact right now.

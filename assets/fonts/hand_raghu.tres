@@ -2,6 +2,9 @@
 
 [ext_resource type="FontFile" path="res://assets/fonts/kalam/Kalam-Regular.ttf" id="1_f"]
 
+[ext_resource type="FontFile" path="res://assets/fonts/dejavu/DejaVuSans-Symbols.ttf" id="sym"]
+
 [resource]
 resource_name = "hand_raghu: Raghu's handwriting (register, diary)"
 base_font = ExtResource("1_f")
+fallbacks = Array[Font]([ExtResource("sym")])

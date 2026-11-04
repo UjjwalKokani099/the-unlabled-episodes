@@ -156,6 +156,33 @@ def objective_tick(rng):
     return out
 
 
+def phone_buzz(rng):
+    """Phone vibrating on a hard surface: two short 160 Hz rattling pulses."""
+    out = []
+    n = int(RATE * 0.9)
+    for i in range(n):
+        t = i / RATE
+        on = (0.0 < t < 0.32) or (0.48 < t < 0.8)
+        env = (min((t % 0.48) * 30, 1.0)) if on else 0.0
+        buzz = math.sin(2 * math.pi * 160 * t) * 0.6 + (rng.uniform(-1, 1) * 0.25 if on else 0.0)
+        out.append(buzz * env * 0.6)
+    return lowpass(out, 0.5)
+
+
+def mobile_ring(rng):
+    """Nikhil's mobile ringtone: a soft three-note marimba figure, 2 s (loops)."""
+    out = [0.0] * int(RATE * 2.0)
+    for start, f in ((0.0, 880.0), (0.18, 1108.7), (0.36, 1318.5), (0.72, 880.0), (0.9, 1108.7), (1.08, 1318.5)):
+        s0 = int(start * RATE)
+        for i in range(int(RATE * 0.5)):
+            t = i / RATE
+            v = (math.sin(2 * math.pi * f * t) + 0.3 * math.sin(2 * math.pi * f * 4 * t) * math.exp(-t * 30)) \
+                * math.exp(-t * 7) * 0.32
+            if s0 + i < len(out):
+                out[s0 + i] += v
+    return out
+
+
 def vcr_click(rng):
     n = int(RATE * 0.09)
     noise = [rng.uniform(-1, 1) for _ in range(n)]
@@ -735,6 +762,8 @@ def main():
     write("fan_hum.wav", fan_hum(rng))
     write("vcr_click.wav", vcr_click(rng))
     write("objective_update.wav", objective_tick(random.Random(55)))
+    write("phone_buzz.wav", phone_buzz(random.Random(56)))
+    write("mobile_ring.wav", mobile_ring(random.Random(57)))
     write("room_hum.wav", room_hum(rng))
     write("crickets_loop.wav", crickets(rng))
     write("dog_bark.wav", dog_bark(rng))

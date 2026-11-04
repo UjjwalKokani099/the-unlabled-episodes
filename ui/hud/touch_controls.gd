@@ -20,9 +20,11 @@ const BUTTONS := {
 	&"light": {"action": &"flashlight", "label": "LIGHT", "pos": Vector2(0.20, 0.30), "r": 48.0, "mode": "hold"},
 	&"nv": {"action": &"night_vision", "label": "NV", "pos": Vector2(0.17, 0.50), "r": 44.0, "mode": "hold"},
 	&"spot": {"action": &"spot", "label": "II REC", "pos": Vector2(0.075, 0.58), "r": 50.0, "mode": "hold"},
-	# top-left corner (the objective list is top-right)
-	&"pause": {"action": &"pause", "label": "MENU", "pos": Vector2(0.06, 0.90), "r": 40.0, "mode": "hold", "left": true},
-	&"tasks": {"action": &"objectives", "label": "TASKS", "pos": Vector2(0.17, 0.90), "r": 40.0, "mode": "hold", "left": true},
+	# top-right corner (the objective list is top-left)
+	&"pause": {"action": &"pause", "label": "MENU", "pos": Vector2(0.06, 0.90), "r": 40.0, "mode": "hold"},
+	&"tasks": {"action": &"objectives", "label": "TASKS", "pos": Vector2(0.17, 0.90), "r": 40.0, "mode": "hold"},
+	# only where the player has a phone (the hub)
+	&"phone": {"action": &"phone", "label": "PHONE", "pos": Vector2(0.28, 0.90), "r": 40.0, "mode": "hold", "needs": "phone"},
 }
 
 var _canvas: Control
@@ -68,6 +70,8 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventScreenTouch:
 		var t := event as InputEventScreenTouch
+		if t.pressed and _on_phone_glass(t.position):
+			return  # the raised phone takes the tap (PlayerPhone maps it onto its screen)
 		if t.pressed:
 			_touch_down(t.index, t.position)
 		else:
@@ -174,9 +178,24 @@ func _release_all() -> void:
 		Input.action_release(a)
 
 
+func _on_phone_glass(pos: Vector2) -> bool:
+	var player := get_tree().get_first_node_in_group("player") as Player
+	return player != null and player.is_using_phone() and player.phone.screen_uv_at(pos).x >= 0.0
+
+
+## Buttons that only exist with some equipment ("needs": "phone").
+func _available(b: Dictionary) -> bool:
+	if b.get("needs", "") == "phone":
+		var player := get_tree().get_first_node_in_group("player") as Player
+		return player != null and player.phone != null and player.phone.carried
+	return true
+
+
 func _button_at(pos: Vector2) -> StringName:
 	for name: StringName in BUTTONS:
 		var b: Dictionary = BUTTONS[name]
+		if not _available(b):
+			continue
 		if pos.distance_to(_button_center(b)) <= b.r * _scale() * 1.15:
 			return name
 	return &""
@@ -205,6 +224,8 @@ func _draw_controls() -> void:
 		held[_button_fingers[f]] = true
 	for name: StringName in BUTTONS:
 		var b: Dictionary = BUTTONS[name]
+		if not _available(b):
+			continue
 		var c := _button_center(b)
 		var r: float = b.r * k
 		if held.has(name) or _toggled.get(name, false):

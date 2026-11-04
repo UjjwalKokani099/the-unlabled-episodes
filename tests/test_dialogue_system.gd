@@ -88,7 +88,10 @@ func _initialize() -> void:
 	check(subs.current_text() == "Probably just the pipes." and subs._label.text.contains("[i]"),
 		"inner monologue: italics, no speaker name ('%s')" % subs.current_text())
 
-	# --- objectives: top-left, fade, sound
+	# --- objectives: top-left, fade, sound (with the option on, whatever the saved settings say)
+	var settings = root.get_node("SettingsManager")
+	var saved_show: bool = settings.show_objectives
+	settings.show_objectives = true
 	var panel = room.get_node("HUD/Objectives")
 	var vp: Vector2 = panel.get_viewport_rect().size
 	check(panel.get_global_rect().position.x < vp.x * 0.25 and panel.get_global_rect().position.y < vp.y * 0.25,
@@ -101,6 +104,7 @@ func _initialize() -> void:
 	await create_timer(0.6).timeout
 	check(panel.modulate.a > 0.9 and panel.line_texts().size() > 0, "objective fades in (%s)" % [panel.line_texts()])
 
+	settings.show_objectives = saved_show
 	room.queue_free()
 	await frames(3)
 	print("RESULT fails=%d" % fails)

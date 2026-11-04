@@ -1,0 +1,14 @@
+{
+	"start": "hello",
+	"nodes": {
+		"hello": {"speaker": "MAA", "text": "Hello? Beta? Awaaz aa rahi hai?", "duration": 2.6, "next": "hello_tr"},
+		"hello_tr": {"speaker": "MAA", "text": "(Can you hear me?)", "duration": 1.6, "next": "me"},
+		"me": {"speaker": "NIKHIL", "text": "Haan Maa. Bolo.", "choices": [
+			{"text": "Sab theek hai. Bas kaam.", "next": "work"},
+			{"text": "Maa... kya aapne kal raat call kiya tha? Teen baje?", "next": "night", "set": {"asked_maa_night": true}}]},
+		"work": {"speaker": "MAA", "text": "Kaam kaam kaam. Aankhen dekho apni. Video call pe dikhti hain.", "duration": 3.2, "next": "bye"},
+		"night": {"speaker": "MAA", "text": "Teen baje? Main toh dus baje so jaati hoon, beta. Tumne kiya hoga.", "duration": 3.4, "next": "night2"},
+		"night2": {"speaker": "MAA", "text": "(At three? I'm asleep by ten. You must have called.)", "duration": 2.4, "next": "bye"},
+		"bye": {"speaker": "MAA", "text": "Achha, so jao. Sunday ko phone karna. Papa bhi baat karenge.", "duration": 3.0, "event": "maa_called"}
+	}
+}

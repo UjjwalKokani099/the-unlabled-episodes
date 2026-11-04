@@ -20,7 +20,7 @@ const STICK_DEADZONE := 0.35
 const PAD_BUTTONS := {
 	&"interact": JOY_BUTTON_A, &"crouch": JOY_BUTTON_B, &"flashlight": JOY_BUTTON_X,
 	&"night_vision": JOY_BUTTON_Y, &"spot": JOY_BUTTON_LEFT_SHOULDER, &"objectives": JOY_BUTTON_BACK,
-	&"sprint": JOY_BUTTON_LEFT_STICK, &"pause": JOY_BUTTON_START,
+	&"sprint": JOY_BUTTON_LEFT_STICK, &"pause": JOY_BUTTON_START, &"phone": JOY_BUTTON_DPAD_UP,
 }
 ## action -> [axis, direction]. look_* are created here (no keyboard keys).
 const PAD_AXES := {

@@ -1,0 +1,25 @@
+{
+	"_format": "Nikhil's phone (systems/phone). contacts: id -> name. threads: messages {from: contact id or 'me', time, text, tr (translation, optional)}, reply {text, tr, event} (one tap; fires the event), min_stage / max_stage (hub stage = tapes watched). calls: the call log {contact, when, kind: missed|incoming|outgoing}. incoming: scripted while in the hub: {kind: text|call, after (seconds in the room), thread + message, or contact + dialogue}.",
+	"contacts": {"maa": "Maa", "rohit": "Rohit (office)", "unknown": "Unknown"},
+	"threads": [
+		{"id": "maa", "contact": "maa", "messages": [
+			{"from": "maa", "time": "9:41 PM", "text": "Beta, khana khaya?", "tr": "Did you eat?"},
+			{"from": "maa", "time": "9:58 PM", "text": "Sunday ko phone kar dena. Papa yaad kar rahe the.", "tr": "Call on Sunday. Papa was asking about you."}],
+		 "reply": {"text": "Haan Maa, kha raha hoon. Sunday pakka.", "tr": "Yes Maa, eating now. Sunday for sure.", "event": "replied_maa"}},
+		{"id": "rohit", "contact": "rohit", "messages": [
+			{"from": "rohit", "time": "6:12 PM", "text": "bro the Monday deck??"},
+			{"from": "rohit", "time": "6:13 PM", "text": "client moved the call to 10. don't sleep in"}],
+		 "reply": {"text": "Sending it tonight. Promise.", "event": "replied_rohit"}}
+	],
+	"calls": [
+		{"contact": "maa", "when": "Yesterday, 8:02 PM", "kind": "missed"},
+		{"contact": "maa", "when": "Yesterday, 8:40 PM", "kind": "missed"},
+		{"contact": "rohit", "when": "Yesterday, 11:15 AM", "kind": "outgoing"},
+		{"contact": "unknown", "when": "Today, 3:12 AM", "kind": "missed", "min_stage": 2}
+	],
+	"incoming": [
+		{"kind": "text", "after": 40, "min_stage": 1, "thread": "maa",
+		 "message": {"from": "maa", "time": "now", "text": "Kal raat 3 baje online kyun the? Neend nahi aati?", "tr": "Why were you online at 3 last night? Can't sleep?"}},
+		{"kind": "call", "after": 55, "min_stage": 2, "max_stage": 2, "contact": "maa", "dialogue": "res://data/dialogue/hub/maa_call.json"}
+	]
+}

@@ -3,7 +3,10 @@
 [ext_resource type="FontFile" path="res://assets/fonts/vt323/VT323-Regular.ttf" id="1_f"]
 [ext_resource type="FontFile" path="res://assets/fonts/mukta/Mukta-Regular.ttf" id="2_f"]
 
+[ext_resource type="FontFile" path="res://assets/fonts/dejavu/DejaVuSans-Symbols.ttf" id="sym"]
+
 [resource]
 resource_name = "vcr: VCR on-screen display (menus, OSD, tape labels)"
 base_font = ExtResource("1_f")
 fallbacks = Array[Font]([ExtResource("2_f")])
+fallbacks = Array[Font]([ExtResource("sym")])

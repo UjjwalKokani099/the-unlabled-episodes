@@ -5,6 +5,9 @@ extends Node3D
 ## - The cardboard box hands Nikhil the next unwatched tape; the VCR plays it (or resumes a
 ##   saved checkpoint when his hands are empty).
 ## - Evening chores are optional objectives: eat dinner, reply to Maa, charge the phone.
+## - Nikhil's phone (PlayerPhone, data/phone/hub.json) lies on the desk: take it, raise it (R),
+##   reply to Maa in Messages; the charger takes it and gives it back. Texts and calls arrive
+##   by hub stage (a missed call at 3:12 from stage 2, Maa calling at stage 2).
 ## - The room changes after each tape (stage = tapes watched, in order):
 ##     1: a diary entry in someone else's handwriting   2: a white van idles in the lane
 ##     3: "108" scratched inside his door               4: doorbell + delivery bag outside;
@@ -24,6 +27,7 @@ const ARRIVAL_THOUGHTS := {
 	4: ["Every address on that wall was crossed out. Except the last one.", 5.0],
 }
 const SPEAKER := "NIKHIL"
+const PHONE_DATA := "res://data/phone/hub.json"
 
 ## -1 = from the save file. 0..4 = force a stage (testing / previews).
 @export var debug_stage: int = -1
@@ -39,6 +43,7 @@ var _hand: Node3D
 var _box_tapes: Array[HubTape] = []
 var _scratch: Label3D
 var _doorbell_rung: bool = false
+var phone: PlayerPhone
 
 
 func _ready() -> void:
@@ -49,12 +54,13 @@ func _ready() -> void:
 	_connect(room.get_node("TapeBox/Interactable"), use_box)
 	_connect(room.get_node("Diary/Interactable"), read_diary)
 	_connect(room.get_node("Plate/Interactable"), eat_dinner)
-	_connect(room.get_node("Phone/Interactable"), read_messages)
+	_connect(room.get_node("Phone/Interactable"), take_phone)
 	_connect(room.get_node("Charger/Interactable"), charge_phone)
 	_connect(room.get_node("DeliveryBag/Interactable"), read_bill)
 	stage = compute_stage() if debug_stage < 0 else debug_stage
 	apply_stage()
 	_make_hand.call_deferred()
+	_setup_phone.call_deferred()
 	_start_chores.call_deferred()
 	_arrival_thought()
 
@@ -255,18 +261,46 @@ func eat_dinner() -> void:
 	EventBus.fire(&"ate_dinner")
 
 
-func read_messages() -> void:
-	get_tree().call_group("hud", "show_note",
-		"[b]Maa[/b]  9:41 PM\nBeta, khana khaya?\n[color=#555](Did you eat?)[/color]\n\n[b]Maa[/b]  9:58 PM\nSunday ko phone kar dena. Papa yaad kar rahe the.\n[color=#555](Call on Sunday. Papa was asking about you.)[/color]\n\n[b]You[/b]\nHaan Maa, kha raha hoon. Sunday pakka.\n[color=#555](Yes Maa, eating now. Sunday for sure.)[/color]")
-	EventBus.fire(&"replied_maa")
+func _setup_phone() -> void:
+	var player := _player()
+	if player == null:
+		return
+	phone = PlayerPhone.attach(player, PHONE_DATA, stage)
+	phone.desk_anchor = room.get_node("Phone")
+	# After every tape the battery is nearly flat, though he charged it (the tape ran on it).
+	if stage >= 1 and GameManager.remember("hub_phone_drained_%d" % stage):
+		phone.screen.battery = 0.12
+	(room.get_node("Phone/Interactable") as Interactable).prompt = "Take your phone"
+
+
+## Pick the phone up from the desk (or off the charger).
+func take_phone() -> void:
+	if phone == null:
+		return
+	var prop := room.get_node("Phone") as Node3D
+	prop.visible = false
+	(prop.get_node("Interactable") as Interactable).enabled = false
+	phone.carried = true
+	phone.charging = false
+	phone.desk_anchor = prop
+	(room.get_node("Charger/Interactable") as Interactable).enabled = true
+	EventBus.fire(&"took_phone")
+	if GameManager.remember("hub_phone_hint"):
+		_message("Your phone. [%s] to look at it." % SettingsManager.key_name(&"phone"), 4.0)
 
 
 func charge_phone() -> void:
-	var phone := room.get_node("Phone") as Node3D
-	phone.global_position = (room.get_node("ChargingSpot") as Node3D).global_position
-	(phone.get_node("Interactable") as Interactable).enabled = false
+	if phone == null or not phone.carried:
+		_message("Your phone is on the desk.")
+		return
+	var prop := room.get_node("Phone") as Node3D
+	prop.global_position = (room.get_node("ChargingSpot") as Node3D).global_position
+	prop.visible = true
+	(prop.get_node("Interactable") as Interactable).enabled = true
 	(room.get_node("Charger/Interactable") as Interactable).enabled = false
-	_message("Phone charging. 12%.")
+	phone.carried = false
+	phone.charging = true
+	_message("Phone charging. %d%%." % roundi(phone.screen.battery * 100.0))
 	if stage >= 1:
 		_think_once(&"charging_late", "Twelve percent. I charged it this morning. Did I fall asleep with the tape running?", 5.0, 2.8)
 	EventBus.fire(&"phone_charging")

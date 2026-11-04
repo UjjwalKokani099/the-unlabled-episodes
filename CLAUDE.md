@@ -99,6 +99,18 @@ Useful headless commands (run from project root):
 - GI: VoxelGI baked by `tools/bake_voxelgi.gd -- <scene>` into `<scene>_gi.res`; re-run the
   generator afterwards so it references the data. Low preset hides VoxelGI.
 - `call_group("hud", "show_note", bbcode, handwritten)` shows paper/screens (NoteView).
+- Phone (present day only; the 2009 tape later): `PlayerPhone.attach(player, data_json, stage)` (systems/phone)
+  puts a Blender phone (assets/models/phone, tools/blender/build_props.py) under the camera; `carried` /
+  `charging` / `desk_anchor`. `phone` action (R, pad D-pad up) raises it; raised = walk only, Interactor off,
+  up/down/wheel + E/click + RMB/Backspace (back), touch taps hit the glass (`screen_uv_at`). PhoneScreen
+  (SubViewport UI): home, Messages/threads (one-tap `reply` fires its event), Calls log, incoming/in-call
+  (answer plays a dialogue JSON), Torch. Data: data/phone/hub.json (contacts, threads, calls, scripted
+  `incoming` by `after` seconds, `min_stage`/`max_stage`). Battery = GameManager.remember_value
+  ("phone_battery"). Hub: take it from the desk, reply to Maa on it, charger takes/returns it; drained to
+  12% on the first return after each tape. Test: test_phone.gd.
+- Fonts: every role FontVariation falls back to assets/fonts/dejavu/DejaVuSans-Symbols.ttf (subset: arrows,
+  boxes, blocks, shapes, symbols). The web build has no system fonts: test_fonts.gd fails if any script/scene/
+  data file prints a symbol the fonts lack.
 - Disabled Interactables leave the physics layer, so they never block the look-ray.
 - Footsteps (`player/footsteps.gd`, child of Player): surface = `metadata/surface` on
   the collision shape underfoot (levelkit tags every collider via `surface_of(material)`;

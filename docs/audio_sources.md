@@ -128,3 +128,5 @@ Then add a row here: file, source URL, author, licence, date.
 | `music/menu_drone.ogg` | Synthesised bed (tools/gen_placeholder_sfx.py `bed_menu_drone`) -> tools/process_audio.py (OGG, -24 LUFS, loops) | Original (project) | Main menu drone; fades in over 4 s |
 | `sfx/boot_sting.wav` | Synthesised (tools/gen_placeholder_sfx.py `boot_sting`) | Original (project) | Studio card sting on boot |
 | `sfx/objective_update.wav` | Synthesised (tools/gen_placeholder_sfx.py `objective_tick`) | Original (project) | Objective update: pencil tick + soft two-note chime |
+| `sfx/phone_buzz.wav` | Synthesised (tools/gen_placeholder_sfx.py `phone_buzz`) | Original (project) | Phone vibrating (texts, calls) |
+| `sfx/mobile_ring.wav` | Synthesised (tools/gen_placeholder_sfx.py `mobile_ring`) | Original (project) | Nikhil's mobile ringtone (loops while a call rings) |

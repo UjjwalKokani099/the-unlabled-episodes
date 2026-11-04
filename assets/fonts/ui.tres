@@ -2,6 +2,9 @@
 
 [ext_resource type="FontFile" path="res://assets/fonts/mukta/Mukta-Regular.ttf" id="1_f"]
 
+[ext_resource type="FontFile" path="res://assets/fonts/dejavu/DejaVuSans-Symbols.ttf" id="sym"]
+
 [resource]
 resource_name = "ui: readable UI + subtitles (Latin + Devanagari)"
 base_font = ExtResource("1_f")
+fallbacks = Array[Font]([ExtResource("sym")])

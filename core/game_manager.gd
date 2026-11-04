@@ -434,6 +434,18 @@ func remembers(key: String) -> bool:
 	return key in (SaveManager.data.get("memory", []) as Array)
 
 
+## A value that outlives tapes and the hub (save file), e.g. the phone's battery.
+## Written to disk with the next save, not on every change.
+func remember_value(key: String, value: Variant) -> void:
+	var values: Dictionary = SaveManager.data.get("memory_values", {})
+	values[key] = value
+	SaveManager.data["memory_values"] = values
+
+
+func remembered_value(key: String, default: Variant = null) -> Variant:
+	return (SaveManager.data.get("memory_values", {}) as Dictionary).get(key, default)
+
+
 # --- Save file (stored by SaveManager) ------------------------------------------
 
 func load_save() -> void:

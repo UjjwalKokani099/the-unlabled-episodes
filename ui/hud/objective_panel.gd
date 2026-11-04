@@ -52,7 +52,7 @@ func line_texts() -> PackedStringArray:
 	return out
 
 
-func _on_changed(sound: bool) -> void:
+func _on_changed(sound: bool = true) -> void:
 	_show_left = SHOW_SECONDS
 	_rebuild()
 	if sound and not EventBus.replaying and SettingsManager.show_objectives:

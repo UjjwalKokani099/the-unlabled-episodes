@@ -60,7 +60,7 @@ const ROWS: Array[Dictionary] = [
 ]
 const ACTION_NAMES := {&"move_forward": "Move forward", &"move_back": "Move back", &"move_left": "Move left",
 	&"move_right": "Move right", &"sprint": "Sprint", &"crouch": "Crouch", &"flashlight": "Flashlight",
-	&"interact": "Use / interact", &"spot": "Pause tape (spot him)", &"night_vision": "Night vision", &"objectives": "Show objectives"}
+	&"interact": "Use / interact", &"spot": "Pause tape (spot him)", &"night_vision": "Night vision", &"objectives": "Show objectives", &"phone": "Raise phone"}
 ## Row text size: larger on the CRT (the menu's SubViewport is shrunk onto the screen).
 const ROW_FONT_SIZE := 22
 const ROW_FONT_SIZE_CRT := 30

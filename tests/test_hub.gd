@@ -59,8 +59,9 @@ func _initialize() -> void:
 
 	# --- Chores ---
 	hub.eat_dinner()
-	hub.read_messages()
-	hub.get_node("HUD/NoteView").close()
+	hub.take_phone()  # replying to Maa happens on the phone now (Messages > Maa > Reply)
+	hub.phone.screen.show_page("thread", "maa")
+	hub.phone.screen.select()
 	hub.charge_phone()
 	await frames(2)
 	check(objectives.is_completed(&"eat") and objectives.is_completed(&"maa") and objectives.is_completed(&"charge"), "chores completed")

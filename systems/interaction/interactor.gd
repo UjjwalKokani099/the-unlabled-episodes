@@ -93,4 +93,4 @@ func _cancel_hold() -> void:
 
 func _can_act() -> bool:
 	var player := owner as Player
-	return player == null or player.can_act()
+	return player == null or (player.can_act() and not player.is_using_phone())
