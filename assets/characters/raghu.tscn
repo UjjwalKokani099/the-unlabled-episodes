@@ -1,618 +1,226 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://systems/characters/character_life.gd" id="1_r"]
+[ext_resource type="PackedScene" path="res://assets/characters/meshes/raghu.glb" id="1_r"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
-albedo_color = Color(0.38, 0.26, 0.18, 1)
-roughness = 0.55
-rim_enabled = true
-rim = 0.15
-rim_tint = 0.6
+[ext_resource type="Script" path="res://systems/characters/skinned_body.gd" id="2_r"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_3"]
-radius = 0.16
-height = 0.34
-radial_segments = 12
-rings = 4
+[ext_resource type="Script" path="res://systems/characters/character_life.gd" id="3_r"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4"]
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+size = Vector3(0.1, 0.012, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3"]
 albedo_color = Color(0.36, 0.31, 0.2, 1)
 roughness = 0.85
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_6"]
-radius = 0.072
-height = 0.48
-radial_segments = 12
-rings = 4
+[sub_resource type="BoxMesh" id="BoxMesh_5"]
+size = Vector3(0.085, 0.09, 0.012)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_8"]
-radius = 0.058
-height = 0.44
-radial_segments = 12
-rings = 4
-
-[sub_resource type="BoxMesh" id="BoxMesh_10"]
-size = Vector3(0.1, 0.07, 0.22)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_11"]
-albedo_color = Color(0.05, 0.045, 0.04, 1)
-roughness = 0.45
-
-[sub_resource type="SphereMesh" id="SphereMesh_13"]
-radius = 0.5
-height = 1.0
-radial_segments = 16
-rings = 8
-
-[sub_resource type="BoxMesh" id="BoxMesh_15"]
-size = Vector3(0.1, 0.02, 0.08)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_16"]
-albedo_color = Color(0.02, 0.02, 0.02, 1)
-roughness = 0.85
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_23"]
-radius = 0.17
-height = 0.56
-radial_segments = 12
-rings = 4
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_24"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6"]
 albedo_color = Color(0.47, 0.41, 0.27, 1)
 roughness = 0.85
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_28"]
-radius = 0.05
-height = 0.2
-radial_segments = 12
-rings = 4
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_30"]
-radius = 0.042
-height = 0.18
-radial_segments = 12
-rings = 4
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_32"]
-radius = 0.042
-height = 0.27
-radial_segments = 12
-rings = 4
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_35"]
-radius = 0.012
-height = 0.05
-radial_segments = 12
-rings = 4
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_43"]
-top_radius = 0.043
-bottom_radius = 0.05
-height = 0.14
-radial_segments = 14
-rings = 1
-
-[sub_resource type="BoxMesh" id="BoxMesh_45"]
-size = Vector3(0.1, 0.012, 0.05)
-
-[sub_resource type="BoxMesh" id="BoxMesh_47"]
-size = Vector3(0.085, 0.09, 0.012)
-
-[sub_resource type="BoxMesh" id="BoxMesh_49"]
+[sub_resource type="BoxMesh" id="BoxMesh_8"]
 size = Vector3(0.09, 0.025, 0.01)
 
-[sub_resource type="BoxMesh" id="BoxMesh_54"]
+[sub_resource type="BoxMesh" id="BoxMesh_13"]
 size = Vector3(0.04, 0.02, 0.004)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_55"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_14"]
 albedo_color = Color(0.75, 0.6, 0.25, 1)
 roughness = 0.3
 metallic = 0.8
 
-[sub_resource type="BoxMesh" id="BoxMesh_57"]
+[sub_resource type="BoxMesh" id="BoxMesh_16"]
 size = Vector3(0.06, 0.014, 0.004)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_58"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_17"]
 albedo_color = Color(0.85, 0.85, 0.82, 1)
 roughness = 0.85
 
-[sub_resource type="BoxMesh" id="BoxMesh_60"]
+[sub_resource type="BoxMesh" id="BoxMesh_19"]
 size = Vector3(0.022, 0.45, 0.006)
 
-[sub_resource type="TorusMesh" id="TorusMesh_62"]
+[sub_resource type="TorusMesh" id="TorusMesh_21"]
 inner_radius = 0.06
 outer_radius = 0.066
 rings = 16
 ring_segments = 6
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_63"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_22"]
 albedo_color = Color(0.7, 0.1, 0.1, 1)
 roughness = 0.85
 
-[sub_resource type="BoxMesh" id="BoxMesh_65"]
+[sub_resource type="BoxMesh" id="BoxMesh_24"]
 size = Vector3(0.35, 0.05, 0.25)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_66"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_25"]
 albedo_color = Color(0.12, 0.09, 0.06, 1)
 roughness = 0.5
 
-[sub_resource type="BoxMesh" id="BoxMesh_68"]
+[sub_resource type="BoxMesh" id="BoxMesh_27"]
 size = Vector3(0.05, 0.035, 0.008)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_69"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_28"]
 albedo_color = Color(0.75, 0.62, 0.3, 1)
 roughness = 0.3
 metallic = 0.8
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_76"]
-albedo_color = Color(0.3116, 0.2132, 0.1476, 1)
-roughness = 0.55
-rim_enabled = true
-rim = 0.15
-rim_tint = 0.6
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_78"]
-albedo_color = Color(0.86, 0.84, 0.8, 1)
-roughness = 0.15
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_80"]
-albedo_color = Color(0.12, 0.08, 0.06, 1)
-roughness = 0.1
-
-[sub_resource type="BoxMesh" id="BoxMesh_83"]
-size = Vector3(0.036, 0.008, 0.012)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84"]
-albedo_color = Color(0.08, 0.07, 0.07, 1)
-roughness = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_86"]
-albedo_color = Color(0.3268, 0.2236, 0.1548, 1)
-roughness = 0.55
-rim_enabled = true
-rim = 0.15
-rim_tint = 0.6
-
-[sub_resource type="BoxMesh" id="BoxMesh_96"]
-size = Vector3(0.022, 0.05, 0.03)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_99"]
-albedo_color = Color(0.2964, 0.2028, 0.1404, 1)
-roughness = 0.4
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_101"]
-albedo_color = Color(0.25, 0.24, 0.23, 1)
-roughness = 1.0
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_103"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_30"]
 top_radius = 0.108
 bottom_radius = 0.112
 height = 0.075
 radial_segments = 14
 rings = 1
 
-[sub_resource type="BoxMesh" id="BoxMesh_105"]
+[sub_resource type="BoxMesh" id="BoxMesh_32"]
 size = Vector3(0.17, 0.012, 0.08)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_106"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_33"]
 albedo_color = Color(0.1, 0.08, 0.05, 1)
 roughness = 0.4
 
-[sub_resource type="BoxMesh" id="BoxMesh_108"]
+[sub_resource type="BoxMesh" id="BoxMesh_35"]
 size = Vector3(0.03, 0.03, 0.004)
-
-[sub_resource type="BoxMesh" id="BoxMesh_110"]
-size = Vector3(0.085, 0.022, 0.016)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_111"]
-albedo_color = Color(0.06, 0.05, 0.05, 1)
-roughness = 1.0
 
 [node name="Raghu" type="Node3D"]
 
 [node name="Body" type="Node3D" parent="."]
 
 [node name="Pelvis" type="Node3D" parent="Body"]
-position = Vector3(0, 0.95, 0)
-
-[node name="Hips" type="MeshInstance3D" parent="Body/Pelvis"]
-position = Vector3(0, 0, 0)
-scale = Vector3(1.02, 1, 0.7)
-mesh = SubResource("CapsuleMesh_3")
-material_override = SubResource("StandardMaterial3D_4")
+position = Vector3(-0.0, 0.8902, -0.0036)
 
 [node name="HipL" type="Node3D" parent="Body/Pelvis"]
-position = Vector3(-0.095, -0.03, 0)
-
-[node name="ThighL" type="MeshInstance3D" parent="Body/Pelvis/HipL"]
-position = Vector3(0, -0.22, 0)
-mesh = SubResource("CapsuleMesh_6")
-material_override = SubResource("StandardMaterial3D_4")
+position = Vector3(-0.1102, -0.0162, 0.0106)
 
 [node name="KneeL" type="Node3D" parent="Body/Pelvis/HipL"]
-position = Vector3(0, -0.45, 0)
-
-[node name="ShinL" type="MeshInstance3D" parent="Body/Pelvis/HipL/KneeL"]
-position = Vector3(0, -0.2, 0)
-mesh = SubResource("CapsuleMesh_8")
-material_override = SubResource("StandardMaterial3D_4")
-
-[node name="ShoeL" type="MeshInstance3D" parent="Body/Pelvis/HipL/KneeL"]
-position = Vector3(0, -0.44, -0.035)
-mesh = SubResource("BoxMesh_10")
-material_override = SubResource("StandardMaterial3D_11")
-
-[node name="ToeL" type="MeshInstance3D" parent="Body/Pelvis/HipL/KneeL"]
-position = Vector3(0, -0.448, -0.14)
-scale = Vector3(0.1, 0.06, 0.1)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_11")
-
-[node name="HeelL" type="MeshInstance3D" parent="Body/Pelvis/HipL/KneeL"]
-position = Vector3(0, -0.47, 0.04)
-mesh = SubResource("BoxMesh_15")
-material_override = SubResource("StandardMaterial3D_16")
+position = Vector3(-0.012, -0.3791, -0.0259)
 
 [node name="HipR" type="Node3D" parent="Body/Pelvis"]
-position = Vector3(0.095, -0.03, 0)
-
-[node name="ThighR" type="MeshInstance3D" parent="Body/Pelvis/HipR"]
-position = Vector3(0, -0.22, 0)
-mesh = SubResource("CapsuleMesh_6")
-material_override = SubResource("StandardMaterial3D_4")
+position = Vector3(0.1102, -0.0162, 0.0106)
 
 [node name="KneeR" type="Node3D" parent="Body/Pelvis/HipR"]
-position = Vector3(0, -0.45, 0)
-
-[node name="ShinR" type="MeshInstance3D" parent="Body/Pelvis/HipR/KneeR"]
-position = Vector3(0, -0.2, 0)
-mesh = SubResource("CapsuleMesh_8")
-material_override = SubResource("StandardMaterial3D_4")
-
-[node name="ShoeR" type="MeshInstance3D" parent="Body/Pelvis/HipR/KneeR"]
-position = Vector3(0, -0.44, -0.035)
-mesh = SubResource("BoxMesh_10")
-material_override = SubResource("StandardMaterial3D_11")
-
-[node name="ToeR" type="MeshInstance3D" parent="Body/Pelvis/HipR/KneeR"]
-position = Vector3(0, -0.448, -0.14)
-scale = Vector3(0.1, 0.06, 0.1)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_11")
-
-[node name="HeelR" type="MeshInstance3D" parent="Body/Pelvis/HipR/KneeR"]
-position = Vector3(0, -0.47, 0.04)
-mesh = SubResource("BoxMesh_15")
-material_override = SubResource("StandardMaterial3D_16")
+position = Vector3(0.012, -0.3791, -0.0259)
 
 [node name="Chest" type="Node3D" parent="Body"]
-position = Vector3(0, 1.0, 0)
-
-[node name="Torso" type="MeshInstance3D" parent="Body/Chest"]
-position = Vector3(0, 0.2, 0)
-scale = Vector3(1.04, 1, 0.64)
-mesh = SubResource("CapsuleMesh_23")
-material_override = SubResource("StandardMaterial3D_24")
-
-[node name="Belly" type="MeshInstance3D" parent="Body/Chest"]
-position = Vector3(0, 0.06, -0.01)
-scale = Vector3(0.31, 0.22, 0.23)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_24")
+position = Vector3(0.0, 1.0418, 0.0204)
 
 [node name="ShoulderL" type="Node3D" parent="Body/Chest"]
-position = Vector3(-0.185, 0.42, 0)
-
-[node name="DeltL" type="MeshInstance3D" parent="Body/Chest/ShoulderL"]
-position = Vector3(0, -0.035, 0)
-scale = Vector3(0.1, 0.11, 0.1)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_24")
-
-[node name="UpperArmL" type="MeshInstance3D" parent="Body/Chest/ShoulderL"]
-position = Vector3(0, -0.1, 0)
-mesh = SubResource("CapsuleMesh_28")
-material_override = SubResource("StandardMaterial3D_24")
-
-[node name="UpperArmSkinL" type="MeshInstance3D" parent="Body/Chest/ShoulderL"]
-position = Vector3(0, -0.2, 0)
-mesh = SubResource("CapsuleMesh_30")
-material_override = SubResource("StandardMaterial3D_1")
+position = Vector3(-0.1798, 0.2798, -0.0331)
 
 [node name="ElbowL" type="Node3D" parent="Body/Chest/ShoulderL"]
-position = Vector3(0, -0.29, 0)
-
-[node name="ForearmL" type="MeshInstance3D" parent="Body/Chest/ShoulderL/ElbowL"]
-position = Vector3(0, -0.13, 0)
-mesh = SubResource("CapsuleMesh_32")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="HandL" type="MeshInstance3D" parent="Body/Chest/ShoulderL/ElbowL"]
-position = Vector3(0, -0.32, -0.005)
-scale = Vector3(0.07, 0.1, 0.035)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="ThumbL" type="MeshInstance3D" parent="Body/Chest/ShoulderL/ElbowL"]
-position = Vector3(0.03, -0.3, -0.02)
-rotation_degrees = Vector3(20, 0, -25)
-mesh = SubResource("CapsuleMesh_35")
-material_override = SubResource("StandardMaterial3D_1")
+position = Vector3(-0.0234, -0.2347, 0.0094)
 
 [node name="ShoulderR" type="Node3D" parent="Body/Chest"]
-position = Vector3(0.185, 0.42, 0)
-
-[node name="DeltR" type="MeshInstance3D" parent="Body/Chest/ShoulderR"]
-position = Vector3(0, -0.035, 0)
-scale = Vector3(0.1, 0.11, 0.1)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_24")
-
-[node name="UpperArmR" type="MeshInstance3D" parent="Body/Chest/ShoulderR"]
-position = Vector3(0, -0.1, 0)
-mesh = SubResource("CapsuleMesh_28")
-material_override = SubResource("StandardMaterial3D_24")
-
-[node name="UpperArmSkinR" type="MeshInstance3D" parent="Body/Chest/ShoulderR"]
-position = Vector3(0, -0.2, 0)
-mesh = SubResource("CapsuleMesh_30")
-material_override = SubResource("StandardMaterial3D_1")
+position = Vector3(0.1798, 0.2798, -0.0331)
 
 [node name="ElbowR" type="Node3D" parent="Body/Chest/ShoulderR"]
-position = Vector3(0, -0.29, 0)
-
-[node name="ForearmR" type="MeshInstance3D" parent="Body/Chest/ShoulderR/ElbowR"]
-position = Vector3(0, -0.13, 0)
-mesh = SubResource("CapsuleMesh_32")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="HandR" type="MeshInstance3D" parent="Body/Chest/ShoulderR/ElbowR"]
-position = Vector3(0, -0.32, -0.005)
-scale = Vector3(0.07, 0.1, 0.035)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="ThumbR" type="MeshInstance3D" parent="Body/Chest/ShoulderR/ElbowR"]
-position = Vector3(-0.03, -0.3, -0.02)
-rotation_degrees = Vector3(20, 0, 25)
-mesh = SubResource("CapsuleMesh_35")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="Neck" type="MeshInstance3D" parent="Body"]
-position = Vector3(0, 1.46, 0)
-mesh = SubResource("CylinderMesh_43")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="EpauletteL" type="MeshInstance3D" parent="Body/Chest"]
-position = Vector3(-0.14, 0.43, 0)
-rotation_degrees = Vector3(0, 0, 12)
-mesh = SubResource("BoxMesh_45")
-material_override = SubResource("StandardMaterial3D_4")
-
-[node name="PocketL" type="MeshInstance3D" parent="Body/Chest"]
-position = Vector3(-0.085, 0.3, -0.112)
-mesh = SubResource("BoxMesh_47")
-material_override = SubResource("StandardMaterial3D_24")
-
-[node name="FlapL" type="MeshInstance3D" parent="Body/Chest"]
-position = Vector3(-0.085, 0.345, -0.12)
-mesh = SubResource("BoxMesh_49")
-material_override = SubResource("StandardMaterial3D_4")
-
-[node name="EpauletteR" type="MeshInstance3D" parent="Body/Chest"]
-position = Vector3(0.14, 0.43, 0)
-rotation_degrees = Vector3(0, 0, -12)
-mesh = SubResource("BoxMesh_45")
-material_override = SubResource("StandardMaterial3D_4")
-
-[node name="PocketR" type="MeshInstance3D" parent="Body/Chest"]
-position = Vector3(0.085, 0.3, -0.112)
-mesh = SubResource("BoxMesh_47")
-material_override = SubResource("StandardMaterial3D_24")
-
-[node name="FlapR" type="MeshInstance3D" parent="Body/Chest"]
-position = Vector3(0.085, 0.345, -0.12)
-mesh = SubResource("BoxMesh_49")
-material_override = SubResource("StandardMaterial3D_4")
-
-[node name="Badge" type="MeshInstance3D" parent="Body/Chest"]
-position = Vector3(0.085, 0.27, -0.121)
-mesh = SubResource("BoxMesh_54")
-material_override = SubResource("StandardMaterial3D_55")
-
-[node name="NameTag" type="MeshInstance3D" parent="Body/Chest"]
-position = Vector3(-0.085, 0.385, -0.12)
-mesh = SubResource("BoxMesh_57")
-material_override = SubResource("StandardMaterial3D_58")
-
-[node name="Placket" type="MeshInstance3D" parent="Body/Chest"]
-position = Vector3(0, 0.2, -0.111)
-mesh = SubResource("BoxMesh_60")
-material_override = SubResource("StandardMaterial3D_4")
-
-[node name="WhistleCord" type="MeshInstance3D" parent="Body/Chest"]
-position = Vector3(0.1, 0.3, -0.06)
-rotation_degrees = Vector3(20, 0, 40)
-mesh = SubResource("TorusMesh_62")
-material_override = SubResource("StandardMaterial3D_63")
-
-[node name="Belt" type="MeshInstance3D" parent="Body/Pelvis"]
-position = Vector3(0, 0.1, 0)
-mesh = SubResource("BoxMesh_65")
-material_override = SubResource("StandardMaterial3D_66")
-
-[node name="Buckle" type="MeshInstance3D" parent="Body/Pelvis"]
-position = Vector3(0, 0.1, -0.126)
-mesh = SubResource("BoxMesh_68")
-material_override = SubResource("StandardMaterial3D_69")
+position = Vector3(0.0234, -0.2347, 0.0094)
 
 [node name="Head" type="Node3D" parent="Body"]
-position = Vector3(0, 1.52, 0)
-
-[node name="Skull" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0, 0.11, 0.005)
-scale = Vector3(0.19, 0.235, 0.215)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="Jaw" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0, 0.0306, -0.025)
-scale = Vector3(0.15, 0.1, 0.15)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="Chin" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0, 0.012, -0.075)
-scale = Vector3(0.06, 0.045, 0.04)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="EarL" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(-0.097, 0.1, 0.012)
-scale = Vector3(0.022, 0.058, 0.04)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="CheekL" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(-0.05, 0.075, -0.075)
-scale = Vector3(0.05, 0.04, 0.035)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="SocketL" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(-0.034, 0.112, -0.083)
-scale = Vector3(0.036, 0.026, 0.02)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_76")
-
-[node name="EyeL" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(-0.034, 0.113, -0.088)
-scale = Vector3(0.024, 0.02, 0.02)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_78")
-
-[node name="IrisL" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(-0.034, 0.113, -0.097)
-scale = Vector3(0.011, 0.011, 0.006)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_80")
+position = Vector3(-0.0, 1.5123, -0.0413)
 
 [node name="EyelidL" type="Node3D" parent="Body/Head"]
-position = Vector3(-0.034, 0.127, -0.09)
-
-[node name="LidL" type="MeshInstance3D" parent="Body/Head/EyelidL"]
-position = Vector3(0, -0.013, 0.0)
-scale = Vector3(0.03, 0.028, 0.022)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="BrowL" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(-0.035, 0.143, -0.096)
-rotation_degrees = Vector3(0, 0, 9)
-mesh = SubResource("BoxMesh_83")
-material_override = SubResource("StandardMaterial3D_84")
-
-[node name="BagL" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(-0.034, 0.098, -0.088)
-scale = Vector3(0.03, 0.012, 0.012)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_86")
-
-[node name="EarR" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0.097, 0.1, 0.012)
-scale = Vector3(0.022, 0.058, 0.04)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="CheekR" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0.05, 0.075, -0.075)
-scale = Vector3(0.05, 0.04, 0.035)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_1")
-
-[node name="SocketR" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0.034, 0.112, -0.083)
-scale = Vector3(0.036, 0.026, 0.02)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_76")
-
-[node name="EyeR" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0.034, 0.113, -0.088)
-scale = Vector3(0.024, 0.02, 0.02)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_78")
-
-[node name="IrisR" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0.034, 0.113, -0.097)
-scale = Vector3(0.011, 0.011, 0.006)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_80")
+position = Vector3(-0.0284, 0.0392, -0.0796)
 
 [node name="EyelidR" type="Node3D" parent="Body/Head"]
-position = Vector3(0.034, 0.127, -0.09)
+position = Vector3(0.0284, 0.0392, -0.0796)
 
-[node name="LidR" type="MeshInstance3D" parent="Body/Head/EyelidR"]
-position = Vector3(0, -0.013, 0.0)
-scale = Vector3(0.03, 0.028, 0.022)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_1")
+[node name="Fit" type="Node3D" parent="Body/Head"]
+position = Vector3(0.0, -0.0736, -0.0004)
+scale = Vector3(0.8663, 0.9983, 0.8998)
 
-[node name="BrowR" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0.035, 0.143, -0.096)
-rotation_degrees = Vector3(0, 0, -9)
-mesh = SubResource("BoxMesh_83")
-material_override = SubResource("StandardMaterial3D_84")
+[node name="Fit" type="Node3D" parent="Body/Chest"]
+position = Vector3(0.0, -0.0605, -0.0369)
+scale = Vector3(0.9011, 0.8103, 1.1375)
 
-[node name="BagR" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0.034, 0.098, -0.088)
-scale = Vector3(0.03, 0.012, 0.012)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_86")
+[node name="Fit" type="Node3D" parent="Body/Pelvis"]
+position = Vector3(0.0, 0.0316, -0.0352)
+scale = Vector3(0.8714, 1.0, 0.8921)
 
-[node name="NoseBridge" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0, 0.1, -0.1)
-rotation_degrees = Vector3(-14, 0, 0)
-mesh = SubResource("BoxMesh_96")
-material_override = SubResource("StandardMaterial3D_1")
+[node name="Mesh" parent="Body" instance=ExtResource("1_r")]
 
-[node name="NoseTip" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0, 0.074, -0.112)
-scale = Vector3(0.032, 0.026, 0.026)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_1")
+[node name="Skin" type="Node" parent="."]
+script = ExtResource("2_r")
 
-[node name="Lips" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0, 0.045, -0.096)
-scale = Vector3(0.046, 0.014, 0.014)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_99")
+[node name="EpauletteL" type="MeshInstance3D" parent="Body/Chest/Fit"]
+position = Vector3(-0.14, 0.43, 0.0)
+rotation_degrees = Vector3(0, 0, 12)
+mesh = SubResource("BoxMesh_2")
+material_override = SubResource("StandardMaterial3D_3")
 
-[node name="HairSides" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0, 0.11, 0.03)
-scale = Vector3(0.195, 0.16, 0.19)
-mesh = SubResource("SphereMesh_13")
-material_override = SubResource("StandardMaterial3D_101")
+[node name="PocketL" type="MeshInstance3D" parent="Body/Chest/Fit"]
+position = Vector3(-0.085, 0.3, -0.112)
+mesh = SubResource("BoxMesh_5")
+material_override = SubResource("StandardMaterial3D_6")
 
-[node name="Cap" type="MeshInstance3D" parent="Body/Head"]
+[node name="FlapL" type="MeshInstance3D" parent="Body/Chest/Fit"]
+position = Vector3(-0.085, 0.345, -0.12)
+mesh = SubResource("BoxMesh_8")
+material_override = SubResource("StandardMaterial3D_3")
+
+[node name="EpauletteR" type="MeshInstance3D" parent="Body/Chest/Fit"]
+position = Vector3(0.14, 0.43, 0.0)
+rotation_degrees = Vector3(0, 0, -12)
+mesh = SubResource("BoxMesh_2")
+material_override = SubResource("StandardMaterial3D_3")
+
+[node name="PocketR" type="MeshInstance3D" parent="Body/Chest/Fit"]
+position = Vector3(0.085, 0.3, -0.112)
+mesh = SubResource("BoxMesh_5")
+material_override = SubResource("StandardMaterial3D_6")
+
+[node name="FlapR" type="MeshInstance3D" parent="Body/Chest/Fit"]
+position = Vector3(0.085, 0.345, -0.12)
+mesh = SubResource("BoxMesh_8")
+material_override = SubResource("StandardMaterial3D_3")
+
+[node name="Badge" type="MeshInstance3D" parent="Body/Chest/Fit"]
+position = Vector3(0.085, 0.27, -0.121)
+mesh = SubResource("BoxMesh_13")
+material_override = SubResource("StandardMaterial3D_14")
+
+[node name="NameTag" type="MeshInstance3D" parent="Body/Chest/Fit"]
+position = Vector3(-0.085, 0.385, -0.12)
+mesh = SubResource("BoxMesh_16")
+material_override = SubResource("StandardMaterial3D_17")
+
+[node name="Placket" type="MeshInstance3D" parent="Body/Chest/Fit"]
+position = Vector3(0, 0.2, -0.111)
+mesh = SubResource("BoxMesh_19")
+material_override = SubResource("StandardMaterial3D_3")
+
+[node name="WhistleCord" type="MeshInstance3D" parent="Body/Chest/Fit"]
+position = Vector3(0.1, 0.3, -0.06)
+rotation_degrees = Vector3(20, 0, 40)
+mesh = SubResource("TorusMesh_21")
+material_override = SubResource("StandardMaterial3D_22")
+
+[node name="Belt" type="MeshInstance3D" parent="Body/Pelvis/Fit"]
+position = Vector3(0, 0.1, 0.0)
+mesh = SubResource("BoxMesh_24")
+material_override = SubResource("StandardMaterial3D_25")
+
+[node name="Buckle" type="MeshInstance3D" parent="Body/Pelvis/Fit"]
+position = Vector3(0, 0.1, -0.126)
+mesh = SubResource("BoxMesh_27")
+material_override = SubResource("StandardMaterial3D_28")
+
+[node name="Cap" type="MeshInstance3D" parent="Body/Head/Fit"]
 position = Vector3(0, 0.205, 0.008)
-mesh = SubResource("CylinderMesh_103")
-material_override = SubResource("StandardMaterial3D_4")
+mesh = SubResource("CylinderMesh_30")
+material_override = SubResource("StandardMaterial3D_3")
 
-[node name="Brim" type="MeshInstance3D" parent="Body/Head"]
+[node name="Brim" type="MeshInstance3D" parent="Body/Head/Fit"]
 position = Vector3(0, 0.172, -0.105)
 rotation_degrees = Vector3(-8, 0, 0)
-mesh = SubResource("BoxMesh_105")
-material_override = SubResource("StandardMaterial3D_106")
+mesh = SubResource("BoxMesh_32")
+material_override = SubResource("StandardMaterial3D_33")
 
-[node name="CapBadge" type="MeshInstance3D" parent="Body/Head"]
+[node name="CapBadge" type="MeshInstance3D" parent="Body/Head/Fit"]
 position = Vector3(0, 0.205, -0.111)
-mesh = SubResource("BoxMesh_108")
-material_override = SubResource("StandardMaterial3D_69")
-
-[node name="Moustache" type="MeshInstance3D" parent="Body/Head"]
-position = Vector3(0, 0.059, -0.102)
-mesh = SubResource("BoxMesh_110")
-material_override = SubResource("StandardMaterial3D_111")
+mesh = SubResource("BoxMesh_35")
+material_override = SubResource("StandardMaterial3D_28")
 
 [node name="Life" type="Node" parent="."]
-script = ExtResource("1_r")
+script = ExtResource("3_r")

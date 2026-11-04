@@ -15,8 +15,16 @@ Skeleton (pivots, all Node3D): Body/Pelvis/HipL|HipR/KneeL|KneeR, Body/Chest/Sho
 ElbowL|R, Body/Head (NPC head tracking turns it; top of the neck at HEAD_Y), Head/EyelidL|R.
 systems/characters/character_life.gd (child "Life") breathes, blinks and walks them.
 Keep the names Body, Body/Head, RecDot and RecLight: scripts look them up.
+
+Blender meshes: when assets/characters/meshes/<name>.glb + .json exist (tools/blender/
+build_characters.py, MakeHuman-based skinned bodies), the pivots are placed from the JSON, the
+mesh is instanced as Body/Mesh with a SkinnedBody node ("Skin") copying the pivots onto its
+bones, the primitive body/face/clothes are left out (DROP) and the accessories are re-seated on
+the new body (remap(): head items follow the eyes, chest items the shirt front, the belt the
+waist). Without the meshes the old primitive stand-ins are built.
 Run: python tools/gen_characters.py
 """
+import json
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,6 +33,13 @@ OUT = os.path.join(ROOT, "assets", "characters")
 HEAD_Y = 1.52  # Body/Head pivot height (top of the neck)
 HIP_Y = 0.92
 SHOULDER_Y = 1.42
+MESHES = os.path.join(OUT, "meshes")
+OLD_EYE_REL = (0.0, 0.113, -0.088)  # primitive eyes, relative to the Head pivot
+# Primitive parts the Blender meshes replace (bodies, faces, painted hair, clothes).
+DROP = {"Kurta", "KurtaCollar", "Jacket", "JacketOpening", "JacketPocket", "HairRing", "HairBack", "Moustache",
+        "HairSides", "Saree", "Border", "Waist", "PalluFront", "PalluBack", "PalluBorder", "Shawl", "HairTop",
+        "Parting", "Bun", "Hem", "Collar", "Hair", "Neck"}
+DROP_PREFIX = ("Pleat", "Rib")
 
 
 def col(c, a=1):
@@ -44,6 +59,12 @@ class Scene:
             props["script"] = f'ExtResource("{self.ext_res("Script", script)}")'
         self.nodes.append(self._node(root, "Node3D", None, props))
         self.nodes.append(self._node("Body", "Node3D", ".", {}))
+        self.file = root.lower()
+        info = os.path.join(MESHES, self.file + ".json")
+        self.info = json.load(open(info)) if os.path.exists(info) and os.path.exists(
+            os.path.join(MESHES, self.file + ".glb")) else None
+        self.thin = 1.0
+        self.extra_z = {}  # name prefix -> extra metres off the chest front (over a jacket)
 
     def ext_res(self, typ, path):
         for line in self.ext:
@@ -90,8 +111,33 @@ class Scene:
         self.nodes.append(self._node(name, "Node3D", parent, props))
         return f"{parent}/{name}"
 
+    def dropped(self, name):
+        return self.info is not None and (name in DROP or name.startswith(DROP_PREFIX))
+
+    def remap(self, name, parent, pos):
+        """Old primitive-body position -> the same spot on the Blender body (see module doc)."""
+        if self.info is None:
+            return pos
+        a, pv = self.info["anchors"], self.info["pivots"]
+        x, y, z = pos
+        if "/Elbow" in parent:
+            ratio = (pv["ElbowR"][1] - a["wrist_y"]) / 0.255
+            return (x, y * ratio, z)
+        if parent == "Body":
+            if y > 1.5:   # at the face: the camcorder and its parts follow the eyes
+                return (x + a["eye"][0], y + a["eye"][1] - 1.633, z + a["eye"][2] + 0.088)
+            if y > 1.3:   # at the neck
+                return (x, y + pv["Head"][1] - HEAD_Y, z + pv["Head"][2])
+        return pos
+
     def part(self, name, typ, mesh_props, color, pos, rot=(0, 0, 0), scale=(1, 1, 1), parent="Body", rough=0.85,
              emission=None, metal=0.0, skin=False, material=None):
+        if self.dropped(name):
+            return
+        pos = self.remap(name, parent, pos)
+        parent = self.fit_parent(parent)
+        if self.info is not None:
+            pos = (pos[0], pos[1], pos[2] + next((dz for pre, dz in self.extra_z.items() if name.startswith(pre)), 0.0))
         self.n += 1
         props = {"position": v(*pos)}
         if rot != (0, 0, 0):
@@ -125,6 +171,8 @@ class Scene:
 
     def cloth(self, name, color, pos, w, h, parent="Body", rot=(0, 0, 0), stripes=(0.0, 0.0), stripe_color=(0.8, 0.7, 0.3),
               folds=2.0, fold_depth=0.015, sway=0.02):
+        if self.dropped(name):
+            return
         mat = self.sub("ShaderMaterial", {
             "shader": f'ExtResource("{self.ext_res("Shader", "res://assets/shaders/cloth.gdshader")}")',
             "shader_parameter/albedo": col(color), "shader_parameter/stripe_color": col(stripe_color),
@@ -140,7 +188,67 @@ class Scene:
             "material_override": f'SubResource("{mat}")'}))
 
     def node(self, name, typ, props, parent="."):
+        if self.info is not None and "position" in props and parent == ".":
+            vals = [float(t) for t in props["position"].split("(")[1].rstrip(")").split(",")]
+            props = dict(props, position=v(*self.remap(name, "Body", vals)))
         self.nodes.append(self._node(name, typ, parent, props))
+
+    def fit_parent(self, parent):
+        """Head/Chest/Pelvis accessories hang off a Fit frame (see mesh_body)."""
+        if self.info is not None and parent in ("Body/Head", "Body/Chest", "Body/Pelvis"):
+            return parent + "/Fit"
+        return parent
+
+    def fit(self, name, parent_pivot, old, new):
+        """A Fit node under `parent_pivot`: maps two old reference values per axis onto the new
+        body's (old/new = ((x0, x1), (y0, y1), (z0, z1)) in the pivot's space), so accessories
+        keep their old local coordinates and land, scaled, on the new body."""
+        scale, pos = [], []
+        for (o0, o1), (n0, n1) in zip(old, new):
+            k = (n1 - n0) / (o1 - o0)
+            scale.append(k)
+            pos.append(n0 - o0 * k)
+        self.nodes.append(self._node("Fit", "Node3D", parent_pivot, {"position": v(*pos), "scale": v(*scale)}))
+
+    def mesh_body(self, arm_pose=None):
+        """Pivots at the Blender body's joints, the mesh as Body/Mesh, the SkinnedBody node."""
+        pv = self.info["pivots"]
+
+        def rel(a, b):
+            return tuple(pv[a][i] - (pv[b][i] if b else 0.0) for i in range(3))
+        pose = arm_pose or {}
+        self.pivot("Pelvis", "Body", rel("Pelvis", None))
+        for side in ("L", "R"):
+            self.pivot(f"Hip{side}", "Body/Pelvis", rel(f"Hip{side}", "Pelvis"))
+            self.pivot(f"Knee{side}", f"Body/Pelvis/Hip{side}", rel(f"Knee{side}", f"Hip{side}"))
+        self.pivot("Chest", "Body", rel("Chest", None))
+        for side in ("L", "R"):
+            self.pivot(f"Shoulder{side}", "Body/Chest", rel(f"Shoulder{side}", "Chest"), pose.get(f"Shoulder{side}", (0, 0, 0)))
+            self.pivot(f"Elbow{side}", f"Body/Chest/Shoulder{side}", rel(f"Elbow{side}", f"Shoulder{side}"),
+                       pose.get(f"Elbow{side}", (0, 0, 0)))
+        self.pivot("Head", "Body", rel("Head", None))
+        for side in ("L", "R"):
+            self.pivot(f"Eyelid{side}", "Body/Head", rel(f"Eyelid{side}", "Head"))
+        a = self.info["anchors"]
+        t = self.thin
+        hd = pv["Head"]
+        # head: old eye (0, .113, -.088) / temple half-width .095 / crown .2275 / back of skull .1125
+        self.fit("Fit", "Body/Head", ((0.0, 0.095), (0.113, 0.2275), (-0.088, 0.1125)),
+                 ((0.0, a["head_half_width"]), (a["eye"][1] - hd[1], a["crown_y"] - hd[1]),
+                  (a["eye"][2] - hd[2], a["head_back_z"] - hd[2])))
+        ch = pv["Chest"]
+        # chest: old half-width .177 thin, shoulders 1.42, waist 1.05, front -.112, back +.112
+        self.fit("Fit", "Body/Chest", ((0.0, 0.177 * t), (0.05, 0.42), (-0.112, 0.112)),
+                 ((0.0, a["chest_half_width"]), (a["waist_y"] - ch[1], pv["ShoulderR"][1] - ch[1]),
+                  (a["chest_front_z"] - ch[2], a["chest_back_z"] - ch[2])))
+        pe = pv["Pelvis"]
+        # pelvis (belt): old waist 1.05 (pivot .95 + .1), half-width .175, front -.126, back .126
+        self.fit("Fit", "Body/Pelvis", ((0.0, 0.175), (0.1, 0.2), (-0.126, 0.126)),
+                 ((0.0, a["waist_half_width"] + 0.004), (a["waist_y"] - pe[1], a["waist_y"] - pe[1] + 0.1),
+                  (a["waist_front_z"] - pe[2] - 0.004, a["waist_back_z"] - pe[2] + 0.004)))
+        glb = self.ext_res("PackedScene", f"res://assets/characters/meshes/{self.file}.glb")
+        self.nodes.append(f'[node name="Mesh" parent="Body" instance=ExtResource("{glb}")]')
+        self.node("Skin", "Node", {"script": f'ExtResource("{self.ext_res("Script", "res://systems/characters/skinned_body.gd")}")'})
 
     def life(self, **exports):
         props = {"script": f'ExtResource("{self.ext_res("Script", "res://systems/characters/character_life.gd")}")'}
@@ -162,6 +270,10 @@ def skeleton(s, *, skin, top, sleeve, legs, shoes, thin=1.0, short_sleeves=False
              arm_pose=None):
     """Pelvis + legs, chest + arms on pivots. `arm_pose` = {"ShoulderL": rot, ...} for posed
     arms. Returns nothing; parts are named for character_life.gd."""
+    s.thin = thin
+    if s.info is not None:
+        s.mesh_body(arm_pose)
+        return
     sk = s.mat(skin, 0.55, skin=True)
     pelvis = s.pivot("Pelvis", "Body", (0, 0.95, 0))
     s.caps("Hips", legs, (0, 0, 0), 0.16, 0.34, parent=pelvis, scale=(1.02 * thin, 1, 0.7))
@@ -205,6 +317,8 @@ def skeleton(s, *, skin, top, sleeve, legs, shoes, thin=1.0, short_sleeves=False
 def face(s, *, skin, hair, lips=None, brows=None, eyes=(0.12, 0.08, 0.06), age=0.0):
     """Head pivot + skull, jaw, ears, eyes with blinking lids, brows, nose, lips. `age`
     0..1 sags the jaw line and adds under-eye shadows."""
+    if s.info is not None:
+        return  # the Blender mesh has the face; mesh_body() made the Head/Eyelid pivots
     s.node("Head", "Node3D", {"position": v(0, HEAD_Y, 0)}, parent="Body")
     h = "Body/Head"
     kw = {"skin": True, "rough": 0.55}
@@ -233,6 +347,7 @@ def face(s, *, skin, hair, lips=None, brows=None, eyes=(0.12, 0.08, 0.06), age=0
 def deshmukh():
     s = Scene("Deshmukh")
     skin, white, jacket, hair = (0.47, 0.33, 0.24), (0.86, 0.85, 0.8), (0.28, 0.27, 0.25), (0.82, 0.82, 0.8)
+    s.extra_z = {"Button": -0.028}
     skeleton(s, skin=skin, top=white, sleeve=white, legs=white, shoes=(0.3, 0.2, 0.12), chappals=True)
     # kurta to the knees, a mandarin collar and a button placket; sleeveless Nehru jacket over it
     s.cyl("Kurta", white, (0, 0.85, 0), 0.2, 0.25, 0.62, scale=(1, 1, 0.74), rough=0.95)

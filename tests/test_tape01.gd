@@ -126,7 +126,7 @@ func _initialize() -> void:
 		wicket_max = maxf(wicket_max, lv.get_node("Wicket").rotation_degrees.y)
 	check(events.has_fired(&"deshmukh_left"), "Mr. Deshmukh walked out of the gate")
 	check(wicket_max > 1.0, "the wicket gate swung open for him")
-	check(lv.get_node("BalconyDeshmukh").visible and lv.get_node("BalconyDeshmukh/Body/Body/Head/Skull").layers == 1 << 19,
+	check(lv.get_node("BalconyDeshmukh").visible and lv.get_node("BalconyDeshmukh/Body/Body/Mesh").find_children("*", "MeshInstance3D", true, false)[0].layers == 1 << 19,
 		"...and now stands on his balcony, on CCTV only")
 	check(await until(func() -> bool: return not lv.get_node("Deshmukh").visible), "he never comes back in")
 	await use(lv, "GateRegister", p)

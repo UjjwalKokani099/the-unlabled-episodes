@@ -15,6 +15,13 @@
 			]
 		},
 		{
+			"title": "Characters",
+			"lines": [
+				"Base bodies from MakeHuman (CC0)",
+				"Modelled and rigged with Blender"
+			]
+		},
+		{
 			"title": "Engine",
 			"lines": [
 				"Godot Engine (MIT licence)",

@@ -3,8 +3,31 @@
 	"studio": "UJJWAL KOKANI",
 	"presents": "presents",
 	"sections": [
-		{"title": "UNLABELED", "lines": ["A found-footage horror anthology"]},
-		{"title": "Created by", "lines": ["Ujjwal Kokani"]},
-		{"title": "Engine", "lines": ["Godot Engine (MIT licence)", "Jolt Physics (MIT licence)"]}
+		{
+			"title": "UNLABELED",
+			"lines": [
+				"A found-footage horror anthology"
+			]
+		},
+		{
+			"title": "Created by",
+			"lines": [
+				"Ujjwal Kokani"
+			]
+		},
+		{
+			"title": "Characters",
+			"lines": [
+				"Base bodies from MakeHuman (CC0)",
+				"Modelled and rigged with Blender"
+			]
+		},
+		{
+			"title": "Engine",
+			"lines": [
+				"Godot Engine (MIT licence)",
+				"Jolt Physics (MIT licence)"
+			]
+		}
 	]
 }

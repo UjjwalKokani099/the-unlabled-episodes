@@ -261,6 +261,17 @@ Useful headless commands (run from project root):
 - propkit also builds primitive clutter (Indian household, 1998 watchman, vehicles),
   `soft()` squashed spheres, `cloth()` hanging fabric (`assets/shaders/cloth.gdshader`: folds,
   sway, stripes; QuadMesh hung from its top edge), `dust_sheet()`.
+- Blender characters: `tools/blender/build_characters.py` (run `blender -b --factory-startup --python
+  tools/blender/build_characters.py [-- name]`; cloud: `apt-get install -y blender python3-numpy`, then
+  `bash tools/blender/fetch_makehuman.sh` for the CC0 MakeHuman data in tools/_build). MakeHuman base mesh
+  + macro targets per character (CHARACTERS table: gender, age_years, weight, height, hair, sleeve,
+  colours, garments), reposed from A-pose, skin/face painted as vertex colours then baked by numpy into
+  a UV texture (Cycles baking is black headless), clothes = zones + lathe garments, MakeHuman weights
+  folded onto 14 game bones named like the pivots. Writes meshes/<name>.glb + .json (pivots, anchors).
+  gen_characters.py then builds pivots from the JSON, instances Body/Mesh, adds `Skin` =
+  SkinnedBody (systems/characters/skinned_body.gd: pivots -> bones each frame; eyelid pivot scale ->
+  lid rotation) and seats accessories via Head/Chest/Pelvis `Fit` frames (old body -> new body).
+  Preview without Godot: `tools/blender/preview.py -- <glb> <png> [closeup]`. Test: test_skinned_body.gd.
 - Characters (`tools/gen_characters.py`): skeleton pivots Body/Pelvis/HipL|R/KneeL|R,
   Body/Chest/ShoulderL|R/ElbowL|R, Body/Head/EyelidL|R; child `Life` =
   `CharacterLife` (breathing, blinking, walk cycle from the NPC's `walking`).
