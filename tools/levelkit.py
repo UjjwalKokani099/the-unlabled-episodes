@@ -6,17 +6,32 @@ Every tape's level generator imports this. Pieces (all axis-aligned, metres, sto
     slab(...)              floor + ceiling skin
     stair_flight(...)      visual steps + smooth ramp collision
     railing(...)           posts + rails (level or sloped)
-    window_fill(...)       frame, glass (dark or lit), grill bars
+    window_fill(...)       frame, glass (dark or lit), grill bars; with the Blender wall kit
+                           (assets/models/wallkit, tools/blender/build_wallkit.py): moulded
+                           frames + shutters, MS grills, sills, chajjas, door frames
+    lv.kit(...)            place a wall-kit piece (one MultiMesh per piece + material)
+    drain_pipe(...)        a drain pipe run down a facade (wall kit)
     residential_wing(...)  a whole G+4 Indian housing-society wing (stilt parking, stair core,
                            one flat per floor with balcony, terrace with stair cabin and tank)
 Static geometry goes under a StaticBatcher node ("Static") which merges it at runtime.
 Collision goes under one StaticBody3D ("Collision").
 """
+import json
 import math
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STOREY = 3.0
+KIT_DIR = os.path.join(ROOT, "assets", "models", "wallkit")
+KIT_MANIFEST = os.path.join(KIT_DIR, "pieces.json")
+
+
+def kit_name(kind: str, w: float, h: float, t: float) -> str:
+    return f"{kind}_{int(round(w * 100))}x{int(round(h * 100))}_t{int(round(t * 100))}"
+
+
+def kit_ready(name: str) -> bool:
+    return os.path.exists(os.path.join(KIT_DIR, name + ".obj"))
 
 
 def r(v: float) -> float:
@@ -56,6 +71,8 @@ class Level:
         self._box_shapes = {}
         self._mesh_count = 0
         self._shape_count = 0
+        self._kit = {}         # (piece, material) -> [transform rows]
+        self._kit_wanted = set()
         props = {}
         if root_script:
             props["script"] = f'ExtResource("{self.ext(root_script, "Script")}")'
@@ -152,13 +169,52 @@ class Level:
         self.nodes.append(self._node_text(f"S{self._shape_count}", "CollisionShape3D", "Collision",
                                           {"shape": f'SubResource("{sid}")', "metadata/surface": f'"{surface}"'}))
 
+    # ------------------------------------------------------------------ wall kit
+    def kit(self, piece: str, pos, yaw_deg: float, mat: str) -> bool:
+        """Place a wall-kit piece (local +z = outside) at pos turned by yaw. Returns False
+        (and asks build_wallkit.py for it via the manifest) when the piece isn't built yet."""
+        self._kit_wanted.add(piece)
+        if not kit_ready(piece):
+            return False
+        a = math.radians(yaw_deg)
+        c, s_ = math.cos(a), math.sin(a)
+        x, y, z = pos
+        self._kit.setdefault((piece, mat), []).append([c, 0.0, s_, x, 0.0, 1.0, 0.0, y, -s_, 0.0, c, z])
+        return True
+
+    def _write_kit(self) -> None:
+        if self._kit_wanted:
+            os.makedirs(KIT_DIR, exist_ok=True)
+            have = set(json.load(open(KIT_MANIFEST))["pieces"]) if os.path.exists(KIT_MANIFEST) else set()
+            if not self._kit_wanted <= have:
+                with open(KIT_MANIFEST, "w", encoding="utf-8", newline="\n") as f:
+                    json.dump({"pieces": sorted(have | self._kit_wanted)}, f, indent=1)
+                    f.write("\n")
+            missing = sorted(p for p in self._kit_wanted if not kit_ready(p))
+            if missing:
+                print(f"wall kit: {len(missing)} piece(s) not built yet (box fallback); run "
+                      "tools/blender/build_wallkit.py and this generator again")
+        if not self._kit:
+            return
+        self.add("Kit", "Node3D", ".")
+        for (piece, mat), rows in sorted(self._kit.items()):
+            mesh = self.ext(f"res://assets/models/wallkit/{piece}.obj", "Mesh")
+            buf = ", ".join(str(r(v)) for row in rows for v in row)
+            mm = self.sub("MultiMesh", {"transform_format": "1", "instance_count": str(len(rows)),
+                                        "mesh": f'ExtResource("{mesh}")', "buffer": f"PackedFloat32Array({buf})"})
+            self.add(f"{piece}_{mat}", "MultiMeshInstance3D", "Kit",
+                     {"multimesh": f'SubResource("{mm}")', "material_override": self.mat(mat)})
+
     def write(self, path: str) -> None:
+        self._write_kit()
         header = ["[gd_scene format=3]", ""]
         for p, (kind, rid) in self.ext_res.items():
             header.append(f'[ext_resource type="{kind}" path="{p}" id="{rid}"]')
         with open(path, "w", encoding="utf-8", newline="\n") as f:
             f.write("\n".join(header) + "\n\n" + "\n".join(self.subs) + "\n" + "\n".join(self.nodes))
-        print(f"wrote {os.path.relpath(path, ROOT)}: {self._mesh_count} kit boxes, {self._shape_count} colliders")
+        kit = sum(len(v) for v in self._kit.values())
+        print(f"wrote {os.path.relpath(path, ROOT)}: {self._mesh_count} kit boxes, {self._shape_count} colliders, "
+              f"{kit} wall-kit pieces in {len(self._kit)} multimeshes")
 
 
 # ---------------------------------------------------------------------- surfaces
@@ -216,7 +272,8 @@ def wall(lv: Level, p0, p1, y0, h, t, mat_out, mat_in, out_sign, openings=(), co
         put(lo, hi, y0, y0 + o["bottom"])
         put(lo, hi, y0 + o["top"], y0 + h)
         if o["kind"] in ("window", "vent", "door"):
-            window_fill(lv, along_x, c, out_sign, t, o["along"], o["w"], y0 + o["bottom"], y0 + o["top"], o)
+            window_fill(lv, along_x, c, out_sign, t, o["along"], o["w"], y0 + o["bottom"], y0 + o["top"],
+                        dict(o, _mat_out=mat_out))
         cursor = hi
     put(cursor, a1, y0, y0 + h)
 
@@ -236,6 +293,8 @@ def window_fill(lv, along_x, c, out_sign, t, along, w, y_lo, y_hi, o):
 
     h = y_hi - y_lo
     mid_y = (y_lo + y_hi) / 2
+    if window_kit(lv, along_x, c, out_sign, t, along, w, y_lo, h, o):
+        return
     # frame: sides + top (+ sill for windows)
     at(along - w / 2 + f / 2, mid_y, 0, f, h, fd, frame_mat)
     at(along + w / 2 - f / 2, mid_y, 0, f, h, fd, frame_mat)
@@ -258,6 +317,60 @@ def window_fill(lv, along_x, c, out_sign, t, along, w, y_lo, y_hi, o):
             at(along, y, gx, w, 0.03, 0.008, "metal_gate_green")
         if kind == "vent":
             return
+
+
+def _kit_place(lv, along_x, c, out_sign, along, y, piece, mat) -> bool:
+    """Kit piece at an opening: local +z must face the wall's outside."""
+    if along_x:
+        pos, yaw = (along, y, c), (0.0 if out_sign > 0 else 180.0)
+    else:
+        pos, yaw = (c, y, along), (90.0 if out_sign > 0 else -90.0)
+    return lv.kit(piece, pos, yaw, mat)
+
+
+def window_kit(lv, along_x, c, out_sign, t, along, w, y_lo, h, o) -> bool:
+    """Blender wall kit for an opening: frame (+ shutters), grill, masonry. Glass stays a box
+    (it carries the lit/dark material and the collision). False -> use the box version."""
+    kind = o["kind"]
+    frame_mat = o.get("frame", "wood_frame_blue")
+    out_mat = o.get("_mat_out", "wall_paint_white")
+    if kind == "door":
+        if o.get("frame_kit", True) is False:
+            return False
+        return _kit_place(lv, along_x, c, out_sign, along, y_lo, kit_name("doorframe", w, h, t), frame_mat)
+    pieces = []
+    if kind == "window":
+        pieces.append((kit_name("winframe", w, h, t), frame_mat))
+        if o.get("masonry", True):
+            pieces.append((kit_name("masonry" if o.get("chajja", True) else "sill", w, h, t), out_mat))
+        if o.get("grill", True):
+            pieces.append((kit_name("grill", w, h, t), "metal_gate_green"))
+    else:  # vent
+        pieces.append((kit_name("vent", w, h, t), frame_mat))
+        if o.get("grill", True):
+            pieces.append((kit_name("ventgrill", w, h, t), "metal_gate_green"))
+    for piece, _ in pieces:
+        lv._kit_wanted.add(piece)
+    if not all(kit_ready(piece) for piece, _ in pieces):
+        return False
+    for piece, mat in pieces:
+        _kit_place(lv, along_x, c, out_sign, along, y_lo, piece, mat)
+    if kind == "window":
+        glass = o.get("glass", "glass_dark")
+        fw = 0.065
+        if along_x:
+            lv.box((along, y_lo + h / 2, c - out_sign * 0.01), (w - 2 * fw, h - 2 * fw, 0.012), glass)
+        else:
+            lv.box((c - out_sign * 0.01, y_lo + h / 2, along), (0.012, h - 2 * fw, w - 2 * fw), glass)
+    return True
+
+
+def drain_pipe(lv, x, z, y0, storeys, t, out_sign, along_x, mat="pipe_grey") -> None:
+    """A drain pipe down a facade from the terrace to a shoe at the ground (wall kit)."""
+    for i in range(storeys):
+        _kit_place(lv, along_x, z if along_x else x, out_sign, x if along_x else z, y0 + i * STOREY,
+                   kit_name("pipe", STOREY, 0, t), mat)
+    _kit_place(lv, along_x, z if along_x else x, out_sign, x if along_x else z, y0 - 0.33, kit_name("pipeshoe", 0, 0, t), mat)
 
 
 # ---------------------------------------------------------------------- floors / stairs / rails
@@ -446,6 +559,9 @@ def residential_wing(lv: Level, name: str, ox: float, oz: float, *, letter: str,
                 occ = lv.sub("BoxOccluder3D", {"size": v3(W - CORE - 0.6, STOREY - 0.4, D - 0.6)})
                 lv.add("Occluder", "OccluderInstance3D", group,
                        {"position": v3(X((CORE + W) / 2), y + STOREY / 2, Z(D / 2)), "occluder": f'SubResource("{occ}")'})
+    # ---- drain pipes down the back facade (bathroom and kitchen stacks)
+    for px in (3.6, 7.7):
+        drain_pipe(lv, X(px), Z(0), 0.33, 5, T, -1, True)
     # ---- terrace (roof of floor 4)
     slab(lv, X(CORE), X(W), Z(0), Z(D), top, 0.15, "concrete_dark", "wall_paint_white")
     slab(lv, X(0), X(CORE), Z(0), Z(CORE_BACK), top, 0.15, "concrete_dark", "wall_paint_white")

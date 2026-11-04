@@ -176,6 +176,14 @@ Useful headless commands (run from project root):
 - Static geometry under `Static` (StaticBatcher merges at runtime: 6400 boxes -> ~200 meshes);
   collision under one `Collision` body; stairs = visual steps + convex ramp collider.
 - In generated .tscn, `script` must be written before that script's exported properties.
+- Blender wall kit: `tools/blender/build_wallkit.py` builds the pieces listed in
+  `assets/models/wallkit/pieces.json` as OBJ meshes (moulded window frames + shutters, MS grills with an
+  arched band, vent lattices, masonry = surround + sill + lintel + chajja, door frames, drain pipes).
+  levelkit `window_fill` -> `window_kit()` and `drain_pipe()` place them with `lv.kit(piece, pos, yaw, mat)`
+  (local +Z = outside); Level.write() emits one MultiMeshInstance3D per (piece, material) under `Kit`
+  (material_override: the wing's own wall paint for masonry). A size nobody built yet is added to
+  pieces.json and falls back to boxes: run the generators, then `blender -b --factory-startup --python
+  tools/blender/build_wallkit.py`, `--import`, then the generators again. Window glass stays a box.
 
 ## Tape 1: Shanti Vihar (Phase 6)
 - `chapters/chapter_01/shanti_vihar.tscn` + `objectives.tres` from `tools/gen_tape01.py`.

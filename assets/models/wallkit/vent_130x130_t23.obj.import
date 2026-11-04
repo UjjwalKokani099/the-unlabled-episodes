@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://clshx66kafqr6"
+path="res://.godot/imported/vent_130x130_t23.obj-408cd93862930fc42f80f3c5743bd07f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/vent_130x130_t23.obj-408cd93862930fc42f80f3c5743bd07f.mesh"]
+
+source_file="res://assets/models/wallkit/vent_130x130_t23.obj"
+dest_files=["res://.godot/imported/vent_130x130_t23.obj-408cd93862930fc42f80f3c5743bd07f.mesh", "res://.godot/imported/vent_130x130_t23.obj-408cd93862930fc42f80f3c5743bd07f.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

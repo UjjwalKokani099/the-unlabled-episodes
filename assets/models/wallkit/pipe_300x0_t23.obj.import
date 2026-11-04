@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://ctkosowr38e6f"
+path="res://.godot/imported/pipe_300x0_t23.obj-99da29c3e3bbe04d32a57f769572ce2c.mesh"
+
+[deps]
+
+files=["res://.godot/imported/pipe_300x0_t23.obj-99da29c3e3bbe04d32a57f769572ce2c.mesh"]
+
+source_file="res://assets/models/wallkit/pipe_300x0_t23.obj"
+dest_files=["res://.godot/imported/pipe_300x0_t23.obj-99da29c3e3bbe04d32a57f769572ce2c.mesh", "res://.godot/imported/pipe_300x0_t23.obj-99da29c3e3bbe04d32a57f769572ce2c.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

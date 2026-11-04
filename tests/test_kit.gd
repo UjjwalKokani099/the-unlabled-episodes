@@ -19,7 +19,17 @@ func _initialize() -> void:
 	root.add_child(level)
 	await physics(5)
 	var batcher = level.get_node("Static")
-	check(batcher.merged_from > 1000, "kit boxes merged: %d" % batcher.merged_from)
+	check(batcher.merged_from > 500, "kit boxes merged: %d" % batcher.merged_from)
+	# Blender wall kit: frames, grills, masonry, pipes as MultiMeshes (one per piece + material)
+	var kit: Node = level.get_node_or_null("Kit")
+	var instances := 0
+	var kinds := {}
+	if kit:
+		for mmi in kit.get_children():
+			instances += mmi.multimesh.instance_count
+			kinds[String(mmi.name).split("_")[0]] = true
+	check(instances > 100 and kinds.has("winframe") and kinds.has("grill") and kinds.has("masonry")
+		and kinds.has("doorframe") and kinds.has("pipe"), "wall kit placed: %d pieces %s" % [instances, kinds.keys()])
 	check(batcher.merged_into < 120, "into %d batched meshes" % batcher.merged_into)
 
 	# Walk up the first flight: ground landing (x 0.8, z 9.4) heading -Z.
