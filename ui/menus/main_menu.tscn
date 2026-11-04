@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://ui/hud/vhs_effect.gd" id="7_vhs"]
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/room_hum.wav" id="8_hum"]
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/vcr_insert.wav" id="9_whirr"]
+[ext_resource type="Theme" path="res://ui/themes/crt_screen_theme.tres" id="crt_theme"]
 
 [sub_resource type="ShaderMaterial" id="Material_vhs"]
 shader = ExtResource("6_vhs")
@@ -80,7 +81,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_theme")
+theme = ExtResource("crt_theme")
 
 [node name="Background" type="ColorRect" parent="Screen/UI"]
 layout_mode = 1
@@ -98,7 +99,7 @@ offset_left = 44.0
 offset_top = 30.0
 offset_right = 444.0
 offset_bottom = 64.0
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 36
 text = "■ STOP      VIDEO 1"
 
 [node name="Clock" type="Label" parent="Screen/UI"]
@@ -111,7 +112,7 @@ offset_top = 30.0
 offset_right = -44.0
 offset_bottom = 64.0
 grow_horizontal = 0
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 36
 text = "PM 11:42"
 horizontal_alignment = 2
 
@@ -135,7 +136,7 @@ text = "UNLABELED"
 
 [node name="Tagline" type="Label" parent="Screen/UI/Panel/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 23
 text = "five tapes. no labels."
 theme_override_colors/font_color = Color(0.75, 0.8, 1, 1)
 
@@ -187,7 +188,7 @@ theme_override_constants/separation = 8
 
 [node name="Title" type="Label" parent="Screen/UI/TapesPanel/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 52
 text = "TAPES"
 
 [node name="List" type="VBoxContainer" parent="Screen/UI/TapesPanel/VBox"]
@@ -197,7 +198,7 @@ script = ExtResource("3_list")
 
 [node name="Note" type="Label" parent="Screen/UI/TapesPanel/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 23
 text = ""
 theme_override_colors/font_color = Color(1, 0.8, 0.5, 1)
 
@@ -224,7 +225,7 @@ theme_override_constants/separation = 14
 
 [node name="Question" type="Label" parent="Screen/UI/Confirm/Panel/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 29
 text = "Erase every watched tape and saved progress?"
 autowrap_mode = 3
 

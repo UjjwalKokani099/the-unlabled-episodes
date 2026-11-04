@@ -1,0 +1,7 @@
+[gd_resource type="FontVariation" format=3]
+
+[ext_resource type="FontFile" path="res://assets/fonts/mukta/Mukta-SemiBold.ttf" id="1_f"]
+
+[resource]
+resource_name = "ui_bold: UI emphasis, speaker names"
+base_font = ExtResource("1_f")

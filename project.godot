@@ -21,6 +21,7 @@ EventBus="*res://core/event_bus.gd"
 SettingsManager="*res://core/settings_manager.gd"
 InputManager="*res://core/input_manager.gd"
 AudioManager="*res://core/audio_manager.gd"
+UIFeedback="*res://core/ui_feedback.gd"
 GraphicsManager="*res://core/graphics_manager.gd"
 SaveManager="*res://core/save_manager.gd"
 SceneLoader="*res://core/scene_loader.gd"
@@ -44,6 +45,10 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[gui]
+
+theme/custom="res://ui/themes/vcr_theme.tres"
 
 [input]
 

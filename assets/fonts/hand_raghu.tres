@@ -1,4 +1,7 @@
-[gd_resource type="SystemFont" format=3]
+[gd_resource type="FontVariation" format=3]
+
+[ext_resource type="FontFile" path="res://assets/fonts/kalam/Kalam-Regular.ttf" id="1_f"]
 
 [resource]
-font_names = PackedStringArray("Ink Free", "Segoe Print", "Comic Sans MS")
+resource_name = "hand_raghu: Raghu's handwriting (register, diary)"
+base_font = ExtResource("1_f")

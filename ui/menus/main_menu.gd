@@ -10,7 +10,8 @@ extends Control
 
 const UI := "Screen/UI/"
 ## Menu items are read off a TV across the room: bigger than a flat 2D menu.
-const ITEM_FONT_SIZE := 38
+## VT323 (the CRT's VCR font) runs small for its size, hence the large number.
+const ITEM_FONT_SIZE := 40
 
 var _starting: bool = false
 

@@ -1,0 +1,13 @@
+[gd_resource type="Theme" format=3]
+
+[ext_resource type="FontVariation" path="res://assets/fonts/vcr.tres" id="1_vcr"]
+
+[resource]
+resource_name = "CRT screen overlay: VCR on-screen-display font (everything else from vcr_theme)"
+default_font = ExtResource("1_vcr")
+default_font_size = 34
+Button/fonts/font = ExtResource("1_vcr")
+Button/font_sizes/font_size = 40
+Label/fonts/font = ExtResource("1_vcr")
+CheckButton/fonts/font = ExtResource("1_vcr")
+CheckButton/font_sizes/font_size = 32

@@ -24,6 +24,7 @@
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/vcr_click.wav" id="22_r"]
 [ext_resource type="PackedScene" path="res://ui/hud/camcorder.tscn" id="23_r"]
 [ext_resource type="PackedScene" path="res://ui/hud/subtitles.tscn" id="24_r"]
+[ext_resource type="FontVariation" path="res://assets/fonts/vcr.tres" id="25_r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0"]
 shader = ExtResource("3_r")
@@ -310,10 +311,6 @@ size = Vector3(0.48, 0.26, 0.02)
 
 [sub_resource type="BoxMesh" id="BoxMesh_88"]
 size = Vector3(0.19, 0.1, 0.025)
-
-[sub_resource type="SystemFont" id="SystemFont_89"]
-font_names = PackedStringArray("VCR OSD Mono", "Consolas", "Courier New")
-font_weight = 700
 
 [node name="Intro" type="Node3D"]
 script = ExtResource("1_r")
@@ -8340,7 +8337,7 @@ offset_left = 74.0
 offset_top = 48.0
 offset_right = 500.0
 offset_bottom = 90.0
-theme_override_fonts/font = SubResource("SystemFont_89")
+theme_override_fonts/font = ExtResource("25_r")
 theme_override_font_sizes/font_size = 34
 text = "PLAY ►"
 
@@ -8351,7 +8348,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_fonts/font = SubResource("SystemFont_89")
+theme_override_fonts/font = ExtResource("25_r")
 theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -8369,7 +8366,7 @@ offset_right = -40.0
 offset_bottom = -30.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_fonts/font = SubResource("SystemFont_89")
+theme_override_fonts/font = ExtResource("25_r")
 theme_override_font_sizes/font_size = 18
 horizontal_alignment = 2
 text = "Hold [Space] to skip"

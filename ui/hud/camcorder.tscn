@@ -4,14 +4,12 @@
 [ext_resource type="Script" path="res://ui/hud/camcorder_osd.gd" id="2_osd"]
 [ext_resource type="Script" path="res://ui/hud/vhs_effect.gd" id="3_vhs"]
 [ext_resource type="Shader" path="res://assets/shaders/vhs.gdshader" id="4_vhs_shader"]
+[ext_resource type="FontVariation" path="res://assets/fonts/vcr.tres" id="osd_font"]
 
-[sub_resource type="SystemFont" id="SystemFont_osd"]
-font_names = PackedStringArray("VCR OSD Mono", "Consolas", "Lucida Console", "Courier New", "Monospace")
-font_weight = 600
 
 [sub_resource type="Theme" id="Theme_osd"]
-default_font = SubResource("SystemFont_osd")
-default_font_size = 24
+default_font = ExtResource("osd_font")
+default_font_size = 30
 Label/colors/font_color = Color(1, 1, 1, 0.85)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0.6)
 Label/constants/shadow_offset_x = 2

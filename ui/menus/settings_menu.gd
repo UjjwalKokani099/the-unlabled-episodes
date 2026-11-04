@@ -30,12 +30,15 @@ const ROWS: Array[Dictionary] = [
 	{"tab": 2, "key": &"crouch_toggle", "label": "Toggle crouch"},
 	{"tab": 2, "key": &"sprint_toggle", "label": "Toggle run"},
 	{"tab": 3, "key": &"subtitles", "label": "Subtitles"},
-	{"tab": 3, "key": &"subtitle_size", "label": "Subtitle size", "min": 0.0, "max": 2.0, "step": 1.0, "names": ["SMALL", "MEDIUM", "LARGE"]},
+	{"tab": 3, "key": &"subtitle_size", "label": "Subtitle size", "min": 0.0, "max": 3.0, "step": 1.0, "names": ["SMALL", "MEDIUM", "LARGE", "XL"]},
+	{"tab": 3, "key": &"subtitle_bg_opacity", "label": "Subtitle background", "min": 0.0, "max": 1.0, "step": 0.05, "percent": true},
 ]
 const ACTION_NAMES := {&"move_forward": "Move forward", &"move_back": "Move back", &"move_left": "Move left",
 	&"move_right": "Move right", &"sprint": "Sprint", &"crouch": "Crouch", &"flashlight": "Flashlight",
 	&"interact": "Use / interact", &"spot": "Pause tape (spot him)", &"night_vision": "Night vision", &"objectives": "Show objectives"}
-const ROW_FONT_SIZE := 20
+## Row text size: larger on the CRT (VCR font) than in the pause menu (readable sans).
+const ROW_FONT_SIZE := 22
+const ROW_FONT_SIZE_CRT := 30
 
 ## Setting key (or action name for rebind rows) -> its control, for refresh and tests.
 var controls: Dictionary = {}
@@ -124,7 +127,7 @@ func _input(event: InputEvent) -> void:
 func _label(text: String) -> Label:
 	var label := Label.new()
 	label.text = text
-	label.add_theme_font_size_override(&"font_size", ROW_FONT_SIZE)
+	label.add_theme_font_size_override(&"font_size", _row_size())
 	label.custom_minimum_size.x = 260
 	return label
 
@@ -133,7 +136,7 @@ func _add_row(row: Dictionary) -> void:
 	var key: StringName = row.key
 	var label := _label(row.label)
 	var value_label := Label.new()
-	value_label.add_theme_font_size_override(&"font_size", ROW_FONT_SIZE)
+	value_label.add_theme_font_size_override(&"font_size", _row_size())
 	value_label.custom_minimum_size.x = 110
 	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_value_labels[key] = value_label
@@ -166,7 +169,7 @@ func _add_rebind_row(action: StringName) -> void:
 	var button := Button.new()
 	button.custom_minimum_size = Vector2(160, 0)
 	button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-	button.add_theme_font_size_override(&"font_size", ROW_FONT_SIZE)
+	button.add_theme_font_size_override(&"font_size", _row_size())
 	button.text = SettingsManager.key_name(action)
 	button.pressed.connect(func() -> void:
 		_waiting_action = action
@@ -190,3 +193,9 @@ func _update_value_label(row: Dictionary) -> void:
 	else:
 		text = row.fmt % value
 	(_value_labels[row.key] as Label).text = text
+
+
+## On the CRT the theme's Label font is the VCR face, which needs a bigger size.
+func _row_size() -> int:
+	var font := get_theme_font(&"font", &"Label")
+	return ROW_FONT_SIZE_CRT if font and "vcr" in font.resource_path else ROW_FONT_SIZE

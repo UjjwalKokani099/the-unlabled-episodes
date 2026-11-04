@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://chapters/hub/scripts/hub_tape.gd" id="1_tape"]
 [ext_resource type="Script" path="res://systems/interaction/interactable.gd" id="2_interactable"]
+[ext_resource type="FontVariation" path="res://assets/fonts/hand_raghu.tres" id="hand_font"]
 
 [sub_resource type="StandardMaterial3D" id="Material_shell"]
 albedo_color = Color(0.04, 0.04, 0.045, 1)
@@ -27,9 +28,6 @@ size = Vector3(0.15, 0.052, 0.002)
 material = SubResource("Material_dot")
 size = Vector3(0.016, 0.016, 0.002)
 
-[sub_resource type="SystemFont" id="SystemFont_hand"]
-font_names = PackedStringArray("Ink Free", "Segoe Print", "Comic Sans MS")
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_use"]
 size = Vector3(0.22, 0.14, 0.08)
 
@@ -51,7 +49,7 @@ shaded = true
 alpha_cut = 1
 modulate = Color(0.08, 0.09, 0.22, 1)
 outline_size = 0
-font = SubResource("SystemFont_hand")
+font = ExtResource("hand_font")
 font_size = 24
 text = "TAPE
 NAME"

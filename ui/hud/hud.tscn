@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://ui/hud/inspect_view.gd" id="7_inspect"]
 [ext_resource type="Script" path="res://ui/hud/dialogue_view.gd" id="8_dialogue"]
 [ext_resource type="Script" path="res://ui/hud/touch_controls.gd" id="9_touch"]
+[ext_resource type="FontVariation" path="res://assets/fonts/typewriter.tres" id="print_font"]
 
 [sub_resource type="StyleBoxFlat" id="Style_paper"]
 bg_color = Color(0.93, 0.9, 0.8, 1)
@@ -20,8 +21,6 @@ border_color = Color(0.6, 0.55, 0.45, 1)
 shadow_color = Color(0, 0, 0, 0.5)
 shadow_size = 12
 
-[sub_resource type="SystemFont" id="Font_print"]
-font_names = PackedStringArray("Courier New", "Consolas", "Nirmala UI")
 
 [node name="HUD" type="CanvasLayer"]
 layer = 10
@@ -137,7 +136,7 @@ theme_override_constants/margin_bottom = 30
 [node name="Text" type="RichTextLabel" parent="NoteView/Root/Paper/Margin"]
 layout_mode = 2
 theme_override_colors/default_color = Color(0.1, 0.1, 0.22, 1)
-theme_override_fonts/normal_font = SubResource("Font_print")
+theme_override_fonts/normal_font = ExtResource("print_font")
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 

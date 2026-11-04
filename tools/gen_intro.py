@@ -92,21 +92,21 @@ def main() -> None:
     # VHS look (OSD hidden by the director), subtitles, UI overlays
     lv.scene("Camcorder", "res://ui/hud/camcorder.tscn", ".")
     lv.scene("Subtitles", "res://ui/hud/subtitles.tscn", ".")
-    font = lv.sub("SystemFont", {"font_names": 'PackedStringArray("VCR OSD Mono", "Consolas", "Courier New")', "font_weight": "700"})
+    font = lv.ext("res://assets/fonts/vcr.tres", "FontVariation")
     lv.add("UI", "CanvasLayer", ".", {"layer": "50"})
     full = {"anchors_preset": "15", "anchor_right": "1.0", "anchor_bottom": "1.0", "grow_horizontal": "2", "grow_vertical": "2", "mouse_filter": "2"}
     lv.add("Fade", "ColorRect", "UI", {**full, "color": "Color(0, 0, 0, 0)"})
     lv.add("Blue", "ColorRect", "UI", {**full, "color": "Color(0.03, 0.08, 0.62, 1)"})
     lv.add("Play", "Label", "UI/Blue", {"offset_left": "74.0", "offset_top": "48.0", "offset_right": "500.0", "offset_bottom": "90.0",
-                                         "theme_override_fonts/font": f'SubResource("{font}")', "theme_override_font_sizes/font_size": "34",
+                                         "theme_override_fonts/font": f'ExtResource("{font}")', "theme_override_font_sizes/font_size": "34",
                                          "text": '"PLAY ►"'})
-    lv.add("Card", "Label", "UI", {**full, "theme_override_fonts/font": f'SubResource("{font}")',
+    lv.add("Card", "Label", "UI", {**full, "theme_override_fonts/font": f'ExtResource("{font}")',
                                     "theme_override_font_sizes/font_size": "40", "horizontal_alignment": "1",
                                     "vertical_alignment": "1", "text": '"THAT NIGHT"'})
     lv.add("Skip", "Label", "UI", {"anchors_preset": "3", "anchor_left": "1.0", "anchor_top": "1.0", "anchor_right": "1.0",
                                     "anchor_bottom": "1.0", "offset_left": "-330.0", "offset_top": "-60.0", "offset_right": "-40.0",
                                     "offset_bottom": "-30.0", "grow_horizontal": "0", "grow_vertical": "0",
-                                    "theme_override_fonts/font": f'SubResource("{font}")', "theme_override_font_sizes/font_size": "18",
+                                    "theme_override_fonts/font": f'ExtResource("{font}")', "theme_override_font_sizes/font_size": "18",
                                     "horizontal_alignment": "2", "text": '"Hold [Space] to skip"'})
     lv.write(os.path.join(ROOT, "chapters", "intro", "intro.tscn"))
 

@@ -25,7 +25,7 @@ const KEYS: Array[StringName] = [
 	&"mouse_sensitivity", &"invert_y", &"fov", &"crouch_toggle", &"sprint_toggle", &"head_bob_intensity", &"camera_sway",
 	&"reduce_camera_motion", &"screen_effects",
 	&"brightness", &"fullscreen", &"graphics_quality", &"show_fps", &"ps1_mode", &"film_look",
-	&"subtitles", &"subtitle_size", &"key_bindings",
+	&"subtitles", &"subtitle_size", &"subtitle_bg_opacity", &"key_bindings",
 	&"master_volume", &"music_volume", &"sfx_volume", &"ambience_volume", &"voice_volume", &"ui_volume",
 ]
 
@@ -127,11 +127,17 @@ var subtitles: bool = true:
 		subtitles = value
 		_on_value_set(&"subtitles")
 
-## 0 = small, 1 = medium, 2 = large.
+## 0 = small, 1 = medium, 2 = large, 3 = XL.
 var subtitle_size: int = 1:
 	set(value):
-		subtitle_size = clampi(value, 0, 2)
+		subtitle_size = clampi(value, 0, 3)
 		_on_value_set(&"subtitle_size")
+
+## Opacity of the black box behind subtitles (accessibility: 0 = none, 1 = solid).
+var subtitle_bg_opacity: float = 0.55:
+	set(value):
+		subtitle_bg_opacity = clampf(value, 0.0, 1.0)
+		_on_value_set(&"subtitle_bg_opacity")
 
 ## Rebound keyboard keys: action name -> physical keycode. Only changed actions are stored.
 var key_bindings: Dictionary = {}:

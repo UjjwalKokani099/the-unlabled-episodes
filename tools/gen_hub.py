@@ -102,9 +102,9 @@ def main() -> None:
     screen_mat = lv.sub("ShaderMaterial", {"render_priority": "0", "shader": f'ExtResource("{lv.ext("res://assets/shaders/tv_screen.gdshader", "Shader")}")'})
     quad = lv.sub("QuadMesh", {"material": f'SubResource("{screen_mat}")', "size": "Vector2(0.44, 0.33)"})
     lv.add("Screen", "MeshInstance3D", tv, {"position": v3(3.15, 0.9, 3.6), "rotation_degrees": v3(0, 180, 0), "mesh": f'SubResource("{quad}")'})
-    font = lv.sub("SystemFont", {"font_names": 'PackedStringArray("VCR OSD Mono", "Consolas", "Courier New")', "font_weight": "600"})
+    font = lv.ext("res://assets/fonts/vcr.tres", "FontVariation")
     lv.add("ScreenText", "Label3D", tv, {"position": v3(3.15, 0.9, 3.595), "rotation_degrees": v3(0, 180, 0), "pixel_size": "0.001",
-                                         "outline_size": "0", "font": f'SubResource("{font}")', "font_size": "48", "text": '""'})
+                                         "outline_size": "0", "font": f'ExtResource("{font}")', "font_size": "48", "text": '""'})
     lv.add("Glow", "OmniLight3D", tv, {"position": v3(3.1, 0.9, 3.2), "light_color": "Color(0.75, 0.8, 0.95, 1)",
                                        "light_energy": "0.8", "shadow_enabled": "true", "omni_range": "4.0"})
     hiss = lv.ext("res://assets/audio/sfx/tv_static.wav", "AudioStream")
@@ -118,7 +118,7 @@ def main() -> None:
     slot = lv.sub("BoxMesh", {"size": v3(0.24, 0.022, 0.01)})
     lv.add("Slot", "MeshInstance3D", vcr, {"position": v3(-0.04, 0.012, 0.152), "mesh": f'SubResource("{slot}")'})
     lv.add("Clock", "Label3D", vcr, {"position": v3(0.14, -0.012, 0.152), "pixel_size": "0.0006", "modulate": "Color(0.3, 1, 0.45, 1)",
-                                     "outline_size": "0", "font": f'SubResource("{font}")', "font_size": "32", "text": '"12:00"'})
+                                     "outline_size": "0", "font": f'ExtResource("{font}")', "font_size": "32", "text": '"12:00"'})
     clunk = lv.ext("res://assets/audio/sfx/vcr_insert.wav", "AudioStream")
     lv.add("InsertSound", "AudioStreamPlayer3D", vcr, {"stream": f'ExtResource("{clunk}")', "unit_size": "4.0", "bus": '&"SFX"'})
     interactable(lv, vcr, "Interactable", (0, 0, 0), (0.5, 0.2, 0.4), "VCR")

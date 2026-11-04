@@ -19,9 +19,7 @@ var _hand_font: Font
 func _ready() -> void:
 	_root.visible = false
 	_print_font = _text.get_theme_font(&"normal_font")
-	var hand := SystemFont.new()
-	hand.font_names = PackedStringArray(["Ink Free", "Segoe Print", "Comic Sans MS"])
-	_hand_font = hand
+	_hand_font = load("res://assets/fonts/hand_raghu.tres")
 
 
 func open(text: String, handwritten: bool = false) -> void:

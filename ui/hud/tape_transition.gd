@@ -18,9 +18,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	var font := SystemFont.new()
-	font.font_names = PackedStringArray(["VCR OSD Mono", "Consolas", "Lucida Console", "Courier New", "Monospace"])
-	font.font_weight = 600
+	var font: Font = load("res://assets/fonts/vcr.tres")
 
 	_black = ColorRect.new()
 	_black.color = Color.BLACK
