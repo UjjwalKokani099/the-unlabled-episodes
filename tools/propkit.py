@@ -143,19 +143,23 @@ class Props:
 
     # ------------------------------------------------------------------ real models
     def model(self, name, pos, yaw=0.0, pitch=0.0, roll=0.0, scale=1.0, parent=None, collide=None,
-              surface="concrete", node_name=None, script="res://systems/props/prop_model.gd", **opts):
+              surface="concrete", node_name=None, script="res://systems/props/prop_model.gd", mount=None, **opts):
         """Instance assets/models/<name>/<name>.gltf (CC0, tools/fetch_models.py).
         Same facing convention as the primitives: the model's front ends up along -Z
         after `yaw` (glTF fronts are +Z, so the instance is turned 180 degrees).
         collide = (size_x, size_y, size_z) box centred size_y/2 above `pos` (axis-aligned
         before yaw; only 0/90/180/270 yaws keep it exact). Extra keyword options are
-        PropModel exports (hide_parts, render_layers, visibility_end, cast_shadows...)."""
+        PropModel exports (hide_parts, render_layers, visibility_end, cast_shadows...).
+        mount = "wall" | "ceiling" | "on" (sits on another prop): tools/check_props.gd skips
+        those when it looks for floating props."""
         if parent is None:
             parent = self._models_parent()
         props = {"script": f'ExtResource("{self.lv.ext(script, "Script")}")',
                  "position": v3(*pos), "rotation_degrees": v3(pitch, yaw + 180.0, roll)}
         if scale != 1.0:
             props["scale"] = v3(scale, scale, scale)
+        if mount:
+            props["metadata/mount"] = f'"{mount}"'
         for k, val in opts.items():
             if isinstance(val, bool):
                 props[k] = "true" if val else "false"

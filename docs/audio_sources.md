@@ -131,3 +131,7 @@ Then add a row here: file, source URL, author, licence, date.
 | `sfx/phone_buzz.wav` | Synthesised (tools/gen_placeholder_sfx.py `phone_buzz`) | Original (project) | Phone vibrating (texts, calls) |
 | `sfx/mobile_ring.wav` | Synthesised (tools/gen_placeholder_sfx.py `mobile_ring`) | Original (project) | Nikhil's mobile ringtone (loops while a call rings) |
 | `sfx/tape_runout.wav` | Synthesised (tools/gen_placeholder_sfx.py `tape_runout`) | Original (project) | End of a tape: hiss thinning out, the deck's stop clunk (Chapter Complete) |
+| `sfx/light_flicker.wav` | Synthesised (tools/gen_placeholder_sfx.py `light_flicker`) | Original (project) | A tube light dropping out: starter tick + choke buzz (LightFlicker, TubeLight stutter) |
+| `sfx/pipe_creak.wav` | Synthesised (tools/gen_placeholder_sfx.py `pipe_creak`) | Original (project) | Old water pipe ticking and groaning (idle events) |
+| `sfx/lathi_tap.wav` | Synthesised (tools/gen_placeholder_sfx.py `lathi_tap`) | Original (project) | Distant watchman's stick taps + whistle (Tape 1 idle events) |
+| `sfx/cooker_whistle.wav` | Synthesised (tools/gen_placeholder_sfx.py `cooker_whistle`) | Original (project) | Pressure cooker whistling across the lane (hub idle events) |

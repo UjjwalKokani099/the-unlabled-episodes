@@ -78,7 +78,7 @@ def main() -> None:
     lv.add("LaptopGlow", "OmniLight3D", ".", {"position": v3(3.0, 0.95, 1.75), "light_color": "Color(0.55, 0.65, 1, 1)",
                                              "light_energy": "0.25", "omni_range": "1.6"})
     lv.box((3.45, 1.55, 1.8), (0.25, 0.03, 1.0), "wood_planks", collide=False)        # wall shelf
-    Props(lv).model("book_encyclopedia_set_01", (3.44, 1.565, 1.32), yaw=90, node_name="Books")
+    Props(lv).model("book_encyclopedia_set_01", (3.44, 1.565, 1.32), yaw=90, node_name="Books", mount="on")
     # steel trunk + CRT + VCR against the front wall, facing the bed (-Z)
     lv.box((2.85, 0.27, 3.75), (1.3, 0.54, 0.6), "metal_trunk_blue")
     Props(lv).model("television_02", TV_POS, node_name="CRT", scale=TV_SCALE)                  # CRT body
@@ -210,7 +210,7 @@ def dress_room(lv: Level) -> None:
     p.tumbler((2.98, 0.75, 1.42))
     p.model("plastic_thermos", (3.42, 0.75, 1.24), yaw=60)
     p.model("alarm_clock_01", (3.05, 0.82, 2.2), yaw=110, script="res://systems/props/wall_clock.gd")
-    p.model("portable_cassette_player", (3.45, 1.62, 2.1), yaw=90)
+    p.model("portable_cassette_player", (3.45, 1.62, 2.1), yaw=90, mount="on")
     p.model("stationery_supplies", (3.0, 0.82, 2.34), yaw=100)
     p.model("standing_picture_frame_01", (3.42, 0.75, 2.36), yaw=-20, node_name="MaaPhoto")
     p.books((3.38, 0.75, 1.45), yaw=8, n=3)
@@ -226,7 +226,7 @@ def dress_room(lv: Level) -> None:
     p.mosquito_coil((1.2, 0, 0.9))
     # corners: steel almirah (front right), water can, broom, slippers
     p.steel_almirah((3.02, 0, 0.38), yaw=180, w=0.82, h=1.75, d=0.5, top=False)
-    p.model("cardboard_box_01", (3.0, 1.81 + 0.18, 0.4), yaw=95)
+    p.model("cardboard_box_01", (3.0, 1.81, 0.4), yaw=95)  # on the almirah
     p.water_can((3.3, 0, 0.82))
     p.model("plastic_broom", (0.3, 0, 2.75), yaw=-90)
     p.doormat((0.75, 0, 3.85))
@@ -235,7 +235,7 @@ def dress_room(lv: Level) -> None:
     p.clothesline((0.12, 2.12, 1.75), (1.05, 2.12, 0.12), [
         (0.2, "shirt", "cloth_check"), (0.45, "towel", "cloth_towel"), (0.75, "trousers", "cloth_grey")])
     # walls: clock over the window, calendar between desk and TV, mirror + hooks by the door
-    p.model("wall_clock", (1.8, 2.5, 0.115), yaw=180, script="res://systems/props/wall_clock.gd")
+    p.model("wall_clock", (1.8, 2.5, 0.115), yaw=180, script="res://systems/props/wall_clock.gd", mount="wall")
     p.calendar((3.485, 1.65, 3.05), yaw=90)
     p.mirror((0.115, 1.55, 3.35), yaw=-90)
     p.switchboard((1.78, 1.3, 4.085), n=3)
@@ -256,7 +256,7 @@ def dress_room(lv: Level) -> None:
                            ("paan_a", (-0.0, 0.35, 5.6), (0, 90, 0))):
         lv.scene(name, f"res://assets/decals/{name}.tscn", ".", {"position": v3(*pos), "rotation_degrees": v3(*rot)})
     # corridor: a bare bulb on a pull-chain holder, a money plant by Nikhil's door
-    p.model("pull_chain_light_socket", (1.8, 2.9, 5.1), node_name="CorridorSocket")
+    p.model("pull_chain_light_socket", (1.8, 2.9, 5.1), node_name="CorridorSocket", mount="ceiling")
     p.cyl((1.8, 2.7, 5.1), 0.03, 0.03, 0.06, "bulb_warm", seg=10, shadow=False)
     p.model("potted_plant_02", (0.35, 0, 4.7), yaw=30, scale=0.75)
     # corridor: shared-bathroom bucket, shoes outside the door

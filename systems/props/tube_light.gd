@@ -3,7 +3,8 @@ extends Node3D
 ## Fluorescent tube-light fixture (the standard Indian corridor/stairwell light).
 ## Optional flicker: occasional dropouts and a stuttering start, like an old choke.
 ## Expects children: Tube (MeshInstance3D, emissive), Light (OmniLight3D); optional Hum
-## (AudioStreamPlayer3D): the choke's buzz, only while lit (cuts out in the flicker).
+## (AudioStreamPlayer3D): the choke's buzz, only while lit (cuts out in the flicker). Every
+## drop-out ticks (LightFlicker.SOUND) in sync with the light.
 
 ## Start switched on.
 @export var on: bool = true:
@@ -17,6 +18,7 @@ extends Node3D
 var _energy: float = 1.0
 var _emission: float = 1.0
 var _timer: float = 0.0
+var _last_tick: int = 0
 
 @onready var _tube: MeshInstance3D = $Tube
 @onready var _light: OmniLight3D = $Light
@@ -57,9 +59,18 @@ func _stutter() -> void:
 	var tween := create_tween()
 	for i in randi_range(2, 6):
 		tween.tween_callback(_apply.bind(randf_range(0.0, 0.3)))
+		tween.tween_callback(_tick)
 		tween.tween_interval(randf_range(0.02, 0.09))
 		tween.tween_callback(_apply.bind(1.0))
 		tween.tween_interval(randf_range(0.03, 0.15))
+
+
+func _tick() -> void:
+	var now := Time.get_ticks_msec()
+	if now - _last_tick < 70 or not is_inside_tree() or not on:
+		return
+	_last_tick = now
+	AudioManager.play_at(LightFlicker.SOUND, _light.global_position, -14.0)
 
 
 func _apply(level: float) -> void:

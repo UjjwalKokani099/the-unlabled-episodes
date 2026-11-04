@@ -171,6 +171,19 @@ Useful headless commands (run from project root):
   runout, card (title, END OF TAPE, runtime, sightings), any key -> hub. Tests set
   `GameManager.chapter_complete_wait = 0.3` (closes itself once black).
 
+## Chapter 1 polish (step 8)
+- Flicker = `LightFlicker` (systems/events): value noise drop-outs + `light_flicker.wav` at the
+  light on every drop (FlickerReaction, sequence `flicker`, TubeLight stutter ticks).
+- `CCTVMonitor`: night-gain picture (HDR albedo) + `Glow` OmniLight whose energy follows the
+  feed's measured brightness (sampled per switch), blanks on switch, dies with the power.
+- `IdleEvents` (systems/story): stand still 20 s -> a far-off sound (no repeats, cooldown,
+  not while saving is held or tension > 0.5). Tape 1 (dog, pipe, lathi + whistle, train,
+  gate) via gen_tape01.py; hub.tscn (dog, pressure cooker, horn, pipe).
+- Floating props: `tools/check_props.gd -- <scene>` (tools/prop_audit.gd); wall/ceiling/
+  stacked props pass propkit `mount="wall"|"ceiling"|"on"`. test_polish.gd runs it on
+  Tape 1 + the hub.
+- Mirrors: none story-relevant yet (the bible's mirror sightings come in later tapes).
+
 ## Graphics / performance (target: 60 FPS at 1080p on the RTX 3050 Ti laptop)
 - Graphics settings: `SettingsManager.graphics_quality` LOW/MEDIUM/HIGH fills the detail keys
   (`GRAPHICS_PRESETS`: render_scale, anti_aliasing, shadow/texture/fog/effects_quality); changing a

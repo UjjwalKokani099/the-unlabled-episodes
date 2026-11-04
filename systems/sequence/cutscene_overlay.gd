@@ -81,9 +81,10 @@ func _layout(amount: float) -> void:
 	_top.size = Vector2(s.x, h)
 	_bottom.position = Vector2(0, s.y - h)
 	_bottom.size = Vector2(s.x, h)
-	_ring.position = Vector2(s.x - 96, s.y - 96)
+	# above the camcorder's time/date block (bottom right), clear of the subtitles
+	_ring.position = Vector2(s.x - 108, s.y - 236)
 	_ring.size = Vector2(56, 56)
-	_label.position = Vector2(s.x - 360, s.y - 82)
+	_label.position = Vector2(s.x - 372, s.y - 222)
 	_label.size = Vector2(250, 30)
 	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 

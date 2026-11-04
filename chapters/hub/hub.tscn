@@ -4,6 +4,11 @@
 [ext_resource type="PackedScene" path="res://chapters/hub/nikhil_room.tscn" id="2_room"]
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="3_player"]
 [ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="4_hud"]
+[ext_resource type="Script" path="res://systems/story/idle_events.gd" id="5_idle"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/dog_bark.wav" id="6_dog"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/cooker_whistle.wav" id="7_cooker"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/horn_far.wav" id="8_horn"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/pipe_creak.wav" id="9_pipe"]
 
 [node name="Hub" type="Node3D"]
 script = ExtResource("1_hub")
@@ -16,3 +21,8 @@ rotation_degrees = Vector3(0, 180, 0)
 flashlight_on_start = false
 
 [node name="HUD" parent="." instance=ExtResource("4_hud")]
+
+[node name="IdleEvents" type="Node" parent="."]
+script = ExtResource("5_idle")
+sounds = Array[AudioStream]([ExtResource("6_dog"), ExtResource("7_cooker"), ExtResource("8_horn"), ExtResource("9_pipe")])
+distance = Vector2(10, 24)

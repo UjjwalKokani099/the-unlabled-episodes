@@ -87,7 +87,7 @@ def story_beats(lv) -> None:
                       ((-3.2, 12.55, -15.0), (0.9, 1.1, 0.6)), ((-9.0, 12.5, -21.5), (1.9, 0.6, 1.4))):
         p.dust_sheet(pos, size)  # furniture under dust sheets
     # the clock on the living-room wall stopped at 3:12
-    p.model("wall_clock", (-7.2, 14.3, -14.12), node_name="StoppedClock", script="res://systems/props/wall_clock.gd",
+    p.model("wall_clock", (-7.2, 14.3, -14.12), node_name="StoppedClock", mount="wall", script="res://systems/props/wall_clock.gd",
             stopped_at=3 * 3600 + 12 * 60 + 7)
     # curtains drawn across the living-room window (x -9.4..-8.2)
     for x in (-9.12, -8.48):
@@ -174,7 +174,7 @@ def story_beats(lv) -> None:
     lv.add("Brain", "Node", stalker, {"script": script(lv, "res://systems/characters/stalker.gd"),
                                       "patrol_points": "PackedVector3Array(14, 0, -2, 22, 0, 1, 20, 0, 9, 9, 0, 7, 8, 0, -4)"})
     # places to hide from his camera: crouch behind the cars, the covered car, the tank pillars
-    Props(lv).model("covered_car", (11, 0.3, 2), node_name="CoveredCar")  # a car under a dust cover
+    Props(lv).model("covered_car", (11, 0, 2), node_name="CoveredCar")  # a car under a dust cover
     lv.collider((11, 0.65, 2), (1.8, 1.3, 4.3), "metal")
     hide = "res://systems/story/hiding_spot.gd"
     for name, pos, size in (("HideBlueCar", (16, 0.9, 12), (3.2, 1.8, 4.8)), ("HideCoveredCar", (11, 0.9, 2), (3.4, 1.8, 5.2)),
@@ -190,6 +190,11 @@ def story_beats(lv) -> None:
     lv.add("Power", "Node", ".", {"script": script(lv, "res://systems/props/power_grid.gd"),
                                   "glow_materials": f"Array[BaseMaterial3D]([{glow}])"})
     lv.add("Story", "Node", ".", {"script": script(lv, SCRIPTS + "tape01_director.gd")})
+    # idle variety: stand still 20 s and the night does something small, far off
+    idle = ", ".join(f'ExtResource("{lv.ext(f"res://assets/audio/sfx/{n}.wav", "AudioStream")}")'
+                     for n in ("dog_bark", "pipe_creak", "lathi_tap", "train_far", "gate_creak"))
+    lv.add("IdleEvents", "Node", ".", {"script": script(lv, "res://systems/story/idle_events.gd"),
+                                       "sounds": f"Array[AudioStream]([{idle}])"})
 
 
 def main() -> None:
@@ -474,14 +479,14 @@ def dress_grounds(lv: Level) -> None:
     p.model("old_tyre", (-22.6, 0.3, 13.7), yaw=25, visibility_end=far)
     p.model("old_tyre", (-22.3, 0.08, 14.6), pitch=90, yaw=10, visibility_end=far)
     p.model("plastic_crate_01", (-21.6, 0, 14.4), yaw=5, visibility_end=far)
-    p.model("plastic_crate_01", (-21.62, 0.26, 14.42), yaw=-8, visibility_end=far)
+    p.model("plastic_crate_01", (-21.62, 0.26, 14.42), yaw=-8, visibility_end=far, mount="on")
     for i, (x, z, yaw) in enumerate(((-3.6, 26.9, 0), (-3.0, 27.25, 40), (-4.1, 27.3, -30))):
         p.model("trashbag", (x, 0, z), yaw=yaw, visibility_end=far)
     for x, z, yaw in ((-2.4, 26.6, 0), (2.2, 18.4, 70), (-7.5, 9.2, 140), (12.4, 4.6, 20)):
         p.model("can_rusted", (x, 0, z), pitch=90, yaw=yaw, visibility_end=25.0)
     # meter room (inner faces x 26.1 / 29.9, z -5.9 / -2.1; door in the x=26 wall at z -4)
     p.model("utility_box_01", (27.1, 0.05, -5.62), yaw=180, collide=(0.52, 1.12, 0.43), surface="metal")
-    p.model("power_box_01", (26.1, 1.6, -2.75), yaw=-90)
+    p.model("power_box_01", (26.1, 1.6, -2.75), yaw=-90, mount="wall")
     p.model("utility_box_02", (30.35, 0, -4.4), yaw=-90, collide=(0.92, 1.12, 0.43), surface="metal")
     # CCTV camera bodies, a little behind each feed's lens (the gate one on its own pole)
     lv.box((0, 1.55, 21.78), (0.08, 3.1, 0.08), "metal_gate_green", collide=False)
@@ -493,7 +498,7 @@ def dress_grounds(lv: Level) -> None:
                 math.cos(math.radians(yaw)) * math.cos(math.radians(pitch)))
         at = tuple(pos[i] + back[i] * 0.12 for i in range(3))
         p.model("security_camera_01", at, yaw=yaw, pitch=-pitch, node_name=f"CCTVCam{name}",
-                render_layers=1 << 18)
+                render_layers=1 << 18, mount="wall")
 
 
 def dress_cabin(lv: Level) -> None:
@@ -506,7 +511,7 @@ def dress_cabin(lv: Level) -> None:
     p.model("vintage_flashlight", (6.95, 0.76, 24.68), yaw=95)
     p.model("cigarette_pack", (6.52, 0.76, 25.02), yaw=25)
     # outside the cabin door: a bulkhead porch light (dies in the power cut), two money plants
-    p.model("security_light", (3.9, 2.35, 23.0), yaw=90, node_name="PorchLightBody")
+    p.model("security_light", (3.9, 2.35, 23.0), yaw=90, node_name="PorchLightBody", mount="wall")
     lv.add("PorchLight", "OmniLight3D", ".", {"position": v3(3.62, 2.2, 23.0), "light_color": "Color(1, 0.86, 0.62, 1)",
            "light_energy": "1.3", "omni_range": "9.0", "omni_attenuation": "1.3", "shadow_enabled": "true",
            "light_volumetric_fog_energy": "1.5"}, groups=["mains"])
@@ -525,7 +530,7 @@ def dress_cabin(lv: Level) -> None:
     p.newspaper_stack((6.95, f, 24.95), yaw=-6, n=6)
     p.mosquito_coil((4.7, f, 24.0))
     p.chappals((4.4, f, 24.25), yaw=80)
-    p.model("wall_clock", (5.75, 2.3, 22.1), yaw=180, script="res://systems/props/wall_clock.gd")
+    p.model("wall_clock", (5.75, 2.3, 22.1), yaw=180, script="res://systems/props/wall_clock.gd", mount="wall")
     lv.scene("CabinCalendar", "res://assets/decals/ganesh.tscn", ".", {"position": v3(4.65, 1.55, 25.4), "rotation_degrees": v3(0, 180, 0)})
     p.notices((7.4, 1.5, 24.1), yaw=90)
     p.hooks_with_bag((4.62, 1.8, 22.1), yaw=180)

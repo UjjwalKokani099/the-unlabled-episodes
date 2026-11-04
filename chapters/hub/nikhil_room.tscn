@@ -1191,6 +1191,7 @@ material_override = ExtResource("17_r")
 script = ExtResource("14_r")
 position = Vector3(3.44, 1.565, 1.32)
 rotation_degrees = Vector3(0.0, 270.0, 0.0)
+metadata/mount = "on"
 
 [node name="M39" type="MeshInstance3D" parent="Static"]
 position = Vector3(2.85, 0.27, 3.75)
@@ -1470,6 +1471,7 @@ rotation_degrees = Vector3(0.0, 290.0, 0.0)
 script = ExtResource("14_r")
 position = Vector3(3.45, 1.62, 2.1)
 rotation_degrees = Vector3(0.0, 270.0, 0.0)
+metadata/mount = "on"
 
 [node name="StationerySupplies" parent="Props" instance=ExtResource("41_r")]
 script = ExtResource("14_r")
@@ -1662,7 +1664,7 @@ metadata/surface = "metal"
 
 [node name="CardboardBox01" parent="Props" instance=ExtResource("44_r")]
 script = ExtResource("14_r")
-position = Vector3(3.0, 1.99, 0.4)
+position = Vector3(3.0, 1.81, 0.4)
 rotation_degrees = Vector3(0.0, 275.0, 0.0)
 
 [node name="P33" type="MeshInstance3D" parent="Static"]
@@ -1744,6 +1746,7 @@ material_override = SubResource("ShaderMaterial_114")
 script = ExtResource("38_r")
 position = Vector3(1.8, 2.5, 0.115)
 rotation_degrees = Vector3(0.0, 360.0, 0.0)
+metadata/mount = "wall"
 
 [node name="P42" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.481, 1.77, 3.05)
@@ -1912,6 +1915,7 @@ rotation_degrees = Vector3(0, 90, 0)
 script = ExtResource("14_r")
 position = Vector3(1.8, 2.9, 5.1)
 rotation_degrees = Vector3(0.0, 180.0, 0.0)
+metadata/mount = "ceiling"
 
 [node name="P61" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.8, 2.7, 5.1)

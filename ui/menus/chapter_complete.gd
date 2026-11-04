@@ -96,11 +96,12 @@ func _build_card() -> Control:
 		stats += "      SIGHTINGS %d/%d" % [GameManager.spotted_count(chapter.spot_prefix), chapter.spots_total]
 	box.add_child(_label(stats, vcr, 26, true, Color(0.85, 0.9, 1.0, 0.85)))
 	_prompt = _label("PRESS ANY KEY", vcr, 26, true)
-	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
-	_prompt.position.y -= 110
-	_prompt.position.x -= 120
-	_prompt.size = Vector2(240, 30)
 	root.add_child(_prompt)
+	_prompt.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	_prompt.offset_left = 0.0
+	_prompt.offset_right = 0.0
+	_prompt.offset_top = -150.0
+	_prompt.offset_bottom = -110.0
 	return root
 
 
