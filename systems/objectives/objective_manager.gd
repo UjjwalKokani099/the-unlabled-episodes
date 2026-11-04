@@ -37,6 +37,15 @@ func clear() -> void:
 
 
 ## Active objectives, in the order they appear in the set.
+## State of every objective, for the checkpoint: {id: {"state": "active"|"done"|"waiting", "progress": n}}.
+func snapshot() -> Dictionary:
+	var out := {}
+	for objective in _all:
+		var state := "done" if _done.has(objective.id) else ("active" if objective in _active else "waiting")
+		out[String(objective.id)] = {"state": state, "progress": int(_progress.get(objective.id, 0))}
+	return out
+
+
 func get_active() -> Array[ObjectiveData]:
 	var result: Array[ObjectiveData] = []
 	for objective in _all:

@@ -18,10 +18,14 @@ const PROMPT_FADE := 0.15
 
 var _prompt_shown: bool = false
 var _prompt_tween: Tween
+## The save icon (shown 2 s on every checkpoint save).
+var save_indicator: SaveIndicator
 
 
 func _ready() -> void:
 	add_to_group("hud")
+	save_indicator = SaveIndicator.new()
+	add_child(save_indicator)
 	message_label.modulate.a = 0.0
 	prompt_label.visible = false
 	prompt_label.modulate.a = 0.0

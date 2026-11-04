@@ -109,7 +109,7 @@ func _initialize() -> void:
 	check(card._tip.visible and card.tip_text() != "" and card._reels.visible, "tape card: tip + reels ('%s')" % card.tip_text())
 	await game.transition_finished
 	check(card._reels.progress == 1.0, "progress reached 100%")
-	game.save_checkpoint(&"start")
+	game.save_checkpoint(&"start", true)
 	await frames(6)
 	check(FileAccess.file_exists("user://thumbs/tape_00_test.png"), "checkpoint keeps a still of the picture")
 	var still = game.chapter_thumbnail(&"tape_00_test")

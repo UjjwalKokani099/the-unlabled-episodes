@@ -91,7 +91,7 @@ func _initialize() -> void:
 	check(game.get_flag("t1_vo_register_signed") == true, "...and it is remembered")
 
 	# --- checkpoint reload: the beat stays said
-	game.save_checkpoint(&"start")
+	game.save_checkpoint(&"start", true)
 	check(game.load_checkpoint(), "reload the checkpoint")
 	await game.transition_finished
 	lv = current_scene

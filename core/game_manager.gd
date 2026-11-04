@@ -7,9 +7,13 @@ extends Node
 ##   GameManager.complete_chapter()                   # "END OF TAPE", unlock next, go to hub
 ##
 ## A checkpoint save is: chapter id, checkpoint id, the Events counts, flags (e.g. which
-## pickups are gone) and the camcorder clock. Objectives rebuild themselves from the
-## Events counts when the level loads, so they don't need saving separately.
-## Each checkpoint also keeps a still of the picture (the tape menu's thumbnail).
+## pickups are gone), the inventory, the objectives (snapshot; they also rebuild from the
+## Events counts), world state (nodes in group "persist": doors, light switches...), play
+## time and the camcorder clock. Each checkpoint also keeps a still of the picture (the tape
+## menu's thumbnail) and shows the save icon.
+##
+## Never mid-scare or mid-cutscene: anything can hold saving (block_saving(source)); a
+## checkpoint reached meanwhile is written as soon as nothing holds it any more.
 
 ## Emitted when a level change has fully finished (screen visible, game unpaused).
 ## (Forwarded from SceneLoader; chapter/checkpoint news goes out on the EventBus.)
@@ -35,6 +39,13 @@ var tape_time_at_load: float = 0.0
 
 var _flags: Dictionary = {}
 var _pending_checkpoint: StringName = &""
+## Items picked up in this chapter: [{id, name}] (saved with the checkpoint).
+var inventory: Array[Dictionary] = []
+var _save_blocks: Dictionary = {}       # source key -> expiry (msec), 0 = until unblocked
+var _deferred_checkpoint: StringName = &""
+var _world_to_restore: Dictionary = {}
+## Longest a block can hold saving, whatever forgets to release it.
+const SAVE_BLOCK_MAX_MS := 180000
 ## Seconds played in the current chapter (paused time doesn't count; kept in checkpoints).
 var chapter_play_time: float = 0.0
 ## Play time of the chapter that was just completed (for the end-of-chapter screen).
@@ -84,6 +95,10 @@ func start_chapter(id: StringName) -> bool:
 	current_chapter = chapter
 	EventBus.reset()
 	_flags = {}
+	inventory.clear()
+	_save_blocks.clear()
+	_deferred_checkpoint = &""
+	_world_to_restore = {}
 	tape_time_at_load = 0.0
 	chapter_play_time = 0.0
 	_pending_checkpoint = &""
@@ -114,22 +129,104 @@ func saved_checkpoint_id() -> StringName:
 	return StringName(SaveManager.data.checkpoint.get("checkpoint", ""))
 
 
-func save_checkpoint(id: StringName) -> void:
+## `force` skips the scare/cutscene hold (tests, debug keys).
+func save_checkpoint(id: StringName, force: bool = false) -> void:
 	# Blocked only while the level is still loading behind the tape card (paused). The
 	# spawn checkpoint saves as the picture fades in, so "Continue" works right away.
 	if current_chapter == null or get_tree().paused:
 		return
+	if not force and not can_save():
+		_deferred_checkpoint = id  # mid-scare / cutscene / chase: save when it's over
+		return
+	_deferred_checkpoint = &""
 	SaveManager.data.checkpoint = {
 		"chapter": String(current_chapter.id),
 		"checkpoint": String(id),
 		"events": EventBus.snapshot(),
 		"flags": _flags.duplicate(),
+		"inventory": inventory.duplicate(true),
+		"objectives": ObjectiveManager.snapshot(),
+		"world": _world_state(),
 		"tape_time": _current_tape_time(),
 		"play_time": chapter_play_time,
 	}
 	SaveManager.write()
 	EventBus.checkpoint_saved.emit(id)
 	_capture_thumbnail(current_chapter.id)
+
+
+# --- Save blocking (never mid-scare, mid-cutscene or mid-chase) -------------------
+
+## Hold saving while `source` (any node or name) is busy; `seconds` > 0 releases itself.
+func block_saving(source: Variant, seconds: float = 0.0) -> void:
+	var limit := Time.get_ticks_msec() + (int(seconds * 1000.0) if seconds > 0.0 else SAVE_BLOCK_MAX_MS)
+	_save_blocks[_block_key(source)] = limit
+
+
+func unblock_saving(source: Variant) -> void:
+	_save_blocks.erase(_block_key(source))
+
+
+## True when nothing holds saving right now.
+func can_save() -> bool:
+	var now := Time.get_ticks_msec()
+	for key: String in _save_blocks.keys():
+		if int(_save_blocks[key]) <= now:
+			_save_blocks.erase(key)
+	return _save_blocks.is_empty()
+
+
+## What holds saving (debug overlay, tests).
+func save_blockers() -> PackedStringArray:
+	can_save()
+	return PackedStringArray(_save_blocks.keys())
+
+
+## A checkpoint waiting for the scare/cutscene to end, or &"".
+func deferred_checkpoint() -> StringName:
+	return _deferred_checkpoint
+
+
+func _block_key(source: Variant) -> String:
+	if source is Object:
+		var node := source as Node
+		return "%s#%d" % [node.name if node else "object", (source as Object).get_instance_id()]
+	return str(source)
+
+
+# --- Inventory ------------------------------------------------------------------
+
+func add_item(id: StringName, display_name: String) -> void:
+	if not has_item(id):
+		inventory.append({"id": String(id), "name": display_name})
+
+
+func has_item(id: StringName) -> bool:
+	return inventory.any(func(item: Dictionary) -> bool: return item.id == String(id))
+
+
+# --- World state (doors, switches: nodes in group "persist") ------------------------
+
+func _world_state() -> Dictionary:
+	var scene := get_tree().current_scene
+	var out := {}
+	if scene == null:
+		return out
+	for node in get_tree().get_nodes_in_group("persist"):
+		if node.has_method(&"save_state") and scene.is_ancestor_of(node):
+			out[String(scene.get_path_to(node))] = node.call(&"save_state")
+	return out
+
+
+func _restore_world() -> void:
+	var scene := get_tree().current_scene
+	if scene == null or _world_to_restore.is_empty():
+		return
+	for path: String in _world_to_restore:
+		var node := scene.get_node_or_null(NodePath(path))
+		if node and node.has_method(&"load_state"):
+			node.call(&"load_state", _world_to_restore[path])
+	_world_to_restore = {}
 
 
 ## Reloads the level at the last checkpoint. Returns false if there's nothing to load.
@@ -145,6 +242,10 @@ func load_checkpoint() -> bool:
 	_flags = (saved.get("flags", {}) as Dictionary).duplicate()
 	tape_time_at_load = float(saved.get("tape_time", 0.0))
 	chapter_play_time = float(saved.get("play_time", 0.0))
+	inventory.assign(saved.get("inventory", []))
+	_world_to_restore = (saved.get("world", {}) as Dictionary).duplicate(true)
+	_save_blocks.clear()
+	_deferred_checkpoint = &""
 	_pending_checkpoint = StringName(saved.get("checkpoint", ""))
 	_change_level(chapter.scene_path, "PLAY ►", PackedStringArray([chapter.title, chapter.subtitle]))
 	return true
@@ -264,12 +365,18 @@ func _process(delta: float) -> void:
 	if current_chapter != null and not get_tree().paused:
 		chapter_play_time += delta
 		SaveManager.data["play_time"] = float(SaveManager.data.get("play_time", 0.0)) + delta
+		if _deferred_checkpoint != &"" and not SceneLoader.is_transitioning() and can_save():
+			save_checkpoint(_deferred_checkpoint)
 
 
 func _clear_chapter_state() -> void:
 	current_chapter = null
 	EventBus.reset()
 	_flags = {}
+	inventory.clear()
+	_save_blocks.clear()
+	_deferred_checkpoint = &""
+	_world_to_restore = {}
 	tape_time_at_load = 0.0
 
 
@@ -389,6 +496,7 @@ func _change_level(path: String, header: String, lines: PackedStringArray) -> vo
 
 
 func _place_player_at_checkpoint() -> void:
+	_restore_world()
 	if _pending_checkpoint == &"":
 		return
 	var player := get_tree().get_first_node_in_group("player") as Player

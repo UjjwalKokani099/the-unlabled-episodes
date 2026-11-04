@@ -75,6 +75,7 @@ func glitch(amount: float, duration: float = 0.5) -> void:
 ## `to_time` ("hh:mm:ss"). Await `cut_finished` (or this call) to continue.
 func tape_cut(to_time: String, black_seconds: float = 1.2) -> void:
 	is_cutting = true
+	GameManager.block_saving(self, 10.0)  # no checkpoint inside a tape cut
 	_play(STATIC_SOUND, -6.0)
 	vhs.glitch(1.0, 0.6)
 	_show_static_rect()
@@ -88,6 +89,7 @@ func tape_cut(to_time: String, black_seconds: float = 1.2) -> void:
 	_black.visible = false
 	vhs.glitch(0.7, 0.8)
 	is_cutting = false
+	GameManager.unblock_saving(self)
 	cut_finished.emit()
 
 

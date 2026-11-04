@@ -99,7 +99,7 @@ func _initialize() -> void:
 	events.fire(&"deshmukh_left")
 	await process_frame
 	check(is_equal_approx(audio._tension_sources.get(&"story", -1.0), 0.3), "3:12 walk-out raises story tension to 0.3")
-	game.save_checkpoint(&"start")
+	game.save_checkpoint(&"start", true)
 	check(game.load_checkpoint(), "reload checkpoint")
 	await game.transition_finished
 	current_scene.get_node("Story").time_scale = 0.02

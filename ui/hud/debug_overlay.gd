@@ -44,6 +44,9 @@ func _process(_delta: float) -> void:
 	var chapter := GameManager.current_chapter
 	lines.append("chapter: %s   checkpoint saved: %s" % [
 		chapter.id if chapter else "-", GameManager.saved_checkpoint_id() if GameManager.has_checkpoint() else "-"])
+	var blockers := GameManager.save_blockers()
+	lines.append("saving: %s%s" % ["ok" if blockers.is_empty() else "held by " + ", ".join(blockers),
+		("   (queued: %s)" % GameManager.deferred_checkpoint()) if GameManager.deferred_checkpoint() != &"" else ""])
 	lines.append("events: %s" % ("-" if _recent_events.is_empty() else " > ".join(_recent_events)))
 	lines.append("mouse sensitivity %.2f   ([ / ] to change)" % SettingsManager.mouse_sensitivity)
 	lines.append("screen effects %.1f   (F4 to cycle)" % SettingsManager.screen_effects)

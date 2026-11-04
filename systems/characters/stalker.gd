@@ -95,6 +95,11 @@ func stop() -> void:
 
 func _set_state(new_state: State) -> void:
 	state = new_state
+	# Never save while he's on you (following, hunting, searching, caught).
+	if new_state in [State.FOLLOWING, State.HUNT, State.SEARCH, State.CAUGHT]:
+		GameManager.block_saving(self)
+	else:
+		GameManager.unblock_saving(self)
 	if not is_in_group("stalkers"):
 		add_to_group("stalkers")
 	body.active = new_state not in [State.ABSENT]

@@ -1,6 +1,7 @@
 class_name LightSwitch
 extends Node3D
-## Wall switch that turns a set of lights on and off. Faces +Z.
+## Wall switch that turns a set of lights on and off. Faces +Z. Its state is part of the
+## checkpoint (group "persist").
 
 signal toggled(is_on: bool)
 
@@ -15,6 +16,7 @@ const CLICK: SoundSet = preload("res://data/sounds/switch_click.tres")
 
 
 func _ready() -> void:
+	add_to_group("persist")
 	interactable.interacted.connect(func(_by: Node3D) -> void: set_on(not is_on))
 	interactable.default_tick = false
 	_apply()
@@ -27,6 +29,15 @@ func set_on(on: bool) -> void:
 	is_on = on
 	_apply()
 	toggled.emit(is_on)
+
+
+func save_state() -> Dictionary:
+	return {"on": is_on}
+
+
+func load_state(state: Dictionary) -> void:
+	is_on = bool(state.get("on", is_on))
+	_apply()
 
 
 func _apply() -> void:

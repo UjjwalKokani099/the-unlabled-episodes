@@ -4,6 +4,7 @@ extends Node3D
 ## Swings away from whoever opens it (eased), with a hinge creak; closing ends in the latch
 ## clicking home. Locked doors rattle in their frame (sound + a small camera nudge) and show
 ## a message. Sounds are SoundSets (data/sounds/door_*.tres), never the same twice in a row.
+## Open/locked state is part of the checkpoint (group "persist": save_state / load_state).
 
 signal opened
 signal closed
@@ -23,6 +24,8 @@ const RATTLE: SoundSet = preload("res://data/sounds/door_rattle.tres")
 @export var opened_event: StringName
 ## Played (from the door) when slam() actually bangs it shut.
 @export var slam_sound: AudioStream
+## Keep this door's open/locked state in checkpoints.
+@export var persist: bool = true
 
 var is_open: bool = false
 var _tween: Tween
@@ -35,6 +38,8 @@ var _slam_player: AudioStreamPlayer3D
 
 
 func _ready() -> void:
+	if persist:
+		add_to_group("persist")
 	interactable.interacted.connect(_on_interacted)
 	interactable.default_tick = false  # the door has its own sounds
 	if slam_sound:
@@ -104,6 +109,21 @@ func unlock() -> void:
 func _on_event(id: StringName) -> void:
 	if id == unlock_event:
 		unlock()
+
+
+## Checkpoint: how this door was left.
+func save_state() -> Dictionary:
+	return {"open": is_open, "angle": hinge.rotation.y, "locked": locked}
+
+
+## Checkpoint load: put the door back, silently.
+func load_state(state: Dictionary) -> void:
+	if _tween:
+		_tween.kill()
+	is_open = bool(state.get("open", is_open))
+	locked = bool(state.get("locked", locked))
+	hinge.rotation.y = float(state.get("angle", deg_to_rad(open_angle) if is_open else 0.0))
+	_update_prompt()
 
 
 func _on_interacted(by: Node3D) -> void:

@@ -1,7 +1,8 @@
 class_name Pickup
 extends Node3D
 ## An item the player can take. Fires `item_id` on the EventBus (objectives count it),
-## shows a message, then removes itself. Stays gone after a checkpoint load (GameManager flag).
+## shows a message, goes into GameManager.inventory, then removes itself. Stays gone after a
+## checkpoint load (GameManager flag).
 
 signal picked_up(item_id: StringName)
 
@@ -24,6 +25,7 @@ func _ready() -> void:
 func _on_interacted(_by: Node3D) -> void:
 	interactable.enabled = false
 	GameManager.set_flag(_flag_key())
+	GameManager.add_item(item_id, display_name)
 	AudioManager.play_set_at(PICKUP_SOUNDS, global_position, -4.0, 2.0)
 	picked_up.emit(item_id)
 	EventBus.fire(item_id)

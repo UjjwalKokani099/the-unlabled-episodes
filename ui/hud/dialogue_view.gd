@@ -43,12 +43,14 @@ func play(path: String, start: String = "") -> void:
 	_dialogue = d
 	is_open = true
 	_root.visible = true
+	GameManager.block_saving(self)  # never save mid-conversation
 	_set_player_input(false)
 	_show(d.resolve(start if start != "" else d.start))
 
 
 ## Ends the conversation now.
 func stop() -> void:
+	GameManager.unblock_saving(self)
 	if not is_open:
 		return
 	is_open = false

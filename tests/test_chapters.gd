@@ -57,7 +57,15 @@ func _initialize() -> void:
 	check(active_ids() == ["collect_batteries"] and objectives.get_progress(&"collect_batteries") == 2, "progress before checkpoint (%s)" % [active_ids()])
 	p.global_position = Vector3(8, 0, -9.5)
 	await physics(6)
-	check(game.saved_checkpoint_id() == &"storage", "storage checkpoint saved")
+	# The tape's door-slam scare is still playing: the checkpoint waits for it (never save
+	# mid-scare), then saves on its own.
+	check(game.deferred_checkpoint() == &"storage" or game.saved_checkpoint_id() == &"storage",
+		"storage checkpoint queued while the scare plays")
+	var waited := 0.0
+	while game.saved_checkpoint_id() != &"storage" and waited < 10.0:
+		await create_timer(0.25).timeout
+		waited += 0.25
+	check(game.saved_checkpoint_id() == &"storage", "storage checkpoint saved after the scare (%.1f s)" % waited)
 	var dark_count: int = events.count(&"entered_dark_room")
 	check(dark_count == 1, "dark room zone fired once on the way")
 	var save_text := FileAccess.get_file_as_string("user://test_save.json")
