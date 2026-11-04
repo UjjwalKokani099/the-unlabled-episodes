@@ -93,7 +93,7 @@ func _initialize() -> void:
 	check(not room2.get_node("Scares/Figure").visible, "figure hidden after load")
 	check(absf(room2.get_node("Door").hinge.rotation.y) < 0.01, "tape door-slam not replayed")
 	var panel: Array = room2.get_node("HUD/Objectives").get_children().map(func(l): return l.text)
-	check(panel == ["Collect batteries  2/3"], "panel shows restored objective only (%s)" % [panel])
+	check(panel == ["•  Collect batteries  2/3"], "panel shows restored objective only (%s)" % [panel])
 	check(room2.get_node("Camcorder").osd.elapsed > 0.1, "camcorder clock continues (%.1f s)" % room2.get_node("Camcorder").osd.elapsed)
 
 	# --- Finish the tape ---
