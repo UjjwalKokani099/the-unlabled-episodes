@@ -98,7 +98,9 @@ func _process(delta: float) -> void:
 	# Slow handheld drift (less when leaning in to read).
 	var amount := 1.0 if framing == Framing.IDLE else 0.35
 	var sway := Basis.from_euler(Vector3(sin(_time * 0.13) * 0.010, sin(_time * 0.09) * 0.016, sin(_time * 0.05) * 0.004) * amount)
-	_camera.transform = Transform3D(_base.basis * sway, _base.origin + Vector3(sin(_time * 0.07) * 0.02 * amount, 0, 0))
+	# ...and a very slow push in and out (~45 s), so the room never sits still.
+	var dolly := -_base.basis.z * (sin(_time * 0.14) * 0.035 * amount)
+	_camera.transform = Transform3D(_base.basis * sway, _base.origin + Vector3(sin(_time * 0.07) * 0.02 * amount, 0, 0) + dolly)
 	_rec.visible = fmod(_time, 1.2) < 0.7
 	# CRT glow: a constant shimmer plus the odd brown-out stutter.
 	_next_stutter -= delta

@@ -15,6 +15,10 @@ extends Resource
 @export var start_datetime: String = "1998-10-31T23:42:00"
 ## Some chapters don't let the player run (a slow, careful night).
 @export var allow_running: bool = true
+## Spottable ids on this tape start with this (e.g. "t1_"); the tape menu counts them.
+@export var spot_prefix: String = ""
+## How many Cameraman sightings this tape hides (story bible: three per tape, 12 total).
+@export var spots_total: int = 3
 
 
 func is_built() -> bool:

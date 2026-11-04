@@ -99,13 +99,24 @@ Useful headless commands (run from project root):
   `locked` + `unlock_event`; open state is a GameManager flag.
 
 ## Menus + intro (Phases 4-5)
-- Main scene = `ui/menus/main_menu.tscn`, diegetic: the VCR-OSD menu UI lives in the
+- Main scene = `ui/menus/boot.tscn` (Boot: black -> studio card 3 s + `boot_sting.wav` -> content
+  warning, PRESS ANY KEY -> main menu; studio name from `data/credits.json`). Tests load
+  `ui/menus/main_menu.tscn` directly. Main menu = diegetic: the VCR-OSD menu UI lives in the
   `Screen` SubViewport (960x720) and is shown on the CRT in `menu_backdrop.tscn` (Nikhil's
   room, tube light off, REC dot) via `assets/shaders/crt_screen.gdshader`. MainMenu._input forwards
   everything to the screen; mouse positions go through `MenuBackdrop.screen_uv_at()` (same
   curvature as the shader). Camera framings IDLE / CLOSE (settings, tapes) / DIVE (start).
   Menu UI paths start with `Screen/UI/`; tests read focus with `menu.focused_control()`.
-  CONTINUE / NEW GAME (replays intro) / TAPES (locked = blank cassette) / SETTINGS / QUIT.
+  CONTINUE / NEW GAME (replays intro) / TAPES (locked = blank cassette; preview = the still
+  GameManager saves at each checkpoint (`chapter_thumbnail(id)`, user://.../thumbs), watched +
+  runtime, `SPOTTED n/3` from ChapterData `spot_prefix`/`spots_total`) / SETTINGS / CREDITS
+  (CreditsRoll reads `data/credits.json`, built by `python tools/gen_credits.py` from
+  `data/credits_header.json` + the CREDITS.md files) / QUIT. Menu drone =
+  `assets/audio/music/menu_drone.ogg` via AudioManager.play_music (4 s fade in). Version label =
+  project.godot `application/config/version`.
+- Loading screen = SceneLoader's titled TapeTransition card: ReelIndicator + LOADING % (threaded
+  load progress) + a tip from `data/loading_tips.json` (LoadingTips; `{action}` -> key, `where` =
+  scene path substring). Pause menu asks (ConfirmDialog) before restart / eject / main menu.
 - First launch autoplays `chapters/intro/intro.tscn` (built by `tools/gen_intro.py`, driven by
   `chapters/intro/scripts/intro_director.gd`; hold Space to skip; `intro_seen` in the save).
 - Settings screen: six tabs (GRAPHICS, DISPLAY, AUDIO, CONTROLS, GAMEPLAY, ACCESSIBILITY) from

@@ -9,3 +9,5 @@ title = "TAPE 04"
 subtitle = "THE LAST DELIVERY"
 scene_path = ""
 start_datetime = "2009-01-09T00:50:00"
+spot_prefix = "t4_"
+spots_total = 3

@@ -1,0 +1,125 @@
+{
+	"studio": "UJJWAL KOKANI",
+	"presents": "presents",
+	"sections": [
+		{
+			"title": "UNLABELED",
+			"lines": [
+				"A found-footage horror anthology"
+			]
+		},
+		{
+			"title": "Created by",
+			"lines": [
+				"Ujjwal Kokani"
+			]
+		},
+		{
+			"title": "Engine",
+			"lines": [
+				"Godot Engine (MIT licence)",
+				"Jolt Physics (MIT licence)"
+			]
+		},
+		{
+			"title": "Fonts",
+			"lines": [
+				"VT323 by Peter Hull (SIL OFL 1.1)",
+				"Mukta by Ek Type (SIL OFL 1.1)",
+				"Special Elite by Astigmatic (Apache 2.0)",
+				"Kalam by Indian Type Foundry (SIL OFL 1.1)",
+				"Reenie Beanie by James Grieshaber (SIL OFL 1.1)"
+			]
+		},
+		{
+			"title": "3D models - Poly Haven (CC0)",
+			"lines": [
+				"Plastic Monobloc Chair 01 by Kuutti Siitonen",
+				"Ceiling Fan by Ulan Cabanilla",
+				"Television 02 by Benny Weimer",
+				"Classic Laptop by Arrangemonk",
+				"Desk Lamp Arm 01 by Yann Kervran, Kuutti Siitonen",
+				"Wall Clock by PierreB3D",
+				"Cardboard Box 01 by Rahul Chaudhary",
+				"Vintage Suitcase by Maximilian Schuster",
+				"Plastic Jerrycan by Ulan Cabanilla",
+				"Plastic Broom by L",
+				"Metal Trash Can by GurJas Studios",
+				"Alarm Clock 01 by Yann Kervran, James Ray Cock",
+				"Plastic Thermos by PierreB3D",
+				"Portable Cassette Player by Mateusz Sadek",
+				"Old Bed Frame by Luca B",
+				"Book Encyclopedia Set 01 by John Malcolm",
+				"Stationery Supplies by Mateusz Sadek",
+				"Binder Notebook by DaDrood",
+				"Standing Picture Frame 01 by James Ray Cock",
+				"Pull Chain Light Socket by Josh Dean",
+				"Planter Pot Clay by Amal Kumar",
+				"Wooden Stool 01 by Kuutti Siitonen",
+				"Security Camera 01 by Alexander Otterbeck, Yann Kervran",
+				"Clipboard by ProgrammerOnCoffee",
+				"Metal Jug by Anzor Lezhava",
+				"Vintage Flashlight by Omar M. El-Safy",
+				"Power Box 01 by Rico Cilliers, Yann Kervran",
+				"Utility Box 01 by James Ray Cock",
+				"Covered Car by MP",
+				"Old Tyre by MP",
+				"Plastic Crate 01 by PierreB3D",
+				"Trashbag by Benny Weimer",
+				"Can Rusted by Rahul Chaudhary",
+				"Cigarette Pack by Ulrich Büch",
+				"Potted Plant 02 by Rico Cilliers",
+				"Security Light by Maximilian Schuster",
+				"Utility Box 02 by James Ray Cock",
+				"",
+				"Thank you: Alexander Otterbeck, Amal Kumar, Anzor Lezhava, Arrangemonk, Benny Weimer, DaDrood, GurJas Studios, James Ray Cock, John Malcolm, Josh Dean, Kuutti Siitonen, L, Luca B, MP, Mateusz Sadek, Maximilian Schuster, Omar M. El-Safy, PierreB3D, ProgrammerOnCoffee, Rahul Chaudhary, Rico Cilliers, Ulan Cabanilla, Ulrich Büch, Yann Kervran"
+			]
+		},
+		{
+			"title": "Textures - ambientCG (CC0)",
+			"lines": [
+				"PaintedPlaster017",
+				"PaintedPlaster014",
+				"PaintedPlaster016",
+				"PaintedPlaster009",
+				"PaintedPlaster018",
+				"Plaster006",
+				"Concrete012",
+				"Concrete036",
+				"Concrete032",
+				"Bricks101",
+				"Terrazzo011",
+				"Concrete031",
+				"Tiles002",
+				"Tiles074",
+				"Tiles078",
+				"PavingStones099",
+				"Asphalt015",
+				"Ground047",
+				"PaintedMetal006",
+				"PaintedMetal010",
+				"Rust009",
+				"CorrugatedSteel005",
+				"PaintedWood005",
+				"PaintedWood006A",
+				"PaintedWood008A",
+				"Planks005",
+				"Paper001",
+				"Leaking012C",
+				"Leaking017B"
+			]
+		},
+		{
+			"title": "Sound",
+			"lines": [
+				"Original sound design (synthesised for this game)"
+			]
+		},
+		{
+			"title": "",
+			"lines": [
+				"Thank you for watching."
+			]
+		}
+	]
+}

@@ -8,10 +8,11 @@ Run from the project root (needs ffmpeg on PATH):
 Loudness targets (EBU R128 integrated, two-pass ffmpeg loudnorm, true peak <= -1.5 dBTP):
     ambience beds  -30 LUFS   (room tone, wind, crickets... sit under everything)
     tension layers -28 LUFS   (mixed in by AudioManager.set_tension)
+    music          -24 LUFS   (main menu drone)
     voice          -16 LUFS   (when VO exists: tools/_build/voice/<id>.wav)
 Short SFX stay WAV, peak-normalised by the generator, and are balanced by per-use volume.
 To use a real recording, drop its WAV in tools/_build/beds/<folder>/ with the same name.
---imports sets loop=true on every OGG under assets/audio/ambience|tension after import.
+--imports sets loop=true on every OGG under assets/audio/ambience|tension|music after import.
 """
 import glob
 import json
@@ -22,7 +23,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "tools", "_build", "beds")
-TARGETS = {"ambience": -30.0, "tension": -28.0, "voice": -16.0}
+TARGETS = {"ambience": -30.0, "tension": -28.0, "music": -24.0, "voice": -16.0}
 TRUE_PEAK = -1.5
 
 
@@ -45,7 +46,7 @@ def process(src: str, dst: str, target: float) -> float:
 
 def set_loop_imports() -> None:
     n = 0
-    for folder in ("ambience", "tension"):
+    for folder in ("ambience", "tension", "music"):
         for imp in glob.glob(os.path.join(ROOT, "assets", "audio", folder, "*.ogg.import")):
             text = open(imp, encoding="utf-8").read()
             new = re.sub(r"^loop=.*$", "loop=true", text, flags=re.M)

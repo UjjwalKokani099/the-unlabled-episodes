@@ -609,12 +609,44 @@ def bed_rumble(rng, seconds):
     return lowpass(out, 0.02)
 
 
+def bed_menu_drone(rng, seconds):
+    """Main menu: a slow, dark pad (A, E, a flat ninth detuned) breathing over tape hiss.
+    Swells every 8 s; 24 s loop."""
+    n = int(RATE * seconds)
+    hiss = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.18)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        swell = 0.55 + 0.45 * math.sin(2 * math.pi * t / 8.0 - 1.2)
+        pad = (0.5 * math.sin(2 * math.pi * 55.0 * t) + 0.35 * math.sin(2 * math.pi * 55.35 * t)
+               + 0.28 * math.sin(2 * math.pi * 82.41 * t) * swell
+               + 0.12 * math.sin(2 * math.pi * 116.54 * t) * swell * swell
+               + 0.08 * math.sin(2 * math.pi * 164.81 * t + math.sin(2 * math.pi * 0.25 * t)))
+        out.append(pad + hiss[i] * 0.35)
+    return lowpass(out, 0.35)
+
+
+def boot_sting(rng):
+    """Studio logo: a tape-head thunk, then a low swell that hangs and decays (3 s)."""
+    n = int(RATE * 3.0)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        thunk = math.sin(2 * math.pi * 48 * t) * math.exp(-t * 18) * 1.2 + rng.uniform(-1, 1) * math.exp(-t * 60) * 0.5
+        env = min(t / 0.6, 1.0) * math.exp(-max(t - 0.6, 0.0) * 1.3)
+        swell = (math.sin(2 * math.pi * 55 * t) + 0.6 * math.sin(2 * math.pi * 82.4 * t)
+                 + 0.3 * math.sin(2 * math.pi * 110.3 * t)) * env * 0.45
+        out.append(thunk + swell)
+    return lowpass(out, 0.4)
+
+
 BEDS = {  # name: (generator, seconds, folder)
     "room_tone": (bed_room_tone, 10.0, "ambience"), "fridge": (bed_fridge, 8.0, "ambience"),
     "wind": (bed_wind, 14.6, "ambience"), "rain": (bed_rain, 10.0, "ambience"),
     "electric": (bed_electric, 8.0, "ambience"),
     "drone_low": (bed_drone_low, 12.0, "tension"), "drone_high": (bed_drone_high, 11.76, "tension"),
     "rumble": (bed_rumble, 10.0, "tension"),
+    "menu_drone": (bed_menu_drone, 24.0, "music"),
 }
 
 
@@ -711,6 +743,7 @@ def main():
     # Variant sets (separate seed so adding sets never changes the files above).
     write_sound_sets(random.Random(4242))
     write_beds(random.Random(777))
+    write("boot_sting.wav", boot_sting(random.Random(31)))
 
 
 if __name__ == "__main__":

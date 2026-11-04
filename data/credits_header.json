@@ -1,0 +1,10 @@
+{
+	"_format": "Hand-written part of the credits (edit freely). tools/gen_credits.py adds the asset credits after it and writes data/credits.json. The boot screen's studio card reads studio/presents.",
+	"studio": "UJJWAL KOKANI",
+	"presents": "presents",
+	"sections": [
+		{"title": "UNLABELED", "lines": ["A found-footage horror anthology"]},
+		{"title": "Created by", "lines": ["Ujjwal Kokani"]},
+		{"title": "Engine", "lines": ["Godot Engine (MIT licence)", "Jolt Physics (MIT licence)"]}
+	]
+}

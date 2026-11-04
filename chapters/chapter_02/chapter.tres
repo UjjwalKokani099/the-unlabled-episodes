@@ -9,3 +9,5 @@ title = "TAPE 02"
 subtitle = "THE TOLL BOOTH"
 scene_path = ""
 start_datetime = "2001-11-02T01:05:00"
+spot_prefix = "t2_"
+spots_total = 3

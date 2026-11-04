@@ -84,9 +84,10 @@ func _initialize() -> void:
 
 	# --- Tapes: tape 1 playable entry, the rest blank cassettes ---
 	menu.get_node(list + "Tapes").pressed.emit()
-	var tapes: Array = menu.get_node("Screen/UI/TapesPanel/VBox/List").get_children().filter(func(n): return n is Button)
+	var tapes: Array = menu.get_node("Screen/UI/TapesPanel/VBox/Body/List").get_children().filter(func(n): return n is Button)
 	check(tapes.size() == 6, "5 tapes + back (%d)" % tapes.size())
-	check(not tapes[0].disabled and tapes[0].text.contains("THE WATCHMAN"), "tape 1 listed ('%s')" % tapes[0].text)
+	check(not tapes[0].disabled and tapes[0].text.contains("TAPE 01")
+		and menu.get_node("Screen/UI/TapesPanel/VBox/Body/Preview/Name").text == "THE WATCHMAN", "tape 1 listed + previewed ('%s')" % tapes[0].text)
 	check(tapes.slice(1, 5).all(func(b): return b.disabled and b.text.begins_with("□")), "locked tapes are blank cassettes")
 	await send_action(&"ui_cancel")
 	check(menu.get_node("Screen/UI/Panel").visible and not menu.get_node("Screen/UI/TapesPanel").visible, "Esc back from tapes")
@@ -124,6 +125,11 @@ func _initialize() -> void:
 	var pm = pause_menu()
 	check(paused and pm.is_open and pm.get_node("Root/List/Restart").visible, "paused in a tape, restart offered")
 	pm.get_node("Root/List/MainMenu").pressed.emit()
+	check(pm.confirm.visible and not pm.get_node("Root/List").visible, "leaving a tape asks first")
+	await send_action(&"pause")
+	check(not pm.confirm.visible and pm.is_open and pm.get_node("Root/List").visible, "Esc on the question: back to the pause list")
+	pm.get_node("Root/List/MainMenu").pressed.emit()
+	pm.confirm.yes_button.pressed.emit()
 	await game.transition_finished
 	menu = current_scene
 	check(menu.name == "MainMenu" and menu.get_node(list + "Continue").visible, "main menu offers Continue")
@@ -134,6 +140,7 @@ func _initialize() -> void:
 	# --- New game erases (after confirming) ---
 	await send_action(&"pause")
 	pause_menu().get_node("Root/List/MainMenu").pressed.emit()
+	pause_menu().confirm.yes_button.pressed.emit()
 	await game.transition_finished
 	menu = current_scene
 	menu.get_node(list + "NewGame").pressed.emit()

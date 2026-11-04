@@ -125,3 +125,5 @@ Then add a row here: file, source URL, author, licence, date.
 | `tension/drone_high.ogg` | Synthesised bed (tools/gen_placeholder_sfx.py) -> tools/process_audio.py (OGG, loudness-normalised) | Original (project) | Replace with a CC0 recording |
 | `tension/drone_low.ogg` | Synthesised bed (tools/gen_placeholder_sfx.py) -> tools/process_audio.py (OGG, loudness-normalised) | Original (project) | Replace with a CC0 recording |
 | `tension/rumble.ogg` | Synthesised bed (tools/gen_placeholder_sfx.py) -> tools/process_audio.py (OGG, loudness-normalised) | Original (project) | Replace with a CC0 recording |
+| `music/menu_drone.ogg` | Synthesised bed (tools/gen_placeholder_sfx.py `bed_menu_drone`) -> tools/process_audio.py (OGG, -24 LUFS, loops) | Original (project) | Main menu drone; fades in over 4 s |
+| `sfx/boot_sting.wav` | Synthesised (tools/gen_placeholder_sfx.py `boot_sting`) | Original (project) | Studio card sting on boot |

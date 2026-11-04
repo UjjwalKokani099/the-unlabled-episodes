@@ -9,3 +9,5 @@ title = "TAPE 03"
 subtitle = "THE NIGHT DESK"
 scene_path = ""
 start_datetime = "2005-07-21T23:30:00"
+spot_prefix = "t3_"
+spots_total = 3

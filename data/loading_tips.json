@@ -1,0 +1,21 @@
+{
+	"_format": "tips shown on the loading card. text: {action} is replaced with its key. where: '' = anywhere, else a substring of the scene path being loaded.",
+	"tips": [
+		{"text": "Press {spot} to pause the tape. A frozen frame shows what a moving one hides.", "where": ""},
+		{"text": "Night vision ({night_vision}) drains the camcorder battery. Spare cells turn up in drawers and cabins.", "where": ""},
+		{"text": "Hold {objectives} to see what is left to do tonight.", "where": ""},
+		{"text": "Crouch ({crouch}) somewhere small and dark. Not everything that watches looks down.", "where": ""},
+		{"text": "A red light in the dark is usually a standby LED. Usually.", "where": ""},
+		{"text": "When the picture starts to roll, something is close to the lens.", "where": ""},
+		{"text": "Read everything you pick up. Old paper remembers more than people do.", "where": ""},
+		{"text": "Whatever follows you on these tapes never hurries. Do not stand still.", "where": ""},
+		{"text": "Use {interact} to turn things over. Dates, names, phone numbers: look closely.", "where": ""},
+		{"text": "Somewhere on every tape, it is 3:12.", "where": ""},
+		{"text": "Nobody wrote a name on these tapes. Nobody ever does.", "where": ""},
+		{"text": "Between tapes the room needs looking after too. Maa's messages will not wait forever.", "where": "chapters/hub"},
+		{"text": "The box gives out the tapes in its own order.", "where": "chapters/hub"},
+		{"text": "Watchman's duty: every visitor signs the register, with the time. Every one.", "where": "chapters/chapter_01"},
+		{"text": "Shanti Vihar has four wings, A to D. The CCTV in the cabin sees what the patrol misses.", "where": "chapters/chapter_01"},
+		{"text": "The intercom in the cabin rings every flat. Some flats ring back.", "where": "chapters/chapter_01"}
+	]
+}

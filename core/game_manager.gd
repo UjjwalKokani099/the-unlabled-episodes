@@ -9,6 +9,7 @@ extends Node
 ## A checkpoint save is: chapter id, checkpoint id, the Events counts, flags (e.g. which
 ## pickups are gone) and the camcorder clock. Objectives rebuild themselves from the
 ## Events counts when the level loads, so they don't need saving separately.
+## Each checkpoint also keeps a still of the picture (the tape menu's thumbnail).
 
 ## Emitted when a level change has fully finished (screen visible, game unpaused).
 ## (Forwarded from SceneLoader; chapter/checkpoint news goes out on the EventBus.)
@@ -17,6 +18,8 @@ signal transition_finished
 const CHAPTER_LIST_PATH := "res://data/chapter_list.tres"
 const MAIN_MENU_PATH := "res://ui/menus/main_menu.tscn"
 const INTRO_PATH := "res://chapters/intro/intro.tscn"
+## Tape menu stills: 4:3, cropped from the middle of the screen.
+const THUMB_SIZE := Vector2i(352, 264)
 
 ## Tests point this somewhere else so they never touch the real save (SaveManager's path).
 var save_path: String:
@@ -126,6 +129,7 @@ func save_checkpoint(id: StringName) -> void:
 	}
 	SaveManager.write()
 	EventBus.checkpoint_saved.emit(id)
+	_capture_thumbnail(current_chapter.id)
 
 
 ## Reloads the level at the last checkpoint. Returns false if there's nothing to load.
@@ -331,6 +335,51 @@ func load_save() -> void:
 
 func delete_save() -> void:
 	SaveManager.delete_save()
+	var dir := DirAccess.open(_thumb_dir())
+	if dir:
+		for file in dir.get_files():
+			dir.remove(file)
+
+
+# --- Tape menu data ---------------------------------------------------------------
+
+## The last still of a tape (taken at its latest checkpoint), or null.
+func chapter_thumbnail(id: StringName) -> Texture2D:
+	var path := _thumb_path(id)
+	if not FileAccess.file_exists(path):
+		return null
+	var image := Image.load_from_file(path)
+	return ImageTexture.create_from_image(image) if image else null
+
+
+## Seconds the tape took the last time it was finished (0 = never finished).
+func chapter_time(id: StringName) -> float:
+	return float((SaveManager.data.get("chapter_times", {}) as Dictionary).get(String(id), 0.0))
+
+
+func _thumb_dir() -> String:
+	return save_path.get_base_dir().path_join("thumbs")
+
+
+func _thumb_path(id: StringName) -> String:
+	return _thumb_dir().path_join(String(id) + ".png")
+
+
+## Grabs the frame being shown (OSD and tape effect included) once it is drawn. Not while
+## the loading card covers the screen (the spawn checkpoint), not without a renderer.
+func _capture_thumbnail(id: StringName) -> void:
+	if DisplayServer.get_name() == "headless" or SceneLoader.transition().is_covering():
+		return
+	await RenderingServer.frame_post_draw
+	var image := get_viewport().get_texture().get_image()
+	if image == null or image.is_empty():
+		return
+	var h := image.get_height()
+	var w := mini(image.get_width(), h * 4 / 3)
+	image = image.get_region(Rect2i((image.get_width() - w) / 2, 0, w, h))
+	image.resize(THUMB_SIZE.x, THUMB_SIZE.y, Image.INTERPOLATE_BILINEAR)
+	DirAccess.make_dir_recursive_absolute(_thumb_dir())
+	image.save_png(_thumb_path(id))
 
 
 # --- Internals ------------------------------------------------------------------

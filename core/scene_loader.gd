@@ -3,13 +3,14 @@ extends Node
 ## change_scene(): fade to the VCR card (TapeTransition), load the next scene in the
 ## background (ResourceLoader threaded request, so the game never freezes; the web build
 ## has no threads and loads directly), swap, optional `prepare` callback (e.g. place the
-## player at a checkpoint), hold the card briefly, fade back in.
+## player at a checkpoint), hold the card briefly, fade back in. Titled cards are the
+## loading screen: reels + progress + a tip from data/loading_tips.json (LoadingTips).
 
 signal transition_started(path: String)
 signal transition_finished
 
-## Hold time for a title card / a plain fade.
-const TITLE_CARD_SECONDS := 1.4
+## Hold time for a title card (long enough to read the tip) / a plain fade.
+const TITLE_CARD_SECONDS := 2.0
 const PLAIN_FADE_SECONDS := 0.25
 
 var _transitioning: bool = false
@@ -44,7 +45,7 @@ func change_scene(path: String, header: String = "", lines: PackedStringArray = 
 	tree.paused = true
 	if not OS.has_feature("web"):
 		ResourceLoader.load_threaded_request(path, "PackedScene", true)
-	await _transition.cover(header, lines)
+	await _transition.cover(header, lines, LoadingTips.pick(path) if not lines.is_empty() else "")
 	var packed := await _finish_loading(path)
 	if packed == null:
 		push_error("SceneLoader: could not load %s" % path)
@@ -67,7 +68,12 @@ func change_scene(path: String, header: String = "", lines: PackedStringArray = 
 
 func _finish_loading(path: String) -> PackedScene:
 	if OS.has_feature("web"):
-		return load(path) as PackedScene
-	while ResourceLoader.load_threaded_get_status(path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		var direct := load(path) as PackedScene
+		_transition.set_progress(1.0)
+		return direct
+	var progress: Array = []
+	while ResourceLoader.load_threaded_get_status(path, progress) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		_transition.set_progress(progress[0] if not progress.is_empty() else 0.0)
 		await get_tree().process_frame
+	_transition.set_progress(1.0)
 	return ResourceLoader.load_threaded_get(path) as PackedScene

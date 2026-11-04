@@ -9,3 +9,5 @@ title = "TAPE 05"
 subtitle = "TONIGHT"
 scene_path = ""
 start_datetime = ""
+spot_prefix = "t5_"
+spots_total = 0
