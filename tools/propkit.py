@@ -183,7 +183,7 @@ class Props:
                 P("box", (sx * 0.2, 0.22, sz * 0.19), (0.04, 0.45, 0.04), mat, rot=(sz * -5, 0, sx * 5))
             P("box", (sx * 0.23, 0.6, 0.0), (0.03, 0.03, 0.4), mat)  # arm rests
         if collide:
-            self.lv.collider(self.at(o, yaw, (0, 0.23, 0)), (0.46, 0.46, 0.44), "soft")
+            self.lv.collider(self.at(o, yaw, (0, 0.23, 0)), (0.46, 0.46, 0.44), "carpet")
 
     def steel_almirah(self, o, yaw=0.0, w=0.9, h=1.8, d=0.5, top=True):
         """Godrej-style steel cupboard, doors face -Z."""
@@ -343,7 +343,7 @@ class Props:
         sx, sy, sz = size
         top = cy + sy / 2
         self.part((cx, cy, cz), yaw, "box", (0, 0, 0), (sx - 0.04, sy - 0.02, sz - 0.04), "dust_sheet")
-        self.lv.collider((cx, cy, cz), (sx, sy, sz) if round(yaw) % 180 == 0 else (sz, sy, sx), "soft")
+        self.lv.collider((cx, cy, cz), (sx, sy, sz) if round(yaw) % 180 == 0 else (sz, sy, sx), "carpet")
         self.soft(self.at((cx, top - 0.01, cz), yaw, (0, 0, 0)), (sx + 0.02, 0.06, sz + 0.02), "dust_sheet", rot=(0, yaw, 0))
         h = sy + 0.02
         for side, (lx, lz, w, face) in enumerate(((0, -sz / 2 - 0.012, sx + 0.06, 0), (0, sz / 2 + 0.012, sx + 0.06, 180),

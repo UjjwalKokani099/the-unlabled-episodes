@@ -164,17 +164,20 @@ class Level:
 # ---------------------------------------------------------------------- surfaces
 
 def surface_of(mat: str) -> str:
-    """Footstep surface for a material name (player/footsteps.gd plays the sound)."""
+    """Footstep surface for a material name (player/footsteps.gd plays the sound):
+    wood, carpet, tile, concrete, gravel, grass, metal."""
     if any(k in mat for k in ("tile", "kota", "mosaic", "glass")):
         return "tile"
     if "wood" in mat or "door" in mat:
         return "wood"
     if "metal" in mat or "paint_car" in mat:
         return "metal"
-    if any(k in mat for k in ("dirt", "foliage")):
-        return "dirt"
-    if any(k in mat for k in ("fabric", "cardboard", "paper")):
-        return "soft"
+    if "foliage" in mat or "grass" in mat:
+        return "grass"
+    if "dirt" in mat or "gravel" in mat:
+        return "gravel"
+    if any(k in mat for k in ("fabric", "cardboard", "paper", "carpet")):
+        return "carpet"
     return "concrete"
 
 

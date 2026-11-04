@@ -16,7 +16,9 @@ const ROWS: Array[Dictionary] = [
 	{"tab": 0, "key": &"screen_effects", "label": "VHS effect", "min": 0.0, "max": 1.0, "step": 0.05, "percent": true},
 	{"tab": 0, "key": &"ps1_mode", "label": "PS1 mode"},
 	{"tab": 0, "key": &"fov", "label": "Field of view", "min": 60.0, "max": 100.0, "step": 1.0, "fmt": "%d"},
-	{"tab": 0, "key": &"head_bob", "label": "Head bob + sway"},
+	{"tab": 0, "key": &"head_bob_intensity", "label": "Head bob", "min": 0.0, "max": 1.0, "step": 0.05, "percent": true},
+	{"tab": 0, "key": &"camera_sway", "label": "Camera sway"},
+	{"tab": 0, "key": &"reduce_camera_motion", "label": "Reduce camera motion"},
 	{"tab": 0, "key": &"fullscreen", "label": "Fullscreen"},
 	{"tab": 0, "key": &"show_fps", "label": "Show FPS"},
 	{"tab": 1, "key": &"master_volume", "label": "Master volume", "min": 0.0, "max": 1.0, "step": 0.05, "percent": true},
@@ -26,6 +28,7 @@ const ROWS: Array[Dictionary] = [
 	{"tab": 2, "key": &"mouse_sensitivity", "label": "Mouse sensitivity", "min": 0.02, "max": 0.6, "step": 0.01, "fmt": "%.2f"},
 	{"tab": 2, "key": &"invert_y", "label": "Invert mouse Y"},
 	{"tab": 2, "key": &"crouch_toggle", "label": "Toggle crouch"},
+	{"tab": 2, "key": &"sprint_toggle", "label": "Toggle run"},
 	{"tab": 3, "key": &"subtitles", "label": "Subtitles"},
 	{"tab": 3, "key": &"subtitle_size", "label": "Subtitle size", "min": 0.0, "max": 2.0, "step": 1.0, "names": ["SMALL", "MEDIUM", "LARGE"]},
 ]

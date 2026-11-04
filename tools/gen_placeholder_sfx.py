@@ -416,9 +416,138 @@ def train_far(rng):
     return lowpass(out, 0.15)
 
 
+def resample(samples, factor):
+    """Speed up (>1) or slow down (<1) by linear interpolation: shifts pitch and length."""
+    n = int(len(samples) / factor)
+    out = []
+    for i in range(n):
+        x = i * factor
+        j = int(x)
+        f = x - j
+        a = samples[j] if j < len(samples) else 0.0
+        b = samples[j + 1] if j + 1 < len(samples) else 0.0
+        out.append(a + (b - a) * f)
+    return out
+
+
+def step_gravel(rng):
+    """Crunch: many tiny grains over ~0.2 s plus a dull thud."""
+    n = int(RATE * 0.22)
+    out = [0.0] * n
+    for _ in range(70):
+        at = int(rng.uniform(0, 0.16) * RATE)
+        amp = rng.uniform(0.2, 1.0)
+        for k in range(int(RATE * 0.004)):
+            if at + k < n:
+                out[at + k] += amp * rng.uniform(-1, 1) * math.exp(-k / (RATE * 0.0012))
+    thud = [0.5 * math.sin(2 * math.pi * 75 * i / RATE) * math.exp(-i / RATE * 35) for i in range(n)]
+    return [a + b for a, b in zip(out, thud)]
+
+
+def step_grass(rng):
+    """Swish of blades + a soft press."""
+    n = int(RATE * 0.25)
+    swish = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.35)
+    return [swish[i] * math.sin(math.pi * min(i / n * 1.6, 1.0)) * math.exp(-i / RATE * 9) * 0.8
+            + 0.3 * math.sin(2 * math.pi * 60 * i / RATE) * math.exp(-i / RATE * 30) for i in range(n)]
+
+
+def door_creak(rng):
+    """Interior door hinge: a short wavering creak (pitch differs per variant)."""
+    n = int(RATE * rng.uniform(0.6, 0.9))
+    base = rng.uniform(420, 700)
+    out = []
+    ph = 0.0
+    for i in range(n):
+        t = i / RATE
+        f = base * (1 + 0.15 * math.sin(2 * math.pi * rng.uniform(5, 9) * t) + 0.25 * t)
+        ph += 2 * math.pi * f / RATE
+        stick = 0.6 + 0.4 * (math.sin(2 * math.pi * 31 * t) > 0.2)
+        env = min(t / 0.05, 1.0) * max(0.0, 1 - t / (n / RATE))
+        out.append(env * stick * (math.sin(ph) + 0.4 * math.sin(2.7 * ph)) * 0.6)
+    return lowpass(out, 0.5)
+
+
+def door_latch(rng):
+    """Door shutting: thump of the leaf + the latch clicking home."""
+    n = int(RATE * 0.35)
+    noise = [rng.uniform(-1, 1) for _ in range(n)]
+    out = [0.8 * math.sin(2 * math.pi * 95 * i / RATE) * math.exp(-i / RATE * 22) + noise[i] * 0.3 * math.exp(-i / RATE * 60)
+           for i in range(n)]
+    click_at = int(RATE * rng.uniform(0.03, 0.06))
+    for k in range(int(RATE * 0.02)):
+        if click_at + k < n:
+            out[click_at + k] += 0.7 * math.sin(2 * math.pi * 2600 * k / RATE) * math.exp(-k / RATE * 300)
+    return out
+
+
+def door_rattle(rng):
+    """Locked: the handle pushed down and the door knocking in its frame, 3-4 times."""
+    buf = silence(0.05)
+    for j in range(rng.randint(3, 4)):
+        hit = [0.7 * math.sin(2 * math.pi * rng.uniform(150, 190) * i / RATE) * math.exp(-i / RATE * 30)
+               + rng.uniform(-1, 1) * 0.5 * math.exp(-i / RATE * 90) for i in range(int(RATE * 0.12))]
+        mix_into(buf, hit, 0.05 + j * rng.uniform(0.09, 0.12))
+    return buf + silence(0.1)
+
+
+def switch_click(rng):
+    """Indian modular wall switch: a crisp plastic snap."""
+    n = int(RATE * 0.06)
+    f = rng.uniform(2200, 3200)
+    return [(rng.uniform(-1, 1) * 0.6 + math.sin(2 * math.pi * f * i / RATE)) * math.exp(-i / RATE * 140) for i in range(n)]
+
+
+def pickup(rng):
+    """Taking something: a cloth/paper brush and a light tap."""
+    out = lowpass([rng.uniform(-1, 1) * math.sin(math.pi * i / (RATE * 0.18)) for i in range(int(RATE * 0.18))], 0.4)
+    tap = [0.5 * math.sin(2 * math.pi * rng.uniform(300, 500) * i / RATE) * math.exp(-i / RATE * 60) for i in range(int(RATE * 0.08))]
+    mix_into(out, tap, 0.1)
+    return out
+
+
+def interact_tick(rng):
+    """Generic soft feedback when using something that has no sound of its own."""
+    n = int(RATE * 0.05)
+    return [math.sin(2 * math.pi * rng.uniform(900, 1200) * i / RATE) * math.exp(-i / RATE * 90) * 0.5 for i in range(n)]
+
+
+# name: (generator, variants)  -> assets/audio/sfx/variants/<name>_<n>.wav + data/sounds/<name>.tres
+SOUND_SETS = {
+    "step_concrete": "step_concrete", "step_tile": "step_tile", "step_wood": "step_wood",
+    "step_metal": "step_metal", "step_gravel": "step_gravel", "step_grass": "step_grass",
+    "step_carpet": "step_soft", "door_creak": "door_creak", "door_latch": "door_latch",
+    "door_rattle": "door_rattle", "switch_click": "switch_click", "pickup": "pickup",
+    "interact_tick": "interact_tick",
+}
+VARIANTS = 5
+
+
+def write_sound_sets(rng):
+    root = OUT.parent.parent.parent
+    sets_dir = root / "data" / "sounds"
+    sets_dir.mkdir(parents=True, exist_ok=True)
+    gens = globals()
+    for set_name, fn in SOUND_SETS.items():
+        paths = []
+        for v in range(1, VARIANTS + 1):
+            samples = resample(gens[fn](rng), rng.uniform(0.94, 1.06))
+            rel = f"variants/{set_name}_{v}.wav"
+            write(rel, samples)
+            paths.append(f"res://assets/audio/sfx/{rel}")
+        ext = "\n".join(f'[ext_resource type="AudioStream" path="{p}" id="{i + 1}_s"]' for i, p in enumerate(paths))
+        streams = ", ".join(f'ExtResource("{i + 1}_s")' for i in range(len(paths)))
+        text = (f'[gd_resource type="Resource" script_class="SoundSet" format=3]\n\n'
+                f'[ext_resource type="Script" path="res://systems/audio/sound_set.gd" id="0_script"]\n{ext}\n\n'
+                f'[resource]\nscript = ExtResource("0_script")\nstreams = Array[AudioStream]([{streams}])\n')
+        (sets_dir / f"{set_name}.tres").write_text(text, encoding="utf-8", newline="\n")
+    print(f"wrote {len(SOUND_SETS)} sound sets x {VARIANTS} variants")
+
+
 def write(name, samples):
     peak = max(abs(s) for s in samples) or 1.0
     OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / name).parent.mkdir(parents=True, exist_ok=True)
     with wave.open(str(OUT / name), "wb") as w:
         w.setnchannels(1)
         w.setsampwidth(2)
@@ -463,6 +592,8 @@ def main():
         write(name + ".wav", fn(rng))
     write("tube_hum.wav", tube_hum(rng))
     write("train_far.wav", train_far(rng))
+    # Variant sets (separate seed so adding sets never changes the files above).
+    write_sound_sets(random.Random(4242))
 
 
 if __name__ == "__main__":

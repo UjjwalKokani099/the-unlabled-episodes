@@ -214,7 +214,7 @@ def dress_room(lv: Level) -> None:
     p.model("stationery_supplies", (3.0, 0.82, 2.34), yaw=100)
     p.model("standing_picture_frame_01", (3.42, 0.75, 2.36), yaw=-20, node_name="MaaPhoto")
     p.books((3.38, 0.75, 1.45), yaw=8, n=3)
-    p.model("plastic_monobloc_chair_01", (2.4, 0, 1.85), yaw=-90, collide=(0.6, 0.5, 0.6), surface="soft")
+    p.model("plastic_monobloc_chair_01", (2.4, 0, 1.85), yaw=-90, collide=(0.6, 0.5, 0.6), surface="carpet")
     p.extension_board((3.3, 0, 1.45), yaw=90)
     p.wire((3.3, 0.02, 1.6), (3.47, 0.02, 2.6))
     p.wire((3.475, 0.02, 2.6), (3.475, 0.9, 2.6))

@@ -516,7 +516,7 @@ def dress_cabin(lv: Level) -> None:
                            ("water_stain", (6.9, 2.595, 22.6), (90, 0, 0)), ("paan_b", (3.89, 0.3, 24.4), (0, -90, 0))):
         lv.scene(name, f"res://assets/decals/{name}.tscn", ".", {"position": v3(*pos), "rotation_degrees": v3(*rot)})
     p.radio((6.66, 0.76, 25.18), yaw=180)
-    p.model("plastic_monobloc_chair_01", (6.55, f, 24.12), yaw=172, collide=(0.6, 0.5, 0.6), surface="soft")
+    p.model("plastic_monobloc_chair_01", (6.55, f, 24.12), yaw=172, collide=(0.6, 0.5, 0.6), surface="carpet")
     p.matka((4.38, f, 25.1))
     p.model("metal_jug", (4.7, f, 25.18), yaw=30)
     p.lathi((7.28, f, 22.3), lean_yaw=-90)

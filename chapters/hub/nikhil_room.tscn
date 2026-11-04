@@ -1607,7 +1607,7 @@ rotation_degrees = Vector3(0.0, 90.0, 0.0)
 [node name="S20" type="CollisionShape3D" parent="Collision"]
 position = Vector3(2.4, 0.25, 1.85)
 shape = SubResource("BoxShape3D_87")
-metadata/surface = "soft"
+metadata/surface = "carpet"
 
 [node name="P9" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.3, 0.02, 1.45)

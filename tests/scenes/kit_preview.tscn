@@ -4023,7 +4023,7 @@ material_override = ExtResource("6_r")
 [node name="S95" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.5, 18.35, 7.1)
 shape = SubResource("BoxShape3D_83")
-metadata/surface = "dirt"
+metadata/surface = "gravel"
 
 [node name="M572" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 19.35, 7.1)
@@ -4033,7 +4033,7 @@ material_override = ExtResource("6_r")
 [node name="S96" type="CollisionShape3D" parent="Collision"]
 position = Vector3(1.5, 19.35, 7.1)
 shape = SubResource("BoxShape3D_85")
-metadata/surface = "dirt"
+metadata/surface = "gravel"
 
 [node name="M573" type="MeshInstance3D" parent="Static"]
 position = Vector3(1.5, 20.12, 7.1)

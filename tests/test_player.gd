@@ -82,7 +82,7 @@ func _initialize() -> void:
 	await teleport(Vector3(1.0, 0, 6.0))
 	p.rotation.y = deg_to_rad(-90)  # face +x
 	Input.action_press("move_forward")
-	await frames(150)
+	await frames(185)  # walk speed is 2.2 m/s (studio spec)
 	Input.action_release("move_forward")
 	await frames(10)
 	check(p.global_position.y > 1.1 and p.is_on_floor(), "climbs ramp (pos=%s)" % p.global_position)

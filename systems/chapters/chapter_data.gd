@@ -13,6 +13,8 @@ extends Resource
 ## Camcorder date/time when the tape starts, "YYYY-MM-DDTHH:MM:SS".
 ## Empty = the player's real local time right now (the final tape is "tonight").
 @export var start_datetime: String = "1998-10-31T23:42:00"
+## Some chapters don't let the player run (a slow, careful night).
+@export var allow_running: bool = true
 
 
 func is_built() -> bool:

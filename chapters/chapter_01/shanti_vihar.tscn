@@ -6946,7 +6946,7 @@ material_override = ExtResource("6_r")
 [node name="S95" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-28.5, 18.35, -16.9)
 shape = SubResource("BoxShape3D_83")
-metadata/surface = "dirt"
+metadata/surface = "gravel"
 
 [node name="M572" type="MeshInstance3D" parent="Static"]
 position = Vector3(-28.5, 19.35, -16.9)
@@ -6956,7 +6956,7 @@ material_override = ExtResource("6_r")
 [node name="S96" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-28.5, 19.35, -16.9)
 shape = SubResource("BoxShape3D_85")
-metadata/surface = "dirt"
+metadata/surface = "gravel"
 
 [node name="M573" type="MeshInstance3D" parent="Static"]
 position = Vector3(-28.5, 20.12, -16.9)
@@ -16093,7 +16093,7 @@ material_override = ExtResource("6_r")
 [node name="S361" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-12.5, 18.35, -16.9)
 shape = SubResource("BoxShape3D_83")
-metadata/surface = "dirt"
+metadata/surface = "gravel"
 
 [node name="M2105" type="MeshInstance3D" parent="Static"]
 position = Vector3(-12.5, 19.35, -16.9)
@@ -16103,7 +16103,7 @@ material_override = ExtResource("6_r")
 [node name="S362" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-12.5, 19.35, -16.9)
 shape = SubResource("BoxShape3D_85")
-metadata/surface = "dirt"
+metadata/surface = "gravel"
 
 [node name="M2106" type="MeshInstance3D" parent="Static"]
 position = Vector3(-12.5, 20.12, -16.9)
@@ -25355,7 +25355,7 @@ material_override = ExtResource("6_r")
 [node name="S633" type="CollisionShape3D" parent="Collision"]
 position = Vector3(3.5, 18.35, -16.9)
 shape = SubResource("BoxShape3D_83")
-metadata/surface = "dirt"
+metadata/surface = "gravel"
 
 [node name="M3656" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.5, 19.35, -16.9)
@@ -25365,7 +25365,7 @@ material_override = ExtResource("6_r")
 [node name="S634" type="CollisionShape3D" parent="Collision"]
 position = Vector3(3.5, 19.35, -16.9)
 shape = SubResource("BoxShape3D_85")
-metadata/surface = "dirt"
+metadata/surface = "gravel"
 
 [node name="M3657" type="MeshInstance3D" parent="Static"]
 position = Vector3(3.5, 20.12, -16.9)
@@ -34501,7 +34501,7 @@ material_override = ExtResource("6_r")
 [node name="S899" type="CollisionShape3D" parent="Collision"]
 position = Vector3(19.5, 18.35, -16.9)
 shape = SubResource("BoxShape3D_83")
-metadata/surface = "dirt"
+metadata/surface = "gravel"
 
 [node name="M5189" type="MeshInstance3D" parent="Static"]
 position = Vector3(19.5, 19.35, -16.9)
@@ -34511,7 +34511,7 @@ material_override = ExtResource("6_r")
 [node name="S900" type="CollisionShape3D" parent="Collision"]
 position = Vector3(19.5, 19.35, -16.9)
 shape = SubResource("BoxShape3D_85")
-metadata/surface = "dirt"
+metadata/surface = "gravel"
 
 [node name="M5190" type="MeshInstance3D" parent="Static"]
 position = Vector3(19.5, 20.12, -16.9)
@@ -41240,7 +41240,7 @@ rotation_degrees = Vector3(0.0, 352.0, 0.0)
 [node name="S1100" type="CollisionShape3D" parent="Collision"]
 position = Vector3(6.55, 0.3, 24.12)
 shape = SubResource("BoxShape3D_289")
-metadata/surface = "soft"
+metadata/surface = "carpet"
 
 [node name="P11" type="MeshInstance3D" parent="Static"]
 position = Vector3(4.38, 0.09, 25.1)
@@ -43074,7 +43074,7 @@ material_override = ExtResource("6_r")
 [node name="S1115" type="CollisionShape3D" parent="Collision"]
 position = Vector3(28.0, 7.25, 4.0)
 shape = SubResource("BoxShape3D_375")
-metadata/surface = "dirt"
+metadata/surface = "gravel"
 
 [node name="M6355" type="MeshInstance3D" parent="Static"]
 position = Vector3(25.8, 0.3, 4.0)
@@ -45909,7 +45909,7 @@ material_override = SubResource("StandardMaterial3D_738")
 [node name="S1139" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-8.2, 12.42, -15.6)
 shape = SubResource("BoxShape3D_739")
-metadata/surface = "soft"
+metadata/surface = "carpet"
 
 [node name="P258" type="MeshInstance3D" parent="Static"]
 position = Vector3(-8.2, 12.81, -15.6)
@@ -45950,7 +45950,7 @@ material_override = SubResource("StandardMaterial3D_738")
 [node name="S1140" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-5.0, 12.38, -17.6)
 shape = SubResource("BoxShape3D_750")
-metadata/surface = "soft"
+metadata/surface = "carpet"
 
 [node name="P426" type="MeshInstance3D" parent="Static"]
 position = Vector3(-5.0, 12.745, -17.6)
@@ -45991,7 +45991,7 @@ material_override = SubResource("StandardMaterial3D_738")
 [node name="S1141" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-3.2, 12.55, -15.0)
 shape = SubResource("BoxShape3D_760")
-metadata/surface = "soft"
+metadata/surface = "carpet"
 
 [node name="P626" type="MeshInstance3D" parent="Static"]
 position = Vector3(-3.2, 13.09, -15.0)
@@ -46032,7 +46032,7 @@ material_override = SubResource("StandardMaterial3D_738")
 [node name="S1142" type="CollisionShape3D" parent="Collision"]
 position = Vector3(-9.0, 12.5, -21.5)
 shape = SubResource("BoxShape3D_770")
-metadata/surface = "soft"
+metadata/surface = "carpet"
 
 [node name="P826" type="MeshInstance3D" parent="Static"]
 position = Vector3(-9.0, 12.79, -21.5)

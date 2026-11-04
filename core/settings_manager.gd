@@ -22,7 +22,8 @@ const AUDIO_BUSES := {
 
 ## Every persisted key. Add new settings here AND as a var below.
 const KEYS: Array[StringName] = [
-	&"mouse_sensitivity", &"invert_y", &"fov", &"crouch_toggle", &"head_bob", &"screen_effects",
+	&"mouse_sensitivity", &"invert_y", &"fov", &"crouch_toggle", &"sprint_toggle", &"head_bob_intensity", &"camera_sway",
+	&"reduce_camera_motion", &"screen_effects",
 	&"brightness", &"fullscreen", &"graphics_quality", &"show_fps", &"ps1_mode", &"film_look",
 	&"subtitles", &"subtitle_size", &"key_bindings",
 	&"master_volume", &"music_volume", &"sfx_volume", &"ambience_volume", &"voice_volume", &"ui_volume",
@@ -56,11 +57,29 @@ var crouch_toggle: bool = false:
 		crouch_toggle = value
 		_on_value_set(&"crouch_toggle")
 
-## Also controls the camera's hand-held sway.
-var head_bob: bool = true:
+## false = hold to run, true = press once to run, again to walk (accessibility).
+var sprint_toggle: bool = false:
 	set(value):
-		head_bob = value
-		_on_value_set(&"head_bob")
+		sprint_toggle = value
+		_on_value_set(&"sprint_toggle")
+
+## 0 = no head bob .. 1 = full (scaled further by reduce_camera_motion).
+var head_bob_intensity: float = 1.0:
+	set(value):
+		head_bob_intensity = clampf(value, 0.0, 1.0)
+		_on_value_set(&"head_bob_intensity")
+
+## Hand-held camera sway + breathing while standing still.
+var camera_sway: bool = true:
+	set(value):
+		camera_sway = value
+		_on_value_set(&"camera_sway")
+
+## Accessibility: smaller bob, no sway / strafe tilt / sprint FOV kick, softer shakes.
+var reduce_camera_motion: bool = false:
+	set(value):
+		reduce_camera_motion = value
+		_on_value_set(&"reduce_camera_motion")
 
 ## VHS look strength: 0 = clean picture, 1 = full effect.
 var screen_effects: float = 1.0:
@@ -163,6 +182,16 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_make_brightness_layer()
 	load_settings()
+
+
+## Multiplier for head bob and other camera motion (0..1).
+func motion_scale() -> float:
+	return head_bob_intensity * (0.35 if reduce_camera_motion else 1.0)
+
+
+## True when the hand-held sway, strafe tilt and FOV kick should play.
+func sway_allowed() -> bool:
+	return camera_sway and not reduce_camera_motion
 
 
 func load_settings() -> void:

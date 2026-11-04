@@ -21,7 +21,7 @@ func _initialize() -> void:
 	await process_frame
 	var settings: Node = root.get_node("SettingsManager")
 	var old_effects: float = settings.screen_effects
-	var old_bob: bool = settings.head_bob
+	var old_sway: bool = settings.camera_sway
 	settings.screen_effects = 1.0
 	var room: Node = load("res://tests/scenes/test_room.tscn").instantiate()
 	root.add_child(room)
@@ -55,7 +55,7 @@ func _initialize() -> void:
 	await seconds(1.1)
 
 	# --- Camera shake ---
-	settings.head_bob = false
+	settings.camera_sway = false
 	await frames(2)
 	check(camera.rotation.length() < 0.0001, "no rotation when calm and sway is off")
 	room.get_tree().call_group("camera_shake", "add_trauma", 0.8)
@@ -67,7 +67,7 @@ func _initialize() -> void:
 	check(peak > deg_to_rad(0.5), "shake rotates the camera (peak %.2f deg)" % rad_to_deg(peak))
 	await seconds(1.0)
 	check(shake.trauma == 0.0 and camera.rotation.length() < 0.0001, "shake settles")
-	settings.head_bob = true
+	settings.camera_sway = true
 	var sway := 0.0
 	until = Time.get_ticks_msec() + 1500
 	while Time.get_ticks_msec() < until:
@@ -95,7 +95,7 @@ func _initialize() -> void:
 
 	room.queue_free()
 	settings.screen_effects = old_effects
-	settings.head_bob = old_bob
+	settings.camera_sway = old_sway
 	await frames(2)
 	print("RESULT fails=", fails)
 	quit(fails)

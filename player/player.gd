@@ -9,13 +9,13 @@ extends CharacterBody3D
 signal flashlight_toggled(is_on: bool)
 
 @export_group("Movement")
-@export var walk_speed: float = 2.4
-@export var sprint_speed: float = 4.2
+@export var walk_speed: float = 2.2
+@export var sprint_speed: float = 3.8
+## Crouching and careful walking.
 @export var crouch_speed: float = 1.2
-## Higher = reaches full speed faster.
-@export var ground_accel: float = 12.0
-## Higher = stops faster when you let go.
-@export var ground_decel: float = 14.0
+## Seconds to reach full speed / to come to a stop (eased, never instant).
+@export var accel_time: float = 0.2
+@export var decel_time: float = 0.15
 @export var air_accel: float = 2.0
 
 @export_group("Body")
@@ -28,9 +28,9 @@ signal flashlight_toggled(is_on: bool)
 
 @export_group("Camera")
 @export var max_pitch: float = 85.0
-## Head-bob radians per metre walked (sets step rhythm).
-@export var bob_frequency: float = 4.5
-@export var bob_amount: float = 0.035
+## Head bob height in metres at walking speed. Its rhythm comes from the footsteps (one
+## dip per footfall), so it always matches the step sounds.
+@export var bob_amount: float = 0.032
 ## Extra field of view while sprinting (degrees), eased in and out.
 @export var sprint_fov_kick: float = 4.0
 
@@ -48,8 +48,9 @@ var is_sprinting: bool = false
 
 var _pitch: float = 0.0
 var _height: float = 0.0
-var _bob_time: float = 0.0
 var _crouch_toggled: bool = false
+var _sprint_toggled: bool = false
+var _last_floor_y: float = 0.0
 var _was_on_floor: bool = true
 var _fall_speed: float = 0.0
 var _land_dip: float = 0.0
@@ -58,6 +59,7 @@ var _land_dip: float = 0.0
 @onready var camera: Camera3D = $Head/Camera3D
 @onready var interactor: Interactor = $Head/Camera3D/Interactor
 @onready var flashlight: SpotLight3D = $Flashlight
+@onready var footsteps: Footsteps = $Footsteps
 @onready var _collider: CollisionShape3D = $CollisionShape3D
 @onready var _shape: CapsuleShape3D = $CollisionShape3D.shape
 
@@ -93,6 +95,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		toggle_flashlight()
 	elif event.is_action_pressed("crouch") and SettingsManager.crouch_toggle:
 		_crouch_toggled = not _crouch_toggled
+	elif event.is_action_pressed("sprint") and SettingsManager.sprint_toggle:
+		_sprint_toggled = not _sprint_toggled
 
 
 func _physics_process(delta: float) -> void:
@@ -104,8 +108,11 @@ func _physics_process(delta: float) -> void:
 	_update_crouch(delta, active)
 
 	var speed := walk_speed
-	# Sprint only while moving forward and standing.
-	is_sprinting = active and not is_crouching and move_input.y < -0.1 and Input.is_action_pressed("sprint")
+	# Run only while moving forward, standing, and where the chapter allows it.
+	var want_run := _sprint_toggled if SettingsManager.sprint_toggle else Input.is_action_pressed("sprint")
+	is_sprinting = active and running_allowed() and not is_crouching and move_input.y < -0.1 and want_run
+	if SettingsManager.sprint_toggle and move_input.y >= -0.1:
+		_sprint_toggled = false  # stopping ends a toggled run
 	if is_crouching:
 		speed = crouch_speed
 	elif is_sprinting:
@@ -116,9 +123,10 @@ func _physics_process(delta: float) -> void:
 		_fall_speed = maxf(_fall_speed, -velocity.y)
 
 	var wish := transform.basis * Vector3(move_input.x, 0.0, move_input.y) * speed
+	# Exponential easing: ~95% of the target speed after accel_time / decel_time.
 	var rate := air_accel
 	if is_on_floor():
-		rate = ground_accel if move_input != Vector2.ZERO else ground_decel
+		rate = 3.0 / (accel_time if move_input != Vector2.ZERO else decel_time)
 	var blend := 1.0 - exp(-rate * delta)
 	velocity.x = lerpf(velocity.x, wish.x, blend)
 	velocity.z = lerpf(velocity.z, wish.z, blend)
@@ -128,8 +136,14 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor() and not _was_on_floor and _fall_speed > 1.5:
 		_land_dip = -clampf(_fall_speed * 0.018, 0.02, 0.14)
 		get_tree().call_group("camera_shake", "add_trauma", clampf(_fall_speed * 0.03, 0.0, 0.3))
+	# Stepping down a stair or a kerb: a small dip, like the knee bending.
+	if is_on_floor() and _was_on_floor:
+		var drop := _last_floor_y - global_position.y
+		if drop > 0.04:
+			_land_dip -= minf(drop * 0.35, 0.05)
 	if is_on_floor():
 		_fall_speed = 0.0
+		_last_floor_y = global_position.y
 	_was_on_floor = is_on_floor()
 	_update_head_bob(delta)
 
@@ -141,7 +155,7 @@ func _process(delta: float) -> void:
 	var rot := flashlight.global_basis.get_rotation_quaternion().slerp(target.basis.get_rotation_quaternion(), blend)
 	flashlight.global_transform = Transform3D(Basis(rot), target.origin)
 	# Sprint widens the view a little (eased; the base value is the player's setting).
-	var want_fov := SettingsManager.fov + (sprint_fov_kick if is_sprinting and SettingsManager.head_bob else 0.0)
+	var want_fov := SettingsManager.fov + (sprint_fov_kick if is_sprinting and SettingsManager.sway_allowed() else 0.0)
 	camera.fov = lerpf(camera.fov, want_fov, 1.0 - exp(-6.0 * delta))
 
 
@@ -216,12 +230,23 @@ func _apply_height() -> void:
 func _update_head_bob(delta: float) -> void:
 	var target := Vector3.ZERO
 	var ground_speed := Vector2(velocity.x, velocity.z).length()
-	if SettingsManager.head_bob and is_on_floor() and ground_speed > 0.2:
-		_bob_time += delta * ground_speed * bob_frequency
-		target = Vector3(cos(_bob_time * 0.5) * bob_amount * 0.6, sin(_bob_time) * bob_amount, 0.0)
+	if is_on_floor() and ground_speed > 0.2:
+		# Locked to the footsteps: lowest point when a foot lands (phase 0), highest
+		# between steps, a little sideways sway towards the stepping foot.
+		var amount := bob_amount * SettingsManager.motion_scale() * clampf(ground_speed / walk_speed, 0.4, 1.5)
+		var phase := footsteps.phase()
+		var down := (1.0 + cos(phase * TAU)) * 0.5
+		var side := sin(phase * PI) * (1.0 if footsteps.left_foot else -1.0)
+		target = Vector3(side * amount * 0.5, (0.5 - down) * amount, 0.0)
 	_land_dip = lerpf(_land_dip, 0.0, 1.0 - exp(-7.0 * delta))
-	target.y += _land_dip
-	camera.position = camera.position.lerp(target, 1.0 - exp(-10.0 * delta))
+	target.y += _land_dip * maxf(SettingsManager.motion_scale(), 0.3)
+	camera.position = camera.position.lerp(target, 1.0 - exp(-14.0 * delta))
+
+
+## False in chapters that don't allow running (ChapterData.allow_running).
+func running_allowed() -> bool:
+	var chapter := GameManager.current_chapter
+	return chapter == null or chapter.allow_running
 
 
 func _flashlight_target() -> Transform3D:
