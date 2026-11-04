@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AmbienceSet" format=3]
+
+[ext_resource type="Script" path="res://systems/audio/ambience_set.gd" id="0_s"]
+[ext_resource type="AudioStream" path="res://assets/audio/ambience/electric.ogg" id="1_a"]
+[ext_resource type="AudioStream" path="res://assets/audio/ambience/room_tone.ogg" id="2_a"]
+
+[resource]
+script = ExtResource("0_s")
+layers = Array[AudioStream]([ExtResource("1_a"), ExtResource("2_a")])
+volumes_db = PackedFloat32Array(-3.0, -8.0)

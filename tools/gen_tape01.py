@@ -366,9 +366,8 @@ def main() -> None:
         sodium_lamp(lv, x, z, facing_x=f, shadow=i in (0, 2))
     # ---- ambience
     amb = lv.add("Ambience", "Node3D", ".", {"script": script(lv, "res://systems/props/ambience.gd")})
-    for name, snd, vol in (("CricketsLoop", "crickets_loop", -12), ("TrafficLoop", "traffic_loop", -18)):
-        lv.add(name, "AudioStreamPlayer", amb, {"stream": f'ExtResource("{lv.ext(f"res://assets/audio/sfx/{snd}.wav", "AudioStream")}")',
-                                               "volume_db": f"{vol}.0", "bus": '&"Ambience"'})
+    # Background beds come from the AcousticZones' ambience sets (AudioManager); this node
+    # only adds the random far-off one-shots (dogs, a horn, a train).
     lv.add("OneShots", "Node3D", amb)
     for name, snd in (("Dog1", "dog_bark"), ("Dog2", "dog_bark"), ("Horn", "horn_far"), ("Train", "train_far")):
         lv.add(name, "AudioStreamPlayer3D", f"{amb}/OneShots", {"stream": f'ExtResource("{lv.ext(f"res://assets/audio/sfx/{snd}.wav", "AudioStream")}")',
@@ -425,14 +424,17 @@ def place_acoustics(lv: Level, wings: dict) -> None:
     """Reverb zones: the courtyard's slap-back between the wings, concrete stairwells, the
     cabin and meter room, and the empty flat 4B (systems/audio/acoustic_zone.gd)."""
     group = lv.add("Acoustics", "Node3D", ".")
+    # The whole compound (incl. terraces) hears the night: crickets, traffic, a breeze.
+    acoustic_zone(lv, "Compound", (0, 10, 0), (66, 22, 58), "outdoors", parent=group, ambience="courtyard_night")
     acoustic_zone(lv, "Courtyard", (0, 4, 7), (64, 8, 42), "yard", parent=group)
-    acoustic_zone(lv, "Cabin", (5.75, 1.3, 23.75), (3.5, 2.6, 3.5), "hard_room", parent=group)
-    acoustic_zone(lv, "MeterRoom", (28, 1.45, -4), (4, 2.9, 4), "hard_room", parent=group)
-    acoustic_zone(lv, "Flat4B", (-6.5, 13.5, -19), (9, 3, 10), "empty_room", parent=group)
+    acoustic_zone(lv, "Cabin", (5.75, 1.3, 23.75), (3.5, 2.6, 3.5), "hard_room", parent=group, ambience="cabin")
+    acoustic_zone(lv, "MeterRoom", (28, 1.45, -4), (4, 2.9, 4), "hard_room", parent=group, ambience="meter_room")
+    acoustic_zone(lv, "Flat4B", (-6.5, 13.5, -19), (9, 3, 10), "empty_room", parent=group, ambience="empty_flat")
     for letter, info in wings.items():
         lx, _, lz = info["landings"][0]
         ox, oz = lx - 1.5, lz - 9.2
-        acoustic_zone(lv, f"Stairs{letter}", (ox + 1.5, 9.0, oz + 7.1), (3.0, 18.0, 5.8), "stair", parent=group)
+        acoustic_zone(lv, f"Stairs{letter}", (ox + 1.5, 9.0, oz + 7.1), (3.0, 18.0, 5.8), "stair", parent=group,
+                      ambience="stairwell")
 
 
 def dress_stairwells(lv: Level, wings: dict) -> None:

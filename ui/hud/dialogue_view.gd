@@ -111,6 +111,11 @@ func _show(id: String) -> void:
 	_speaker.text = n.get("speaker", "")
 	_speaker.visible = _speaker.text != ""
 	_text.text = n.get("text", "")
+	# Voice line id = <file name>/<node id>, e.g. "deshmukh/hello" ->
+	# assets/audio/voice/deshmukh/hello.ogg (or "voice" in the node to override). Silent until recorded.
+	var voice_id: String = n.get("voice", "%s/%s" % [_dialogue.path.get_file().get_basename(), id])
+	if n.get("text", "") != "...":
+		AudioManager.play_voice(voice_id)
 	_shown = 0.0
 	_typing = not instant and _text.get_total_character_count() > 0
 	_text.visible_characters = -1 if not _typing else 0

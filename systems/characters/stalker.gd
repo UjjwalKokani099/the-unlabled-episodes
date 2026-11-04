@@ -62,6 +62,8 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	GraphicsManager.set_dread(0.0)
+	AudioManager.set_tension(0.0, &"stalker")
+	AudioManager.set_tension(0.0, &"stalker")
 
 
 ## True if any stalker in the scene is currently patrolling/hunting (hint texts use it).
@@ -218,6 +220,8 @@ func _follow(player: Player, _delta: float) -> void:
 ## Tracking errors + hiss rise with exposure (the camcorder's proximity warning).
 func _update_feedback(delta: float) -> void:
 	GraphicsManager.set_dread(exposure)  # the picture narrows and drains of colour in his shot
+	AudioManager.set_tension(0.45 + exposure * 0.55 if state in [State.HUNT, State.SEARCH] else exposure * 0.8,
+		&"stalker", 1.5)
 	_hiss.volume_db = linear_to_db(clampf(exposure, 0.0001, 1.0)) - 6.0
 	if exposure > 0.02 and not _hiss.playing:
 		_hiss.play()

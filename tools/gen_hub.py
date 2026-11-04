@@ -152,8 +152,8 @@ def main() -> None:
     lv.add("ChargingSpot", "Marker3D", ".", {"position": v3(3.35, 0.76, 2.65)})
 
     dress_room(lv)
-    acoustic_zone(lv, "RoomAcoustics", (1.8, 1.45, 2.1), (3.6, 2.9, 4.2), "small_room")
-    acoustic_zone(lv, "CorridorAcoustics", (1.8, 1.45, 5.15), (3.84, 2.9, 1.9), "corridor")
+    acoustic_zone(lv, "RoomAcoustics", (1.8, 1.45, 2.1), (3.6, 2.9, 4.2), "small_room", ambience="hub_room")
+    acoustic_zone(lv, "CorridorAcoustics", (1.8, 1.45, 5.15), (3.84, 2.9, 1.9), "corridor", ambience="hub_corridor")
 
     # ---- outside: lane below, building opposite, street lamp, the van spot
     lv.box((1.8, -6.1, -6.0), (40, 0.2, 14), "ground_asphalt")

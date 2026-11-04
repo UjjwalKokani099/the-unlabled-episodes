@@ -15,7 +15,10 @@ func _ready() -> void:
 	_label.modulate.a = 0.0
 
 
-func say(speaker: String, text: String, seconds: float = 3.0) -> void:
+func say(speaker: String, text: String, seconds: float = 3.0, voice_id: String = "") -> void:
+	# The voice plays whether or not subtitles are on; the text stays at least as long.
+	var voice_len := AudioManager.play_voice(voice_id)
+	seconds = maxf(seconds, voice_len + 0.3)
 	if not SettingsManager.subtitles:
 		return
 	_label.add_theme_font_size_override(&"normal_font_size", SIZES[SettingsManager.subtitle_size])

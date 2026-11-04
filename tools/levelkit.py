@@ -487,12 +487,17 @@ def night_environment(lv: Level, fog_density=0.012, moon=True) -> None:
             "directional_shadow_max_distance": "60.0", "light_volumetric_fog_energy": "0.3"})
 
 
-def acoustic_zone(lv: Level, name: str, centre, size, space: str, parent=".") -> str:
-    """Reverb for the listener while inside (systems/audio/acoustic_zone.gd): open, yard,
-    small_room, hard_room, empty_room, corridor, stair. Nested zones: the smallest wins."""
-    path = lv.add(name, "Area3D", parent, {"position": v3(*centre),
-                                           "script": f'ExtResource("{lv.ext("res://systems/audio/acoustic_zone.gd", "Script")}")',
-                                           "space": f'"{space}"'})
+def acoustic_zone(lv: Level, name: str, centre, size, space: str, parent=".", ambience: str = "") -> str:
+    """Reverb (and optionally background beds) for the listener while inside
+    (systems/audio/acoustic_zone.gd): open/outdoors, yard, small_room, hard_room,
+    empty_room, corridor/hallway, bathroom, stair. `ambience` = a data/ambience/<name>.tres.
+    Nested zones: the smallest wins."""
+    props = {"position": v3(*centre),
+             "script": f'ExtResource("{lv.ext("res://systems/audio/acoustic_zone.gd", "Script")}")',
+             "space": f'"{space}"'}
+    if ambience:
+        props["ambience"] = f'ExtResource("{lv.ext(f"res://data/ambience/{ambience}.tres", "Resource")}")'
+    path = lv.add(name, "Area3D", parent, props)
     shape = lv.sub("BoxShape3D", {"size": v3(*size)})
     lv.add("Shape", "CollisionShape3D", path, {"shape": f'SubResource("{shape}")'})
     return path

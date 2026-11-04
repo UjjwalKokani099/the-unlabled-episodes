@@ -239,6 +239,7 @@ func quit_game() -> void:
 	var tree := get_tree()
 	tree.paused = false
 	# Sounds still playing at exit hold their streams (reported as leaks): stop them all.
+	AudioManager.shutdown()
 	for type in ["AudioStreamPlayer", "AudioStreamPlayer2D", "AudioStreamPlayer3D"]:
 		for node in tree.root.find_children("*", type, true, false):
 			node.call(&"stop")

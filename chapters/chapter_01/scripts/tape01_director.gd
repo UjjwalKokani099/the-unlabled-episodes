@@ -78,6 +78,7 @@ func _ready() -> void:
 
 
 func _restore() -> void:
+	_update_tension.call_deferred()
 	var left := EventBus.has_fired(&"deshmukh_left")
 	balcony.visible = left
 	if left:
@@ -120,10 +121,11 @@ const VO_BEATS := {
 func _on_event(id: StringName) -> void:
 	if EventBus.replaying or ending_started:
 		return
+	_update_tension()
 	if VO_BEATS.has(id) and GameManager.get_flag("t1_vo_" + String(id)) == null:
 		GameManager.set_flag("t1_vo_" + String(id), true)
 		var beat: Array = VO_BEATS[id]
-		_after(beat[0], _say.bind(VO, beat[1], beat[2]))
+		_after(beat[0], _say.bind(VO, beat[1], beat[2], "t1/vo_" + String(id)))
 	match id:
 		&"back_at_cabin":
 			deshmukh_npc.active = false
@@ -168,6 +170,8 @@ func _on_event(id: StringName) -> void:
 					_message("CAM 2. He's still there. Watching the gate.", 3.5)
 		&"balcony_checked":
 			_note_time(id)
+			# Silence right before the intercom rings.
+			AudioManager.hold_silence(3.0, 1.2, 3.0)
 			_message("Nobody. The balcony door is shut. No light inside.", 4.0)
 			_after(4.0, func() -> void: EventBus.fire(&"intercom_ring"))
 		&"intercom_answered":
@@ -208,8 +212,9 @@ func _on_event(id: StringName) -> void:
 
 func _opening() -> void:
 	await _wait(2.5)
-	for line in OPENING:
-		_say(VO, line[0], line[1])
+	for i in OPENING.size():
+		var line: Array = OPENING[i]
+		_say(VO, line[0], line[1], "t1/opening_%d" % (i + 1))
 		await _wait(line[1] + 0.4)
 
 
@@ -392,8 +397,27 @@ func _after(seconds: float, fn: Callable) -> void:
 		fn.call()
 
 
-func _say(speaker: String, text: String, seconds: float = 3.5) -> void:
-	get_tree().call_group("subtitles", "say", speaker, text, seconds)
+## A subtitle line; `voice_id` plays assets/audio/voice/<voice_id>.ogg once VO is recorded.
+func _say(speaker: String, text: String, seconds: float = 3.5, voice_id: String = "") -> void:
+	get_tree().call_group("subtitles", "say", speaker, text, seconds, voice_id)
+
+
+## Story tension from how far the night has gone (EventBus counts, so checkpoints keep it):
+## mundane round 0, after the cut a little, rising through 3:12, the intercom, 4B and the
+## stranger's handwriting, high in the power cut, released at the end.
+const TENSION_BEATS := [
+	[&"back_at_cabin", 0.12], [&"deshmukh_left", 0.3], [&"intercom_answered", 0.45],
+	[&"4b_checked", 0.55], [&"register_read_late", 0.6], [&"power_cut", 0.75],
+	[&"meter_room_reached", 0.5], [&"power_restored", 0.0],
+]
+
+
+func _update_tension() -> void:
+	var level := 0.0
+	for beat: Array in TENSION_BEATS:
+		if EventBus.has_fired(beat[0]):
+			level = beat[1]
+	AudioManager.set_tension(level, &"story", 0.15)
 
 
 func _message(text: String, seconds: float = 2.5) -> void:

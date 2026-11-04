@@ -294,6 +294,22 @@ SceneLoader, ObjectiveManager, GameManager (project.godot [autoload]).
   `Interactor.used` -> crosshair pulse. Inspect view blurs the world (ui_blur.gdshader).
 - Tests: test_game_feel.gd, test_interaction_feel.gd.
 
+## Audio system (studio spec step 3)
+- Ambience: `AmbienceSet` (data/ambience/*.tres: looping OGG beds + levels) on an
+  `AcousticZone` (`ambience`; innermost zone with one wins). `AudioManager.set_ambience()`
+  crossfades over 1.5 s; layers shared by both places keep playing, re-levelled.
+- Tension: `AudioManager.set_tension(0..1, source)`; highest source wins; three layers
+  (drone_low, rumble from 0.25, drone_high from 0.55) on the Music bus. Tape 1 story levels
+  come from EventBus counts (`tape01_director.TENSION_BEATS`), the Stalker adds exposure.
+  `hold_silence(seconds)` = deliberate silence before a scare (Tape 1: before the intercom).
+- Voice: subtitles/dialogue carry line ids (`t1/vo_<event>`, `t1/opening_N`,
+  `<dialogue file>/<node>`); `AudioManager.play_voice(id)` plays assets/audio/voice/<id>.ogg
+  when it exists, else subtitles only.
+- Beds: gen_placeholder_sfx.py -> tools/_build/beds/ -> `python tools/process_audio.py`
+  (ffmpeg, OGG + loudness) -> `--import` -> `python tools/process_audio.py --imports` (loop).
+  Every file + licence: docs/audio_sources.md. `AudioManager.shutdown()` on quit.
+- Test: test_audio_system.gd.
+
 ## Layout
 - `scenes/`   hub, menus, test scenes
 - `scripts/`  autoload (singletons), player, interaction, objectives, events, ui

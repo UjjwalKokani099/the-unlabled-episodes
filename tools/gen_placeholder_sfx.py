@@ -512,6 +512,122 @@ def interact_tick(rng):
     return [math.sin(2 * math.pi * rng.uniform(900, 1200) * i / RATE) * math.exp(-i / RATE * 90) * 0.5 for i in range(n)]
 
 
+# ---- seamless ambience beds + tension layers (written as WAV, then tools/process_audio.py
+# makes loudness-normalised looping OGGs in assets/audio/ambience/ and assets/audio/tension/)
+
+def seamless(fn, seconds, rng, fade=0.5):
+    """Render `seconds` + `fade` of a bed and fold the tail over the head: loops with no seam."""
+    raw = fn(rng, seconds + fade)
+    n, f = int(RATE * seconds), int(RATE * fade)
+    out = raw[:n]
+    for i in range(f):
+        t = i / f
+        out[i] = out[i] * t + raw[n + i] * (1 - t)
+    return out
+
+
+def bed_room_tone(rng, seconds):
+    """Air in a quiet room: very soft broadband hiss with a faint 50 Hz mains."""
+    n = int(RATE * seconds)
+    air = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.05)
+    return [air[i] * 2.0 + 0.05 * math.sin(2 * math.pi * 50 * i / RATE) for i in range(n)]
+
+
+def bed_fridge(rng, seconds):
+    """Old fridge compressor: 50 Hz + harmonics with a slow wobble."""
+    n = int(RATE * seconds)
+    air = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.03)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        w = 1 + 0.08 * math.sin(2 * math.pi * 0.3 * t)
+        out.append((0.4 * math.sin(2 * math.pi * 50 * t) + 0.25 * math.sin(2 * math.pi * 100 * t * w)
+                    + 0.1 * math.sin(2 * math.pi * 150 * t)) * 0.7 + air[i])
+    return out
+
+
+def bed_wind(rng, seconds):
+    """Night breeze between buildings: filtered noise swelling and easing."""
+    n = int(RATE * seconds)
+    a = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.02)
+    b = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.006)
+    return [(a[i] * 3.0 + b[i] * 6.0) * (0.55 + 0.45 * math.sin(2 * math.pi * i / RATE / 7.3 + 1.0)) for i in range(n)]
+
+
+def bed_rain(rng, seconds):
+    """Steady rain: dense droplets over a soft wash."""
+    n = int(RATE * seconds)
+    wash = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.25)
+    out = [w * 0.6 for w in wash]
+    for _ in range(int(seconds * 900)):
+        at = rng.randrange(n)
+        amp = rng.uniform(0.05, 0.4)
+        for k in range(60):
+            if at + k < n:
+                out[at + k] += amp * math.exp(-k / 8.0) * rng.uniform(-1, 1)
+    return out
+
+
+def bed_electric(rng, seconds):
+    """Meter room: transformer hum (100 Hz rich) with the odd crackle."""
+    n = int(RATE * seconds)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        buzz = sum(math.sin(2 * math.pi * 100 * k * t) / k for k in range(1, 7))
+        out.append(buzz * 0.35 + (rng.uniform(-1, 1) * 0.8 if rng.random() < 0.0008 else 0.0))
+    return out
+
+
+def bed_drone_low(rng, seconds):
+    """Tension 1: two detuned low tones beating slowly, under a dark wash."""
+    n = int(RATE * seconds)
+    wash = lowpass([rng.uniform(-1, 1) for _ in range(n)], 0.01)
+    return [0.45 * math.sin(2 * math.pi * 55 * i / RATE) + 0.4 * math.sin(2 * math.pi * 55.6 * i / RATE)
+            + 0.15 * math.sin(2 * math.pi * 82.4 * i / RATE) + wash[i] * 4 for i in range(n)]
+
+
+def bed_drone_high(rng, seconds):
+    """Tension 2: a thin dissonant cluster with slow tremolo (only at high intensity)."""
+    n = int(RATE * seconds)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        trem = 0.6 + 0.4 * math.sin(2 * math.pi * 0.17 * t)
+        out.append(trem * (math.sin(2 * math.pi * 466.2 * t) + 0.8 * math.sin(2 * math.pi * 493.9 * t)
+                           + 0.5 * math.sin(2 * math.pi * 698.5 * t)) * 0.3)
+    return lowpass(out, 0.3)
+
+
+def bed_rumble(rng, seconds):
+    """Tension 3: sub rumble (brown noise, very low)."""
+    n = int(RATE * seconds)
+    out, y = [], 0.0
+    for _ in range(n):
+        y = (y + rng.uniform(-1, 1) * 0.02) * 0.998
+        out.append(y)
+    return lowpass(out, 0.02)
+
+
+BEDS = {  # name: (generator, seconds, folder)
+    "room_tone": (bed_room_tone, 10.0, "ambience"), "fridge": (bed_fridge, 8.0, "ambience"),
+    "wind": (bed_wind, 14.6, "ambience"), "rain": (bed_rain, 10.0, "ambience"),
+    "electric": (bed_electric, 8.0, "ambience"),
+    "drone_low": (bed_drone_low, 12.0, "tension"), "drone_high": (bed_drone_high, 11.76, "tension"),
+    "rumble": (bed_rumble, 10.0, "tension"),
+}
+
+
+def write_beds(rng):
+    import shutil
+    beds = OUT.parent.parent.parent / "tools" / "_build" / "beds" / "ambience"
+    beds.mkdir(parents=True, exist_ok=True)
+    for loop in ("crickets", "traffic"):  # the night beds written above become ambience OGGs too
+        shutil.copy(OUT / f"{loop}_loop.wav", beds / f"{loop}.wav")
+    for name, (fn, seconds, folder) in BEDS.items():
+        write(f"../../../tools/_build/beds/{folder}/{name}.wav", seamless(fn, seconds, rng))
+
+
 # name: (generator, variants)  -> assets/audio/sfx/variants/<name>_<n>.wav + data/sounds/<name>.tres
 SOUND_SETS = {
     "step_concrete": "step_concrete", "step_tile": "step_tile", "step_wood": "step_wood",
@@ -594,6 +710,7 @@ def main():
     write("train_far.wav", train_far(rng))
     # Variant sets (separate seed so adding sets never changes the files above).
     write_sound_sets(random.Random(4242))
+    write_beds(random.Random(777))
 
 
 if __name__ == "__main__":

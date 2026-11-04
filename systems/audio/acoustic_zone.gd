@@ -5,8 +5,10 @@ extends Area3D
 ## footsteps, doors, voices and hums sound like the place you're standing in. Nested zones
 ## (the cabin inside the courtyard): the smallest one wins; outside every zone it's "open".
 ##
-## No physics layer (it can never block the look ray or footstep ray); it only watches the
-## player (layer 2). Generators place them: tools/levelkit.py acoustic_zone().
+## A zone can also carry an `ambience` (AmbienceSet): entering it crossfades the background
+## beds over ~1.5 s (AudioManager.set_ambience); a zone without one uses the next larger
+## zone's. No physics layer (it can never block the look ray or footstep ray); it only
+## watches the player (layer 2). Generators place them: tools/levelkit.py acoustic_zone().
 
 const BUS := &"SFX"
 const PRESETS := {
@@ -17,11 +19,16 @@ const PRESETS := {
 	&"hard_room": [0.35, 0.3, 0.24, 12.0, 0.6],     # bare concrete (meter room, cabin)
 	&"empty_room": [0.45, 0.25, 0.3, 18.0, 0.7],    # empty flat: echoey
 	&"corridor": [0.45, 0.4, 0.2, 15.0, 0.6],
+	&"hallway": [0.45, 0.4, 0.2, 15.0, 0.6],          # same as corridor (spec name)
+	&"bathroom": [0.3, 0.1, 0.32, 6.0, 0.5],         # small, tiled: bright and splashy
+	&"outdoors": [0.2, 0.8, 0.0, 20.0, 0.5],         # same as open (spec name)
 	&"stair": [0.78, 0.2, 0.34, 30.0, 0.8],         # concrete stairwell: long tail
 }
 const BLEND_SECONDS := 0.8
 
-@export_enum("open", "yard", "small_room", "hard_room", "empty_room", "corridor", "stair") var space: String = "small_room"
+@export_enum("open", "outdoors", "yard", "small_room", "hard_room", "empty_room", "corridor", "hallway", "bathroom", "stair") var space: String = "small_room"
+## Background beds while the player is here (null = keep the surrounding zone's).
+@export var ambience: AmbienceSet
 
 static var _inside: Array[AcousticZone] = []
 static var _tween: Tween
@@ -51,6 +58,16 @@ func _exit_tree() -> void:
 
 func _apply() -> void:
 	set_space(current_space())
+	AudioManager.set_ambience(current_ambience())
+
+
+## The ambience of the innermost zone that has one (null outside every zone).
+static func current_ambience() -> AmbienceSet:
+	var best: AcousticZone = null
+	for zone in _inside:
+		if is_instance_valid(zone) and zone.ambience and (best == null or zone.volume() < best.volume()):
+			best = zone
+	return best.ambience if best else null
 
 
 ## Size of the zone (its first box shape), so the innermost of nested zones wins.
