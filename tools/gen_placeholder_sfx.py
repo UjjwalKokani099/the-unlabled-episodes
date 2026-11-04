@@ -143,6 +143,19 @@ def fan_hum(rng):
     return out
 
 
+def objective_tick(rng):
+    """Objective update: a soft pencil tick then a low two-note chime, quiet and short."""
+    out = []
+    n = int(RATE * 0.55)
+    for i in range(n):
+        t = i / RATE
+        tick = rng.uniform(-1, 1) * math.exp(-t * 160) * 0.35
+        a = math.sin(2 * math.pi * 523.3 * t) * math.exp(-max(t - 0.05, 0) * 7) * (t > 0.05)
+        b = math.sin(2 * math.pi * 659.3 * t) * math.exp(-max(t - 0.16, 0) * 6) * (t > 0.16)
+        out.append(tick + (a * 0.22 + b * 0.18) * min(1.0, t * 40))
+    return out
+
+
 def vcr_click(rng):
     n = int(RATE * 0.09)
     noise = [rng.uniform(-1, 1) for _ in range(n)]
@@ -721,6 +734,7 @@ def main():
     write("doorbell.wav", doorbell(rng))
     write("fan_hum.wav", fan_hum(rng))
     write("vcr_click.wav", vcr_click(rng))
+    write("objective_update.wav", objective_tick(random.Random(55)))
     write("room_hum.wav", room_hum(rng))
     write("crickets_loop.wav", crickets(rng))
     write("dog_bark.wav", dog_bark(rng))

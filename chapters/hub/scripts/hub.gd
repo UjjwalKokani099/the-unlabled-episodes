@@ -339,7 +339,7 @@ func _think_once(key: StringName, text: String, seconds: float, delay: float = 0
 		await get_tree().create_timer(delay).timeout
 		if not is_inside_tree():
 			return
-	get_tree().call_group("subtitles", "say", SPEAKER, text, seconds)
+	get_tree().call_group("subtitles", "think", text, seconds)  # inner monologue
 
 
 func _connect(area: Interactable, method: Callable) -> void:

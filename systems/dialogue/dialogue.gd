@@ -22,6 +22,13 @@ extends RefCounted
 ##   EventBus), "flag:<name>" (a dialogue flag is truthy), "!" in front negates.
 ## - `set` (on a node or a choice) stores dialogue flags; `event` fires an Events id.
 ##   Flags live in Game flags as "dlg_<name>", so checkpoints keep them.
+## - Line id = "<file>/<node>" (voice: assets/audio/voice/<file>/<node>.ogg when recorded;
+##   `voice` overrides the id, `audio` plays a specific file, e.g. a distorted phone voice).
+## - `duration` (seconds): the line moves on by itself after that long (calls, overheard
+##   lines); without it the player presses E.
+## - `timer` (seconds) on a node with choices: only where tension needs it. The choices drain
+##   away; when time is up the choice `timeout` (index, default the last) is taken.
+## validate() lists broken links and conditions (tests run it over every file).
 
 const FLAG_PREFIX := "dlg_"
 
@@ -120,6 +127,49 @@ func resolve(id: String) -> String:
 
 func node(id: String) -> Dictionary:
 	return nodes.get(id, {})
+
+
+## Problems in this file: links to missing nodes, unknown conditions, bad timers. [] = fine.
+func validate() -> PackedStringArray:
+	var problems := PackedStringArray()
+	if not nodes.has(start):
+		problems.append("start node '%s' missing" % start)
+	for id: String in nodes:
+		var n: Dictionary = nodes[id]
+		var links: Array = []
+		if n.has("next") and String(n.next) != "":
+			links.append(n.next)
+		for c: Dictionary in n.get("choices", []):
+			if not c.has("text"):
+				problems.append("%s: a choice has no text" % id)
+			if String(c.get("next", "")) != "":
+				links.append(c.next)
+			problems.append_array(_check_conditions(id, c.get("if", "")))
+		for b: Dictionary in n.get("branch", []):
+			if String(b.get("next", "")) != "":
+				links.append(b.next)
+			problems.append_array(_check_conditions(id, b.get("if", "")))
+		for link: String in links:
+			if not nodes.has(link):
+				problems.append("%s: links to missing node '%s'" % [id, link])
+		if n.has("timer") and (n.get("choices", []) as Array).is_empty():
+			problems.append("%s: timer without choices" % id)
+		if not n.has("branch") and not n.has("text"):
+			problems.append("%s: no text" % id)
+		if n.has("audio") and not ResourceLoader.exists(String(n.audio)):
+			problems.append("%s: audio %s missing" % [id, n.audio])
+	return problems
+
+
+func _check_conditions(id: String, conditions: Variant) -> PackedStringArray:
+	var out := PackedStringArray()
+	if conditions == null or (conditions is String and conditions == ""):
+		return out
+	for c: String in (conditions if conditions is Array else [conditions]):
+		var bare := c.trim_prefix("!")
+		if not (bare.begins_with("event:") or bare.begins_with("flag:")):
+			out.append("%s: unknown condition '%s'" % [id, c])
+	return out
 
 
 ## The choices of a node that are available right now.

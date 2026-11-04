@@ -64,7 +64,10 @@ func say(speaker: String, text: String, seconds: float = 3.0, voice_id: String =
 	var plain := (speaker + ": " + text) if speaker != "" else text
 	_label.text = "[center][b][color=#f2e2c0]%s:[/color][/b] %s[/center]" % [speaker, text] if speaker != "" else "[center]%s[/center]" % text
 	# Shrink the box around short lines; long ones wrap at MAX_WIDTH.
-	var width := minf(FONT.get_string_size(plain.replace("[i]", "").replace("[/i]", ""), HORIZONTAL_ALIGNMENT_LEFT, -1, size).x + 8.0, MAX_WIDTH)
+	var bare := plain
+	for tag in ["[i]", "[/i]", "[color=#e4e4e4]", "[/color]"]:
+		bare = bare.replace(tag, "")
+	var width := minf(FONT.get_string_size(bare, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x + 8.0, MAX_WIDTH)
 	_label.custom_minimum_size = Vector2(width, 0)
 	_layout_box.call_deferred(width)
 	if _tween:
@@ -73,6 +76,11 @@ func say(speaker: String, text: String, seconds: float = 3.0, voice_id: String =
 	_tween = create_tween()
 	_tween.tween_interval(seconds)
 	_tween.tween_property(_box, "modulate:a", 0.0, 0.4)
+
+
+## Inner monologue: the player character's own thoughts, in italics, no name, a softer white.
+func think(text: String, seconds: float = 3.0, voice_id: String = "") -> void:
+	say("", "[i][color=#e4e4e4]%s[/color][/i]" % text, seconds, voice_id)
 
 
 func current_text() -> String:

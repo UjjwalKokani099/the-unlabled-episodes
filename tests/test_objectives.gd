@@ -93,7 +93,7 @@ func _initialize() -> void:
 	p = room.get_node("Player")
 	await frames(20)
 	check(active_ids() == ["find_tape"], "room starts with find_tape (%s)" % [active_ids()])
-	check(panel_lines() == ["Find the tape in the dark room"], "HUD panel lists it (%s)" % [panel_lines()])
+	check(panel_lines() == ["•  Find the tape in the dark room"], "HUD panel lists it (%s)" % [panel_lines()])
 	check(room.get_node("HUD/Objectives").modulate.a > 0.5, "panel visible after objective appears")
 	var storage = room.get_node("LockedDoor")
 	check(storage.locked, "storage door locked")
@@ -104,7 +104,7 @@ func _initialize() -> void:
 	await send_interact(false)
 	check(objectives.is_completed(&"find_tape") and active_ids() == ["open_storage"], "tape -> open_storage (%s)" % [active_ids()])
 	check(not storage.locked, "storage door unlocked by find_tape")
-	check(panel_lines() == ["Find the tape in the dark room  - done", "Get into the storage room"], "panel shows done + new (%s)" % [panel_lines()])
+	check(panel_lines() == ["✓  Find the tape in the dark room", "•  Get into the storage room"], "panel shows done + new (%s)" % [panel_lines()])
 
 	await stand_at(Vector3(8, 0, -11.0), 0, 0)
 	await send_interact(true)
@@ -112,7 +112,7 @@ func _initialize() -> void:
 	await frames(60)
 	check(storage.is_open, "storage door opens")
 	check(active_ids() == ["collect_batteries"], "-> collect_batteries (%s)" % [active_ids()])
-	check(panel_lines().has("Collect batteries  0/3"), "counter 0/3 shown (%s)" % [panel_lines()])
+	check(panel_lines().has("•  Collect batteries  0/3"), "counter 0/3 shown (%s)" % [panel_lines()])
 
 	var n := 0
 	for x in [7.4, 8.0, 8.6]:
@@ -126,9 +126,9 @@ func _initialize() -> void:
 			check(objectives.get_progress(&"collect_batteries") == n, "battery %d (prompt '%s', progress %d)" % [n, prompt, objectives.get_progress(&"collect_batteries")])
 	check(objectives.is_completed(&"collect_batteries"), "all 3 batteries collected")
 	check(active_ids() == ["return_to_start"], "-> return_to_start (%s)" % [active_ids()])
-	check(panel_lines().has("Collect batteries  - done"), "panel shows batteries done (%s)" % [panel_lines()])
+	check(panel_lines().has("✓  Collect batteries"), "panel shows batteries done (%s)" % [panel_lines()])
 	await create_timer(3.0).timeout
-	check(panel_lines() == ["Go back to where you started"], "done lines expire (%s)" % [panel_lines()])
+	check(panel_lines() == ["•  Go back to where you started"], "done lines expire (%s)" % [panel_lines()])
 	events.fire(&"test_exit")
 	check(finished[0] == 1, "test room objectives all completed")
 

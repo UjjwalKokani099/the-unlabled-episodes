@@ -1,7 +1,8 @@
 class_name DialogueView
 extends CanvasLayer
 ## Plays a Dialogue (res://data/dialogue/*.json) at the bottom of the screen: speaker name,
-## typewriter text, then the player's choices. Lives in the HUD:
+## typewriter text, then the player's choices (a red bar drains on timed choices; lines with
+## a `duration` move on by themselves). Lives in the HUD:
 ##     get_tree().call_group("hud", "start_dialogue", "res://data/dialogue/tape01/iyer.json", "")
 ## E / Space / click: finish the line, then continue. Choices: click, number keys, or
 ## arrows + E. The player can't move while talking. Await `finished` (gives the last node).
@@ -27,6 +28,10 @@ var _choices: VBoxContainer
 var _hint: Label
 var _blip: AudioStreamPlayer
 var _blip_count: int = 0
+var _auto_left: float = -1.0     # `duration` countdown to the next line
+var _timer_left: float = -1.0    # timed-choice countdown
+var _timer_total: float = 0.0
+var _timer_bar: ProgressBar
 
 
 func _ready() -> void:
@@ -85,6 +90,22 @@ func choose(index: int) -> void:
 	_go(choice.get("next", ""))
 
 
+## Seconds left on a timed choice (-1 = no timer running).
+func time_left() -> float:
+	return _timer_left
+
+
+## Timed choice ran out: take the node's `timeout` choice (default the last one).
+func _time_out() -> void:
+	_timer_left = -1.0
+	_timer_bar.visible = false
+	var available := _dialogue.choices(current_id)
+	if available.is_empty():
+		return
+	var index := int(_dialogue.node(current_id).get("timeout", available.size() - 1))
+	choose(clampi(index, 0, available.size() - 1))
+
+
 func choice_texts() -> PackedStringArray:
 	var texts := PackedStringArray()
 	if is_open:
@@ -116,8 +137,13 @@ func _show(id: String) -> void:
 	# Voice line id = <file name>/<node id>, e.g. "deshmukh/hello" ->
 	# assets/audio/voice/deshmukh/hello.ogg (or "voice" in the node to override). Silent until recorded.
 	var voice_id: String = n.get("voice", "%s/%s" % [_dialogue.path.get_file().get_basename(), id])
-	if n.get("text", "") != "...":
+	if n.has("audio"):
+		AudioManager.play_sfx(load(String(n.audio)) as AudioStream, 0.0, &"Voice")
+	elif n.get("text", "") != "...":
 		AudioManager.play_voice(voice_id)
+	_auto_left = -1.0
+	_timer_left = -1.0
+	_timer_bar.visible = false
 	_shown = 0.0
 	_typing = not instant and _text.get_total_character_count() > 0
 	_text.visible_characters = -1 if not _typing else 0
@@ -130,11 +156,19 @@ func _show(id: String) -> void:
 func _finish_typing() -> void:
 	_typing = false
 	_text.visible_characters = -1
+	var n := _dialogue.node(current_id)
 	var available := _dialogue.choices(current_id)
 	if available.is_empty():
-		_hint.text = "[E] ..." if _dialogue.node(current_id).get("next", "") != "" else "[E] End"
+		_hint.text = "[E] ..." if n.get("next", "") != "" else "[E] End"
 		_hint.visible = true
+		if n.has("duration"):
+			_auto_left = float(n.duration)
 		return
+	if n.has("timer"):
+		_timer_total = maxf(float(n.timer), 0.5)
+		_timer_left = _timer_total
+		_timer_bar.value = 1.0
+		_timer_bar.visible = true
 	for i in available.size():
 		var button := Button.new()
 		button.text = "%d.  %s" % [i + 1, available[i].text]
@@ -148,12 +182,24 @@ func _finish_typing() -> void:
 
 
 func _clear_choices() -> void:
+	_timer_left = -1.0
+	if _timer_bar:
+		_timer_bar.visible = false
 	for child in _choices.get_children():
 		_choices.remove_child(child)
 		child.queue_free()
 
 
 func _process(delta: float) -> void:
+	if is_open and _auto_left >= 0.0:
+		_auto_left -= delta
+		if _auto_left < 0.0:
+			advance()
+	if is_open and _timer_left >= 0.0:
+		_timer_left -= delta
+		_timer_bar.value = maxf(_timer_left / _timer_total, 0.0)
+		if _timer_left < 0.0:
+			_time_out()
 	if not _typing:
 		return
 	_shown += delta * CHARS_PER_SECOND
@@ -225,6 +271,20 @@ func _build() -> void:
 	_choices = VBoxContainer.new()
 	_choices.add_theme_constant_override(&"separation", 2)
 	box.add_child(_choices)
+	# timed choices: a thin bar that drains (only on nodes with a `timer`)
+	_timer_bar = ProgressBar.new()
+	_timer_bar.min_value = 0.0
+	_timer_bar.max_value = 1.0
+	_timer_bar.show_percentage = false
+	_timer_bar.custom_minimum_size = Vector2(0, 4)
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = Color(0.85, 0.2, 0.15, 0.9)
+	var back := StyleBoxFlat.new()
+	back.bg_color = Color(1, 1, 1, 0.12)
+	_timer_bar.add_theme_stylebox_override(&"fill", fill)
+	_timer_bar.add_theme_stylebox_override(&"background", back)
+	_timer_bar.visible = false
+	box.add_child(_timer_bar)
 	_hint = Label.new()
 	_hint.add_theme_font_size_override(&"font_size", 16)
 	_hint.modulate = Color(1, 1, 1, 0.55)

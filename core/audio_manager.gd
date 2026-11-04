@@ -33,6 +33,7 @@ const UI_SOUNDS := {
 	&"hover": preload("res://assets/audio/sfx/ui_blip.wav"),
 	&"click": preload("res://assets/audio/sfx/ui_select.wav"),
 	&"back": preload("res://assets/audio/sfx/vcr_click.wav"),
+	&"objective": preload("res://assets/audio/sfx/objective_update.wav"),
 }
 
 var _pool_2d: Array[AudioStreamPlayer] = []
@@ -130,7 +131,7 @@ func play_ui(kind: StringName) -> void:
 	if stream == null:
 		return
 	_ui.stream = stream
-	_ui.volume_db = -14.0 if kind == &"hover" else -8.0
+	_ui.volume_db = -14.0 if kind == &"hover" else (-10.0 if kind == &"objective" else -8.0)
 	_ui.pitch_scale = randf_range(0.97, 1.03)
 	_ui.play()
 

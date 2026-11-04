@@ -138,7 +138,9 @@ Useful headless commands (run from project root):
   `reset_bindings()`). Gamepad map is added at runtime by `InputManager.add_gamepad_map()`
   (look_* actions = right stick, `controller_sensitivity`). `SettingsManager.flash_scale()` (reduce
   flashing) scales VHS glitches, flicker dips, static. `show_objectives` off = Tab only.
-  Test: test_settings.gd. Subtitles: `call_group("subtitles", "say",
+  Test: test_settings.gd. Inner monologue: `call_group("subtitles", "think", text, seconds)` (italics,
+  no name). Objectives: HUD ObjectivePanel top-left, slide/fade in, `objective_update.wav` (not on
+  replays). Subtitles: `call_group("subtitles", "say",
   speaker, text, seconds)` (Subtitles node is in the HUD and the intro).
 - Pause menu lives inside `ui/hud/hud.tscn` (Esc). Theme: `ui/themes/vcr_theme.tres`.
 - Tests that open the main menu must call `GameManager.mark_intro_seen()` first.
@@ -230,6 +232,9 @@ Useful headless commands (run from project root):
   (stored as GameManager flags `dlg_<name>`), `event` fires). Play: `call_group("hud",
   "start_dialogue", path, start)` -> HUD/DialogueView (await `finished`). Tests: `instant`,
   `advance()`, `choose(i)`, `choice_texts()`. Read flags with `Dialogue.flag("name")`.
+  Node extras: `duration` (auto-advance), `audio` (file), `timer` + `timeout` (timed choices, red bar;
+  only for tense moments, e.g. the secretary's reveal). `Dialogue.validate()` lists broken links;
+  test_dialogue_system.gd validates every file in data/dialogue.
 - NPC base: `assets/characters/npc.tscn` (CharacterBody3D + Model + Agent + Talk). Put a
   character scene under `<npc>/Model`; head tracking turns `Model/.../Body/Head` (`uncanny`
   = 150 degrees + snap); `walk_to()` -> `arrived` (deferred); `talk()`; `active` toggles all.

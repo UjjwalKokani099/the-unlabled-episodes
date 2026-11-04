@@ -76,14 +76,10 @@ theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 
 [node name="Objectives" type="VBoxContainer" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -620.0
-offset_top = 24.0
-offset_right = -28.0
-offset_bottom = 200.0
-grow_horizontal = 0
+offset_left = 74.0
+offset_top = 96.0
+offset_right = 680.0
+offset_bottom = 280.0
 mouse_filter = 2
 theme_override_constants/separation = 4
 script = ExtResource("3_objectives")
