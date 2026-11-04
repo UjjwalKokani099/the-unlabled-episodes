@@ -85,6 +85,22 @@ func play_at(stream: AudioStream, position: Vector3, volume_db: float = 0.0, uni
 	return p
 
 
+## A clip from a SoundSet (no back-to-back repeats, pitch jitter) at a world position.
+func play_set_at(set: SoundSet, position: Vector3, volume_db: float = 0.0, unit_size: float = 3.0) -> AudioStreamPlayer3D:
+	if set == null or set.streams.is_empty():
+		return null
+	var p := play_at(set.pick(), position, set.volume_db + volume_db, unit_size)
+	p.pitch_scale = set.random_pitch()
+	return p
+
+
+## A clip from a SoundSet, not positional.
+func play_set(set: SoundSet, volume_db: float = 0.0, bus: StringName = &"SFX") -> AudioStreamPlayer:
+	if set == null or set.streams.is_empty():
+		return null
+	return play_sfx(set.pick(), set.volume_db + volume_db, bus, set.random_pitch())
+
+
 ## Fades `stream` in on the Music bus over `fade` seconds (crossfading any current track).
 func play_music(stream: AudioStream, fade: float = 4.0, volume_db: float = 0.0) -> void:
 	if _music.stream == stream and _music.playing:

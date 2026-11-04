@@ -5,9 +5,11 @@ extends RayCast3D
 ## Walls block the ray, so you can't use things through them.
 
 signal focus_changed(target: Interactable)
+## Something was used (the HUD pulses the crosshair).
+signal used(target: Interactable)
 
 ## How far the player can reach, in metres.
-@export var reach: float = 2.2
+@export var reach: float = 2.0
 
 ## What the player is looking at right now (null = nothing usable).
 var focused: Interactable = null
@@ -38,9 +40,10 @@ func _physics_process(delta: float) -> void:
 	_hold_elapsed += delta
 	hold_ratio = minf(_hold_elapsed / focused.hold_time, 1.0)
 	if _hold_elapsed >= focused.hold_time:
-		var used := focused
+		var held_target := focused
 		_cancel_hold()
-		used.interact(owner)
+		held_target.interact(owner)
+		used.emit(held_target)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -48,7 +51,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	get_viewport().set_input_as_handled()
 	if focused.hold_time <= 0.0:
-		focused.interact(owner)
+		var pressed_target := focused
+		pressed_target.interact(owner)
+		used.emit(pressed_target)
 	else:
 		_holding = true
 		_hold_elapsed = 0.0

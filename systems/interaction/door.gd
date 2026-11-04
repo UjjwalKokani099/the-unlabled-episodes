@@ -1,10 +1,16 @@
 class_name Door
 extends Node3D
 ## Hinged door. Origin = floor level on the hinge side; the closed panel runs along +X.
-## Swings away from whoever opens it. Locked doors rattle and show a message.
+## Swings away from whoever opens it (eased), with a hinge creak; closing ends in the latch
+## clicking home. Locked doors rattle in their frame (sound + a small camera nudge) and show
+## a message. Sounds are SoundSets (data/sounds/door_*.tres), never the same twice in a row.
 
 signal opened
 signal closed
+
+const CREAK: SoundSet = preload("res://data/sounds/door_creak.tres")
+const LATCH: SoundSet = preload("res://data/sounds/door_latch.tres")
+const RATTLE: SoundSet = preload("res://data/sounds/door_rattle.tres")
 
 @export var open_angle: float = 100.0
 @export var open_duration: float = 0.7
@@ -30,6 +36,7 @@ var _slam_player: AudioStreamPlayer3D
 
 func _ready() -> void:
 	interactable.interacted.connect(_on_interacted)
+	interactable.default_tick = false  # the door has its own sounds
 	if slam_sound:
 		_slam_player = AudioStreamPlayer3D.new()
 		_slam_player.stream = slam_sound
@@ -51,6 +58,7 @@ func _ready() -> void:
 func open_away_from(from_position: Vector3) -> void:
 	var side := 1.0 if to_local(from_position).z >= 0.0 else -1.0
 	_swing(deg_to_rad(open_angle) * side)
+	_sound(CREAK, -6.0)
 	is_open = true
 	_update_prompt()
 	opened.emit()
@@ -60,6 +68,9 @@ func open_away_from(from_position: Vector3) -> void:
 
 func close() -> void:
 	_swing(0.0)
+	_sound(CREAK, -9.0)
+	# The latch clicks home as the panel arrives.
+	_tween.tween_callback(_sound.bind(LATCH, -4.0))
 	is_open = false
 	_update_prompt()
 	closed.emit()
@@ -99,6 +110,8 @@ func _on_interacted(by: Node3D) -> void:
 	if locked:
 		get_tree().call_group("hud", "show_message", locked_message)
 		_rattle()
+		_sound(RATTLE, -3.0)
+		get_tree().call_group("camera_shake", "add_trauma", 0.12)
 	elif is_open:
 		close()
 	else:
@@ -126,6 +139,11 @@ func _new_tween() -> Tween:
 	# The panel is a physics body, so animate it on physics frames.
 	_tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	return _tween
+
+
+## Plays a clip from `set` at the middle of the door panel.
+func _sound(set: SoundSet, volume_db: float) -> void:
+	AudioManager.play_set_at(set, hinge.global_transform * Vector3(0.55, 1.1, 0.0), volume_db, 3.0)
 
 
 func _update_prompt() -> void:

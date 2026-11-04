@@ -8,6 +8,8 @@ signal picked_up(item_id: StringName)
 @export var item_id: StringName = &"item"
 @export var display_name: String = "item"
 
+const PICKUP_SOUNDS: SoundSet = preload("res://data/sounds/pickup.tres")
+
 @onready var interactable: Interactable = $Interactable
 
 
@@ -16,11 +18,13 @@ func _ready() -> void:
 		queue_free()
 		return
 	interactable.interacted.connect(_on_interacted)
+	interactable.default_tick = false
 
 
 func _on_interacted(_by: Node3D) -> void:
 	interactable.enabled = false
 	GameManager.set_flag(_flag_key())
+	AudioManager.play_set_at(PICKUP_SOUNDS, global_position, -4.0, 2.0)
 	picked_up.emit(item_id)
 	EventBus.fire(item_id)
 	get_tree().call_group("hud", "show_message", "Picked up: %s" % display_name)

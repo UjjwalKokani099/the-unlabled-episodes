@@ -19,6 +19,7 @@ signal closed
 @export var opened_event: StringName
 
 const SLIDE := preload("res://assets/audio/sfx/drawer_slide.wav")
+const RATTLE: SoundSet = preload("res://data/sounds/door_rattle.tres")
 
 var is_open: bool = false
 var _closed_position: Vector3
@@ -36,6 +37,7 @@ func _ready() -> void:
 	_sound.unit_size = 3.0
 	add_child(_sound)
 	interactable.interacted.connect(func(_by: Node3D) -> void: toggle())
+	interactable.default_tick = false
 	if unlock_event != &"":
 		if EventBus.has_fired(unlock_event):
 			locked = false
@@ -99,6 +101,7 @@ func _rattle() -> void:
 		_tween.kill()
 	var out := _closed_position + transform.basis.z.normalized() * 0.012
 	_tween = create_tween()
+	AudioManager.play_set_at(RATTLE, global_position, -10.0, 2.0)  # locked: it knocks in its runners
 	for i in 2:
 		_tween.tween_property(self, "position", out, 0.04)
 		_tween.tween_property(self, "position", _closed_position, 0.05)

@@ -13,15 +13,25 @@ var _message_tween: Tween
 var _key_name: String = ""
 
 
+## Prompt fade (studio spec: 0.15 s, never a hard pop).
+const PROMPT_FADE := 0.15
+
+var _prompt_shown: bool = false
+var _prompt_tween: Tween
+
+
 func _ready() -> void:
 	add_to_group("hud")
 	message_label.modulate.a = 0.0
 	prompt_label.visible = false
+	prompt_label.modulate.a = 0.0
 
 
 func _process(_delta: float) -> void:
 	if not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group("player") as Player
+		if _player:
+			_player.interactor.used.connect(func(_t: Interactable) -> void: crosshair.pulse())
 	var target: Interactable = null
 	var hold := 0.0
 	if _player:
@@ -30,10 +40,23 @@ func _process(_delta: float) -> void:
 
 	crosshair.focused = target != null
 	crosshair.progress = hold
-	prompt_label.visible = target != null
+	if (target != null) != _prompt_shown:
+		_fade_prompt(target != null)
 	if target:
 		var verb := "Hold [%s]" if target.hold_time > 0.0 else "[%s]"
 		prompt_label.text = (verb % _interact_key()) + " " + target.prompt
+
+
+func _fade_prompt(show: bool) -> void:
+	_prompt_shown = show
+	if _prompt_tween and _prompt_tween.is_valid():
+		_prompt_tween.kill()
+	if show:
+		prompt_label.visible = true
+	_prompt_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_prompt_tween.tween_property(prompt_label, "modulate:a", 1.0 if show else 0.0, PROMPT_FADE)
+	if not show:
+		_prompt_tween.tween_callback(func() -> void: prompt_label.visible = false)
 
 
 ## Show a piece of paper / screen text (diary, register, bill, chat). See NoteView.

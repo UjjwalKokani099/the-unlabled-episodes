@@ -7,6 +7,8 @@ extends Area3D
 ## from the prop's own script. The prop decides what "use" means.
 
 signal interacted(by: Node3D)
+
+const TICK: SoundSet = preload("res://data/sounds/interact_tick.tres")
 signal focus_entered
 signal focus_exited
 
@@ -19,6 +21,10 @@ const LAYER := 4
 @export_range(0.0, 10.0, 0.1) var hold_time: float = 0.0
 ## Disabled interactables can't be focused or used, and don't block the look-ray
 ## (they leave the interactable physics layer).
+## Sound played on use (a SoundSet). Leave empty for the generic soft tick.
+@export var use_sounds: SoundSet
+## Owners that play their own sounds (doors, drawers, switches, pickups) turn this off.
+@export var default_tick: bool = true
 @export var enabled: bool = true:
 	set(value):
 		enabled = value
@@ -32,5 +38,11 @@ func _ready() -> void:
 
 
 func interact(by: Node3D) -> void:
-	if enabled:
-		interacted.emit(by)
+	if not enabled:
+		return
+	interacted.emit(by)
+	# Nothing happens silently: a soft tick unless the owner plays its own sound.
+	if use_sounds:
+		AudioManager.play_set_at(use_sounds, global_position, -4.0)
+	elif default_tick:
+		AudioManager.play_set_at(TICK, global_position, -12.0, 2.0)

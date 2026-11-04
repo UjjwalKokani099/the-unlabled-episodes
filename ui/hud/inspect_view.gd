@@ -13,6 +13,8 @@ const SHOW_SIZE := 0.36
 const TURN_SPEED := 0.008
 const KEY_TURN := 2.2
 
+const BLUR_SHADER := preload("res://assets/shaders/ui_blur.gdshader")
+
 var is_open: bool = false
 var _item: Inspectable
 var _pivot: Node3D
@@ -164,8 +166,11 @@ func _build() -> void:
 	_root = Control.new()
 	_root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(_root)
+	# The world behind stays visible, blurred and darkened (assets/shaders/ui_blur.gdshader).
 	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.78)
+	var blur := ShaderMaterial.new()
+	blur.shader = BLUR_SHADER
+	dim.material = blur
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_root.add_child(dim)
 	# The little stage: own world, own lights, transparent background.
