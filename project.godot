@@ -28,6 +28,7 @@ SaveManager="*res://core/save_manager.gd"
 SceneLoader="*res://core/scene_loader.gd"
 ObjectiveManager="*res://systems/objectives/objective_manager.gd"
 GameManager="*res://core/game_manager.gd"
+DebugMenu="*res://core/debug_menu.gd"
 
 [debug]
 

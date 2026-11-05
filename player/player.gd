@@ -45,6 +45,13 @@ signal flashlight_toggled(is_on: bool)
 var input_enabled: bool = true
 ## The phone in Nikhil's hand (PlayerPhone.attach), or null: tapes before 2009 have none.
 var phone: PlayerPhone = null
+## Debug menu (F1): fly where you look, through walls (run = faster, crouch = down).
+var noclip: bool = false:
+	set(value):
+		noclip = value
+		if is_node_ready():
+			_collider.disabled = value
+			velocity = Vector3.ZERO
 var is_crouching: bool = false
 var is_sprinting: bool = false
 
@@ -102,6 +109,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if noclip:
+		_fly(delta)
+		return
 	var active := can_act()
 	var move_input := Vector2.ZERO
 	if active:
@@ -185,6 +195,17 @@ func is_using_phone() -> bool:
 ## True when the player is allowed to move, look and interact right now.
 func can_act() -> bool:
 	return input_enabled and _is_mouse_captured()
+
+
+func _fly(delta: float) -> void:
+	if not can_act():
+		return
+	var input := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var dir := camera.global_basis * Vector3(input.x, 0.0, input.y)
+	if Input.is_action_pressed("crouch"):
+		dir += Vector3.DOWN
+	var speed := sprint_speed * (3.0 if Input.is_action_pressed("sprint") else 1.5)
+	global_position += dir.limit_length(1.0) * speed * delta
 
 
 func toggle_flashlight() -> void:

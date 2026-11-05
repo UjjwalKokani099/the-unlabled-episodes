@@ -93,7 +93,4 @@ func _initialize() -> void:
 	check(current_scene.name == "Hub" and current_scene.stage == 0, "back in the hub; test tape doesn't advance the story")
 
 	game.delete_save()
-	current_scene.queue_free()
-	await frames(3)
-	print("RESULT fails=", fails)
-	quit(fails)
+	await load("res://tests/support.gd").finish(self, fails)

@@ -57,6 +57,7 @@ var last_chapter_time: float = 0.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	ErrorLog.install()  # errors + warnings with timestamps -> user://logs/errors.log
 	chapter_list = load(CHAPTER_LIST_PATH)
 	SceneLoader.transition_finished.connect(transition_finished.emit)
 	# Closing the window goes through quit_game(), so scripted sequences that are still
@@ -368,6 +369,7 @@ func quit_game() -> void:
 		tree.current_scene.queue_free()
 	await tree.process_frame
 	await tree.process_frame
+	ErrorLog.uninstall()
 	tree.quit()
 
 

@@ -51,7 +51,7 @@ func change_scene(path: String, header: String = "", lines: PackedStringArray = 
 	var tree := get_tree()
 	tree.paused = true
 	if not OS.has_feature("web"):
-		ResourceLoader.load_threaded_request(path, "PackedScene", true)
+		ResourceLoader.load_threaded_request(path, "PackedScene", false)
 	await _transition.cover(header, lines, LoadingTips.pick(path) if not lines.is_empty() else "")
 	var packed := await _finish_loading(path)
 	if packed == null:

@@ -184,6 +184,17 @@ Useful headless commands (run from project root):
   Tape 1 + the hub.
 - Mirrors: none story-relevant yet (the bible's mirror sightings come in later tapes).
 
+## QA / tooling (step 9)
+- F1 = `DebugMenu` autoload (core/debug_menu.gd; freed in release builds): chapters, the level's
+  checkpoints (GO TO / LOAD SAVED), noclip (`Player.noclip`), SHOW FPS, SHOW TRIGGERS (Area3D
+  boxes: red story, green checkpoint, blue hiding), GIVE items (the level's Pickups), AI on/off.
+  Test: test_debug_menu.gd.
+- `ErrorLog` (core/error_log.gd, a Logger installed by GameManager): errors + warnings with
+  timestamps and GDScript backtraces -> user://logs/errors.log (rotates; godot.log keeps all).
+- docs/performance.md (tools/profile_level.gd numbers), docs/playtest_checklist.md,
+  tests/test_leaks.gd (counts flat across room <-> Tape 1), tests/support.gd `finish()`.
+- SceneLoader loads without sub-threads (sub-threads leaked load tokens; same speed).
+
 ## Graphics / performance (target: 60 FPS at 1080p on the RTX 3050 Ti laptop)
 - Graphics settings: `SettingsManager.graphics_quality` LOW/MEDIUM/HIGH fills the detail keys
   (`GRAPHICS_PRESETS`: render_scale, anti_aliasing, shadow/texture/fog/effects_quality); changing a
@@ -351,8 +362,8 @@ Useful headless commands (run from project root):
   a window also run under xvfb-run (touch/menu-click tests still fail there, as on main).
 
 ## Core autoloads (studio layout, Nov 2026)
-Order: EventBus, SettingsManager, InputManager, AudioManager, GraphicsManager, SaveManager,
-SceneLoader, ObjectiveManager, GameManager (project.godot [autoload]).
+Order: EventBus, SettingsManager, InputManager, AudioManager, UIFeedback, GraphicsManager, SaveManager,
+SceneLoader, ObjectiveManager, GameManager, DebugMenu (project.godot [autoload]).
 - `EventBus`: `fire(id)` story events + typed signals (chapter_started/completed,
   checkpoint_saved, scene_transition_started/finished, setting_changed,
   input_device_changed, objective_changed, game_paused). Systems talk through it.

@@ -18,10 +18,12 @@ const SHADOWS := [
 	{"shadow_atlas": 4096, "soft_shadows": RenderingServer.SHADOW_QUALITY_SOFT_LOW},
 	{"shadow_atlas": 4096, "soft_shadows": RenderingServer.SHADOW_QUALITY_SOFT_MEDIUM},
 ]
+## lod_threshold: screen-space error (px) before a mesh drops a LOD. 3 px is invisible at the
+## 75% render scale under the VHS look (hub: 490k -> ~330k triangles, docs/performance.md).
 const TEXTURES := [
-	{"lod_threshold": 4.0, "mipmap_bias": 0.5, "anisotropic": Viewport.ANISOTROPY_2X},
-	{"lod_threshold": 2.0, "mipmap_bias": 0.0, "anisotropic": Viewport.ANISOTROPY_4X},
-	{"lod_threshold": 1.0, "mipmap_bias": 0.0, "anisotropic": Viewport.ANISOTROPY_16X},
+	{"lod_threshold": 8.0, "mipmap_bias": 0.5, "anisotropic": Viewport.ANISOTROPY_2X},
+	{"lod_threshold": 4.0, "mipmap_bias": 0.0, "anisotropic": Viewport.ANISOTROPY_4X},
+	{"lod_threshold": 3.0, "mipmap_bias": 0.0, "anisotropic": Viewport.ANISOTROPY_16X},
 ]
 const FOG := [
 	{"volumetric_fog": false, "fog_size": 64, "fog_depth": 48, "fog_filter": false},
