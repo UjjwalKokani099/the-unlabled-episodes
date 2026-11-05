@@ -18,6 +18,7 @@ config/icon="res://assets/branding/icon.png"
 config/windows_native_icon="res://assets/branding/icon.ico"
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
+run/disable_stdout.release=true
 
 [autoload]
 
@@ -31,6 +32,7 @@ SaveManager="*res://core/save_manager.gd"
 SceneLoader="*res://core/scene_loader.gd"
 ObjectiveManager="*res://systems/objectives/objective_manager.gd"
 GameManager="*res://core/game_manager.gd"
+Achievements="*res://core/achievements.gd"
 DebugMenu="*res://core/debug_menu.gd"
 
 [debug]

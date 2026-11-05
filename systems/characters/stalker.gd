@@ -169,6 +169,7 @@ func _in_shot(player: Player) -> bool:
 func _catch() -> void:
 	_set_state(State.CAUGHT)
 	caught.emit()
+	EventBus.player_caught.emit()
 	get_tree().call_group("camcorder", "glitch", 1.0, 1.5)
 	get_tree().call_group("camcorder", "show_static")
 	get_tree().call_group("hud", "show_message", "TRACKING LOST", 2.0)

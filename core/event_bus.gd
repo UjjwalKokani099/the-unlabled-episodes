@@ -23,6 +23,10 @@ signal setting_changed(key: StringName)
 signal input_device_changed(device: int)
 signal objective_changed(objective_id: StringName, completed: bool)
 signal game_paused(paused: bool)
+## A Cameraman sighting counted for the first time (GameManager.mark_spotted).
+signal spotted(spot_id: StringName)
+## The Cameraman caught the player (Stalker CAUGHT, before the checkpoint reloads).
+signal player_caught
 
 ## True while a checkpoint load rebuilds state (objectives re-completing etc.).
 ## Scares (EventReaction) ignore events fired while this is set.

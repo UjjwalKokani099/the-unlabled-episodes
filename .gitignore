@@ -37,3 +37,4 @@ tools/_build/
 # Python bytecode from the tools/ generators
 __pycache__/
 *.pyc
+steam_appid.txt

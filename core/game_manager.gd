@@ -423,6 +423,7 @@ func mark_spotted(spot_id: StringName) -> bool:
 	list.append(String(spot_id))
 	SaveManager.data["spotted"] = list
 	SaveManager.write()
+	EventBus.spotted.emit(spot_id)
 	return true
 
 

@@ -1,0 +1,14 @@
+{
+	"_format": "Achievements (core/achievements.gd). id = the Steamworks API name (create the same ids in Steamworks > Stats & Achievements). unlock: chapter:<chapter id> | spotted_any | spotted:<prefix>:<count> | caught. hidden = secret on the store page.",
+	"achievements": [
+		{"id": "TAPE_01", "name": "The Watchman", "description": "Watch Tape 1 to the end.", "unlock": "chapter:tape_01_watchman", "hidden": false},
+		{"id": "TAPE_02", "name": "The Toll Booth", "description": "Watch Tape 2 to the end.", "unlock": "chapter:tape_02_tollbooth", "hidden": false},
+		{"id": "TAPE_03", "name": "The Night Desk", "description": "Watch Tape 3 to the end.", "unlock": "chapter:tape_03_hotel", "hidden": false},
+		{"id": "TAPE_04", "name": "The Last Delivery", "description": "Watch Tape 4 to the end.", "unlock": "chapter:tape_04_delivery", "hidden": false},
+		{"id": "TAPE_05", "name": "Unlabeled", "description": "Watch the last tape.", "unlock": "chapter:tape_05_final", "hidden": false},
+		{"id": "FIRST_SIGHTING", "name": "Pause", "description": "Spot the Cameraman for the first time.", "unlock": "spotted_any", "hidden": true},
+		{"id": "T1_ALL_SIGHTINGS", "name": "He Was Always There", "description": "Spot all three of his appearances on Tape 1.", "unlock": "spotted:t1_:3", "hidden": true},
+		{"id": "ALL_SIGHTINGS", "name": "Rewind", "description": "Spot all twelve appearances.", "unlock": "spotted::12", "hidden": true},
+		{"id": "TRACKING_LOST", "name": "Tracking Lost", "description": "Let him get you on tape.", "unlock": "caught", "hidden": true}
+	]
+}

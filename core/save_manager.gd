@@ -33,6 +33,7 @@ static func defaults() -> Dictionary:
 		"checkpoint": {},
 		"intro_seen": false,
 		"spotted": [],
+		"achievements": [],
 		"memory": [],
 		"play_time": 0.0,
 		"chapter_times": {},

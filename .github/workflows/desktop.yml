@@ -1,0 +1,105 @@
+# Builds the Windows (Steam's main platform) and Linux release builds, smoke-tests the
+# Linux one (boots the exported game headless: the main scene, the menu and Tape 1 must
+# load with no errors) and keeps both as zips (artifacts). For a release, push a tag
+# "v<version>" (tools/build_release.py bumps the version and writes CHANGELOG.md first).
+# Runs on tags, by hand, and on Claude's branches when the build setup itself changes.
+name: Desktop build
+
+on:
+  push:
+    tags: ["v*"]
+    branches: ["claude/**"]
+    paths:
+      - export_presets.cfg
+      - .github/workflows/desktop.yml
+      - tools/build_release.py
+  workflow_dispatch:
+
+concurrency:
+  group: desktop-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  desktop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      GODOT_VERSION: 4.7.2-stable
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: List LFS files
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-ids
+      - uses: actions/cache@v4
+        with:
+          path: .git/lfs
+          key: lfs-${{ hashFiles('.lfs-ids') }}
+          restore-keys: lfs-
+      - name: Pull LFS files
+        run: git lfs pull
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/godot
+            ~/.local/share/godot/export_templates
+          key: godot-${{ env.GODOT_VERSION }}-desktop
+      - name: Install Godot + desktop templates
+        run: |
+          if [ ! -x ~/godot/godot ]; then
+            mkdir -p ~/godot && cd ~/godot
+            curl -fsSL -o g.zip "https://github.com/godotengine/godot/releases/download/$GODOT_VERSION/Godot_v${GODOT_VERSION}_linux.x86_64.zip"
+            unzip -q g.zip && mv "Godot_v${GODOT_VERSION}_linux.x86_64" godot && rm g.zip
+          fi
+          T=~/.local/share/godot/export_templates/${GODOT_VERSION/-/.}
+          if [ ! -f "$T/windows_release_x86_64.exe" ] || [ ! -f "$T/linux_release.x86_64" ]; then
+            mkdir -p "$T"
+            curl -fsSL -o /tmp/t.tpz "https://github.com/godotengine/godot/releases/download/$GODOT_VERSION/Godot_v${GODOT_VERSION}_export_templates.tpz"
+            unzip -q -o -j /tmp/t.tpz templates/windows_release_x86_64.exe templates/linux_release.x86_64 templates/version.txt -d "$T"
+            rm /tmp/t.tpz
+          fi
+
+      - uses: actions/cache@v4
+        with:
+          path: .godot
+          key: import-desktop-${{ hashFiles('.lfs-ids', 'project.godot', '**/*.import') }}
+          restore-keys: import-desktop-
+      - name: Import project
+        run: |
+          ~/godot/godot --headless --path . --import 2>&1 | grep -E "ERROR|SCRIPT ERROR" | head -50 || true
+          ~/godot/godot --headless --path . --import 2>&1 | grep -E "ERROR|SCRIPT ERROR" | head -50 || true
+
+      - name: Export Windows + Linux (release)
+        run: |
+          mkdir -p build/windows build/linux
+          ~/godot/godot --headless --path . --export-release "Windows Desktop" build/windows/Unlabeled.exe 2>&1 | tail -20
+          ~/godot/godot --headless --path . --export-release "Linux" build/linux/Unlabeled.x86_64 2>&1 | tail -20
+          test -f build/windows/Unlabeled.exe && test -f build/windows/Unlabeled.pck
+          test -f build/linux/Unlabeled.x86_64 && test -f build/linux/Unlabeled.pck
+          ls -la build/windows build/linux
+
+      - name: Smoke test the exported Linux build
+        run: |
+          chmod +x build/linux/Unlabeled.x86_64
+          fail=0
+          for scene in "" res://ui/menus/main_menu.tscn res://chapters/chapter_01/shanti_vihar.tscn; do
+            echo "== ${scene:-main scene}"
+            timeout 300 ./build/linux/Unlabeled.x86_64 --headless --quit-after 400 $scene > run.log 2>&1 || true
+            grep -E "SCRIPT ERROR|^ERROR|Failed loading|Parse Error" run.log | grep -v "audio_driver\|ALSA\|dummy driver" > errors.log || true
+            if [ -s errors.log ]; then cat errors.log | head -30; fail=1; fi
+          done
+          exit $fail
+
+      - name: Zip
+        run: |
+          VERSION=$(grep -oP 'config/version="\K[^"]+' project.godot)
+          mkdir -p build/release
+          (cd build/windows && zip -qr "../release/Unlabeled-${VERSION}-windows.zip" .)
+          (cd build/linux && zip -qr "../release/Unlabeled-${VERSION}-linux.zip" .)
+          ls -la build/release >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-builds
+          path: build/release
+          retention-days: 14

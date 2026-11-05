@@ -200,6 +200,17 @@ Useful headless commands (run from project root):
   tests/test_leaks.gd (counts flat across room <-> Tape 1), tests/support.gd `finish()`.
 - SceneLoader loads without sub-threads (sub-threads leaked load tokens; same speed).
 
+## Release / Steam (spec 15)
+- Export presets: Web (iPad), "Windows Desktop", "Linux" (export_presets.cfg; excludes tools/,
+  docs/, build/, tests/*.gd — tests/scenes stays: data/chapter_list.tres references it).
+- `python tools/build_release.py patch|minor|major|none [--no-export]`: version bump, CHANGELOG.md,
+  export + zip to build/release/. Tag `v<version>` -> .github/workflows/desktop.yml builds both and
+  smoke-runs the exported Linux build headless (main scene, menu, Tape 1; any error fails it).
+- `Achievements` autoload (core/achievements.gd + data/achievements.json; ids = Steamworks API
+  names): EventBus.chapter_completed / spotted / player_caught; stored in the save; GodotSteam's
+  `Steam` singleton, when installed, is initialised and mirrored (no other code touches Steam).
+  Test: test_achievements.gd (mock backend tests/support_steam_mock.gd). Owner steps: docs/steam.md.
+
 ## Graphics / performance (target: 60 FPS at 1080p on the RTX 3050 Ti laptop)
 - Graphics settings: `SettingsManager.graphics_quality` LOW/MEDIUM/HIGH fills the detail keys
   (`GRAPHICS_PRESETS`: render_scale, anti_aliasing, shadow/texture/fog/effects_quality); changing a
@@ -383,7 +394,7 @@ Useful headless commands (run from project root):
 
 ## Core autoloads (studio layout, Nov 2026)
 Order: EventBus, SettingsManager, InputManager, AudioManager, UIFeedback, GraphicsManager, SaveManager,
-SceneLoader, ObjectiveManager, GameManager, DebugMenu (project.godot [autoload]).
+SceneLoader, ObjectiveManager, GameManager, Achievements, DebugMenu (project.godot [autoload]).
 - `EventBus`: `fire(id)` story events + typed signals (chapter_started/completed,
   checkpoint_saved, scene_transition_started/finished, setting_changed,
   input_device_changed, objective_changed, game_paused). Systems talk through it.
