@@ -209,6 +209,9 @@ Useful headless commands (run from project root):
 - Walkthrough/trailer footage: `tools/record_walkthrough.gd` (Movie Maker: `--write-movie x.avi
   --fixed-fps 30 --resolution 1920x1080 --script res://tools/record_walkthrough.gd`; usage in the
   header). Drives the real game with a scripted camera, ~2 min; re-record after level changes.
+  `tools/record_tape01.gd`: the whole Tape 1 night with real walking (InputManager gamepad mode +
+  the move actions: physics, head bob, footsteps), conversations, spots, the ending (~8-10 min).
+  Headless + --fixed-fps stalls threaded loading: preview with Movie Maker at a low resolution.
 - `Achievements` autoload (core/achievements.gd + data/achievements.json; ids = Steamworks API
   names): EventBus.chapter_completed / spotted / player_caught; stored in the save; GodotSteam's
   `Steam` singleton, when installed, is initialised and mirrored (no other code touches Steam).
