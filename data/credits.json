@@ -1,17 +1,17 @@
 {
-	"studio": "UJJWAL KOKANI",
+	"studio": "TIMELESS STUDIOS",
 	"presents": "presents",
 	"sections": [
 		{
-			"title": "UNLABELED",
+			"title": "UNLABELED - HORROR",
 			"lines": [
 				"A found-footage horror anthology"
 			]
 		},
 		{
-			"title": "Created by",
+			"title": "A Timeless Studios game",
 			"lines": [
-				"Ujjwal Kokani"
+				"Created by Ujjwal Kokani"
 			]
 		},
 		{
@@ -35,7 +35,8 @@
 				"Mukta by Ek Type (SIL OFL 1.1)",
 				"Special Elite by Astigmatic (Apache 2.0)",
 				"Kalam by Indian Type Foundry (SIL OFL 1.1)",
-				"Reenie Beanie by James Grieshaber (SIL OFL 1.1)"
+				"Reenie Beanie by James Grieshaber (SIL OFL 1.1)",
+				"DejaVu Sans, symbol blocks only (arrows, box drawing, blocks, geometric shapes, misc symbols, dingbats), subset with fontTools (Bitstream Vera licence, free for commercial use)"
 			]
 		},
 		{

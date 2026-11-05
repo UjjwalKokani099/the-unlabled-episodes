@@ -21,6 +21,7 @@ signal transition_finished
 
 const CHAPTER_LIST_PATH := "res://data/chapter_list.tres"
 const MAIN_MENU_PATH := "res://ui/menus/main_menu.tscn"
+const WINDOW_TITLE := "Unlabeled - Horror"
 const INTRO_PATH := "res://chapters/intro/intro.tscn"
 ## Tape menu stills: 4:3, cropped from the middle of the screen.
 const THUMB_SIZE := Vector2i(352, 264)
@@ -58,6 +59,10 @@ var last_chapter_time: float = 0.0
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	ErrorLog.install()  # errors + warnings with timestamps -> user://logs/errors.log
+	# The store/window name. config/name stays "UNLABELED": it names the user:// folder, and
+	# changing it would move everyone's saves and settings.
+	if DisplayServer.get_name() != "headless":
+		DisplayServer.window_set_title(WINDOW_TITLE)
 	chapter_list = load(CHAPTER_LIST_PATH)
 	SceneLoader.transition_finished.connect(transition_finished.emit)
 	# Closing the window goes through quit_game(), so scripted sequences that are still

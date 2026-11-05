@@ -1,18 +1,18 @@
 {
 	"_format": "Hand-written part of the credits (edit freely). tools/gen_credits.py adds the asset credits after it and writes data/credits.json. The boot screen's studio card reads studio/presents.",
-	"studio": "UJJWAL KOKANI",
+	"studio": "TIMELESS STUDIOS",
 	"presents": "presents",
 	"sections": [
 		{
-			"title": "UNLABELED",
+			"title": "UNLABELED - HORROR",
 			"lines": [
 				"A found-footage horror anthology"
 			]
 		},
 		{
-			"title": "Created by",
+			"title": "A Timeless Studios game",
 			"lines": [
-				"Ujjwal Kokani"
+				"Created by Ujjwal Kokani"
 			]
 		},
 		{

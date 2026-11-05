@@ -1,5 +1,6 @@
 [gd_scene format=3]
 
+[ext_resource type="Texture2D" path="res://assets/branding/logo_label.png" id="logo_label"]
 [ext_resource type="Script" path="res://ui/menus/main_menu.gd" id="1_menu"]
 [ext_resource type="Theme" path="res://ui/themes/vcr_theme.tres" id="2_theme"]
 [ext_resource type="Script" path="res://ui/menus/menu_list.gd" id="3_list"]
@@ -135,10 +136,13 @@ theme_override_styles/panel = SubResource("Style_osd")
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="Title" type="Label" parent="Screen/UI/Panel/VBox"]
+[node name="Logo" type="TextureRect" parent="Screen/UI/Panel/VBox"]
+custom_minimum_size = Vector2(300, 149)
 layout_mode = 2
-theme_override_font_sizes/font_size = 58
-text = "UNLABELED"
+size_flags_horizontal = 0
+texture = ExtResource("logo_label")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Tagline" type="Label" parent="Screen/UI/Panel/VBox"]
 layout_mode = 2

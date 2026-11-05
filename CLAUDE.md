@@ -155,6 +155,11 @@ Useful headless commands (run from project root):
   replays). Subtitles: `call_group("subtitles", "say",
   speaker, text, seconds)` (Subtitles node is in the HUD and the intro).
 - Pause menu lives inside `ui/hud/hud.tscn` (Esc). Theme: `ui/themes/vcr_theme.tres`.
+- Branding: studio = TIMELESS STUDIOS (data/credits_header.json -> gen_credits.py). Logo =
+  the owner's VHS cassette art, `assets/branding/logo_vhs.png` (source), `logo_label.png` (menu
+  CRT panel), `icon.png` / `icon.ico` (app + Windows exe). Window title "Unlabeled - Horror" is
+  set at runtime (GameManager.WINDOW_TITLE); config/name stays UNLABELED because it names the
+  user:// folder (saves). Engine splash = plain black (spec).
 - Tests that open the main menu must call `GameManager.mark_intro_seen()` first.
 
 ## Scripted sequences + cutscenes (step 7)
