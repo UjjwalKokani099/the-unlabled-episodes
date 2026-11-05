@@ -206,6 +206,9 @@ Useful headless commands (run from project root):
 - `python tools/build_release.py patch|minor|major|none [--no-export]`: version bump, CHANGELOG.md,
   export + zip to build/release/. Tag `v<version>` -> .github/workflows/desktop.yml builds both and
   smoke-runs the exported Linux build headless (main scene, menu, Tape 1; any error fails it).
+- Walkthrough/trailer footage: `tools/record_walkthrough.gd` (Movie Maker: `--write-movie x.avi
+  --fixed-fps 30 --resolution 1920x1080 --script res://tools/record_walkthrough.gd`; usage in the
+  header). Drives the real game with a scripted camera, ~2 min; re-record after level changes.
 - `Achievements` autoload (core/achievements.gd + data/achievements.json; ids = Steamworks API
   names): EventBus.chapter_completed / spotted / player_caught; stored in the save; GodotSteam's
   `Steam` singleton, when installed, is initialised and mirrored (no other code touches Steam).
