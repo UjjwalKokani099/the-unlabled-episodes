@@ -81,14 +81,12 @@ jobs:
       - name: Smoke test the exported Linux build
         run: |
           chmod +x build/linux/Unlabeled.x86_64
-          fail=0
-          for scene in "" res://ui/menus/main_menu.tscn res://chapters/chapter_01/shanti_vihar.tscn; do
-            echo "== ${scene:-main scene}"
-            timeout 300 ./build/linux/Unlabeled.x86_64 --headless --quit-after 400 $scene > run.log 2>&1 || true
-            grep -E "SCRIPT ERROR|^ERROR|Failed loading|Parse Error" run.log | grep -v "audio_driver\|ALSA\|dummy driver" > errors.log || true
-            if [ -s errors.log ]; then cat errors.log | head -30; fail=1; fi
-          done
-          exit $fail
+          # release templates take no scene path: --smoke-test (after --) drives boot -> menu -> Tape 1
+          timeout 600 ./build/linux/Unlabeled.x86_64 --headless -- --smoke-test > run.log 2>&1 || true
+          grep -q "SMOKE OK" run.log || { echo "no SMOKE OK"; tail -40 run.log; exit 1; }
+          grep -E "SCRIPT ERROR|^ERROR|Failed loading|Parse Error" run.log | grep -v "audio_driver\|ALSA\|dummy driver" > errors.log || true
+          if [ -s errors.log ]; then head -40 errors.log; exit 1; fi
+          echo "Smoke test: boot -> menu -> Tape 1 OK" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Zip
         run: |

@@ -527,9 +527,10 @@ func key_name(action: StringName) -> String:
 	return "-"
 
 
-## The key on this keyboard layout at a physical (US-position) key. Web can't map layouts.
+## The key on this keyboard layout at a physical (US-position) key. Web and headless (CI,
+## servers) can't map layouts.
 func _layout_keycode(physical: Key) -> Key:
-	if OS.has_feature("web"):
+	if OS.has_feature("web") or DisplayServer.get_name() == "headless":
 		return physical
 	return DisplayServer.keyboard_get_keycode_from_physical(physical)
 

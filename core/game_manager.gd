@@ -65,6 +65,8 @@ func _ready() -> void:
 		DisplayServer.window_set_title(WINDOW_TITLE)
 	chapter_list = load(CHAPTER_LIST_PATH)
 	SceneLoader.transition_finished.connect(transition_finished.emit)
+	if "--smoke-test" in OS.get_cmdline_user_args():
+		_smoke_test.call_deferred()
 	# Closing the window goes through quit_game(), so scripted sequences that are still
 	# waiting on timers are freed cleanly (no leaks or errors on exit).
 	get_tree().set_auto_accept_quit(false)
@@ -360,20 +362,52 @@ func has_progress() -> bool:
 
 ## Quit the game cleanly: save, free the running scene (and any coroutines waiting in it),
 ## let a frame pass, then quit. The window's close button calls this too.
+## CI smoke test of an exported build (`<game> --headless -- --smoke-test`; release templates
+## don't take a scene on the command line): the real boot -> menu -> Tape 1 path, a few
+## seconds of the tape, then the normal quit. Prints SMOKE OK / SMOKE FAIL; the workflow
+## also fails on any engine/script error in the output.
+func _smoke_test() -> void:
+	var tree := get_tree()
+	var ok := true
+	await tree.create_timer(2.0).timeout
+	SceneLoader.change_scene(MAIN_MENU_PATH)
+	await SceneLoader.transition_finished
+	ok = ok and tree.current_scene != null and tree.current_scene.name == "MainMenu"
+	await tree.create_timer(2.0).timeout
+	var started := start_chapter(&"tape_01_watchman")
+	if started:
+		await transition_finished
+		await tree.create_timer(5.0).timeout
+	ok = ok and started and tree.current_scene != null and tree.current_scene.name == "ShantiVihar"
+	printerr("SMOKE OK" if ok else "SMOKE FAIL (scene: %s)" % (tree.current_scene.name if tree.current_scene else "none"))
+	delete_save()
+	quit_game()
+
+
 func quit_game() -> void:
 	if SaveManager.data.get("play_time", 0.0) > 0.0:
 		SaveManager.write()
 	var tree := get_tree()
 	tree.paused = false
+	# A navmesh still baking on its thread holds the level's resources: let it finish (the
+	# hub/Tape 1 bake right after loading; quitting then used to leave resources in use).
+	for region in tree.root.find_children("*", "NavigationRegion3D", true, false):
+		var guard := 0
+		while (region as NavigationRegion3D).is_baking() and guard < 300:
+			await tree.process_frame
+			guard += 1
+	# The level goes first: while it lives, hums and fans restart their own sounds.
+	if tree.current_scene:
+		tree.current_scene.queue_free()
+	await tree.process_frame
 	# Sounds still playing at exit hold their streams (reported as leaks): stop them all.
 	AudioManager.shutdown()
 	for type in ["AudioStreamPlayer", "AudioStreamPlayer2D", "AudioStreamPlayer3D"]:
 		for node in tree.root.find_children("*", type, true, false):
 			node.call(&"stop")
-	await tree.process_frame
-	if tree.current_scene:
-		tree.current_scene.queue_free()
-	await tree.process_frame
+	# The audio server drops stopped playbacks on its own mixing thread: give it real time
+	# (frames can be milliseconds apart), or their streams are still held at exit.
+	await tree.create_timer(0.3, true, false, true).timeout
 	await tree.process_frame
 	ErrorLog.uninstall()
 	tree.quit()
