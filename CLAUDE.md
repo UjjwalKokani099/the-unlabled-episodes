@@ -441,8 +441,12 @@ SceneLoader, ObjectiveManager, GameManager, Achievements, DebugMenu (project.god
   come from EventBus counts (`tape01_director.TENSION_BEATS`), the Stalker adds exposure.
   `hold_silence(seconds)` = deliberate silence before a scare (Tape 1: before the intercom).
 - Voice: subtitles/dialogue carry line ids (`t1/vo_<event>`, `t1/opening_N`,
-  `<dialogue file>/<node>`); `AudioManager.play_voice(id)` plays assets/audio/voice/<id>.ogg
-  when it exists, else subtitles only.
+  `<dialogue file>/<node>`); lines without one get `Subtitles.auto_voice_id(text)` =
+  "auto/<md5[:12]>". `AudioManager.play_voice(id)` plays assets/audio/voice/<id>.ogg when it
+  exists, else subtitles only. Voice script: `python tools/voice_lines.py` -> data/voice/lines.json
+  + docs/voice_script.md (cast notes, `speak` text); `--install <dir>` turns `<id with / -> __>.wav|mp3`
+  into normalised OGGs (radio/phone filtered). Playthrough tests fail if a spoken line isn't in
+  the script (support.gd `unscripted_voice_ids`): re-run the tool after writing new lines.
 - Beds: gen_placeholder_sfx.py -> tools/_build/beds/ -> `python tools/process_audio.py`
   (ffmpeg, OGG + loudness) -> `--import` -> `python tools/process_audio.py --imports` (loop).
   Every file + licence: docs/audio_sources.md. `AudioManager.shutdown()` on quit.

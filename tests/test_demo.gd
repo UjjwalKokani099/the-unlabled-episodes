@@ -138,6 +138,8 @@ func _initialize() -> void:
 	check(game.remembers("hub_thought_arrival_1") and game.remembers("hub_thought_diary_entry"), "thoughts remembered in the save")
 
 	settings.subtitles = saved_subs
+	var unscripted = load("res://tests/support.gd").unscripted_voice_ids(self)
+	check(unscripted.is_empty(), "every spoken line is in the voice script %s" % [unscripted])
 	game.delete_save()
 	game.save_path = "user://save.json"
 	current_scene.queue_free()

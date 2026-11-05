@@ -56,6 +56,9 @@ var _voice: AudioStreamPlayer
 var _shut_down: bool = false
 
 
+## Every voice line id the game asked for this session (tests compare with data/voice/lines.json).
+var voice_requests: PackedStringArray = []
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	for i in POOL_2D:
@@ -300,6 +303,8 @@ func is_silenced() -> bool:
 func play_voice(line_id: String) -> float:
 	if line_id == "":
 		return 0.0
+	if voice_requests.size() < 2000:
+		voice_requests.append(line_id)  # tests check every id is in the voice script
 	var path := VOICE_DIR + line_id + ".ogg"
 	if not ResourceLoader.exists(path):
 		return 0.0

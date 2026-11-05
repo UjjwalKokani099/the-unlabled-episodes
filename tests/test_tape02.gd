@@ -160,5 +160,7 @@ func _initialize() -> void:
 	check(await until(func() -> bool: return lv.get_node("Vehicles/Van/CamBackseat").active, 10.0), "a red dot in the back seat")
 	await until(func() -> bool: return current_scene != null and current_scene.name == "Hub", 60.0)
 	check(game.is_completed(&"tape_02_wip") and current_scene.name == "Hub", "END OF TAPE, back in the room")
+	var unscripted = load("res://tests/support.gd").unscripted_voice_ids(self)
+	check(unscripted.is_empty(), "every spoken line is in the voice script %s" % [unscripted])
 	game.delete_save()
 	await load("res://tests/support.gd").finish(self, fails)

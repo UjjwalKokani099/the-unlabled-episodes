@@ -217,6 +217,8 @@ func _initialize() -> void:
 	check(current_scene.stage == 1, "hub moves to stage 1 (the diary entry)")
 	check(load("res://assets/materials/glass_lit_warm.tres").emission_energy_multiplier > 0.0, "window glow restored for other levels")
 	check(game.spotted_count("t1_") == 3, "spots survive finishing the tape")
+	var unscripted = load("res://tests/support.gd").unscripted_voice_ids(self)
+	check(unscripted.is_empty(), "every spoken line is in the voice script %s" % [unscripted])
 	game.delete_save()
 	current_scene.queue_free()
 	await physics(3)

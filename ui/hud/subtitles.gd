@@ -52,7 +52,16 @@ func _ready() -> void:
 	_apply_box()
 
 
+## Voice line id for a line given without one: "auto/<first 12 hex of md5(text)>". Every
+## spoken line then has a voice file slot (assets/audio/voice/auto/<hash>.ogg);
+## tools/voice_lines.py computes the same ids for the voice script (data/voice/lines.json).
+static func auto_voice_id(text: String) -> String:
+	return "auto/" + text.md5_text().left(12)
+
+
 func say(speaker: String, text: String, seconds: float = 3.0, voice_id: String = "") -> void:
+	if voice_id == "" and text != "":
+		voice_id = auto_voice_id(text)
 	# The voice plays whether or not subtitles are on; the text stays at least as long.
 	var voice_len := AudioManager.play_voice(voice_id)
 	seconds = maxf(seconds, voice_len + 0.3)
@@ -80,7 +89,7 @@ func say(speaker: String, text: String, seconds: float = 3.0, voice_id: String =
 
 ## Inner monologue: the player character's own thoughts, in italics, no name, a softer white.
 func think(text: String, seconds: float = 3.0, voice_id: String = "") -> void:
-	say("", "[i][color=#e4e4e4]%s[/color][/i]" % text, seconds, voice_id)
+	say("", "[i][color=#e4e4e4]%s[/color][/i]" % text, seconds, voice_id if voice_id != "" else auto_voice_id(text))
 
 
 func current_text() -> String:

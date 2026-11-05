@@ -32,3 +32,17 @@ static func finish(tree: SceneTree, fails: int) -> void:
 	for i in 6:
 		await tree.process_frame
 	tree.quit(fails)
+
+
+## Voice ids the game asked for that the voice script (data/voice/lines.json, made by
+## tools/voice_lines.py) doesn't list: a line nobody would ever record. Should be [].
+static func unscripted_voice_ids(tree: SceneTree) -> Array:
+	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/voice/lines.json"))
+	var known := {}
+	for line: Dictionary in (data as Dictionary).get("lines", []):
+		known[line.id] = true
+	var out := []
+	for id in tree.root.get_node("AudioManager").voice_requests:
+		if not known.has(id) and not id in out:
+			out.append(id)
+	return out
