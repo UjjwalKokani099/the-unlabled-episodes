@@ -277,7 +277,7 @@ func _initialize() -> void:
 	await secs(5.0)
 	await until(func() -> bool: return lv.get_node("Intercom").ringing, 10.0)
 	await face(Vector3(4.0, 2.0, 22.0), 1.2)
-	await walk([Vector3(-1.0, 0, 2.0), Vector3(0.5, 0, 15.0), Vector3(2.6, 0, 23.0), Vector3(5.0, 0, 24.2)], true)
+	await walk([Vector3(-1.0, 0, 2.0), Vector3(0.5, 0, 15.0), Vector3(2.6, 0, 23.0), Vector3(5.0, 0, 23.0), Vector3(5.0, 0, 24.2)], true)
 	await face(Vector3(4.12, 1.4, 24.6), 0.8)
 	mark("intercom")
 	await use("Intercom")
@@ -297,16 +297,17 @@ func _initialize() -> void:
 	var out_dir := (door.global_position - flat)
 	out_dir.y = 0
 	out_dir = out_dir.normalized()
-	p.global_position = door.global_position + out_dir * 1.6 + Vector3(0, 0.1, 0)
+	# after the cut he is already inside, just past the door (outside the door is the open
+	# side of the building on some layouts: placing him there made him fall in a render)
+	var inside: Vector3 = door.global_position - out_dir * 1.2
+	p.global_position = Vector3(inside.x, flat.y + 0.05, inside.z)
 	p.velocity = Vector3.ZERO
 	p.rotation.y = atan2(out_dir.x, out_dir.z)
 	set_pitch(-2.0)
 	await camcorder.cut_finished
 	mark("flat4b")
 	await secs(1.0)
-	await use("WingB/Door4B")
-	await secs(1.2)
-	await walk([door.global_position - out_dir * 0.8, flat])
+	await walk([flat])
 	await until(func() -> bool: return ev.has_fired(&"4b_checked"), 5.0)
 	await face(Vector3(-7.2, 14.2, -14.1), 2.0)
 	await secs(4.0)
