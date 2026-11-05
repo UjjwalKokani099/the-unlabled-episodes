@@ -135,3 +135,8 @@ Then add a row here: file, source URL, author, licence, date.
 | `sfx/pipe_creak.wav` | Synthesised (tools/gen_placeholder_sfx.py `pipe_creak`) | Original (project) | Old water pipe ticking and groaning (idle events) |
 | `sfx/lathi_tap.wav` | Synthesised (tools/gen_placeholder_sfx.py `lathi_tap`) | Original (project) | Distant watchman's stick taps + whistle (Tape 1 idle events) |
 | `sfx/cooker_whistle.wav` | Synthesised (tools/gen_placeholder_sfx.py `cooker_whistle`) | Original (project) | Pressure cooker whistling across the lane (hub idle events) |
+| `sfx/engine_idle.wav` | Synthesised (tools/gen_placeholder_sfx.py `engine_idle`) | Original (project) | Small petrol engine idling, loops (Tape 2 vehicles) |
+| `sfx/barrier_motor.wav` | Synthesised (tools/gen_placeholder_sfx.py `barrier_motor`) | Original (project) | Boom barrier motor + stop clunk (Tape 2) |
+| `sfx/receipt_print.wav` | Synthesised (tools/gen_placeholder_sfx.py `receipt_print`) | Original (project) | Dot-matrix toll receipt printer (Tape 2) |
+| `sfx/radio_squelch.wav` | Synthesised (tools/gen_placeholder_sfx.py `radio_squelch`) | Original (project) | Wireless set key-up, squelch, click (Tape 2 radio) |
+| `sfx/coins.wav` | Synthesised (tools/gen_placeholder_sfx.py `coins`) | Original (project) | Coins counted onto a steel tray (Tape 2 tolls) |

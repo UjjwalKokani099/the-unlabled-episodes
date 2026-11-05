@@ -1,0 +1,30 @@
+{
+	"id": "t2_ending",
+	"trigger": {"event": "last_toll"},
+	"once": true,
+	"cutscene": true,
+	"steps": [
+		{"do": "call", "node": "Story", "method": "begin_ending"},
+		{"do": "think", "text": "Exact change. Again.", "seconds": 2.5},
+		{"do": "wait", "seconds": 1.4},
+		{"do": "message", "text": "The driver holds out a receipt. Already printed.", "seconds": 3.0},
+		{"do": "wait", "seconds": 1.6},
+		{"do": "call", "node": "Story", "method": "show_receipt"},
+		{"do": "wait", "seconds": 4.0},
+		{"do": "say", "speaker": "SALIM", "text": "...That's my name.", "seconds": 2.5},
+		{"do": "wait", "seconds": 2.0},
+		{"do": "call", "node": "Story", "method": "hide_receipt"},
+		{"do": "silence", "seconds": 2.5, "fade_out": 0.3, "fade_in": 2.0},
+		{"do": "call", "node": "Story", "method": "lights_die"},
+		{"do": "wait", "seconds": 2.2},
+		{"do": "call", "node": "Story", "method": "red_dot"},
+		{"do": "look", "at": "Vehicles/Van/CamBackseat", "height": 1.2, "seconds": 1.4, "hold": 1.0},
+		{"do": "glitch", "amount": 0.5, "seconds": 1.2},
+		{"do": "wait", "seconds": 3.0},
+		{"do": "call", "node": "Camcorder", "method": "show_static"},
+		{"do": "wait", "seconds": 1.0},
+		{"do": "say", "speaker": "SALIM (V.O.)", "text": "They found the booth empty at six. The arm was up. The cash tray was full of exact change.", "seconds": 5.0, "voice": "t2/vo_ending"},
+		{"do": "wait", "seconds": 5.3},
+		{"do": "call", "node": "Story", "method": "finish"}
+	]
+}

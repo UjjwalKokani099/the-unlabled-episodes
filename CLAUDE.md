@@ -261,6 +261,21 @@ Useful headless commands (run from project root):
   tests); the director rebuilds its state from EventBus counts in `_restore()`.
 - Register times quoted by the stranger's entries = GameManager flags `t1_t_<event>` (camcorder clock).
 
+## Tape 2: The Toll Booth (step 10, first pass)
+- `chapters/chapter_02/toll_plaza.tscn` + `objectives.tres` from `tools/gen_tape02.py`. Playable
+  as the DEBUG chapter `tape_02_wip` (chapters/chapter_02/chapter_wip.tres, F1 menu / chapter
+  list debug_chapters); the real `tape_02_tollbooth` keeps an empty scene_path so the demo
+  still ends after Tape 1 (DemoEnd). Flip it when the tape is polished.
+- Salim's booth 3 on the island at x 0, lane x -2.7 (left-hand traffic towards -Z, right-hand
+  drive: the driver stops at the -X window). `TollVehicle` (AnimatableBody3D: drive_up ->
+  `arrived`, WAITING, leave -> `gone`); `PlateLog` (flag `t2_log`, the stranger's line after
+  van 4); radio = EventOnUse `radio_used` -> data/dialogue/tape02/*.json.
+- `tape02_director.gd` `_advance()` derives the next step from EventBus counts/flags
+  (`vehicle_served` x3, `van_served_1..4`, `t2_cut_n` tape cuts + checkpoint `booth`), so
+  reloads resume. Ending = data/sequences/tape02/ending.json (receipt with Salim's name,
+  power_cut, red dot in the back seat). Spots: t2_cctv (lane camera), t2_road, t2_backseat.
+- Test: test_tape02.gd. Art is kit boxes + propkit for now (vehicles, people = boxes).
+
 ## Story systems (shared by every tape)
 - Tape cut: `call_group("camcorder", "tape_cut", "03:10:40")` (static, black, clock jumps;
   stored in OSD `elapsed`, so checkpoints keep it). OSD: `clock_text()`, `time_of_day()`.

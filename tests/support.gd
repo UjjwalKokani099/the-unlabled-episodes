@@ -23,10 +23,12 @@ static func finish(tree: SceneTree, fails: int) -> void:
 			guard += 1
 	# overlays added to the root by the game (END OF TAPE card, transition layers)
 	for child in tree.root.get_children():
-		if child is CanvasLayer and child.get_script() and String(child.get_script().resource_path).contains("chapter_complete"):
+		if is_instance_valid(child) and not child.is_queued_for_deletion() and child is CanvasLayer \
+				and child.get_script() and String(child.get_script().resource_path).contains("chapter_complete"):
 			child.queue_free()
-	if tree.current_scene:
-		tree.current_scene.queue_free()
+	var scene := tree.current_scene
+	if is_instance_valid(scene) and not scene.is_queued_for_deletion():
+		scene.queue_free()
 	for i in 6:
 		await tree.process_frame
 	tree.quit(fails)

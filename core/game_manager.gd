@@ -282,7 +282,8 @@ func complete_chapter() -> void:
 	_change_level(_hub_path(), "", PackedStringArray())
 	# the loader's own black card is up after its fade (0.45 s): then ours can go
 	await get_tree().create_timer(0.6, true).timeout
-	screen.queue_free()
+	if is_instance_valid(screen):
+		screen.queue_free()
 	_completing = false
 
 

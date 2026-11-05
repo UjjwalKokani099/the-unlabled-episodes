@@ -1,0 +1,104 @@
+[gd_resource type="Resource" script_class="ObjectiveSet" format=3]
+
+[ext_resource type="Script" path="res://systems/objectives/objective_set.gd" id="1_set"]
+[ext_resource type="Script" path="res://systems/objectives/objective_data.gd" id="2_data"]
+
+[sub_resource type="Resource" id="O_radio_checkin"]
+script = ExtResource("2_data")
+id = &"radio_checkin"
+text = "Check in with control on the radio"
+complete_on = &"radio_checkin"
+required = 1
+starts_after = &""
+
+[sub_resource type="Resource" id="O_serve_cars"]
+script = ExtResource("2_data")
+id = &"serve_cars"
+text = "Take the toll, lift the barrier"
+complete_on = &"vehicle_served"
+required = 3
+starts_after = &"radio_checkin"
+
+[sub_resource type="Resource" id="O_log_hour"]
+script = ExtResource("2_data")
+id = &"log_hour"
+text = "Write the plates in the log"
+complete_on = &"log_written"
+required = 1
+starts_after = &"serve_cars"
+
+[sub_resource type="Resource" id="O_van_1"]
+script = ExtResource("2_data")
+id = &"van_1"
+text = "Serve the next vehicle"
+complete_on = &"van_served_1"
+required = 1
+starts_after = &"log_hour"
+
+[sub_resource type="Resource" id="O_radio_van"]
+script = ExtResource("2_data")
+id = &"radio_van"
+text = "Radio control about the van"
+complete_on = &"radio_van"
+required = 1
+starts_after = &"van_1"
+
+[sub_resource type="Resource" id="O_van_2"]
+script = ExtResource("2_data")
+id = &"van_2"
+text = "Serve the van"
+complete_on = &"van_served_2"
+required = 1
+starts_after = &"radio_van"
+
+[sub_resource type="Resource" id="O_check_cctv"]
+script = ExtResource("2_data")
+id = &"check_cctv"
+text = "Check the lane camera"
+complete_on = &"lane_checked"
+required = 1
+starts_after = &"van_2"
+
+[sub_resource type="Resource" id="O_van_3"]
+script = ExtResource("2_data")
+id = &"van_3"
+text = "Serve the van"
+complete_on = &"van_served_3"
+required = 1
+starts_after = &"check_cctv"
+
+[sub_resource type="Resource" id="O_radio_again"]
+script = ExtResource("2_data")
+id = &"radio_again"
+text = "Try the radio again"
+complete_on = &"radio_dead"
+required = 1
+starts_after = &"van_3"
+
+[sub_resource type="Resource" id="O_van_4"]
+script = ExtResource("2_data")
+id = &"van_4"
+text = "Serve the van"
+complete_on = &"van_served_4"
+required = 1
+starts_after = &"radio_again"
+
+[sub_resource type="Resource" id="O_read_log"]
+script = ExtResource("2_data")
+id = &"read_log"
+text = "Read the plate log"
+complete_on = &"log_read_late"
+required = 1
+starts_after = &"van_4"
+
+[sub_resource type="Resource" id="O_last_toll"]
+script = ExtResource("2_data")
+id = &"last_toll"
+text = "Take the toll"
+complete_on = &"last_toll"
+required = 1
+starts_after = &"read_log"
+
+[resource]
+script = ExtResource("1_set")
+objectives = Array[ExtResource("2_data")]([SubResource("O_radio_checkin"), SubResource("O_serve_cars"), SubResource("O_log_hour"), SubResource("O_van_1"), SubResource("O_radio_van"), SubResource("O_van_2"), SubResource("O_check_cctv"), SubResource("O_van_3"), SubResource("O_radio_again"), SubResource("O_van_4"), SubResource("O_read_log"), SubResource("O_last_toll")])

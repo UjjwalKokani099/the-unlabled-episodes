@@ -122,7 +122,8 @@ func _warm_up(scene: Node) -> void:
 	last_warmup_count = i
 	for f in 2:
 		await get_tree().process_frame
-	rig.queue_free()
+	if is_instance_valid(rig):  # the scene (and its camera) can go away mid warm-up (quit)
+		rig.queue_free()
 
 
 func _finish_loading(path: String) -> PackedScene:

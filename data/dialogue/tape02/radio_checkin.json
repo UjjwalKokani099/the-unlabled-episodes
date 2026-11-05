@@ -1,0 +1,11 @@
+{
+	"start": "call",
+	"nodes": {
+		"call": {"speaker": "SALIM", "text": "Booth three to control. Pillai sir?", "duration": 2.6, "next": "pillai"},
+		"pillai": {"speaker": "PILLAI (RADIO)", "text": "Control. Go ahead, Salim.", "choices": [
+			{"text": "Booth three on duty, sir. Float is five hundred.", "next": "quiet"},
+			{"text": "Salim here. Nothing on the road at all.", "next": "quiet"}]},
+		"quiet": {"speaker": "PILLAI (RADIO)", "text": "Good. Trucks start after four. Till then, don't sleep, and log every plate. Every plate.", "next": "over"},
+		"over": {"speaker": "SALIM", "text": "Every plate. Over.", "duration": 2.0, "event": "radio_checkin"}
+	}
+}

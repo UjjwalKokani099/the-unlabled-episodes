@@ -1,0 +1,10 @@
+{
+	"start": "call",
+	"nodes": {
+		"call": {"speaker": "SALIM", "text": "Control? Pillai sir? Booth three. Please answer.", "duration": 3.0, "next": "hiss"},
+		"hiss": {"speaker": "", "text": "[i](static)[/i]", "duration": 2.4, "next": "again"},
+		"again": {"speaker": "SALIM", "text": "Sir, the van. It came back again. There were more people in it.", "duration": 3.4, "next": "voice"},
+		"voice": {"speaker": "RADIO", "text": "...Booth three. Salim bhai. Who is that sitting with you?", "duration": 3.8, "audio": "res://assets/audio/sfx/radio_squelch.wav", "next": "end"},
+		"end": {"speaker": "", "text": "[i](the static stops)[/i]", "duration": 2.0, "event": "radio_dead"}
+	}
+}

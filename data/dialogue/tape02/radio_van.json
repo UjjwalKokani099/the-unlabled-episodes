@@ -1,0 +1,12 @@
+{
+	"start": "call",
+	"nodes": {
+		"call": {"speaker": "SALIM", "text": "Control, booth three. Sir, a white Omni just went through. Bombay plate.", "duration": 3.4, "next": "pillai"},
+		"pillai": {"speaker": "PILLAI (RADIO)", "text": "Omni? I've had your lane camera up the whole time, Salim. Nothing has gone through booth three in an hour.", "choices": [
+			{"text": "It paid, sir. I have the money in the tray.", "next": "count"},
+			{"text": "...Maybe I dozed off.", "next": "wash"}]},
+		"count": {"speaker": "PILLAI (RADIO)", "text": "Then count it again. And stop calling me about ghosts.", "next": "over"},
+		"wash": {"speaker": "PILLAI (RADIO)", "text": "Then go wash your face. Two more hours.", "next": "over"},
+		"over": {"speaker": "SALIM", "text": "Yes, sir. Over.", "duration": 1.8, "event": "radio_van"}
+	}
+}

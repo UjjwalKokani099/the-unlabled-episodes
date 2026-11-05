@@ -270,6 +270,81 @@ def cooker_whistle(rng):
     return lowpass(out, 0.35)
 
 
+def engine_idle(rng):
+    """A small petrol engine idling (Maruti Omni): 4-stroke thump ~14 Hz firing, exhaust
+    rasp, a little wobble. 2 s, loops."""
+    n = int(RATE * 2.0)
+    out = []
+    y = 0.0
+    for i in range(n):
+        t = i / RATE
+        rpm = 13.5 + 0.6 * math.sin(2 * math.pi * 0.5 * t)
+        fire = max(0.0, math.sin(2 * math.pi * rpm * t)) ** 6
+        y = y * 0.82 + rng.uniform(-1, 1) * 0.18
+        out.append(fire * 0.55 + math.sin(2 * math.pi * rpm * 2 * t) * 0.12 + y * 0.18 * (0.4 + fire))
+    return lowpass(out, 0.18)
+
+
+def barrier_motor(rng):
+    """Boom barrier: a motor whine rising then a clunk at the stop."""
+    n = int(RATE * 1.4)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        f = 180 + 120 * min(t / 0.4, 1.0)
+        env = min(t / 0.05, 1.0) * (1.0 if t < 1.15 else max(0.0, 1 - (t - 1.15) / 0.05))
+        whine = (math.sin(2 * math.pi * f * t) + 0.3 * math.sin(2 * math.pi * f * 3 * t)) * 0.18 * env
+        clunk = 0.0
+        if t > 1.2:
+            k = t - 1.2
+            clunk = (math.sin(2 * math.pi * 90 * k) * 0.7 + rng.uniform(-1, 1) * 0.3) * math.exp(-k * 30)
+        out.append(whine + clunk + rng.uniform(-1, 1) * 0.02 * env)
+    return out
+
+
+def receipt_print(rng):
+    """Toll receipt printer: dot-matrix buzz in short lines, then the tear."""
+    n = int(RATE * 1.1)
+    out = [0.0] * n
+    for line in range(6):
+        k0 = int((0.05 + line * 0.13) * RATE)
+        for i in range(int(RATE * 0.09)):
+            t = i / RATE
+            if k0 + i < n:
+                out[k0 + i] += (1.0 if math.sin(2 * math.pi * 900 * t) > 0 else -1.0) * 0.12 * (0.6 + 0.4 * rng.random())
+    for i in range(int(RATE * 0.12)):
+        k = int(0.92 * RATE) + i
+        if k < n:
+            out[k] += rng.uniform(-1, 1) * 0.4 * math.exp(-i / RATE * 25)
+    return lowpass(out, 0.5)
+
+
+def radio_squelch(rng):
+    """Wireless set: key-up click, a burst of squelch hiss, click."""
+    n = int(RATE * 0.6)
+    out = []
+    for i in range(n):
+        t = i / RATE
+        click = math.exp(-t * 300) * 0.6 + (math.exp(-(t - 0.55) * 300) * 0.5 if t > 0.55 else 0.0)
+        hiss = rng.uniform(-1, 1) * 0.35 * (1.0 if 0.02 < t < 0.5 else 0.0) * (0.7 + 0.3 * math.sin(2 * math.pi * 7 * t))
+        out.append(click * (1 if rng.random() > 0.5 else -1) + hiss)
+    return out
+
+
+def coins(rng):
+    """Coins and a folded note counted onto a steel tray."""
+    n = int(RATE * 0.7)
+    out = [0.0] * n
+    for at in (0.0, 0.11, 0.19, 0.33):
+        k0 = int(at * RATE)
+        f = rng.uniform(2800, 4200)
+        for i in range(int(RATE * 0.2)):
+            t = i / RATE
+            if k0 + i < n:
+                out[k0 + i] += (math.sin(2 * math.pi * f * t) + 0.6 * math.sin(2 * math.pi * f * 1.48 * t)) * 0.2 * math.exp(-t * 28)
+    return out
+
+
 def vcr_click(rng):
     n = int(RATE * 0.09)
     noise = [rng.uniform(-1, 1) for _ in range(n)]
@@ -856,6 +931,11 @@ def main():
     write("pipe_creak.wav", pipe_creak(random.Random(60)))
     write("lathi_tap.wav", lathi_tap(random.Random(61)))
     write("cooker_whistle.wav", cooker_whistle(random.Random(62)))
+    write("engine_idle.wav", engine_idle(random.Random(63)))
+    write("barrier_motor.wav", barrier_motor(random.Random(64)))
+    write("receipt_print.wav", receipt_print(random.Random(65)))
+    write("radio_squelch.wav", radio_squelch(random.Random(66)))
+    write("coins.wav", coins(random.Random(67)))
     write("room_hum.wav", room_hum(rng))
     write("crickets_loop.wav", crickets(rng))
     write("dog_bark.wav", dog_bark(rng))

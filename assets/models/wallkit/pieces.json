@@ -7,8 +7,10 @@
   "doorframe_120x220_t23",
   "grill_100x120_t23",
   "grill_120x120_t23",
+  "grill_90x90_t12",
   "masonry_100x120_t23",
   "masonry_120x120_t23",
+  "masonry_90x90_t12",
   "pipe_300x0_t23",
   "pipeshoe_0x0_t23",
   "vent_130x130_t23",
@@ -20,6 +22,7 @@
   "ventgrill_80x160_t23",
   "ventgrill_90x90_t23",
   "winframe_100x120_t23",
-  "winframe_120x120_t23"
+  "winframe_120x120_t23",
+  "winframe_90x90_t12"
  ]
 }
